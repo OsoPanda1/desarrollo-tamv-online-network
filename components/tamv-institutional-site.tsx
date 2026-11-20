@@ -82,27 +82,25 @@ export function TamvInstitutionalSite() {
                 <strong>Real del Monte, Hidalgo, México</strong>
               </div>
             </div>
-            <aside className="hero-visual" aria-label="Mapa conceptual del ecosistema TAMV">
-              <div className="visual-heading"><span>MAPA CONCEPTUAL</span><span>00 / 07</span></div>
-              <div className="network-orbit" aria-hidden="true">
-                <div className="orbit-ring orbit-ring-one" />
-                <div className="orbit-ring orbit-ring-two" />
-                <div className="orbit-ring orbit-ring-three" />
-                <div className="orbit-axis orbit-axis-one" />
-                <div className="orbit-axis orbit-axis-two" />
-                <span className="orbit-point point-one" />
-                <span className="orbit-point point-two" />
-                <span className="orbit-point point-three" />
-                <span className="orbit-point point-four" />
-                <div className="orbit-core"><span className="brand-mark orbit-brand-emblem" aria-hidden="true" /><span>NODO CERO</span></div>
+            <figure className="hero-visual">
+              <div className="hero-image-frame">
+                <Image
+                  src="/tamv-research-editorial.png"
+                  alt="Imagen editorial conceptual de una mesa de archivo con un mapa sin rótulos, documentos, cuaderno y brújula."
+                  fill
+                  priority
+                  sizes="(max-width: 760px) 100vw, 42vw"
+                />
+                <div className="hero-image-overlay">
+                  <div className="hero-image-topline"><span>CUADERNO DE CAMPO</span><span>HIDALGO · MÉXICO</span></div>
+                  <div className="hero-image-caption">
+                    <span>MEMORIA TERRITORIAL / 01</span>
+                    <strong>El conocimiento comienza con contexto.</strong>
+                  </div>
+                </div>
               </div>
-              <div className="visual-caption">
-                <span className="caption-mark">01</span>
-                <div><strong>Una red en construcción</strong><p>Arquitectura, comunidad y evidencia conectadas por propósito.</p></div>
-                <span className="visual-coordinates">20°08&apos;N<br />98°40&apos;O</span>
-              </div>
-              <p className="visual-note">Representación conceptual · No es un mapa de servicios desplegados</p>
-            </aside>
+              <figcaption className="hero-image-foot"><span>INVESTIGACIÓN CON RAÍCES</span><span>IMAGEN EDITORIAL CONCEPTUAL</span></figcaption>
+            </figure>
           </div>
           <a className="hero-scroll" href="#institucion" aria-label="Continuar a la sección institucional"><ArrowDown aria-hidden="true" /></a>
         </section>
