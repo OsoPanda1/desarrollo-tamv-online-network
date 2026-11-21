@@ -36,8 +36,10 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
-      - name: Validate migration runner syntax
-        run: node --check scripts/db-migrate.mjs
+      - name: Validate database script syntax
+        run: |
+          node --check scripts/db-migrate.mjs
+          node --check scripts/db-preflight.mjs
       - name: Automated tests
         run: pnpm test
       - name: TypeScript validation
