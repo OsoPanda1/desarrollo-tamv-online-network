@@ -49,6 +49,17 @@ const checks = [
   ["duplicate researcher profiles per owner", `SELECT count(*)::int AS n FROM (SELECT user_id FROM researcher_profiles GROUP BY user_id HAVING count(*) > 1) d`],
   ["duplicate evidence version per proposal and owner", `SELECT count(*)::int AS n FROM (SELECT proposal_id, user_id, version FROM proposal_evidence GROUP BY proposal_id, user_id, version HAVING count(*) > 1) d`],
   ["multiple active appeals per proposal", `SELECT count(*)::int AS n FROM (SELECT proposal_id FROM proposal_appeals WHERE status IN ('received', 'under_review') GROUP BY proposal_id HAVING count(*) > 1) d`],
+  ["orphan HCU domains (owner)", `SELECT count(*)::int AS n FROM hcu_domains d LEFT JOIN "user" u ON u.id = d.user_id WHERE d.user_id <> 'system' AND u.id IS NULL`],
+  ["orphan HCU atoms (owner)", `SELECT count(*)::int AS n FROM hcu_atoms a LEFT JOIN "user" u ON u.id = a.user_id WHERE a.user_id <> 'system' AND u.id IS NULL`],
+  ["orphan HCU hyperedges (owner)", `SELECT count(*)::int AS n FROM hcu_hyperedges h LEFT JOIN "user" u ON u.id = h.user_id WHERE h.user_id <> 'system' AND u.id IS NULL`],
+  ["orphan HCU shocks (owner)", `SELECT count(*)::int AS n FROM hcu_shocks s LEFT JOIN "user" u ON u.id = s.user_id WHERE u.id IS NULL`],
+  ["orphan research projects (owner)", `SELECT count(*)::int AS n FROM research_projects p LEFT JOIN "user" u ON u.id = p.user_id WHERE p.user_id <> 'system' AND u.id IS NULL`],
+  ["orphan research topics (owner)", `SELECT count(*)::int AS n FROM research_topics t LEFT JOIN "user" u ON u.id = t.user_id WHERE t.user_id <> 'system' AND u.id IS NULL`],
+  ["invalid proposal status", `SELECT count(*)::int AS n FROM research_proposals WHERE status NOT IN ('received','triage','in_review','changes_requested','accepted','rejected','appealed','published','withdrawn')`],
+  ["invalid proposal visibility", `SELECT count(*)::int AS n FROM research_proposals WHERE visibility NOT IN ('private','public')`],
+  ["published proposals without consent", `SELECT count(*)::int AS n FROM research_proposals WHERE status = 'published' AND (visibility <> 'public' OR share_consent = false)`],
+  ["invalid HCU atom coordinates", `SELECT count(*)::int AS n FROM hcu_atoms WHERE influence_x NOT BETWEEN -1 AND 1 OR risk_y NOT BETWEEN -1 AND 1 OR evidence_z NOT BETWEEN 0 AND 1`],
+  ["invalid HCU simulation horizons", `SELECT count(*)::int AS n FROM hcu_runs WHERE start_year > end_year OR end_year - start_year > 24 OR seed < 0`],
 ]
 
 const pool = new Pool({ connectionString: databaseUrl, max: 1, connectionTimeoutMillis: 10_000, idleTimeoutMillis: 5_000 })
