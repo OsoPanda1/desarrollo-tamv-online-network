@@ -59,6 +59,7 @@ const checks = [
   ["invalid proposal visibility", `SELECT count(*)::int AS n FROM research_proposals WHERE visibility NOT IN ('private','public')`],
   ["published proposals without consent", `SELECT count(*)::int AS n FROM research_proposals WHERE status = 'published' AND (visibility <> 'public' OR share_consent = false)`],
   ["invalid HCU atom coordinates", `SELECT count(*)::int AS n FROM hcu_atoms WHERE influence_x NOT BETWEEN 0 AND 100 OR risk_y NOT BETWEEN 0 AND 100 OR evidence_z NOT BETWEEN 0 AND 100`],
+  ["HCU hyperedges exceed source/target fan-out bounds", `SELECT count(*)::int AS n FROM hcu_hyperedges WHERE cardinality(source_atom_ids) < 1 OR cardinality(target_atom_ids) < 1 OR cardinality(source_atom_ids) > 32 OR cardinality(target_atom_ids) > 32`],
   ["invalid HCU simulation horizons", `SELECT count(*)::int AS n FROM hcu_runs WHERE start_year > end_year OR end_year - start_year > 24 OR seed < 0`],
 ]
 
