@@ -27,7 +27,13 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
     pnpm typecheck
     pnpm dev
 
-Do not commit .env.local, credentials, private keys, database dumps or real user data. Review docs/database/migrations.md before applying migrations; the first migration assumes the existing schema is already present. A successful build does not prove authorization, database workflows or production integrations work.
+### Database operations
+
+- `pnpm db:preflight` — read-only schema and integrity diagnostics; set `DATABASE_URL` explicitly to a disposable/test database first.
+- `pnpm db:preflight -- --strict` — exits unsuccessfully if schema checks or integrity diagnostics find issues.
+- `pnpm db:migrate` — applies checksummed migrations only after the strict preflight passes. Do not run this against production until a backup restore has been rehearsed and the exact target database is confirmed.
+
+Do not commit .env.local, credentials, private keys, database dumps or real user data. Review docs/database/migrations.md before applying migrations; migrations assume the existing schema is present and do not bootstrap a blank database. A successful build does not prove authorization, database workflows or production integrations work.
 
 ## Triple hardening
 
