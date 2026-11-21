@@ -71,4 +71,5 @@ test("HCU simulation budget rejects excessive graph and compute workloads", () =
   assert.equal(isHcuGraphWithinLimits(10, 1_001), false)
   assert.equal(isHcuSimulationWithinBudget(small), true)
   assert.equal(isHcuSimulationWithinBudget({ ...small, mcRuns: 200, atomCount: 100, edgeCount: 100 }), false)
+  assert.equal(isHcuSimulationWithinBudget({ ...small, edgeFanout: 64 }), false)
 })
