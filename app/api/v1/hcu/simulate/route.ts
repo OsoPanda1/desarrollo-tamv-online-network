@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { hcuRuns, user } from "@/lib/db/schema"
 import { simulateHcu, HCU_MODEL_VERSION, type HcuAtom, type HcuEdge } from "@/lib/hcu/model"
+import { estimateHcuSimulationWork, isHcuGraphWithinLimits, MAX_HCU_SIMULATION_WORK } from "@/lib/hcu/budget"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { sha256, canonicalJson } from "@/lib/research/provenance"
 import { getPublicHcuGraph } from "@/lib/research/queries"
@@ -43,12 +44,17 @@ export async function POST(request: Request) {
   }
 
   const graph = await getPublicHcuGraph()
-  if (graph.atoms.length > 250 || graph.edges.length > 1_000) {
+  if (!isHcuGraphWithinLimits(graph.atoms.length, graph.edges.length)) {
     return apiError("El grafo excede el presupuesto operativo de simulación. Reduce su complejidad.", 503)
   }
-  const horizon = input.endYear - input.startYear + 1
-  const estimatedWork = input.mcRuns * horizon * Math.max(1, graph.atoms.length) * Math.max(1, graph.edges.length)
-  if (estimatedWork > 5_000_000) {
+  const estimatedWork = estimateHcuSimulationWork({
+    mcRuns: input.mcRuns,
+    startYear: input.startYear,
+    endYear: input.endYear,
+    atomCount: graph.atoms.length,
+    edgeCount: graph.edges.length,
+  })
+  if (estimatedWork > MAX_HCU_SIMULATION_WORK) {
     return apiError("La combinación de horizonte, muestras y grafo excede el presupuesto de cálculo. Reduce las muestras o el horizonte.", 400)
   }
   const knownAtomIds = new Set(graph.atoms.map((atom) => atom.id))
