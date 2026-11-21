@@ -1,6 +1,7 @@
 import test from "node:test"
 import assert from "node:assert/strict"
 import { canTransitionProposal } from "../lib/research/workflow.ts"
+import { csvCell } from "../lib/research/csv.ts"
 import { appealSchema, moderationSchema, proposalSchema, simulationSchema } from "../lib/validation.ts"
 
 test("proposal workflow allows only declared transitions", () => {
@@ -51,4 +52,12 @@ test("simulation schema rejects out-of-range work factors", () => {
   assert.equal(simulationSchema.safeParse({ ...base, mcRuns: 201 }).success, false)
   assert.equal(simulationSchema.safeParse({ ...base, seed: -1 }).success, false)
   assert.equal(simulationSchema.safeParse({ ...base, shocks: Array.from({ length: 17 }, (_, i) => ({ atomId: String(i), year: 2030, intensity: 0.1 })) }).success, false)
+})
+
+test("CSV exports neutralize spreadsheet formula injection and preserve quoting", () => {
+  assert.equal(csvCell("=HYPERLINK(\"https://evil.example\")"), "\"'=HYPERLINK(\"\"https://evil.example\"\")\"")
+  assert.equal(csvCell("  +1+1"), "\"'  +1+1\"")
+  assert.equal(csvCell("@SUM(A1:A2)"), "\"'@SUM(A1:A2)\"")
+  assert.equal(csvCell('A "quoted" value'), "\"A \"\"quoted\"\" value\"")
+  assert.equal(csvCell(null), "\"\"")
 })
