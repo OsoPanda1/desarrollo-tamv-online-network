@@ -35,7 +35,7 @@ try {
   `)
 
   const names = (await readdir(migrationsDirectory))
-    .filter((name) => /^\d+_[a-z0-9_-]+\.sql$/i.test(name))
+    .filter((name) => /^\d{4}_[a-z0-9_-]+\.sql$/i.test(name))
     .sort()
 
   if (names.length === 0) {
