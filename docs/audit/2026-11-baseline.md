@@ -102,7 +102,7 @@ The following source-level findings were confirmed during the next pass and addr
 - Added migration 0001 with non-unique query indexes only. It assumes the existing schema is already present and has not been run against a database in this session. No foreign keys or unique constraints were added because existing data and deletion/retention semantics have not been verified.
 - Added a core/companion identity federation contract defining OIDC validation, subject mapping, local authorization, account linking, logout/revocation and staged rollout. This is a design contract, not live federation.
 - GitHub Actions run diagnostics for the observed CI, CodeQL and secret-scan attempts showed jobs finishing with `runner_id: 0` and empty step lists; log downloads were unavailable. This indicates the jobs did not provide executable validation evidence, so the failures cannot currently be attributed to TypeScript, dependency audit or scan findings. Repository Actions/runner availability and permissions must be checked by an administrator.
-- The Vercel status check on a later/current PR head returned success. The preview itself was not smoke-tested because the connected Vercel tool scope did not authorize access to the team deployment. No local build could be run from this environment because direct GitHub network access was unavailable.
+- A Vercel status check succeeded on the prior source-code head; the latest audit-documentation-only commit has a new pending Vercel check. The preview itself was not smoke-tested because the connected Vercel tool scope did not authorize access to the team deployment. No local build could be run from this environment because direct GitHub network access was unavailable.
 
 ## Corrected release status
 
