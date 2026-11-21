@@ -39,13 +39,13 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
     if (!proposal) return { error: "not_found" as const }
     if (proposal.status === "withdrawn") return { error: "closed" as const }
-    if (proposal.shareConsent === parsed.data.shareConsent) {
-      return { consent: proposal.shareConsent, changed: false, withdrawn: false }
-    }
 
     // Consent withdrawal after publication removes the record from public
     // catalog queries. It cannot recall copies already exported or mirrored.
     const withdrawPublication = proposal.status === "published" && !parsed.data.shareConsent
+    if (proposal.shareConsent === parsed.data.shareConsent && !withdrawPublication) {
+      return { consent: proposal.shareConsent, changed: false, withdrawn: false }
+    }
     const nextStatus = withdrawPublication ? "withdrawn" : proposal.status
 
     const [lastEvent] = await transaction
