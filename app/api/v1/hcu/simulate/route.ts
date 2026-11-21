@@ -47,12 +47,16 @@ export async function POST(request: Request) {
   if (!isHcuGraphWithinLimits(graph.atoms.length, graph.edges.length)) {
     return apiError("El grafo excede el presupuesto operativo de simulación. Reduce su complejidad.", 503)
   }
+  const edgeFanout = graph.edges.length
+    ? graph.edges.reduce((sum, edge) => sum + edge.sourceAtomIds.length + edge.targetAtomIds.length, 0) / graph.edges.length
+    : 1
   const estimatedWork = estimateHcuSimulationWork({
     mcRuns: input.mcRuns,
     startYear: input.startYear,
     endYear: input.endYear,
     atomCount: graph.atoms.length,
     edgeCount: graph.edges.length,
+    edgeFanout,
   })
   if (estimatedWork > MAX_HCU_SIMULATION_WORK) {
     return apiError("La combinación de horizonte, muestras y grafo excede el presupuesto de cálculo. Reduce las muestras o el horizonte.", 400)
