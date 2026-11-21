@@ -8,6 +8,10 @@
 - The runner uses a PostgreSQL advisory lock and a transaction per migration. It logs filenames and safe status only; it does not print DATABASE_URL.
 - Keep a tested backup and a reviewed rollback/recovery plan before any production migration.
 
+## Read-only preflight
+
+Run `pnpm db:preflight` against the intended database before any migration. It verifies required table/column presence and reports orphan/duplicate counts without printing row contents or changing data. Use `pnpm db:preflight -- --strict` to return a failing exit code when integrity findings exist. A non-strict run is diagnostic only; warnings still require review.
+
 ## First migration
 
 `0001_integrity_indexes.sql` adds non-unique indexes to improve owner-scoped queries, evidence version lookup, event history, appeals and HCU run retrieval. It does not delete, rewrite or validate existing data. It assumes the tables/columns in the current Drizzle schema already exist; it is not an initial schema bootstrap.
