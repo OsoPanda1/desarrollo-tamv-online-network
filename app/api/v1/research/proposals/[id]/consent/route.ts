@@ -27,14 +27,26 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const now = new Date()
   const result = await db.transaction(async (transaction) => {
     const [proposal] = await transaction
-      .select({ id: researchProposals.id, status: researchProposals.status, shareConsent: researchProposals.shareConsent })
+      .select({
+        id: researchProposals.id,
+        status: researchProposals.status,
+        shareConsent: researchProposals.shareConsent,
+      })
       .from(researchProposals)
       .where(and(eq(researchProposals.id, id), eq(researchProposals.userId, session.user.id)))
       .for("update")
       .limit(1)
+
     if (!proposal) return { error: "not_found" as const }
-    if (["published", "withdrawn"].includes(proposal.status)) return { error: "closed" as const }
-    if (proposal.shareConsent === parsed.data.shareConsent) return { consent: proposal.shareConsent, changed: false }
+    if (proposal.status === "withdrawn") return { error: "closed" as const }
+    if (proposal.shareConsent === parsed.data.shareConsent) {
+      return { consent: proposal.shareConsent, changed: false, withdrawn: false }
+    }
+
+    // Consent withdrawal after publication removes the record from public
+    // catalog queries. It cannot recall copies already exported or mirrored.
+    const withdrawPublication = proposal.status === "published" && !parsed.data.shareConsent
+    const nextStatus = withdrawPublication ? "withdrawn" : proposal.status
 
     const [lastEvent] = await transaction
       .select({ eventHash: proposalEvents.eventHash })
@@ -42,13 +54,73 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       .where(eq(proposalEvents.proposalId, id))
       .orderBy(desc(proposalEvents.createdAt))
       .limit(1)
-    const payload = { proposalId: id, actorId: session.user.id, action: "publication_consent_updated", shareConsent: parsed.data.shareConsent, occurredAt: now.toISOString() }
+
+    const action = withdrawPublication
+      ? "publication_withdrawn_by_author"
+      : "publication_consent_updated"
+    const payload = {
+      proposalId: id,
+      actorId: session.user.id,
+      action,
+      fromStatus: proposal.status,
+      toStatus: nextStatus,
+      shareConsent: parsed.data.shareConsent,
+      occurredAt: now.toISOString(),
+    }
     const event = makeProposalEventHash(payload, lastEvent?.eventHash ?? null)
-    await transaction.update(researchProposals).set({ shareConsent: parsed.data.shareConsent, updatedAt: now }).where(eq(researchProposals.id, id))
-    await transaction.insert(proposalEvents).values({ id: crypto.randomUUID(), userId: session.user.id, proposalId: id, action: "publication_consent_updated", fromStatus: proposal.status, toStatus: proposal.status, detail: parsed.data.shareConsent ? "La persona autora autorizó la difusión pública del resumen si se publica." : "La persona autora retiró su autorización de difusión pública.", createdAt: now, previousHash: lastEvent?.eventHash ?? null, eventHash: event.eventHash, canonicalPayload: event.canonicalPayload })
-    return { consent: parsed.data.shareConsent, changed: true }
+
+    await transaction
+      .update(researchProposals)
+      .set({
+        shareConsent: parsed.data.shareConsent,
+        status: nextStatus,
+        visibility: withdrawPublication ? "private" : undefined,
+        publishedAt: withdrawPublication ? null : undefined,
+        updatedAt: now,
+      })
+      .where(eq(researchProposals.id, id))
+
+    await transaction.insert(proposalEvents).values({
+      id: crypto.randomUUID(),
+      userId: session.user.id,
+      proposalId: id,
+      action,
+      fromStatus: proposal.status,
+      toStatus: nextStatus,
+      detail: withdrawPublication
+        ? "La persona autora retiró el consentimiento tras la publicación. El registro se retiró del catálogo público; las copias externas previas pueden persistir."
+        : parsed.data.shareConsent
+          ? "La persona autora autorizó la difusión pública del resumen si se publica."
+          : "La persona autora retiró su autorización de difusión pública.",
+      createdAt: now,
+      previousHash: lastEvent?.eventHash ?? null,
+      eventHash: event.eventHash,
+      canonicalPayload: event.canonicalPayload,
+    })
+
+    return {
+      consent: parsed.data.shareConsent,
+      changed: true,
+      withdrawn: withdrawPublication,
+    }
   })
 
-  if ("error" in result) return apiError(result.error === "not_found" ? "No se encontró la propuesta." : "El consentimiento ya no se puede cambiar después del cierre editorial.", result.error === "not_found" ? 404 : 409)
-  return apiJson({ shareConsent: result.consent, message: result.changed ? "Consentimiento actualizado y registrado." : "El consentimiento ya tenía ese valor." })
+  if ("error" in result) {
+    return apiError(
+      result.error === "not_found"
+        ? "No se encontró la propuesta."
+        : "La propuesta ya fue retirada y no admite cambios de consentimiento.",
+      result.error === "not_found" ? 404 : 409,
+    )
+  }
+
+  return apiJson({
+    shareConsent: result.consent,
+    withdrawn: result.withdrawn,
+    message: result.withdrawn
+      ? "Se retiró la publicación del catálogo público. Las copias exportadas o conservadas por terceros no pueden retirarse desde TAMV."
+      : result.changed
+        ? "Consentimiento actualizado y registrado."
+        : "El consentimiento ya tenía ese valor.",
+  })
 }
