@@ -8,11 +8,12 @@ export type HcuWorkInput = {
   endYear: number
   atomCount: number
   edgeCount: number
+  edgeFanout?: number
 }
 
 export function estimateHcuSimulationWork(input: HcuWorkInput): number {
   const horizon = input.endYear - input.startYear + 1
-  return input.mcRuns * horizon * Math.max(1, input.atomCount) * Math.max(1, input.edgeCount)
+  return input.mcRuns * horizon * Math.max(1, input.atomCount) * Math.max(1, input.edgeCount) * Math.max(1, input.edgeFanout ?? 1)
 }
 
 export function isHcuGraphWithinLimits(atomCount: number, edgeCount: number): boolean {
