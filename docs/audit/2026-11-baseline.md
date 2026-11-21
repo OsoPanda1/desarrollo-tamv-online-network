@@ -117,3 +117,11 @@ The branch now has migration tooling, one non-destructive index migration, secur
 - Pinned workflow actions to immutable commit SHAs to reduce mutable-tag supply-chain risk.
 
 Remaining limitation: tests, TypeScript check, production build, SQL migration application, database concurrency behavior, UI/browser behavior, live links and deployed authentication still require a functioning runner and controlled test environment.
+
+
+## Phase 7 update: database preflight and final gates
+
+- Added a read-only database preflight script and the `pnpm db:preflight` command. It checks required schema columns and reports counts for orphaned references and duplicate identity/evidence/active-appeal records without printing row contents or modifying data. The optional strict mode exits non-zero on integrity findings.
+- CI now includes syntax checks for both database scripts and runs the native test suite before TypeScript/build validation. The dependency audit remains a deliberate high/critical severity release gate.
+- Workflow actions are pinned to immutable commit SHAs. This reduces mutable-tag risk but does not replace reviewing upstream releases and transitive dependencies.
+- No database preflight, migration, unit test, typecheck, production build, browser smoke test or deployed route test has passed in this session. The code is staged in the draft PR; execution is blocked by the current Actions runner behavior and lack of authorized Vercel deployment access.
