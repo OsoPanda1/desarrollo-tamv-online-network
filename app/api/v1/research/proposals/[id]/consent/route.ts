@@ -24,7 +24,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const parsed = consentSchema.safeParse(body)
   if (!parsed.success) return apiError("Consentimiento no válido.", 400)
 
-  const now = new Date()
   const result = await db.transaction(async (transaction) => {
     const [proposal] = await transaction
       .select({
@@ -49,12 +48,13 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const nextStatus = withdrawPublication ? "withdrawn" : proposal.status
 
     const [lastEvent] = await transaction
-      .select({ eventHash: proposalEvents.eventHash })
+      .select({ eventHash: proposalEvents.eventHash, createdAt: proposalEvents.createdAt })
       .from(proposalEvents)
       .where(eq(proposalEvents.proposalId, id))
       .orderBy(desc(proposalEvents.createdAt))
       .limit(1)
 
+    const now = new Date(Math.max(Date.now(), (lastEvent?.createdAt.getTime() ?? 0) + 1))
     const action = withdrawPublication
       ? "publication_withdrawn_by_author"
       : "publication_consent_updated"
