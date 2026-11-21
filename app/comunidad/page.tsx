@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import communityDirectory from "@/data/community-sources.json"
+
+type CommunitySource = { name: string; url: string; type: string }
+type CommunityCategory = { id: string; title: string; description: string; sources: CommunitySource[] }
 
 export const metadata: Metadata = {
   title: "Comunidad tecnológica | TAMV Online Network",
   description: "Directorio editorial de comunidades independientes de tecnología, hardware, programación, audio, IA y creación digital.",
 }
-
-type CommunitySource = { name: string; url: string; type: string }
-type CommunityCategory = { id: string; title: string; description: string; sources: CommunitySource[] }
-
-import communityDirectory from "@/data/community-sources.json"
 
 const typeLabels: Record<string, string> = {
   publication: "Publicación tecnológica",
