@@ -94,3 +94,16 @@ The following source-level findings were confirmed during the next pass and addr
 4. Test real authentication flows and all API routes using separate owner, other-user, reviewer, editor and administrator accounts.
 5. Configure repository rules/branch protection to require successful checks and review; configuration files alone do not enforce merge policy.
 6. Validate deployed observability, backup restoration, secret rotation and incident response before claiming production readiness.
+
+
+## Phase 4–5 update: migration tooling and federation boundary
+
+- Added a checksummed, transactional PostgreSQL migration runner using an advisory lock, a migration ledger and an explicit `pnpm db:migrate` command. It does not run automatically at app startup.
+- Added migration 0001 with non-unique query indexes only. It assumes the existing schema is already present and has not been run against a database in this session. No foreign keys or unique constraints were added because existing data and deletion/retention semantics have not been verified.
+- Added a core/companion identity federation contract defining OIDC validation, subject mapping, local authorization, account linking, logout/revocation and staged rollout. This is a design contract, not live federation.
+- GitHub Actions run diagnostics for the observed CI, CodeQL and secret-scan attempts showed jobs finishing with `runner_id: 0` and empty step lists; log downloads were unavailable. This indicates the jobs did not provide executable validation evidence, so the failures cannot currently be attributed to TypeScript, dependency audit or scan findings. Repository Actions/runner availability and permissions must be checked by an administrator.
+- The latest Vercel check is still pending. The connected Vercel tool scope did not authorize access to the team deployment, and no local build could be run from this environment because direct GitHub network access was unavailable.
+
+## Corrected release status
+
+The branch now has migration tooling, one non-destructive index migration, security workflows and a proposed federation contract. **None of these changes is production-validated yet.** Do not apply migration 0001 to a shared database until its actual schema is checked and a restore-tested backup exists. Do not claim successful CI, CodeQL, Gitleaks, deployment or OIDC federation until each has concrete passing evidence.
