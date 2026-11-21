@@ -1,6 +1,6 @@
 import { requireModeratorRequest } from "@/lib/auth-helpers"
 import { db } from "@/lib/db"
-import { proposalEvents, proposalReviews, researchProposals } from "@/lib/db/schema"
+import { proposalAppeals, proposalEvents, proposalReviews, researchProposals } from "@/lib/db/schema"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { makeProposalEventHash } from "@/lib/research/provenance"
 import { canTransitionProposal } from "@/lib/research/workflow"
@@ -71,6 +71,25 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       .where(eq(proposalEvents.proposalId, proposalId))
       .orderBy(desc(proposalEvents.createdAt))
       .limit(1)
+
+    // Keep the appeal record synchronized with the proposal state. Without
+    // this, a completed appeal remains "received" and can block future appeals.
+    if (proposal.status === "appealed" && nextStatus === "in_review") {
+      await transaction
+        .update(proposalAppeals)
+        .set({ status: "under_review" })
+        .where(and(eq(proposalAppeals.proposalId, proposalId), eq(proposalAppeals.status, "received")))
+    } else if (proposal.status === "appealed" && nextStatus === "rejected") {
+      await transaction
+        .update(proposalAppeals)
+        .set({ status: "resolved", resolutionNote: input.feedback, resolvedAt: now })
+        .where(and(eq(proposalAppeals.proposalId, proposalId), eq(proposalAppeals.status, "received")))
+    } else if (proposal.status === "in_review" && nextStatus) {
+      await transaction
+        .update(proposalAppeals)
+        .set({ status: "resolved", resolutionNote: input.feedback, resolvedAt: now })
+        .where(and(eq(proposalAppeals.proposalId, proposalId), eq(proposalAppeals.status, "under_review")))
+    }
 
     const toStatus = nextStatus ?? proposal.status
     const action = input.outcome === "recusal" ? "reviewer_recusal" : `review_${input.outcome}`
