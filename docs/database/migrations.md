@@ -16,6 +16,10 @@ Run `pnpm db:preflight` against the intended database before any migration. It v
 
 `0001_integrity_indexes.sql` adds non-unique indexes to improve owner-scoped queries, evidence version lookup, event history, appeals and HCU run retrieval. It does not delete, rewrite or validate existing data. It assumes the tables/columns in the current Drizzle schema already exist; it is not an initial schema bootstrap.
 
+## Second migration
+
+`0002_public_query_indexes.sql` adds indexes for public research-topic/project/publication listings, researcher directory reads, HCU graph queries, and topic-scoped proposal/interest lookups. It is additive and does not add constraints or rewrite rows. Apply it through the same strict-preflight migration runner only after a backup/restore rehearsal and query-plan review on a disposable database.
+
 ## Important limitation
 
 The repository did not contain a verified migration history at the time of this audit. Before running the migration against any shared database:
