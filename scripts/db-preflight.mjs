@@ -20,6 +20,11 @@ const required = {
   collaboration_interests: ["id", "user_id", "created_at"],
   researcher_profiles: ["id", "user_id"],
   research_topics: ["id", "user_id", "status", "area"],
+  research_projects: ["id", "user_id", "slug", "visibility", "verification_status"],
+  hcu_domains: ["id", "user_id", "visibility"],
+  hcu_atoms: ["id", "user_id", "domain_id", "visibility", "is_quarantined"],
+  hcu_hyperedges: ["id", "user_id", "source_atom_ids", "target_atom_ids", "visibility", "is_active"],
+  hcu_shocks: ["id", "user_id", "atom_id", "year", "intensity"],
 }
 
 const checks = [
@@ -35,6 +40,12 @@ const checks = [
   ["orphan collaboration interests (owner)", `SELECT count(*)::int AS n FROM collaboration_interests i LEFT JOIN "user" u ON u.id = i.user_id WHERE u.id IS NULL`],
   ["orphan HCU runs (owner)", `SELECT count(*)::int AS n FROM hcu_runs r LEFT JOIN "user" u ON u.id = r.user_id WHERE u.id IS NULL`],
   ["orphan researcher profiles (owner)", `SELECT count(*)::int AS n FROM researcher_profiles r LEFT JOIN "user" u ON u.id = r.user_id WHERE u.id IS NULL`],
+  ["orphan proposals (topic)", `SELECT count(*)::int AS n FROM research_proposals p LEFT JOIN research_topics t ON t.id = p.topic_id WHERE p.topic_id IS NOT NULL AND t.id IS NULL`],
+  ["orphan collaboration interests (topic)", `SELECT count(*)::int AS n FROM collaboration_interests i LEFT JOIN research_topics t ON t.id = i.topic_id WHERE i.topic_id IS NOT NULL AND t.id IS NULL`],
+  ["orphan HCU atoms (domain)", `SELECT count(*)::int AS n FROM hcu_atoms a LEFT JOIN hcu_domains d ON d.id = a.domain_id WHERE d.id IS NULL`],
+  ["orphan HCU shocks (atom)", `SELECT count(*)::int AS n FROM hcu_shocks s LEFT JOIN hcu_atoms a ON a.id = s.atom_id WHERE a.id IS NULL`],
+  ["orphan HCU hyperedge source atoms", `SELECT count(*)::int AS n FROM hcu_hyperedges h CROSS JOIN LATERAL unnest(h.source_atom_ids) atom_id LEFT JOIN hcu_atoms a ON a.id = atom_id WHERE a.id IS NULL`],
+  ["orphan HCU hyperedge target atoms", `SELECT count(*)::int AS n FROM hcu_hyperedges h CROSS JOIN LATERAL unnest(h.target_atom_ids) atom_id LEFT JOIN hcu_atoms a ON a.id = atom_id WHERE a.id IS NULL`],
   ["duplicate researcher profiles per owner", `SELECT count(*)::int AS n FROM (SELECT user_id FROM researcher_profiles GROUP BY user_id HAVING count(*) > 1) d`],
   ["duplicate evidence version per proposal and owner", `SELECT count(*)::int AS n FROM (SELECT proposal_id, user_id, version FROM proposal_evidence GROUP BY proposal_id, user_id, version HAVING count(*) > 1) d`],
   ["multiple active appeals per proposal", `SELECT count(*)::int AS n FROM (SELECT proposal_id FROM proposal_appeals WHERE status IN ('received', 'under_review') GROUP BY proposal_id HAVING count(*) > 1) d`],
