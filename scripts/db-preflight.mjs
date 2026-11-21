@@ -58,7 +58,7 @@ const checks = [
   ["invalid proposal status", `SELECT count(*)::int AS n FROM research_proposals WHERE status NOT IN ('received','triage','in_review','changes_requested','accepted','rejected','appealed','published','withdrawn')`],
   ["invalid proposal visibility", `SELECT count(*)::int AS n FROM research_proposals WHERE visibility NOT IN ('private','public')`],
   ["published proposals without consent", `SELECT count(*)::int AS n FROM research_proposals WHERE status = 'published' AND (visibility <> 'public' OR share_consent = false)`],
-  ["invalid HCU atom coordinates", `SELECT count(*)::int AS n FROM hcu_atoms WHERE influence_x NOT BETWEEN -1 AND 1 OR risk_y NOT BETWEEN -1 AND 1 OR evidence_z NOT BETWEEN 0 AND 1`],
+  ["invalid HCU atom coordinates", `SELECT count(*)::int AS n FROM hcu_atoms WHERE influence_x NOT BETWEEN 0 AND 100 OR risk_y NOT BETWEEN 0 AND 100 OR evidence_z NOT BETWEEN 0 AND 100`],
   ["invalid HCU simulation horizons", `SELECT count(*)::int AS n FROM hcu_runs WHERE start_year > end_year OR end_year - start_year > 24 OR seed < 0`],
 ]
 
