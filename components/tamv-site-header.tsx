@@ -1,62 +1,54 @@
 "use client"
 
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ArrowUpRight, Menu, X } from "lucide-react"
 import { useState } from "react"
+import { LanguageSwitch } from "@/components/shared/language-switch"
+import { localizedPath, type Locale } from "@/lib/i18n"
 
 const links = [
-  { href: "#institucion", label: "Institución" },
-  { href: "#ecosistema", label: "Ecosistema" },
-  { href: "#investigacion", label: "Investigación" },
-  { href: "#gobernanza", label: "Gobernanza" },
-  { href: "#hoja-de-ruta", label: "Hoja de ruta" },
+  { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
+  { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
+  { href: "/hcu", labelEs: "Mapa HCU", labelEn: "HCU map" },
+  { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
+  { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },
 ]
 
-export function TamvSiteHeader() {
+export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const english = locale === "en"
+  const homeHash = pathname === "/" ? "#inicio" : `${localizedPath("/", locale)}#inicio`
+  const contactHash = pathname === "/" ? "#contacto" : `${localizedPath("/", locale)}#contacto`
 
   function closeMenu() {
     setMenuOpen(false)
   }
 
   return (
-    <header className="site-header">
+    <header className="site-header" lang={locale}>
       <div className="utility-bar">
         <div className="container utility-inner">
-          <span>INVESTIGACIÓN · TECNOLOGÍA · MEMORIA VIVA</span>
-          <span>MINERAL DEL MONTE · HIDALGO · MÉXICO</span>
+          <span>{english ? "RESEARCH · TECHNOLOGY · LIVING MEMORY" : "INVESTIGACIÓN · TECNOLOGÍA · MEMORIA VIVA"}</span>
+          <span>{english ? "MINERAL DEL MONTE · HIDALGO · MEXICO" : "MINERAL DEL MONTE · HIDALGO · MÉXICO"}</span>
         </div>
       </div>
       <div className="container header-inner">
-        <a className="brand-lockup" href="#inicio" aria-label="TAMV Online Network, inicio" onClick={closeMenu}>
+        <Link className="brand-lockup" href={homeHash} aria-label={english ? "TAMV Online Network, home" : "TAMV Online Network, inicio"} onClick={closeMenu}>
           <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-type">
-            <strong>TAMV</strong>
-            <small>ONLINE NETWORK</small>
-          </span>
-        </a>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-label={menuOpen ? "Cerrar navegación" : "Abrir navegación"}
-          aria-expanded={menuOpen}
-          aria-controls="primary-navigation"
-          onClick={() => setMenuOpen((isOpen) => !isOpen)}
-        >
+          <span className="brand-type"><strong>TAMV</strong><small>ONLINE NETWORK</small></span>
+        </Link>
+        <button className="menu-toggle" type="button" aria-label={menuOpen ? (english ? "Close navigation" : "Cerrar navegación") : (english ? "Open navigation" : "Abrir navegación")} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen((isOpen) => !isOpen)}>
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
-        <nav
-          className={`primary-navigation${menuOpen ? " is-open" : ""}`}
-          id="primary-navigation"
-          aria-label="Navegación principal"
-        >
+        <nav className={`primary-navigation${menuOpen ? " is-open" : ""}`} id="primary-navigation" aria-label={english ? "Main navigation" : "Navegación principal"}>
           {links.map((link) => (
-            <a key={link.href} href={link.href} onClick={closeMenu}>
-              {link.label}
-            </a>
+            <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
           ))}
-          <a className="nav-contact" href="#contacto" onClick={closeMenu}>
-            Contacto <ArrowUpRight aria-hidden="true" />
-          </a>
+          {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
+          <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
+          <Link className="nav-portal" href="/portal" onClick={closeMenu}>{english ? "Portal" : "Portal"} <ArrowUpRight aria-hidden="true" /></Link>
         </nav>
       </div>
     </header>
