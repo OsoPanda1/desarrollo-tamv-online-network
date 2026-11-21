@@ -23,9 +23,11 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
 
     pnpm install --frozen-lockfile
     cp .env.example .env.local
+    pnpm test
+    pnpm typecheck
     pnpm dev
 
-Do not commit .env.local, credentials, private keys, database dumps or real user data. Inspect environment requirements and migrations before deploying. A successful build does not prove authorization, database workflows or production integrations work.
+Do not commit .env.local, credentials, private keys, database dumps or real user data. Review docs/database/migrations.md before applying migrations; the first migration assumes the existing schema is already present. A successful build does not prove authorization, database workflows or production integrations work.
 
 ## Triple hardening
 
