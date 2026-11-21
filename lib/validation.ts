@@ -1,13 +1,51 @@
 import { z } from "zod"
 
-const safeHttpUrl = z.string().trim().url().max(2048).refine((value) => {
+function isSafeReferenceUrl(value: string) {
   try {
-    const protocol = new URL(value).protocol
-    return protocol === "http:" || protocol === "https:"
+    const url = new URL(value)
+    if (url.protocol !== "http:" && url.protocol !== "https:") return false
+    if (url.username || url.password) return false
+
+    const hostname = url.hostname.toLowerCase().replace(/^\[|\]$/g, "")
+    if (
+      hostname === "localhost" ||
+      hostname.endsWith(".localhost") ||
+      hostname.endsWith(".local") ||
+      hostname.endsWith(".internal") ||
+      hostname.endsWith(".test")
+    ) return false
+
+    const octets = hostname.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/)
+    if (octets) {
+      const [a, b, c, d] = octets.slice(1).map(Number)
+      if ([a, b, c, d].some((part) => part > 255)) return false
+      if (
+        a === 0 || a === 10 || a === 127 || a >= 224 ||
+        (a === 169 && b === 254) ||
+        (a === 172 && b >= 16 && b <= 31) ||
+        (a === 192 && b === 168) ||
+        (a === 100 && b >= 64 && b <= 127) ||
+        (a === 192 && b === 0 && (c === 0 || c === 2)) ||
+        (a === 198 && (b === 18 || b === 19)) ||
+        (a === 198 && b === 51 && c === 100) ||
+        (a === 203 && b === 0 && c === 113)
+      ) return false
+      // Keep the last octet referenced so the complete address is validated.
+      if (d < 0 || d > 255) return false
+    }
+
+    // Only globally routable IPv6 unicast space (2000::/3) is accepted.
+    if (hostname.includes(":") && !/^[23][0-9a-f:]+$/i.test(hostname)) return false
+    return true
   } catch {
     return false
   }
-}, "Usa una URL HTTP o HTTPS válida.")
+}
+
+const safeHttpUrl = z.string().trim().url().max(2048).refine(
+  isSafeReferenceUrl,
+  "Usa una URL HTTP/HTTPS pública válida, sin credenciales ni direcciones locales.",
+)
 
 export const proposalSchema = z.object({
   topicId: z.string().trim().min(1).max(120).nullable().optional(),
