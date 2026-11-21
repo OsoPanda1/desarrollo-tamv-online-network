@@ -27,7 +27,14 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
     pnpm typecheck
     pnpm dev
 
-### Database operations
+## Operational health endpoints
+
+- `GET /api/health` — application liveness. This is intentionally independent of PostgreSQL so a database outage does not cause a healthy application process to be treated as dead.
+- `GET /api/health/ready` — readiness probe. Executes a bounded `SELECT 1` against PostgreSQL and returns HTTP 200 only when `DATABASE_URL` is configured and the database responds; otherwise returns HTTP 503.
+- Both endpoints send `Cache-Control: no-store`. Readiness failures return a generic dependency state and never include connection strings, database hosts, exception text or credentials.
+- These endpoints are operational signals, not a full synthetic transaction, authentication check, schema migration validation or proof that every feature is healthy.
+
+## Database operations
 
 - `pnpm db:preflight` — read-only schema and integrity diagnostics; set `DATABASE_URL` explicitly to a disposable/test database first.
 - `pnpm db:preflight -- --strict` — exits unsuccessfully if schema checks or integrity diagnostics find issues.
