@@ -2,6 +2,7 @@ import test from "node:test"
 import assert from "node:assert/strict"
 import { canTransitionProposal } from "../lib/research/workflow.ts"
 import { csvCell } from "../lib/research/csv.ts"
+import { estimateHcuSimulationWork, isHcuGraphWithinLimits, isHcuSimulationWithinBudget } from "../lib/hcu/budget.ts"
 import { appealSchema, moderationSchema, proposalSchema, simulationSchema } from "../lib/validation.ts"
 
 test("proposal workflow allows only declared transitions", () => {
@@ -60,4 +61,14 @@ test("CSV exports neutralize spreadsheet formula injection and preserve quoting"
   assert.equal(csvCell("@SUM(A1:A2)"), "\"'@SUM(A1:A2)\"")
   assert.equal(csvCell('A "quoted" value'), "\"A \"\"quoted\"\" value\"")
   assert.equal(csvCell(null), "\"\"")
+})
+
+test("HCU simulation budget rejects excessive graph and compute workloads", () => {
+  const small = { mcRuns: 100, startYear: 2026, endYear: 2035, atomCount: 20, edgeCount: 20 }
+  assert.equal(estimateHcuSimulationWork(small), 400_000)
+  assert.equal(isHcuGraphWithinLimits(250, 1_000), true)
+  assert.equal(isHcuGraphWithinLimits(251, 10), false)
+  assert.equal(isHcuGraphWithinLimits(10, 1_001), false)
+  assert.equal(isHcuSimulationWithinBudget(small), true)
+  assert.equal(isHcuSimulationWithinBudget({ ...small, mcRuns: 200, atomCount: 100, edgeCount: 100 }), false)
 })
