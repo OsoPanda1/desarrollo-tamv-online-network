@@ -147,3 +147,9 @@ These additional checks and tests have been committed to the draft branch. They 
 - Expanded the database preflight to flag oversized or empty hyperedges so those records are reviewed before any future constraint migration.
 
 This is application-level abuse resistance, not a substitute for platform-wide rate limiting, request concurrency controls, observability, or load testing. The regression tests and preflight still need to run in a functioning CI runner and controlled database environment.
+
+
+## Continued implementation — event-chain ordering
+
+- Moderation, appeal submission and consent-change handlers now generate event timestamps only after acquiring the proposal row lock and after reading the latest event. The new timestamp is forced to be at least one millisecond later than the latest recorded event, preventing concurrent requests with precomputed/equal timestamps from making `ORDER BY createdAt DESC` select an ambiguous prior hash.
+- This protects new event writes from a known ordering race. It does not retroactively prove or repair historical event chains; a dedicated verifier/reconciliation pass and concurrency tests remain necessary before treating the event history as a tamper-evident audit record.
