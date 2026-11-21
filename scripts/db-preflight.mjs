@@ -11,18 +11,18 @@ if (!databaseUrl) {
 
 const required = {
   user: ["id"],
-  research_proposals: ["id", "user_id", "createdAt", "status", "visibility", "share_consent"],
+  research_proposals: ["id", "user_id", "topic_id", "createdAt", "status", "visibility", "share_consent"],
   proposal_events: ["id", "user_id", "proposal_id", "created_at"],
   proposal_evidence: ["id", "user_id", "proposal_id", "version"],
   proposal_reviews: ["id", "user_id", "proposal_id", "createdAt"],
   proposal_appeals: ["id", "user_id", "proposal_id", "status"],
-  hcu_runs: ["id", "user_id", "created_at"],
-  collaboration_interests: ["id", "user_id", "created_at"],
+  hcu_runs: ["id", "user_id", "created_at", "start_year", "end_year", "seed"],
+  collaboration_interests: ["id", "user_id", "topic_id", "created_at"],
   researcher_profiles: ["id", "user_id"],
   research_topics: ["id", "user_id", "status", "area"],
   research_projects: ["id", "user_id", "slug", "visibility", "verification_status"],
   hcu_domains: ["id", "user_id", "visibility"],
-  hcu_atoms: ["id", "user_id", "domain_id", "visibility", "is_quarantined"],
+  hcu_atoms: ["id", "user_id", "domain_id", "visibility", "is_quarantined", "influence_x", "risk_y", "evidence_z"],
   hcu_hyperedges: ["id", "user_id", "source_atom_ids", "target_atom_ids", "visibility", "is_active"],
   hcu_shocks: ["id", "user_id", "atom_id", "year", "intensity"],
 }
