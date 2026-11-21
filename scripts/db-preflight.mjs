@@ -11,7 +11,7 @@ if (!databaseUrl) {
 
 const required = {
   user: ["id"],
-  research_proposals: ["id", "user_id", "createdAt", "status", "visibility", "shareConsent"],
+  research_proposals: ["id", "user_id", "createdAt", "status", "visibility", "share_consent"],
   proposal_events: ["id", "user_id", "proposal_id", "created_at"],
   proposal_evidence: ["id", "user_id", "proposal_id", "version"],
   proposal_reviews: ["id", "user_id", "proposal_id", "createdAt"],
