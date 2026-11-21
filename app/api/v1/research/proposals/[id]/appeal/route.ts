@@ -24,7 +24,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   if (!parsed.success) return apiError("Explica el motivo de la apelación (30–2,000 caracteres).", 400)
 
   const appealId = crypto.randomUUID()
-  const now = new Date()
   const result = await db.transaction(async (transaction) => {
     const [proposal] = await transaction
       .select({ id: researchProposals.id, status: researchProposals.status })
@@ -43,12 +42,13 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     if (existing) return { error: "already_open" as const }
 
     const [lastEvent] = await transaction
-      .select({ eventHash: proposalEvents.eventHash })
+      .select({ eventHash: proposalEvents.eventHash, createdAt: proposalEvents.createdAt })
       .from(proposalEvents)
       .where(eq(proposalEvents.proposalId, proposalId))
       .orderBy(desc(proposalEvents.createdAt))
       .limit(1)
 
+    const now = new Date(Math.max(Date.now(), (lastEvent?.createdAt.getTime() ?? 0) + 1))
     const payload = { proposalId, actorId: session.user.id, action: "appeal_submitted", fromStatus: "rejected", toStatus: "appealed", occurredAt: now.toISOString() }
     const event = makeProposalEventHash(payload, lastEvent?.eventHash ?? null)
     await transaction.insert(proposalAppeals).values({ id: appealId, userId: session.user.id, proposalId, reason: parsed.data.reason, status: "received", createdAt: now })
