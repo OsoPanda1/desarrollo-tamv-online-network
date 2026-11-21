@@ -1014,3 +1014,50 @@ svg { flex-shrink: 0; }
 .portal-consent-field [data-slot="field-label"] { display: block; width: auto; color: #64717b; font: 400 9px/1.65 var(--sans); cursor: pointer; }
 .portal-consent-field [data-slot="field-description"] { color: #77838a; font: 400 8px/1.6 var(--sans); }
 .portal-consent-field [data-slot="field-label"] a { color: var(--navy); font-weight: 700; }
+
+/* AI Lounge profile badge — third-party hosted image and profile link. */
+.ai-lounge-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 18px;
+  border-left: 1px solid var(--rule);
+}
+.ai-lounge-label {
+  color: #77818a;
+  font: 700 8px/1.5 var(--mono);
+  letter-spacing: .11em;
+}
+.ai-lounge-profile a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.ai-lounge-profile img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 28px;
+  object-fit: contain;
+}
+.ai-lounge-profile a:focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 4px;
+}
+@media (max-width: 960px) {
+  .ai-lounge-profile {
+    grid-column: 1 / -1;
+    padding: 16px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-lounge-profile a { transition: none; }
+}
+

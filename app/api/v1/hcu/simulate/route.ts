@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { hcuRuns, user } from "@/lib/db/schema"
 import { simulateHcu, HCU_MODEL_VERSION, type HcuAtom, type HcuEdge } from "@/lib/hcu/model"
+import { estimateHcuSimulationWork, isHcuGraphWithinLimits, MAX_HCU_SIMULATION_WORK } from "@/lib/hcu/budget"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { sha256, canonicalJson } from "@/lib/research/provenance"
 import { getPublicHcuGraph } from "@/lib/research/queries"
@@ -31,7 +32,35 @@ export async function POST(request: Request) {
     return apiError("Cada choque debe caer dentro del horizonte elegido.", 400)
   }
 
+  // Reject expensive work before simulation; the final transactional quota
+  // check below remains authoritative for concurrent requests.
+  const since = new Date(Date.now() - 24 * 60 * 60 * 1000)
+  const [priorRuns] = await db
+    .select({ value: count() })
+    .from(hcuRuns)
+    .where(and(eq(hcuRuns.userId, session.user.id), gte(hcuRuns.createdAt, since)))
+  if ((priorRuns?.value ?? 0) >= 20) {
+    return apiError("Alcanzaste el límite de 20 simulaciones por día.", 429)
+  }
+
   const graph = await getPublicHcuGraph()
+  if (!isHcuGraphWithinLimits(graph.atoms.length, graph.edges.length)) {
+    return apiError("El grafo excede el presupuesto operativo de simulación. Reduce su complejidad.", 503)
+  }
+  const edgeFanout = graph.edges.length
+    ? graph.edges.reduce((sum, edge) => sum + edge.sourceAtomIds.length + edge.targetAtomIds.length, 0) / graph.edges.length
+    : 1
+  const estimatedWork = estimateHcuSimulationWork({
+    mcRuns: input.mcRuns,
+    startYear: input.startYear,
+    endYear: input.endYear,
+    atomCount: graph.atoms.length,
+    edgeCount: graph.edges.length,
+    edgeFanout,
+  })
+  if (estimatedWork > MAX_HCU_SIMULATION_WORK) {
+    return apiError("La combinación de horizonte, muestras y grafo excede el presupuesto de cálculo. Reduce las muestras o el horizonte.", 400)
+  }
   const knownAtomIds = new Set(graph.atoms.map((atom) => atom.id))
   if (input.shocks.some((shock) => !knownAtomIds.has(shock.atomId)) || input.quarantine.some((id) => !knownAtomIds.has(id))) {
     return apiError("El grafo cambió o incluye un nodo no disponible. Recarga la página.", 400)

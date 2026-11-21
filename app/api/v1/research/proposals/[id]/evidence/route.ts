@@ -22,37 +22,59 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const parsed = evidenceSchema.safeParse(body)
   if (!parsed.success) return apiError("Revisa la etiqueta, el tipo y la URL de la referencia.", 400)
 
-  const [proposal] = await db
-    .select({ id: researchProposals.id, status: researchProposals.status })
-    .from(researchProposals)
-    .where(and(eq(researchProposals.id, proposalId), eq(researchProposals.userId, session.user.id)))
-    .limit(1)
-  if (!proposal) return apiError("No se encontró la propuesta.", 404)
-  if (["published", "withdrawn"].includes(proposal.status)) return apiError("Esta propuesta ya no admite nuevas referencias.", 409)
+  // Lock the parent proposal so concurrent evidence writes cannot race the
+  // editorial state check or allocate the same version number.
+  const result = await db.transaction(async (transaction) => {
+    const [proposal] = await transaction
+      .select({ id: researchProposals.id, status: researchProposals.status })
+      .from(researchProposals)
+      .where(and(eq(researchProposals.id, proposalId), eq(researchProposals.userId, session.user.id)))
+      .for("update")
+      .limit(1)
 
-  const [lastEvidence] = await db
-    .select({ version: proposalEvidence.version })
-    .from(proposalEvidence)
-    .where(and(eq(proposalEvidence.proposalId, proposalId), eq(proposalEvidence.userId, session.user.id)))
-    .orderBy(desc(proposalEvidence.createdAt))
-    .limit(1)
+    if (!proposal) return { error: "not_found" as const }
+    if (["published", "withdrawn"].includes(proposal.status)) return { error: "closed" as const }
 
-  const [evidence] = await db
-    .insert(proposalEvidence)
-    .values({
-      id: crypto.randomUUID(),
-      userId: session.user.id,
-      proposalId,
-      label: parsed.data.label,
-      kind: parsed.data.kind,
-      url: parsed.data.url,
-      description: parsed.data.description || null,
-      license: parsed.data.license || null,
-      version: (lastEvidence?.version ?? 0) + 1,
-      visibility: "private",
-      verificationStatus: "unverified",
-    })
-    .returning({ id: proposalEvidence.id, label: proposalEvidence.label, url: proposalEvidence.url, version: proposalEvidence.version, verificationStatus: proposalEvidence.verificationStatus })
+    const [lastEvidence] = await transaction
+      .select({ version: proposalEvidence.version })
+      .from(proposalEvidence)
+      .where(and(eq(proposalEvidence.proposalId, proposalId), eq(proposalEvidence.userId, session.user.id)))
+      .orderBy(desc(proposalEvidence.version))
+      .limit(1)
 
-  return apiJson({ evidence, note: "La referencia se guarda en privado. No se descarga ni se verifica automáticamente." }, 201)
+    const [evidence] = await transaction
+      .insert(proposalEvidence)
+      .values({
+        id: crypto.randomUUID(),
+        userId: session.user.id,
+        proposalId,
+        label: parsed.data.label,
+        kind: parsed.data.kind,
+        url: parsed.data.url,
+        description: parsed.data.description || null,
+        license: parsed.data.license || null,
+        version: (lastEvidence?.version ?? 0) + 1,
+        visibility: "private",
+        verificationStatus: "unverified",
+      })
+      .returning({
+        id: proposalEvidence.id,
+        label: proposalEvidence.label,
+        url: proposalEvidence.url,
+        version: proposalEvidence.version,
+        verificationStatus: proposalEvidence.verificationStatus,
+      })
+
+    return { evidence }
+  })
+
+  if ("error" in result) {
+    if (result.error === "not_found") return apiError("No se encontró la propuesta.", 404)
+    return apiError("Esta propuesta ya no admite nuevas referencias.", 409)
+  }
+
+  return apiJson({
+    evidence: result.evidence,
+    note: "La referencia se guarda en privado. No se descarga ni se verifica automáticamente.",
+  }, 201)
 }

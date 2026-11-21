@@ -87,6 +87,8 @@ export async function getPublicHcuGraph() {
       (edge) =>
         edge.sourceAtomIds.length > 0 &&
         edge.targetAtomIds.length > 0 &&
+        edge.sourceAtomIds.length <= 32 &&
+        edge.targetAtomIds.length <= 32 &&
         edge.sourceAtomIds.every((id) => atomIds.has(id)) &&
         edge.targetAtomIds.every((id) => atomIds.has(id)),
     ),

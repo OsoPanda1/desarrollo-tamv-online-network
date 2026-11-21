@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { PortalCheckboxField, PortalFieldGroup } from "@/components/shared/portal-form-fields"
 
-export function ConsentControl({ proposalId, initialValue }: { proposalId: string; initialValue: boolean }) {
+export function ConsentControl({ proposalId, initialValue, published = false }: { proposalId: string; initialValue: boolean; published?: boolean }) {
   const router = useRouter()
   const [shareConsent, setShareConsent] = useState(initialValue)
   const [message, setMessage] = useState<string | null>(null)
@@ -32,7 +32,7 @@ export function ConsentControl({ proposalId, initialValue }: { proposalId: strin
   }
 
   return <form className="consent-control" onSubmit={updateConsent}>
-    <PortalFieldGroup><PortalCheckboxField id={`share-consent-${proposalId}`} checked={shareConsent} onCheckedChange={setShareConsent} label="Autorizo publicar el resumen únicamente si se acepta y publica editorialmente." /></PortalFieldGroup>
+    <PortalFieldGroup><PortalCheckboxField id={`share-consent-${proposalId}`} checked={shareConsent} onCheckedChange={setShareConsent} label={published ? "Mantener el consentimiento de publicación (desmarcar retira esta publicación del catálogo público; las copias externas pueden persistir)." : "Autorizo publicar el resumen únicamente si se acepta y publica editorialmente."} /></PortalFieldGroup>
     <button className="text-button" type="submit" disabled={loading}>{loading ? "Guardando…" : "Actualizar consentimiento"}</button>
     {message && <p className="form-status" role="status">{message}</p>}
   </form>

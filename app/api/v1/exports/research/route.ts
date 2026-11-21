@@ -1,12 +1,8 @@
 import { getPublicProjects, getPublicResearchTopics, getPublishedProposals } from "@/lib/research/queries"
+import { csvCell } from "@/lib/research/csv"
 import { NextResponse } from "next/server"
 
 export const dynamic = "force-dynamic"
-
-function csvCell(value: unknown) {
-  const text = value == null ? "" : String(value)
-  return `"${text.replaceAll('"', '""')}"`
-}
 
 function baseUrl() {
   const host = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL
