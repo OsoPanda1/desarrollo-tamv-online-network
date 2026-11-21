@@ -137,3 +137,13 @@ Remaining limitation: tests, TypeScript check, production build, SQL migration a
 ## Validation status after continued changes
 
 These additional checks and tests have been committed to the draft branch. They have not been executed in a working CI runner or against a real PostgreSQL instance in this session. The strict preflight deliberately fails closed on integrity findings; if it reports historical data issues, resolve them with a reviewed remediation plan rather than bypassing the gate. A clean preflight is necessary but not sufficient for applying constraints or declaring the system production-ready.
+
+
+## Continued implementation — export and simulation abuse resistance
+
+- Research CSV generation now uses a dedicated encoder that prefixes spreadsheet formula starters (including after leading control/space characters) before standard CSV quoting. Regression tests cover formula injection, quote escaping and empty values.
+- HCU simulation now checks the user's daily run count before expensive graph loading and simulation, while retaining the transactional quota check after computation to handle races.
+- Added explicit public graph limits (250 atoms, 1,000 edges), a work-budget estimate based on Monte Carlo runs, time horizon, graph size and average hyperedge fan-out, and a maximum source/target fan-out of 32 IDs per edge. Requests outside the budget fail before the simulation model runs.
+- Expanded the database preflight to flag oversized or empty hyperedges so those records are reviewed before any future constraint migration.
+
+This is application-level abuse resistance, not a substitute for platform-wide rate limiting, request concurrency controls, observability, or load testing. The regression tests and preflight still need to run in a functioning CI runner and controlled database environment.
