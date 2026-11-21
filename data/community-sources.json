@@ -17,7 +17,8 @@
           "url": "https://www.geeknetic.es",
           "type": "publication-community"
         }
-      ]
+      ],
+      "description": "Noticias, análisis y contexto tecnológico."
     },
     {
       "id": "hardware-networks",
@@ -48,7 +49,8 @@
           "url": "https://www.elchapuzasinformatico.com",
           "type": "publication-community"
         }
-      ]
+      ],
+      "description": "Componentes, conectividad, diagnóstico y experiencias técnicas."
     },
     {
       "id": "software-development",
@@ -89,7 +91,8 @@
           "url": "https://www.forospyware.com",
           "type": "community"
         }
-      ]
+      ],
+      "description": "Desarrollo, solución de problemas y aprendizaje entre pares."
     },
     {
       "id": "creative-audio",
@@ -105,7 +108,8 @@
           "url": "https://www.auriculares-hifi.com",
           "type": "community"
         }
-      ]
+      ],
+      "description": "Producción musical, audio, equipos y colaboración creativa."
     },
     {
       "id": "creator-economy",
@@ -116,7 +120,8 @@
           "url": "https://forobeta.com",
           "type": "community"
         }
-      ]
+      ],
+      "description": "Herramientas, publicación y comunidades de profesionales digitales."
     },
     {
       "id": "manufacturers-carriers",
@@ -132,7 +137,8 @@
           "url": "https://community.sony.com",
           "type": "community"
         }
-      ]
+      ],
+      "description": "Canales comunitarios de soporte y experiencias de usuarios."
     },
     {
       "id": "ai-development",
@@ -148,7 +154,8 @@
           "url": "https://developers.google.com",
           "type": "developer-platform"
         }
-      ]
+      ],
+      "description": "Documentación, herramientas y discusión sobre tecnología emergente."
     }
   ]
 }
