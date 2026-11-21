@@ -1,0 +1,83 @@
+import type { Metadata } from "next"
+import Link from "next/link"
+import { ArrowUpRight, FileSearch, GitBranch } from "lucide-react"
+import { TamvAppShell } from "@/components/tamv-app-shell"
+import { LanguageSwitch } from "@/components/shared/language-switch"
+import { PageIntro } from "@/components/shared/page-intro"
+import { getPublicProjects } from "@/lib/research/queries"
+import { resolveLocale } from "@/lib/i18n"
+
+export const dynamic = "force-dynamic"
+type SearchParams = Promise<{ lang?: string }>
+
+export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
+  const english = resolveLocale((await searchParams).lang) === "en"
+  return english
+    ? { title: "Sources and provenance", description: "Public register of TAMV-related repositories, provenance, licenses, maturity, and limitations." }
+    : { title: "Fuentes y procedencia", description: "Registro público de repositorios relacionados con TAMV, su procedencia, licencia, madurez y límites." }
+}
+
+type SourceRepository = {
+  name: string
+  language: string
+  updatedAt: string
+  purposeEs: string
+  purposeEn: string
+  evidenceEs: string
+  evidenceEn: string
+}
+
+const sourceRepositories: Record<string, SourceRepository> = {
+  "litle-trust-fabric": { name: "litle-trust-fabric", language: "TypeScript", updatedAt: "2026-07-22", purposeEs: "Repositorio público asociado a identidad de confianza, trazabilidad y evidencia LITLE.", purposeEn: "Public repository associated with LITLE trust identity, traceability, and evidence.", evidenceEs: "El código y el README describen un marco propuesto/en preproducción; no acredita una auditoría externa.", evidenceEn: "The code and README describe a proposed/pre-production framework; no external audit is evidenced." },
+  "isabella-ai-tina": { name: "isabella-ai-tina", language: "TypeScript", updatedAt: "2026-10-10", purposeEs: "La descripción del repositorio propone coordinación de IA, identidad, seguridad, auditoría y persistencia.", purposeEn: "The repository description proposes AI coordination, identity, security, auditing, and persistence.", evidenceEs: "Autodescripción del repositorio; no valida despliegue, seguridad ni desempeño independiente.", evidenceEn: "Repository self-description; it does not validate deployment, security, or independent performance." },
+  "Isabella-V6-TINA": { name: "Isabella-V6-TINA", language: "TypeScript", updatedAt: "2026-10-10", purposeEs: "Incluye documentación de integración LITLE y módulos del proyecto Isabella.", purposeEn: "Includes LITLE integration documentation and Isabella project modules.", evidenceEs: "Las afirmaciones del README son declaraciones del proyecto, no verificaciones de terceros.", evidenceEn: "README claims are project statements, not third-party verification." },
+  "mexican-ai-isabella": { name: "mexican-ai-isabella", language: "TypeScript", updatedAt: "2026-08-27", purposeEs: "La descripción lo presenta como infraestructura y propuesta tecnológica latinoamericana; contiene referencias LITLE.", purposeEn: "Described as Latin American technology infrastructure and proposal; includes LITLE references.", evidenceEs: "Propósito tomado de la descripción del repositorio; revisión de seguridad y licencia pendiente.", evidenceEn: "Purpose taken from repository metadata; security and license review remain pending." },
+  "tamv-atlas": { name: "tamv-atlas", language: "TypeScript", updatedAt: "2026-05-27", purposeEs: "Candidato de la familia TAMV Atlas por nombre; descripción pública no declarada.", purposeEn: "TAMV Atlas family candidate by name; no public description is declared.", evidenceEs: "Alcance inferido del nombre; requiere revisión del README y de cada módulo.", evidenceEn: "Scope inferred from the name; README and module review are still required." },
+  "tamv-core-atlas": { name: "tamv-core-atlas", language: "TypeScript", updatedAt: "2026-06-05", purposeEs: "Candidato de núcleo Atlas por nombre; descripción pública no declarada.", purposeEn: "Atlas core candidate by name; no public description is declared.", evidenceEs: "Alcance inferido del nombre; no se presenta como componente de producción.", evidenceEn: "Scope inferred from the name; it is not presented as a production component." },
+  "TRASCENDENCE-ATLAS": { name: "TRASCENDENCE-ATLAS", language: "HTML", updatedAt: "2026-06-18", purposeEs: "Referencia con Atlas en el nombre; descripción pública no declarada.", purposeEn: "Atlas-named reference; no public description is declared.", evidenceEs: "Clasificación provisional por nombre; función, stack completo y estado requieren cotejo.", evidenceEn: "Provisional name-based classification; purpose, complete stack, and status need review." },
+  "citemesh-roots": { name: "citemesh-roots", language: "TypeScript", updatedAt: "2026-05-05", purposeEs: "Candidato CITEMESH encontrado por nombre; no declara descripción pública.", purposeEn: "CITEMESH candidate found by name; no public description is declared.", evidenceEs: "No se localizó un repositorio público separado con GEMET en el nombre durante este barrido.", evidenceEn: "No separate public repository named GEMET was identified in this pass." },
+  "rdm-digital-hub": { name: "rdm-digital-hub", language: "TypeScript", updatedAt: "2026-08-18", purposeEs: "La descripción menciona orquestación Docker, gateway, API core, SPA, panel y nodo-cero.", purposeEn: "The description mentions Docker orchestration, gateway, core API, SPA, admin panel, and node-zero.", evidenceEs: "Descripción declarada por el autor; el estado operativo y las afirmaciones criptográficas no están verificados aquí.", evidenceEn: "Author-provided description; runtime status and cryptographic claims are not verified here." },
+  "rdm-digital-nodo-cero": { name: "rdm-digital-nodo-cero", language: "TypeScript", updatedAt: "2026-05-16", purposeEs: "Referencia de Nodo Cero por nombre; descripción pública no declarada.", purposeEn: "Node Zero reference by name; no public description is declared.", evidenceEs: "Requiere cotejo de documentación, dependencias, licencia y madurez.", evidenceEn: "Documentation, dependencies, license, and maturity need verification." },
+  "utamv-campus": { name: "utamv-campus", language: "TypeScript", updatedAt: "2026-06-01", purposeEs: "Referencia académica UTAMV por nombre; descripción pública no declarada.", purposeEn: "UTAMV academic reference by name; no public description is declared.", evidenceEs: "No equivale a RVOE, acreditación ni reconocimiento oficial; validación educativa pendiente.", evidenceEn: "It does not imply RVOE, accreditation, or official recognition; educational validation is pending." },
+  "metodo4l": { name: "metodo4l", language: "TypeScript", updatedAt: "2026-08-24", purposeEs: "La descripción pública lo identifica como metodología de marketing digital.", purposeEn: "The public description identifies it as a digital marketing methodology.", evidenceEs: "No se infiere que sea una ruta curricular o título académico.", evidenceEn: "It is not assumed to be a curriculum pathway or academic credential." },
+  "curso-musica-tamvonline": { name: "curso-musica-tamvonline", language: "TypeScript", updatedAt: "2026-11-08", purposeEs: "Repositorio relacionado con un curso de música por su nombre; sin descripción pública.", purposeEn: "A music-course-related repository by name; no public description is declared.", evidenceEs: "El contenido formativo, autoría, licencia y estado del curso requieren verificación.", evidenceEn: "Course content, authorship, license, and status require verification." },
+  "interfaz-curso-musica-ai-18": { name: "interfaz-curso-musica-ai-18", language: "TypeScript", updatedAt: "2026-11-06", purposeEs: "La descripción menciona Play and Go, música con IA e introducción 3D.", purposeEn: "The description mentions Play and Go, AI-assisted music, and a 3D introduction.", evidenceEs: "Descripción de interfaz; no se presenta como curso acreditado ni como oferta abierta vigente.", evidenceEn: "Interface description; not presented as an accredited course or currently open offering." },
+  "WEBINSTITUCIONAL-TAMVONLINE": { name: "WEBINSTITUCIONAL-TAMVONLINE", language: "HTML", updatedAt: "2026-11-03", purposeEs: "La descripción anuncia un sitio institucional bilingüe de 24 páginas y registros para curadores.", purposeEn: "The description announces a 24-page bilingual institutional site and curator records.", evidenceEs: "La cifra y capacidades proceden de la descripción del repositorio; no se revalidan aquí.", evidenceEn: "The figures and capabilities come from repository metadata and are not re-validated here." },
+  "tamv-documentacion": { name: "tamv-documentacion", language: "Sin dato", updatedAt: "2026-06-01", purposeEs: "La descripción pública lo identifica como documentación TAMV.", purposeEn: "The public description identifies it as TAMV documentation.", evidenceEs: "La cobertura, versión y licencia de los documentos deben cotejarse antes de citarlos.", evidenceEn: "Document coverage, version, and license must be checked before citation." },
+  "ISABELLA-VERSION-TERMINUS-V6": { name: "ISABELLA-VERSION-TERMINUS-V6", language: "TypeScript", updatedAt: "2026-11-06", purposeEs: "La descripción habla de gobernanza y trazabilidad auditable para agentes de IA.", purposeEn: "The description refers to governance and auditable traceability for AI agents.", evidenceEs: "Autodescripción del proyecto; controles de seguridad y despliegue no validados por terceros.", evidenceEn: "Project self-description; security controls and deployment are not third-party validated." },
+}
+
+const sourceFamilies = [
+  { name: "LITLE / Open Science", repos: ["litle-trust-fabric", "isabella-ai-tina", "Isabella-V6-TINA", "mexican-ai-isabella"], areaEs: "Identidad, trazabilidad y prácticas de ciencia abierta", areaEn: "Identity, traceability, and open-science practices", stateEs: "Solo se enlazan repositorios públicos. Los identificadores, firmas y controles criptográficos son propuestas de fuente hasta una auditoría independiente.", stateEn: "Only public repositories are linked. Identifiers, signatures, and cryptographic controls remain source proposals until independently audited." },
+  { name: "TAMV Atlas", repos: ["tamv-atlas", "tamv-core-atlas", "TRASCENDENCE-ATLAS"], areaEs: "Ingesta, integración y catálogo de capacidades", areaEn: "Ingestion, integration, and capability catalog", stateEs: "Las fichas sin descripción se clasifican provisionalmente por nombre; no se han fusionado módulos ni dependencias.", stateEn: "Records without descriptions are provisionally classified by name; modules and dependencies have not been merged." },
+  { name: "GEMET / CITEMESH", repos: ["citemesh-roots", "rdm-digital-hub"], areaEs: "Metadatos semánticos, investigación y conectores", areaEn: "Semantic metadata, research, and connectors", stateEs: "CITEMESH tiene un candidato público. No se confirmó un repositorio GEMET público por nombre; el estado de runtime descrito por repositorios requiere pruebas.", stateEn: "CITEMESH has a public candidate. No public GEMET-named repository was confirmed; runtime claims need testing." },
+  { name: "Academia y Método 4L", repos: ["utamv-campus", "metodo4l", "curso-musica-tamvonline", "interfaz-curso-musica-ai-18"], areaEs: "Rutas de aprendizaje, academia y cursos", areaEn: "Learning pathways, academia, and courses", stateEs: "La presencia de un repositorio no acredita una oferta activa, currículo aprobado, RVOE ni reconocimiento académico.", stateEn: "A repository does not establish an active offering, approved curriculum, RVOE, or academic recognition." },
+  { name: "Investigación e institución", repos: ["WEBINSTITUCIONAL-TAMVONLINE", "tamv-documentacion", "rdm-digital-nodo-cero", "ISABELLA-VERSION-TERMINUS-V6"], areaEs: "Divulgación, documentación y herramientas de investigación", areaEn: "Outreach, documentation, and research tools", stateEs: "Registro de metadatos de repositorios públicos; no es una auditoría completa de código ni de los repositorios privados.", stateEn: "Public repository metadata register; not a complete code audit or review of private repositories." },
+]
+
+export default async function SourcesPage({ searchParams }: { searchParams: SearchParams }) {
+  const locale = resolveLocale((await searchParams).lang)
+  const english = locale === "en"
+  const projects = await getPublicProjects()
+  const linkedProjects = projects.filter((project) => project.sourceUrl)
+  return <TamvAppShell locale={locale}>
+    <PageIntro number="05" eyebrow={english ? "SOURCE REGISTER & PROVENANCE" : "REGISTRO DE FUENTES Y PROCEDENCIA"} title={english ? "Unify through" : "Unificar mediante"} accent={english ? "traceable contracts." : "contratos trazables."} description={english ? "Source repositories are connected as references, not blindly merged. Each integration must preserve purpose, license, maturity, commit, and independent review." : "Los repositorios fuente se conectan como referencias, no se fusionan a ciegas. Cada integración debe conservar propósito, licencia, madurez, commit y revisión independiente."} locale={locale} actions={<LanguageSwitch pathname="/fuentes" locale={locale} />} />
+    <section className="section source-register-section"><div className="container">
+      <div className="source-summary"><FileSearch aria-hidden="true" /><p>{english ? "The initial account index contained 326 repositories. This register describes 17 public records selected from the requested project names, public descriptions, and code references. Private repositories are excluded; this is a metadata review, not a line-by-line audit." : "El índice inicial de la cuenta contenía 326 repositorios. Este registro describe 17 fichas públicas seleccionadas por los nombres solicitados, descripciones y menciones en código. Se excluyen los repositorios privados; es una revisión de metadatos, no una auditoría línea por línea."}</p></div>
+      <div className="source-family-grid">{sourceFamilies.map((family, index) => <article className="source-family-card" key={family.name}>
+        <p className="eyebrow">{String(index + 1).padStart(2, "0")} / {english ? "SOURCE FAMILY" : "FAMILIA DE FUENTES"}</p><h2>{family.name}</h2><p>{english ? family.areaEn : family.areaEs}</p>
+        <ul>{family.repos.map((repoName) => {
+          const repo = sourceRepositories[repoName]
+          return <li className="source-repo-entry" key={repo.name}>
+            <div className="source-repo-heading"><a href={`https://github.com/OsoPanda1/${repo.name}`} target="_blank" rel="noopener noreferrer"><GitBranch aria-hidden="true" /> OsoPanda1/{repo.name} <ArrowUpRight aria-hidden="true" /></a><span>{repo.language} · main · {repo.updatedAt}</span></div>
+            <p>{english ? repo.purposeEn : repo.purposeEs}</p>
+            <small>{english ? repo.evidenceEn : repo.evidenceEs} {english ? "License: not declared." : "Licencia: no declarada."}</small>
+          </li>
+        })}</ul>
+        <p className="source-status">{english ? family.stateEn : family.stateEs}</p>
+      </article>)}</div>
+      <div className="source-records"><div><p className="eyebrow">{english ? "PINNED PROJECT RECORDS" : "FICHAS DE PROYECTO ANCLADAS"}</p><h2>{english ? "Commits and licenses, per record." : "Commits y licencias, por registro."}</h2></div>{linkedProjects.map((project) => <article className="source-record" key={project.id}><div><strong>{english ? project.titleEn : project.titleEs}</strong><span>{project.verificationStatus.replaceAll("_", " ")}</span></div><p>{project.sourceCommit ? `Commit ${project.sourceCommit}` : (english ? "Commit not recorded" : "Commit no registrado")} · {project.license ?? (english ? "License undeclared" : "Licencia no declarada")}</p><a href={project.sourceUrl!} target="_blank" rel="noopener noreferrer">{english ? "Open source snapshot" : "Abrir snapshot de fuente"} <ArrowUpRight aria-hidden="true" /></a></article>)}</div>
+      <p className="editorial-caveat">{english ? "Repositories remain under their own licenses. Only public links are listed; private repositories are not exposed. A missing license means reuse is not authorized by this register. Records without pinned commits refer to the repository's current default branch, not a reproducible snapshot." : "Cada repositorio conserva su licencia. Solo se listan enlaces públicos; los repositorios privados no se exponen. La falta de licencia significa que este registro no autoriza la reutilización. Las fichas sin commit fijado remiten a la rama predeterminada actual, no a un snapshot reproducible."}</p>
+    </div></section>
+  </TamvAppShell>
+}

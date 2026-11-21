@@ -1,0 +1,91 @@
+"use client"
+
+import Link from "next/link"
+import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import type { HcuSimulationOutput } from "@/lib/hcu/model"
+import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components/shared/portal-form-fields"
+
+type SimulationResult = { id: string; modelVersion: string; inputHash: string; outputHash: string; output: HcuSimulationOutput }
+type AtomOption = { id: string; nameEs: string; nameEn: string; isQuarantined: boolean }
+
+export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en" }) {
+  const english = locale === "en"
+  const [scenario, setScenario] = useState("baseline")
+  const [startYear, setStartYear] = useState(2026)
+  const [endYear, setEndYear] = useState(2050)
+  const [seed, setSeed] = useState(20261120)
+  const [mcRuns, setMcRuns] = useState(50)
+  const [shockAtomId, setShockAtomId] = useState(atoms[0]?.id ?? "")
+  const [shockYear, setShockYear] = useState(2026)
+  const [intensity, setIntensity] = useState(0.3)
+  const [quarantine, setQuarantine] = useState<string[]>([])
+  const [result, setResult] = useState<SimulationResult | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  async function run(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setResult(null)
+    setError(null)
+    setLoading(true)
+    try {
+      const response = await fetch("/api/v1/hcu/simulate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scenario, startYear, endYear, seed, mcRuns, shocks: shockAtomId ? [{ atomId: shockAtomId, year: shockYear, intensity }] : [], quarantine }),
+      })
+      const body = await response.json() as SimulationResult & { error?: string }
+      if (!response.ok) throw new Error(body.error ?? "No fue posible ejecutar la simulación.")
+      setResult(body)
+    } catch (runError) {
+      setError(runError instanceof Error ? runError.message : "No fue posible ejecutar la simulación.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function toggleQuarantine(id: string, checked: boolean) {
+    setQuarantine((current) => checked ? [...current, id] : current.filter((atomId) => atomId !== id))
+  }
+
+  return <div className="hcu-simulator-layout">
+    <form className="portal-form hcu-simulator-form" onSubmit={run}>
+      <div className="hcu-simulator-head"><p className="eyebrow">{english ? "EXPLORATORY INSTRUMENT" : "INSTRUMENTO EXPLORATORIO"}</p><h2>{english ? "Shape a scenario." : "Configura un escenario."}</h2><p>{english ? "This model is deterministic for a given seed and graph version; outputs remain hypothetical." : "El modelo es determinista para una semilla y versión de grafo; sus salidas siguen siendo hipotéticas."}</p></div>
+      <PortalFieldGroup>
+        <PortalField id="hcu-scenario" label={english ? "Scenario" : "Escenario"}><select id="hcu-scenario" value={scenario} onChange={(event) => setScenario(event.target.value)}><option value="baseline">{english ? "Reference" : "Referencia"}</option><option value="conservative">{english ? "Conservative assumptions" : "Supuestos conservadores"}</option><option value="collaborative">{english ? "Collaborative assumptions" : "Supuestos de colaboración"}</option></select></PortalField>
+        <PortalFieldGroup className="form-two-columns">
+          <PortalField id="hcu-start-year" label={english ? "Start year" : "Año inicial"}><Input id="hcu-start-year" type="number" min={2026} max={2050} value={startYear} onChange={(event) => setStartYear(Number(event.target.value))} required /></PortalField>
+          <PortalField id="hcu-end-year" label={english ? "End year" : "Año final"}><Input id="hcu-end-year" type="number" min={2026} max={2050} value={endYear} onChange={(event) => setEndYear(Number(event.target.value))} required /></PortalField>
+        </PortalFieldGroup>
+        <PortalField id="hcu-seed" label={english ? "Seed" : "Semilla"}><Input id="hcu-seed" type="number" min={0} max={2147483647} value={seed} onChange={(event) => setSeed(Number(event.target.value))} required /></PortalField>
+        <PortalField id="hcu-runs" label={english ? "Monte Carlo runs (20–200)" : "Corridas Monte Carlo (20–200)"}><Input id="hcu-runs" type="number" min={20} max={200} step={10} value={mcRuns} onChange={(event) => setMcRuns(Number(event.target.value))} required /></PortalField>
+      </PortalFieldGroup>
+      <fieldset className="portal-fieldset"><legend>{english ? "One modeled shock" : "Un choque modelado"}</legend>
+        <PortalFieldGroup>
+          <PortalField id="hcu-shock-atom" label={english ? "Affected node" : "Nodo afectado"}><select id="hcu-shock-atom" value={shockAtomId} onChange={(event) => setShockAtomId(event.target.value)}>{atoms.map((atom) => <option key={atom.id} value={atom.id}>{english ? atom.nameEn : atom.nameEs}</option>)}</select></PortalField>
+          <PortalFieldGroup className="form-two-columns">
+            <PortalField id="hcu-shock-year" label={english ? "Year" : "Año"}><Input id="hcu-shock-year" type="number" min={startYear} max={endYear} value={shockYear} onChange={(event) => setShockYear(Number(event.target.value))} required /></PortalField>
+            <PortalField id="hcu-shock-intensity" label={english ? "Intensity (−1 to 1)" : "Intensidad (−1 a 1)"}><Input id="hcu-shock-intensity" type="number" min={-1} max={1} step={0.1} value={intensity} onChange={(event) => setIntensity(Number(event.target.value))} required /></PortalField>
+          </PortalFieldGroup>
+        </PortalFieldGroup>
+      </fieldset>
+      <fieldset className="portal-fieldset"><legend>{english ? "Quarantine nodes" : "Poner nodos en cuarentena"}</legend><p>{english ? "Quarantined nodes do not pass signals." : "Los nodos en cuarentena no transmiten señales."}</p>
+        <div className="hcu-checkbox-list">{atoms.map((atom) => <PortalCheckboxField id={`quarantine-${atom.id}`} key={atom.id} checked={quarantine.includes(atom.id)} onCheckedChange={(checked) => toggleQuarantine(atom.id, checked)} label={english ? atom.nameEn : atom.nameEs} />)}</div>
+      </fieldset>
+      {!loggedIn && <p className="form-note">{english ? "A researcher account is required to run and save a result." : "Se requiere una cuenta de investigación para ejecutar y guardar el resultado."} <Link href="/sign-in">{english ? "Sign in" : "Inicia sesión"}</Link>.</p>}
+      {error && <p className="form-error" role="alert">{error}</p>}
+      <button className="button button-copper" type="submit" disabled={!loggedIn || loading || atoms.length === 0}>{loading ? (english ? "Running…" : "Ejecutando…") : (english ? "Run and save" : "Ejecutar y guardar")}</button>
+      <p className="form-note">{english ? "Limit: 20 saved runs per day. The hash is an integrity aid, not an external anchor." : "Límite: 20 ejecuciones guardadas al día. El hash ayuda a verificar integridad local, pero no tiene ancla externa."}</p>
+    </form>
+    <section className="hcu-results" aria-live="polite" aria-labelledby="hcu-results-title">
+      <div className="hcu-results-header"><p className="eyebrow">{english ? "ANNUAL OUTPUT" : "SALIDA ANUAL"}</p><h2 id="hcu-results-title">{english ? "A range, not a forecast." : "Un rango, no un pronóstico."}</h2></div>
+      {!result ? <div className="hcu-results-empty"><span>HCU / 01</span><p>{english ? "Run a scenario to view a reproducible index and its uncertainty band." : "Ejecuta un escenario para ver el índice reproducible y su banda de variación."}</p></div> : <>
+        <div className="hcu-run-metadata"><span>{result.modelVersion}</span><span>SHA-256 {result.outputHash.slice(0, 14)}…</span><Link href={`/api/v1/hcu/runs/${result.id}/export`} target="_blank" rel="noopener noreferrer">{english ? "Export JSON-LD" : "Exportar JSON-LD"}</Link></div>
+        <div className="hcu-series">{result.output.series.map((point) => <div className="hcu-series-row" key={point.year}><strong>{point.year}</strong><div className="hcu-range-track" aria-label={`${point.year}: ${point.p10}–${point.p90}; mediana ${point.median}`}><span className="hcu-range" style={{ left: `${point.p10}%`, width: `${Math.max(0, point.p90 - point.p10)}%` }} /><i className="hcu-median" style={{ left: `${point.median}%` }} /></div><span>{point.median.toFixed(1)}</span></div>)}</div>
+        <dl className="hcu-result-metrics"><div><dt>{english ? "Mean risk" : "Riesgo medio"}</dt><dd>{result.output.series[0]?.meanRisk.toFixed(1)}</dd></div><div><dt>{english ? "Evidence" : "Evidencia"}</dt><dd>{result.output.series[0]?.meanEvidence.toFixed(1)}</dd></div><div><dt>{english ? "Seed" : "Semilla"}</dt><dd>{seed}</dd></div></dl>
+        <details className="hcu-assumptions"><summary>{english ? "Model assumptions and limitations" : "Supuestos y límites del modelo"}</summary><ul>{result.output.assumptions.map((assumption) => <li key={assumption}>{assumption}</li>)}</ul><p>Input SHA-256: <code>{result.inputHash}</code></p></details>
+      </>}
+    </section>
+  </div>
+}
