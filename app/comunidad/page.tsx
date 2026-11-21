@@ -6,15 +6,27 @@ export const metadata: Metadata = {
   description: "Directorio editorial de comunidades independientes de tecnología, hardware, programación, audio, IA y creación digital.",
 }
 
-const groups = [
-  { title: "Actualidad tecnológica", description: "Noticias, análisis y contexto tecnológico.", items: [["Xataka", "https://www.xataka.com", "Publicación tecnológica"], ["Geeknetic", "https://www.geeknetic.es", "Tecnología y hardware"]] },
-  { title: "Hardware, redes y telecomunicaciones", description: "Componentes, conectividad, diagnóstico y experiencias técnicas.", items: [["Hard2mano", "https://www.hard2mano.com", "Comunidad de hardware"], ["ADSLZone", "https://www.adslzone.net", "Telecomunicaciones y tecnología"], ["BandaAncha.eu", "https://bandaancha.eu", "Redes y conectividad"], ["HTCMania", "https://www.htcmania.com", "Dispositivos y comunidad"], ["El Chapuzas Informático", "https://www.elchapuzasinformatico.com", "Noticias y análisis de hardware"]] },
-  { title: "Software, programación y soporte", description: "Desarrollo, solución de problemas y aprendizaje entre pares.", items: [["La Web del Programador", "https://www.lawebdelprogramador.com", "Programación"], ["Foros del Web", "https://www.forosdelweb.com", "Desarrollo web"], ["ElOtroLado.net", "https://www.elotrolado.net", "Tecnología y cultura digital"], ["YoReparo", "https://www.yoreparo.com", "Reparación y soporte"], ["TodoExcel", "https://www.todoexcel.com", "Hojas de cálculo"], ["ElHacker.net", "https://www.elhacker.net", "Seguridad y aprendizaje técnico"], ["ForoSpyware", "https://www.forospyware.com", "Seguridad y soporte"]] },
-  { title: "Audio, música y creación", description: "Producción musical, audio, equipos y colaboración creativa.", items: [["Hispasonic", "https://www.hispasonic.com", "Audio y producción musical"], ["Auriculares HiFi", "https://www.auriculares-hifi.com", "Audio personal y alta fidelidad"]] },
-  { title: "Creadores y economía digital", description: "Herramientas, publicación y comunidades de profesionales digitales.", items: [["ForoBeta", "https://forobeta.com", "Creadores y negocios digitales"]] },
-  { title: "Fabricantes y operadores", description: "Canales comunitarios de soporte y experiencias de usuarios.", items: [["Comunidad Movistar", "https://comunidad.movistar.es", "Soporte de telecomunicaciones"], ["Comunidad Sony", "https://community.sony.com", "Productos y soporte"]] },
-  { title: "IA y desarrollo", description: "Documentación, herramientas y discusión sobre tecnología emergente.", items: [["OpenAI Community", "https://community.openai.com", "Comunidad de desarrolladores"], ["Google for Developers", "https://developers.google.com", "Documentación y herramientas"]] },
-]
+type CommunitySource = { name: string; url: string; type: string }
+type CommunityCategory = { id: string; title: string; description: string; sources: CommunitySource[] }
+
+import communityDirectory from "@/data/community-sources.json"
+
+const typeLabels: Record<string, string> = {
+  publication: "Publicación tecnológica",
+  "publication-community": "Publicación y comunidad",
+  community: "Comunidad independiente",
+  "developer-platform": "Documentación y herramientas para desarrolladores",
+}
+
+const groups = (communityDirectory.categories as CommunityCategory[]).map((category) => ({
+  title: category.title,
+  description: category.description,
+  items: category.sources.map((source) => ({
+    name: source.name,
+    url: source.url,
+    kind: typeLabels[source.type] ?? source.type,
+  })),
+}))
 
 export default function CommunityPage() {
   return (
@@ -38,10 +50,10 @@ export default function CommunityPage() {
             <h3 className="text-lg font-semibold">{group.title}</h3>
             <p className="mt-2 min-h-12 text-sm leading-6 text-muted-foreground">{group.description}</p>
             <ul className="mt-5 divide-y divide-border">
-              {group.items.map(([name, url, kind]) => (
-                <li key={name} className="py-3 first:pt-0 last:pb-0">
-                  <a href={url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
-                    <span><span className="block font-medium group-hover:text-sky-600">{name}</span><span className="mt-1 block text-xs text-muted-foreground">{kind}</span></span>
+              {group.items.map((item) => (
+                <li key={item.name} className="py-3 first:pt-0 last:pb-0">
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
+                    <span><span className="block font-medium group-hover:text-sky-600">{item.name}</span><span className="mt-1 block text-xs text-muted-foreground">{item.kind}</span></span>
                     <span aria-hidden="true" className="text-muted-foreground">↗</span>
                   </a>
                 </li>
