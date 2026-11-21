@@ -125,3 +125,15 @@ Remaining limitation: tests, TypeScript check, production build, SQL migration a
 - CI now includes syntax checks for both database scripts and runs the native test suite before TypeScript/build validation. The dependency audit remains a deliberate high/critical severity release gate.
 - Workflow actions are pinned to immutable commit SHAs. This reduces mutable-tag risk but does not replace reviewing upstream releases and transitive dependencies.
 - No database preflight, migration, unit test, typecheck, production build, browser smoke test or deployed route test has passed in this session. The code is staged in the draft PR; execution is blocked by the current Actions runner behavior and lack of authorized Vercel deployment access.
+
+
+## Continued implementation — data integrity and export hardening
+
+- Expanded `scripts/db-preflight.mjs` to inspect ownership and relational integrity across research proposals/topics/projects, researcher profiles, collaboration interests, HCU domains/atoms/hyperedges/shocks/runs, duplicate evidence versions, duplicate profiles, active appeals, invalid workflow states, published records lacking public consent, invalid HCU coordinate ranges, and simulation horizons.
+- Corrected the proposal consent column check to use the physical PostgreSQL name `share_consent`, matching Drizzle schema mapping. Corrected HCU bounds to the model's 0–100 scale. These corrections are important: without them, the preflight could report a false schema failure or reject valid seeded HCU values.
+- Preflight sessions now set PostgreSQL's default transaction mode to read-only and impose a 15-second statement timeout. The migration runner refuses to apply migrations unless the strict preflight exits successfully.
+- Research catalog CSV exports now neutralize formula-leading user-controlled values (including formula starters after control/space prefixes), while retaining CSV quote escaping. Added regression tests for formula injection and quoting.
+
+## Validation status after continued changes
+
+These additional checks and tests have been committed to the draft branch. They have not been executed in a working CI runner or against a real PostgreSQL instance in this session. The strict preflight deliberately fails closed on integrity findings; if it reports historical data issues, resolve them with a reviewed remediation plan rather than bypassing the gate. A clean preflight is necessary but not sufficient for applying constraints or declaring the system production-ready.
