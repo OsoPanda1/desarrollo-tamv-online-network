@@ -23,6 +23,10 @@ test("proposal input rejects unsafe URL schemes and defaults consent to false", 
 
   assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "javascript:alert(1)" }).success, false)
   assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "data:text/html,unsafe" }).success, false)
+  assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "https://user:password@example.org/private" }).success, false)
+  assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "http://127.0.0.1/admin" }).success, false)
+  assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "http://192.168.1.1/private" }).success, false)
+  assert.equal(proposalSchema.safeParse({ ...base, sourceUrl: "http://service.internal/metadata" }).success, false)
   assert.equal(proposalSchema.safeParse({ ...base, title: "short" }).success, false)
 })
 
