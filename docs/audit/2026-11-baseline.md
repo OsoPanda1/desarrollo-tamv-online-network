@@ -107,3 +107,13 @@ The following source-level findings were confirmed during the next pass and addr
 ## Corrected release status
 
 The branch now has migration tooling, one non-destructive index migration, security workflows and a proposed federation contract. **None of these changes is production-validated yet.** Do not apply migration 0001 to a shared database until its actual schema is checked and a restore-tested backup exists. Do not claim successful CI, CodeQL, Gitleaks, deployment or OIDC federation until each has concrete passing evidence.
+
+
+## Phase 6 update: test coverage and reference URL validation
+
+- Added a native Node test suite for declared proposal state transitions, bounded proposal/moderation/appeal/simulation inputs, and unsafe reference URL rejection. The suite is wired into the CI job but has not been executed successfully in this session because GitHub Actions jobs had no assigned runner.
+- Hardened the shared HTTP URL schema to reject non-HTTP(S) schemes, embedded URL credentials, localhost/local-domain references and common private/reserved IPv4 ranges; restricted IPv6 literals to the global-unicast prefix. This validation protects stored research references and evidence links; it is not a server-side fetcher and must not be treated as an SSRF defense for future outbound HTTP features.
+- Wired the community page to the JSON source registry, removing duplicated inline source lists so editorial descriptions and link metadata have a single data source.
+- Pinned workflow actions to immutable commit SHAs to reduce mutable-tag supply-chain risk.
+
+Remaining limitation: tests, TypeScript check, production build, SQL migration application, database concurrency behavior, UI/browser behavior, live links and deployed authentication still require a functioning runner and controlled test environment.
