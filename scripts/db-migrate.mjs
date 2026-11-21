@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto"
+import { spawnSync } from "node:child_process"
 import { readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -11,6 +12,17 @@ const databaseUrl = process.env.DATABASE_URL
 
 if (!databaseUrl) {
   console.error("DATABASE_URL is required. No migration was applied.")
+  process.exit(1)
+}
+
+// Refuse schema changes unless the read-only integrity preflight succeeds.
+// The preflight is a separate process so its failure cannot be swallowed.
+const preflight = spawnSync(process.execPath, [path.join(root, "db-preflight.mjs"), "--strict"], {
+  env: process.env,
+  stdio: "inherit",
+})
+if (preflight.error || preflight.status !== 0) {
+  console.error("Migration blocked: strict database preflight did not pass.")
   process.exit(1)
 }
 
