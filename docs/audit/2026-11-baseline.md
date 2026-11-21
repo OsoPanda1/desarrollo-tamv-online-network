@@ -57,3 +57,40 @@ Never invent member counts, active users, traffic, conversion, research impact o
 ## Limitations
 
 This review did not execute the application, install dependencies, run tests, inspect every route implementation, test database permissions, scan secrets or test the live deployment. Findings are prioritized hypotheses supported by repository structure and targeted source review; close them only with code and test evidence.
+
+
+## Phase 1–3 remediation log (branch work; validation pending)
+
+The following source-level findings were confirmed during the next pass and addressed in this branch. They are **code changes awaiting CI and runtime verification**, not certified remediations.
+
+| ID | Severity | Confirmed issue | Change made | Residual validation |
+|---|---|---|---|---|
+| AUD-13 | High | Evidence attachment checked proposal state, selected a version, and inserted outside a transaction; concurrent writes could race state changes or duplicate version numbers. | Lock the owning proposal row and perform state check, version allocation and insert in one transaction. | Run concurrent integration tests against PostgreSQL; add a database uniqueness constraint for proposal/user/version in a reviewed migration. |
+| AUD-14 | High | A published proposal's owner could not withdraw publication consent; the UI hid the consent control for published records. | Consent withdrawal now atomically changes the record to withdrawn/private, clears publication time, and records a provenance event; the owner UI exposes this control. | Test catalog/export removal, cached pages, concurrent publication/withdrawal, and third-party copies. External copies cannot be recalled by this application. |
+| AUD-15 | Medium | Appeal records could remain in received after the proposal moved through appeal review, blocking a later appeal. | Synchronize appeal state to under_review and then resolved in the same moderation transaction; store resolution note/time. | Exercise all state transitions, recusal, repeat appeals and concurrent moderation with integration tests. |
+| AUD-16 | Medium | Auth trusted origins were derived from Vercel hosts but did not explicitly normalize the canonical BETTER_AUTH_URL origin. | Normalize allowed origins, reject malformed/non-HTTPS production origins, include the configured canonical origin, and deduplicate the allowlist. | Validate login/callback/logout on production and preview domains; verify deployment variables and cookie behavior. |
+
+## Security automation added in the branch
+
+- .github/workflows/ci.yml: frozen pnpm install, TypeScript check, production build and high/critical production dependency audit.
+- .github/workflows/codeql.yml: CodeQL JavaScript/TypeScript analysis with the extended query suite.
+- .github/workflows/secret-scan.yml: Gitleaks secret scanning on pushes, pull requests and a weekly schedule.
+- .github/dependabot.yml: weekly npm/pnpm dependency and GitHub Actions update proposals.
+- .github/pull_request_template.md, SECURITY.md, .env.example, and docs/security/release-gates.md: review gates, safe environment template, disclosure guidance and release evidence requirements.
+
+## Current validation status
+
+- Source changes committed to the feature branch.
+- CI and security workflows are configured, but this review has not independently observed successful runs for the current head.
+- The only visible check observed during this pass was a pending Vercel check; this is not a successful build result.
+- No PostgreSQL integration test, browser smoke test, penetration test, production deployment test, or third-party identity federation test has been executed from this session.
+- Database migrations and declarative constraints remain an explicit gap: the current repository does not yet provide a verified, reproducible migration/recovery workflow. Do not deploy schema changes based only on TypeScript schema definitions.
+
+## Next required sequence
+
+1. Confirm CI, CodeQL, Gitleaks, dependency audit and Vercel checks on the latest PR head.
+2. Establish a reproducible Drizzle migration workflow, then add constraints/indexes through reviewed forward and rollback plans.
+3. Add integration tests for ownership/role boundaries, appeal lifecycle, publication consent, exports and HCU run isolation.
+4. Test real authentication flows and all API routes using separate owner, other-user, reviewer, editor and administrator accounts.
+5. Configure repository rules/branch protection to require successful checks and review; configuration files alone do not enforce merge policy.
+6. Validate deployed observability, backup restoration, secret rotation and incident response before claiming production readiness.
