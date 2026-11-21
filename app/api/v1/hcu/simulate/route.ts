@@ -31,7 +31,26 @@ export async function POST(request: Request) {
     return apiError("Cada choque debe caer dentro del horizonte elegido.", 400)
   }
 
+  // Reject expensive work before simulation; the final transactional quota
+  // check below remains authoritative for concurrent requests.
+  const since = new Date(Date.now() - 24 * 60 * 60 * 1000)
+  const [priorRuns] = await db
+    .select({ value: count() })
+    .from(hcuRuns)
+    .where(and(eq(hcuRuns.userId, session.user.id), gte(hcuRuns.createdAt, since)))
+  if ((priorRuns?.value ?? 0) >= 20) {
+    return apiError("Alcanzaste el límite de 20 simulaciones por día.", 429)
+  }
+
   const graph = await getPublicHcuGraph()
+  if (graph.atoms.length > 250 || graph.edges.length > 1_000) {
+    return apiError("El grafo excede el presupuesto operativo de simulación. Reduce su complejidad.", 503)
+  }
+  const horizon = input.endYear - input.startYear + 1
+  const estimatedWork = input.mcRuns * horizon * Math.max(1, graph.atoms.length) * Math.max(1, graph.edges.length)
+  if (estimatedWork > 5_000_000) {
+    return apiError("La combinación de horizonte, muestras y grafo excede el presupuesto de cálculo. Reduce las muestras o el horizonte.", 400)
+  }
   const knownAtomIds = new Set(graph.atoms.map((atom) => atom.id))
   if (input.shocks.some((shock) => !knownAtomIds.has(shock.atomId)) || input.quarantine.some((id) => !knownAtomIds.has(id))) {
     return apiError("El grafo cambió o incluye un nodo no disponible. Recarga la página.", 400)
