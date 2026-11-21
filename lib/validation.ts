@@ -6,7 +6,7 @@ function isSafeReferenceUrl(value: string) {
     if (url.protocol !== "http:" && url.protocol !== "https:") return false
     if (url.username || url.password) return false
 
-    const hostname = url.hostname.toLowerCase().replace(/^\[|\]$/g, "")
+    const hostname = url.hostname.toLowerCase().replace(/^\[|\]$/g, "").replace(/\.$/, "")
     if (
       hostname === "localhost" ||
       hostname.endsWith(".localhost") ||
@@ -35,7 +35,7 @@ function isSafeReferenceUrl(value: string) {
     }
 
     // Only globally routable IPv6 unicast space (2000::/3) is accepted.
-    if (hostname.includes(":") && !/^[23][0-9a-f:]+$/i.test(hostname)) return false
+    if (hostname.includes(":") && (!/^[23][0-9a-f:]+$/i.test(hostname) || /^2001:db8:/i.test(hostname))) return false
     return true
   } catch {
     return false
