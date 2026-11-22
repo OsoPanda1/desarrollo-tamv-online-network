@@ -9,14 +9,13 @@ import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components
 type SimulationResult = { id: string; modelVersion: string; inputHash: string; outputHash: string; output: HcuSimulationOutput }
 type AtomOption = { id: string; nameEs: string; nameEn: string; isQuarantined: boolean }
 
-export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en" }) {
+export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onShockAtomChange }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en"; shockAtomId: string; onShockAtomChange: (id: string) => void }) {
   const english = locale === "en"
   const [scenario, setScenario] = useState("baseline")
   const [startYear, setStartYear] = useState(2026)
   const [endYear, setEndYear] = useState(2050)
   const [seed, setSeed] = useState(20261120)
   const [mcRuns, setMcRuns] = useState(50)
-  const [shockAtomId, setShockAtomId] = useState(atoms[0]?.id ?? "")
   const [shockYear, setShockYear] = useState(2026)
   const [intensity, setIntensity] = useState(0.3)
   const [quarantine, setQuarantine] = useState<string[]>([])
@@ -55,15 +54,15 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOp
       <PortalFieldGroup>
         <PortalField id="hcu-scenario" label={english ? "Scenario" : "Escenario"}><select id="hcu-scenario" value={scenario} onChange={(event) => setScenario(event.target.value)}><option value="baseline">{english ? "Reference" : "Referencia"}</option><option value="conservative">{english ? "Conservative assumptions" : "Supuestos conservadores"}</option><option value="collaborative">{english ? "Collaborative assumptions" : "Supuestos de colaboración"}</option></select></PortalField>
         <PortalFieldGroup className="form-two-columns">
-          <PortalField id="hcu-start-year" label={english ? "Start year" : "Año inicial"}><Input id="hcu-start-year" type="number" min={2026} max={2050} value={startYear} onChange={(event) => setStartYear(Number(event.target.value))} required /></PortalField>
-          <PortalField id="hcu-end-year" label={english ? "End year" : "Año final"}><Input id="hcu-end-year" type="number" min={2026} max={2050} value={endYear} onChange={(event) => setEndYear(Number(event.target.value))} required /></PortalField>
+          <PortalField id="hcu-start-year" label={english ? "Start year" : "Año inicial"}><Input id="hcu-start-year" type="number" min={2026} max={endYear} value={startYear} onChange={(event) => { const year = Number(event.target.value); setStartYear(year); if (year > endYear) setEndYear(year); if (shockYear < year) setShockYear(year) }} required /></PortalField>
+          <PortalField id="hcu-end-year" label={english ? "End year" : "Año final"}><Input id="hcu-end-year" type="number" min={startYear} max={2050} value={endYear} onChange={(event) => { const year = Number(event.target.value); setEndYear(year); if (year < startYear) setStartYear(year); if (shockYear > year) setShockYear(year) }} required /></PortalField>
         </PortalFieldGroup>
         <PortalField id="hcu-seed" label={english ? "Seed" : "Semilla"}><Input id="hcu-seed" type="number" min={0} max={2147483647} value={seed} onChange={(event) => setSeed(Number(event.target.value))} required /></PortalField>
         <PortalField id="hcu-runs" label={english ? "Monte Carlo runs (20–200)" : "Corridas Monte Carlo (20–200)"}><Input id="hcu-runs" type="number" min={20} max={200} step={10} value={mcRuns} onChange={(event) => setMcRuns(Number(event.target.value))} required /></PortalField>
       </PortalFieldGroup>
       <fieldset className="portal-fieldset"><legend>{english ? "One modeled shock" : "Un choque modelado"}</legend>
         <PortalFieldGroup>
-          <PortalField id="hcu-shock-atom" label={english ? "Affected node" : "Nodo afectado"}><select id="hcu-shock-atom" value={shockAtomId} onChange={(event) => setShockAtomId(event.target.value)}>{atoms.map((atom) => <option key={atom.id} value={atom.id}>{english ? atom.nameEn : atom.nameEs}</option>)}</select></PortalField>
+          <PortalField id="hcu-shock-atom" label={english ? "Affected node" : "Nodo afectado"}><select id="hcu-shock-atom" value={shockAtomId} onChange={(event) => onShockAtomChange(event.target.value)}>{atoms.map((atom) => <option key={atom.id} value={atom.id}>{english ? atom.nameEn : atom.nameEs}</option>)}</select></PortalField>
           <PortalFieldGroup className="form-two-columns">
             <PortalField id="hcu-shock-year" label={english ? "Year" : "Año"}><Input id="hcu-shock-year" type="number" min={startYear} max={endYear} value={shockYear} onChange={(event) => setShockYear(Number(event.target.value))} required /></PortalField>
             <PortalField id="hcu-shock-intensity" label={english ? "Intensity (−1 to 1)" : "Intensidad (−1 a 1)"}><Input id="hcu-shock-intensity" type="number" min={-1} max={1} step={0.1} value={intensity} onChange={(event) => setIntensity(Number(event.target.value))} required /></PortalField>
