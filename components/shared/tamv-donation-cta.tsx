@@ -24,7 +24,7 @@ export function TamvDonationCTA({
       <span className="tamv-support-icon"><HeartHandshake aria-hidden="true" /></span>
       <span className="tamv-support-copy">
         <strong>{accessibleLabel}</strong>
-        {variant === "inline" && <small>{english ? "Help sustain independent research and open tools." : "Ayuda a sostener la investigación independiente y las herramientas abiertas."}</small>}
+        {variant === "inline" && <small>{english ? "Help sustain independent research and digital tools." : "Ayuda a sostener la investigación independiente y las herramientas digitales."}</small>}
       </span>
       <ArrowUpRight className="tamv-support-arrow" aria-hidden="true" />
     </Link>
