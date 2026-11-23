@@ -26,9 +26,9 @@ const individualBenefits = [
 ]
 
 const businessBenefits = [
-  { es: "Perfil de organización y punto de contacto para oportunidades de colaboración TAMV.", en: "Organization profile and contact point for TAMV collaboration opportunities.", Icon: Building2 },
-  { es: "Curso de preparación para presentar la empresa, su propuesta de valor y su proyecto ante posibles aliados o inversionistas.", en: "Preparation course to present the company, its value proposition and project to potential partners or investors.", Icon: BookOpenCheck },
-  { es: "Estructura de pitch, diagnóstico de evidencia, hoja de ruta y riesgos del proyecto.", en: "Pitch structure, evidence review, roadmap, and project risk framing.", Icon: ShieldCheck },
+  { es: "Nombre de la organización guardado en la suscripción empresarial y vinculado a la cuenta responsable.", en: "Organization name recorded with the business subscription and linked to the responsible account.", Icon: Building2 },
+  { es: "El curso práctico de cinco módulos para organizar el perfil, la evidencia, el modelo de negocio y el pitch de la organización.", en: "The five-module practical course to organize the organization profile, evidence, business model and pitch.", Icon: BookOpenCheck },
+  { es: "Ruta para postular la iniciativa empresarial a oportunidades de colaboración, sujeta a revisión del proyecto.", en: "A route to submit the business initiative for collaboration opportunities, subject to project review.", Icon: ShieldCheck },
   { es: "Ruta de exploración de programas externos para startups; los criterios y beneficios dependen de cada proveedor.", en: "Guided exploration of external startup programs; eligibility and benefits depend on each provider.", Icon: Network },
 ]
 
@@ -77,7 +77,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
           <p className="eyebrow">{english ? "FOR COMPANIES AND TEAMS" : "PARA EMPRESAS Y ORGANIZACIONES"}</p>
           <h3>{english ? "Business membership" : "Membresía empresarial"}</h3>
           <p className="membership-price"><strong>$699</strong><span>MXN / {english ? "month per organization" : "mes por empresa"}</span></p>
-          <p>{english ? "For companies and startup teams preparing a credible profile, a project narrative and a structured pitch." : "Para empresas y equipos startup que preparan un perfil sólido, la narrativa de su proyecto y una presentación estructurada."}</p>
+          <p>{english ? "For companies and startup teams preparing a credible profile, a project narrative and a structured pitch." : "Para empresas y equipos startup que buscan organizar su proyecto y preparar una presentación estructurada. La suscripción se vincula a la cuenta titular; no crea asientos para empleados."}</p>
           <ul className="membership-benefits">{businessBenefits.map(({ es, en, Icon }) => <li key={es}><Icon aria-hidden="true" /><span>{english ? en : es}</span></li>)}</ul>
           <MembershipCheckout planId="business" locale={locale} />
           <div className="membership-manage"><MembershipPortalButton planId="business" locale={locale} /></div>
