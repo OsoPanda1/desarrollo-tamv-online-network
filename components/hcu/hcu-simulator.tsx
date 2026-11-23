@@ -48,40 +48,22 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onSh
     setQuarantine((current) => checked ? [...current, id] : current.filter((atomId) => atomId !== id))
   }
 
-  useEffect(() => {
-    if (!shockAtomId) return
-    setShocks((current) => {
-      if (current.length === 0) return [{ atomId: shockAtomId, year: startYear, intensity: 0.3 }]
-      if (current[0].atomId === shockAtomId) return current
-      return current.map((shock, index) => index === 0 ? { ...shock, atomId: shockAtomId } : shock)
-    })
-  }, [shockAtomId, startYear])
-
   function updateShock(index: number, key: keyof ShockDraft, value: string) {
     setShocks((current) => current.map((shock, position) => position === index
       ? { ...shock, [key]: key === "atomId" ? value : Number(value) }
       : shock))
-    if (index === 0 && key === "atomId") onShockAtomChange(value)
-  }
-
-  function removeShock(index: number) {
-    const nextShocks = shocks.filter((_, position) => position !== index)
-    setShocks(nextShocks)
-    if (index === 0 && nextShocks[0]) onShockAtomChange(nextShocks[0].atomId)
   }
 
   function updateStartYear(value: number) {
-    const nextEndYear = Math.max(value, endYear)
     setStartYear(value)
-    setEndYear(nextEndYear)
-    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.max(value, Math.min(nextEndYear, shock.year)) })))
+    if (value > endYear) setEndYear(value)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.max(value, Math.min(endYear, shock.year)) })))
   }
 
   function updateEndYear(value: number) {
-    const nextStartYear = Math.min(value, startYear)
     setEndYear(value)
-    setStartYear(nextStartYear)
-    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.min(value, Math.max(nextStartYear, shock.year)) })))
+    if (value < startYear) setStartYear(value)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.min(value, Math.max(startYear, shock.year)) })))
   }
 
   return <div className="hcu-simulator-layout">

@@ -21,14 +21,22 @@ export async function GET() {
     });
   }
 
-  const probeQuery = {
-    text: "SELECT 1",
-    query_timeout: DATABASE_PROBE_TIMEOUT_MS,
-  };
-  const ready = await probeWithinBudget(pool.query(probeQuery), DATABASE_PROBE_TIMEOUT_MS);
+  try {
+    const probeQuery = {
+      text: "SELECT 1",
+      query_timeout: DATABASE_PROBE_TIMEOUT_MS,
+    };
 
-  return Response.json(readinessPayload(ready), {
-    status: ready ? 200 : 503,
+    await pool.query(probeQuery);
+  } catch {
+    return Response.json(readinessPayload(false), {
+      status: 503,
+      headers: noStoreHeaders,
+    });
+  }
+
+  return Response.json(readinessPayload(true), {
+    status: 200,
     headers: noStoreHeaders,
   });
 }

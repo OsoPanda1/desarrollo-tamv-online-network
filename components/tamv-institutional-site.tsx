@@ -196,6 +196,7 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
               <h2>Federar capacidades. <em>Conservar contexto.</em></h2>
               <p>La arquitectura heptafederada se presenta como un modelo para interconectar ámbitos autónomos. Los nombres siguientes organizan la visión editorial de esta página; no sustituyen una especificación técnica canónica.</p>
               <a className="button button-outline-light" href="#gobernanza">Principios de gobernanza <ArrowRight aria-hidden="true" /></a>
+              <a className="button button-outline-light" href="/isabella">Isabella AI <ArrowRight aria-hidden="true" /></a>
             </div>
             <div className="federation-panel">
               <div className="federation-panel-header"><span>ÁMBITOS DEL MODELO</span><span>7 / FEDERACIONES</span></div>
@@ -205,6 +206,7 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
                 ))}
               </div>
               <p className="federation-note">Esquema de referencia basado en la documentación adjunta. La delimitación operativa requiere validación y gobernanza pública.</p>
+              <p className="federation-note">Este es el mapa de referencia del repositorio. Los documentos de Drive contienen seis variantes históricas de las siete federaciones, sin reconciliar entre sí; esta vista usa solo el mapa del repositorio y nunca mezcla mapas. <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/architecture/federation-reconciliation.md" target="_blank" rel="noopener noreferrer">Nota de conciliación de federaciones</a>.</p>
             </div>
           </div>
         </section>
@@ -220,6 +222,7 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
               <a className="inline-link" href="https://doi.org/10.5281/zenodo.19436662" target="_blank" rel="noopener noreferrer">
                 Consultar registro documental en Zenodo <ArrowUpRight aria-hidden="true" />
               </a>
+              <p className="body-copy">Nota sobre este DOI (10.5281/zenodo.19436662): los documentos le atribuyen tres contenidos distintos — el Atlas (Atlas V4, encabezado), la Evaluación de Consistencia Conceptual de Isabella V1.0 (Atlas V4, §XV) y el proyecto OSF «TAMV Paradigm &amp; RDM Digital Hub» (OSF, §V) — y el Manual Maestro asigna esa misma Evaluación al DOI 10.5281/zenodo.20606361. Consúltese como registro documental, no como una atribución única verificada.</p>
             </div>
             <aside className="research-card">
               <div className="research-card-label"><BookOpen aria-hidden="true" /> CUADERNO DE REFERENCIA</div>
@@ -312,6 +315,128 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
           </div>
         </section>
 
+        <section className="section enterprise-section" id="empresa" aria-labelledby="empresa-title">
+          <div className="container">
+            <div className="section-heading-row">
+              <div><p className="eyebrow">10 / EMPRESA TAMV · MANIFIESTO</p><h2 id="empresa-title">{enterpriseManifesto.statement}</h2></div>
+              <p>{enterpriseManifesto.intro}</p>
+            </div>
+            <p className="lead-copy">{enterpriseManifesto.originTitle}</p>
+            <p className="body-copy">{enterpriseManifesto.originText}</p>
+            <div className="section-heading-row">
+              <div><p className="eyebrow">DEDICATORIA</p><h2>{enterpriseManifesto.dedicationTitle}</h2></div>
+            </div>
+            <div className="work-grid">
+              {enterpriseManifesto.dedication.map((item, index) => (
+                <article className="work-card" key={item.title}>
+                  <div className="work-card-top"><span>0{index + 1}</span></div>
+                  <h3>{item.title}</h3><p>{item.detail}</p>
+                  <span className="work-card-rule" aria-hidden="true" />
+                </article>
+              ))}
+            </div>
+            <div className="mission-grid">
+              <article><span>CRITERIO DE AUTONOMÍA</span><h3>{enterpriseManifesto.autonomyCriterionTitle}</h3><p>{enterpriseManifesto.autonomyCriterionText}</p></article>
+              <article><span>COMPROMISO DE DISEÑO</span><h3>{enterpriseManifesto.designCommitmentTitle}</h3><p>{enterpriseManifesto.designCommitmentText}</p></article>
+            </div>
+            <div className="section-heading-row">
+              <div><p className="eyebrow">CINCO AXIOMAS</p><h2>Si la tecnología no fortalece a la comunidad, <em>solo está decorando dependencia.</em></h2></div>
+              <p>Los cinco axiomas del ecosistema. Cada uno está formulado como una condición: si se rompe, la infraestructura pierde su razón de ser.</p>
+            </div>
+            <div className="governance-grid">
+              {enterpriseAxioms.map((axiom) => (
+                <article className="governance-card" key={axiom.number}>
+                  <span className="governance-number">{axiom.number}</span>
+                  <Check aria-hidden="true" />
+                  <h3>{axiom.title}</h3>
+                  <p>{axiom.text}</p>
+                </article>
+              ))}
+            </div>
+            <div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>{enterpriseCentralQuestion.title} {enterpriseCentralQuestion.text}</p></div>
+            <div className="section-heading-row">
+              <div><p className="eyebrow">MATRIZ DE RUNTIME</p><h2>El ecosistema, <em>capa por capa.</em></h2></div>
+              <p>{runtimeMatrixNote.text}</p>
+            </div>
+            <div className="work-grid">
+              {runtimeMatrix.map((row, index) => (
+                <article className="work-card" key={row.component}>
+                  <div className="work-card-top"><span>0{index + 1}</span><span>{row.status}</span></div>
+                  <h3>{row.component}</h3><p><strong>{row.layer}.</strong> {row.role}</p>
+                  <span className="work-card-rule" aria-hidden="true" />
+                </article>
+              ))}
+            </div>
+            <div className="values-line"><span>ECONOMÍA PHYGITAL · 8 MONEDAS</span>{phygitalCoins.map((coin) => <b key={coin}>{coin}</b>)}</div>
+            <div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>{enterpriseManifesto.caution}</p></div>
+          </div>
+        </section>
+
+        <section className="section founder-section" id="fundador" aria-labelledby="fundador-title">
+          <div className="container">
+            <div className="section-heading-row">
+              <div><p className="eyebrow">11 / FUNDADOR</p><h2 id="fundador-title">{founderProfile.name}</h2></div>
+              <p>Conocido como <strong>{founderProfile.alias}</strong> — {founderProfile.aliasNote} {founderProfile.roleDetail}.</p>
+            </div>
+            <p className="lead-copy">{founderProfile.motto}</p>
+            <p className="body-copy">{founderProfile.bio}</p>
+            <div className="mission-grid">
+              <article><span>IDENTIDAD ACADÉMICA</span><h3>Identificadores públicos</h3><p>ORCID {founderProfile.orcid} · ISNI {founderProfile.isni} · Frontiers Loop {founderProfile.loopId} · GitHub {founderProfile.github}</p><p>{founderProfile.place}</p></article>
+              <article><span>PRINCIPIO RECTOR</span><h3>La ética se compila, no se declara.</h3><p>“{founderProfile.guidingPrinciple}”</p></article>
+            </div>
+            <div className="section-heading-row">
+              <div><p className="eyebrow">MODELO TINA</p><h2>{founderProfile.tinaName}</h2></div>
+              <p>{founderProfile.tinaDescription}</p>
+            </div>
+            <div className="governance-grid">
+              {founderProfile.tinaFunctions.map((fn) => (
+                <article className="governance-card" key={fn.number}>
+                  <span className="governance-number">{fn.number}</span>
+                  <Check aria-hidden="true" />
+                  <h3>{fn.title}</h3>
+                  <p>{fn.text}</p>
+                </article>
+              ))}
+            </div>
+            <p className="body-copy">{founderProfile.identifiersNote}</p>
+            <a className="inline-link" href={founderProfile.orcidUrl} target="_blank" rel="noopener noreferrer">
+              Ver el registro público en ORCID <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
+        <section className="section legacy-section" id="legado" aria-labelledby="legado-title">
+          <div className="container">
+            <div className="section-heading-row">
+              <div><p className="eyebrow">12 / LEGADO · EL CAMINO</p><h2 id="legado-title">No fama ni fortuna: <em>un camino para quien viene detrás.</em></h2></div>
+              <p>Durante más de cuatro décadas se sostuvo que Latinoamérica solo podía ser consumidora pasiva y mano de obra barata. Este hub entero es la respuesta construida desde Real del Monte, Hidalgo — y esta sección es su manual abierto: la guía para que quien venga detrás, con sus propios sueños, no tenga que pasar siendo invisible ni ignorado.</p>
+            </div>
+            <blockquote>
+              <p>“{legacyQuote.text}”</p>
+              <cite>{legacyQuote.attribution}</cite>
+            </blockquote>
+            <div className="section-heading-row">
+              <div><p className="eyebrow">GUÍA PASO A PASO</p><h2>El Camino, <em>en ocho pasos.</em></h2></div>
+              <p>Cada paso produce una evidencia concreta. No se avanza declarando: se avanza dejando el artefacto que el paso siguiente puede verificar.</p>
+            </div>
+            <div className="roadmap-list">
+              {legacyGuide.map((step, index) => (
+                <article className="roadmap-step" key={step.step}>
+                  <span className="roadmap-phase">0{index + 1}</span>
+                  <div><h3>{step.title}</h3><p>{step.subtitle} {step.text}</p><p><strong>Evidencia al terminar:</strong> {step.evidence}</p></div>
+                  <span className="roadmap-arrow" aria-hidden="true"><ArrowRight /></span>
+                </article>
+              ))}
+              <p className="roadmap-disclaimer">Guía editorial del hub; cada evidencia debe poder verificarse en un artefacto público antes de darse por cumplida.</p>
+            </div>
+            <div className="builders-actions">
+              <a className="button button-copper" href="/excelencia">Excelencia académica <ArrowRight aria-hidden="true" /></a>
+              <a className="button button-outline-dark" href="/hcu">Mapa transformativo HCU <ArrowRight aria-hidden="true" /></a>
+              <a className="button button-outline-dark" href="/auditoria-creator">Auditoría Creator Intelligence <ArrowRight aria-hidden="true" /></a>
+            </div>
+          </div>
+        </section>
+
         <section className="section contact-section" id="contacto">
           <div className="container contact-panel">
             <div className="contact-emblem"><span className="brand-mark contact-brand-emblem" aria-hidden="true" /><span>HIDALGO<br />MÉXICO</span></div>
@@ -383,10 +508,10 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
       <section className="section ecosystem-section" id="ecosistema"><div className="container"><div className="section-heading-row ecosystem-heading"><div><p className="eyebrow">03 / TAMV ECOSYSTEM</p><h2>Purposeful components, <em>explicit maturity.</em></h2></div><p>Explore projects described in TAMV materials. Each record separates stated purpose from work that still needs implementation or external verification.</p></div><TamvProjectExplorer projects={projects} locale="en" /></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support the TAMV ecosystem" /></div>
 
-      <section className="section architecture-section" id="arquitectura"><div className="container architecture-layout"><div className="architecture-intro"><p className="eyebrow eyebrow-light">04 / REFERENCE ARCHITECTURE</p><h2>Federate capabilities. <em>Preserve context.</em></h2><p>The heptafederated architecture is presented as a model for connecting autonomous domains. The labels below organize this editorial overview; they are not a canonical technical specification.</p><a className="button button-outline-light" href="/gobernanza?lang=en">Governance principles <ArrowRight aria-hidden="true" /></a></div><div className="federation-panel"><div className="federation-panel-header"><span>MODEL DOMAINS</span><span>7 / FEDERATIONS</span></div><div className="federation-list">{federations.map((area, index) => <div className="federation-item" key={area}><span>0{index + 1}</span><strong>{area}</strong><span className="federation-status">Framed</span></div>)}</div><p className="federation-note">Reference outline based on the supplied documents. Operational boundaries require validation and public governance.</p></div></div></section>
+      <section className="section architecture-section" id="arquitectura"><div className="container architecture-layout"><div className="architecture-intro"><p className="eyebrow eyebrow-light">04 / REFERENCE ARCHITECTURE</p><h2>Federate capabilities. <em>Preserve context.</em></h2><p>The heptafederated architecture is presented as a model for connecting autonomous domains. The labels below organize this editorial overview; they are not a canonical technical specification.</p><a className="button button-outline-light" href="/gobernanza?lang=en">Governance principles <ArrowRight aria-hidden="true" /></a><a className="button button-outline-light" href="/isabella">Isabella AI <ArrowRight aria-hidden="true" /></a></div><div className="federation-panel"><div className="federation-panel-header"><span>MODEL DOMAINS</span><span>7 / FEDERATIONS</span></div><div className="federation-list">{federations.map((area, index) => <div className="federation-item" key={area}><span>0{index + 1}</span><strong>{area}</strong><span className="federation-status">Framed</span></div>)}</div><p className="federation-note">Reference outline based on the supplied documents. Operational boundaries require validation and public governance.</p><p className="federation-note">This is the repository&apos;s reference map. The Drive documents contain six historical variants of the seven federations, unreconciled with each other; this view uses only the repository map and never mixes maps. <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/architecture/federation-reconciliation.md" target="_blank" rel="noopener noreferrer">Federation reconciliation note</a>.</p></div></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Sustain open infrastructure" /></div>
 
-      <section className="section research-section" id="investigacion"><div className="container research-layout"><div><p className="eyebrow">05 / OPEN RESEARCH AND KNOWLEDGE</p><h2>Research also means <em>showing its limits.</em></h2><p className="lead-copy">The attached comparative inventory brings together research, development, governance, and scholarly publishing references to inform future TAMV design.</p><p className="body-copy">It is not a certified global ranking or an independent audit of each platform. Before becoming a requirement, every capability should be checked against official documentation, licensing, verification dates, and access conditions.</p><a className="inline-link" href="https://doi.org/10.5281/zenodo.19436662" target="_blank" rel="noopener noreferrer">View the documentary record on Zenodo <ArrowUpRight aria-hidden="true" /></a></div><aside className="research-card"><div className="research-card-label"><BookOpen aria-hidden="true" /> REFERENCE NOTEBOOK</div><strong>{researchInventory.platforms}<span>+</span></strong><h3>platforms reviewed</h3><div className="research-divider" /><div className="research-metadata"><span>INVENTORIED CAPABILITIES</span><b>{researchInventory.capabilities}</b></div><div className="research-metadata"><span>THEMATIC GROUPS</span><b>{researchInventory.categories}</b></div><p>Working inventory supplied to guide systematic verification.</p></aside></div></section>
+      <section className="section research-section" id="investigacion"><div className="container research-layout"><div><p className="eyebrow">05 / OPEN RESEARCH AND KNOWLEDGE</p><h2>Research also means <em>showing its limits.</em></h2><p className="lead-copy">The attached comparative inventory brings together research, development, governance, and scholarly publishing references to inform future TAMV design.</p><p className="body-copy">It is not a certified global ranking or an independent audit of each platform. Before becoming a requirement, every capability should be checked against official documentation, licensing, verification dates, and access conditions.</p><a className="inline-link" href="https://doi.org/10.5281/zenodo.19436662" target="_blank" rel="noopener noreferrer">View the documentary record on Zenodo <ArrowUpRight aria-hidden="true" /></a><p className="body-copy">Note on this DOI (10.5281/zenodo.19436662): the documents attribute three different contents to it — the Atlas (Atlas V4, header), the Conceptual Consistency Evaluation of Isabella V1.0 (Atlas V4, §XV), and the OSF project “TAMV Paradigm &amp; RDM Digital Hub” (OSF, §V) — and the Master Manual assigns that same Evaluation to DOI 10.5281/zenodo.20606361. Treat it as a documentary record, not as a single verified attribution.</p></div><aside className="research-card"><div className="research-card-label"><BookOpen aria-hidden="true" /> REFERENCE NOTEBOOK</div><strong>{researchInventory.platforms}<span>+</span></strong><h3>platforms reviewed</h3><div className="research-divider" /><div className="research-metadata"><span>INVENTORIED CAPABILITIES</span><b>{researchInventory.capabilities}</b></div><div className="research-metadata"><span>THEMATIC GROUPS</span><b>{researchInventory.categories}</b></div><p>Working inventory supplied to guide systematic verification.</p></aside></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support open research" /></div>
 
             <TamvResearchTopics topics={topics} locale="en" />
@@ -429,6 +554,128 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
             <a className="button button-outline-dark" href="https://github.com/OsoPanda1/desarrollo-tamv-online-network" target="_blank" rel="noopener noreferrer">View source code <ArrowUpRight aria-hidden="true" /></a>
           </div>
           <p className="builders-caveat">The repository does not guarantee every module is deployed or every proposal accepted. Contributions are evaluated on scope, evidence, tests, licensing and actual maintenance capacity.</p>
+        </div>
+      </section>
+
+      <section className="section enterprise-section" id="empresa" aria-labelledby="empresa-title">
+        <div className="container">
+          <div className="section-heading-row">
+            <div><p className="eyebrow">10 / TAMV ENTERPRISE · MANIFESTO</p><h2 id="empresa-title">{enterpriseManifesto.statementEn}</h2></div>
+            <p>{enterpriseManifesto.introEn}</p>
+          </div>
+          <p className="lead-copy">{enterpriseManifesto.originTitleEn}</p>
+          <p className="body-copy">{enterpriseManifesto.originTextEn}</p>
+          <div className="section-heading-row">
+            <div><p className="eyebrow">DEDICATION</p><h2>{enterpriseManifesto.dedicationTitleEn}</h2></div>
+          </div>
+          <div className="work-grid">
+            {enterpriseManifesto.dedication.map((item, index) => (
+              <article className="work-card" key={item.titleEn}>
+                <div className="work-card-top"><span>0{index + 1}</span></div>
+                <h3>{item.titleEn}</h3><p>{item.detailEn}</p>
+                <span className="work-card-rule" aria-hidden="true" />
+              </article>
+            ))}
+          </div>
+          <div className="mission-grid">
+            <article><span>AUTONOMY CRITERION</span><h3>{enterpriseManifesto.autonomyCriterionTitleEn}</h3><p>{enterpriseManifesto.autonomyCriterionTextEn}</p></article>
+            <article><span>DESIGN COMMITMENT</span><h3>{enterpriseManifesto.designCommitmentTitleEn}</h3><p>{enterpriseManifesto.designCommitmentTextEn}</p></article>
+          </div>
+          <div className="section-heading-row">
+            <div><p className="eyebrow">FIVE AXIOMS</p><h2>If technology does not strengthen the community, <em>it is only decorating dependence.</em></h2></div>
+            <p>The ecosystem's five axioms. Each is stated as a condition: if it breaks, the infrastructure loses its reason to exist.</p>
+          </div>
+          <div className="governance-grid">
+            {enterpriseAxioms.map((axiom) => (
+              <article className="governance-card" key={axiom.number}>
+                <span className="governance-number">{axiom.number}</span>
+                <Check aria-hidden="true" />
+                <h3>{axiom.titleEn}</h3>
+                <p>{axiom.textEn}</p>
+              </article>
+            ))}
+          </div>
+          <div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>{enterpriseCentralQuestion.titleEn} {enterpriseCentralQuestion.textEn}</p></div>
+          <div className="section-heading-row">
+            <div><p className="eyebrow">RUNTIME MATRIX</p><h2>The ecosystem, <em>layer by layer.</em></h2></div>
+            <p>{runtimeMatrixNote.textEn}</p>
+          </div>
+          <div className="work-grid">
+            {runtimeMatrix.map((row, index) => (
+              <article className="work-card" key={row.component}>
+                <div className="work-card-top"><span>0{index + 1}</span><span>{row.status}</span></div>
+                <h3>{row.component}</h3><p><strong>{row.layerEn}.</strong> {row.roleEn}</p>
+                <span className="work-card-rule" aria-hidden="true" />
+              </article>
+            ))}
+          </div>
+          <div className="values-line"><span>PHYGITAL ECONOMY · 8 CURRENCIES</span>{phygitalCoins.map((coin) => <b key={coin}>{coin}</b>)}</div>
+          <div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>{enterpriseManifesto.cautionEn}</p></div>
+        </div>
+      </section>
+
+      <section className="section founder-section" id="fundador" aria-labelledby="fundador-title">
+        <div className="container">
+          <div className="section-heading-row">
+            <div><p className="eyebrow">11 / FOUNDER</p><h2 id="fundador-title">{founderProfile.name}</h2></div>
+            <p>Known as <strong>{founderProfile.alias}</strong> — {founderProfile.aliasNoteEn} {founderProfile.roleDetailEn}.</p>
+          </div>
+          <p className="lead-copy">{founderProfile.mottoEn}</p>
+          <p className="body-copy">{founderProfile.bioEn}</p>
+          <div className="mission-grid">
+            <article><span>ACADEMIC IDENTITY</span><h3>Public identifiers</h3><p>ORCID {founderProfile.orcid} · ISNI {founderProfile.isni} · Frontiers Loop {founderProfile.loopId} · GitHub {founderProfile.github}</p><p>{founderProfile.place}</p></article>
+            <article><span>GUIDING PRINCIPLE</span><h3>Ethics is compiled, not declared.</h3><p>“{founderProfile.guidingPrincipleEn}”</p></article>
+          </div>
+          <div className="section-heading-row">
+            <div><p className="eyebrow">TINA MODEL</p><h2>{founderProfile.tinaName}</h2></div>
+            <p>{founderProfile.tinaDescriptionEn}</p>
+          </div>
+          <div className="governance-grid">
+            {founderProfile.tinaFunctions.map((fn) => (
+              <article className="governance-card" key={fn.number}>
+                <span className="governance-number">{fn.number}</span>
+                <Check aria-hidden="true" />
+                <h3>{fn.titleEn}</h3>
+                <p>{fn.textEn}</p>
+              </article>
+            ))}
+          </div>
+          <p className="body-copy">{founderProfile.identifiersNoteEn}</p>
+          <a className="inline-link" href={founderProfile.orcidUrl} target="_blank" rel="noopener noreferrer">
+            View the public record on ORCID <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+      </section>
+
+      <section className="section legacy-section" id="legado" aria-labelledby="legado-title">
+        <div className="container">
+          <div className="section-heading-row">
+            <div><p className="eyebrow">12 / LEGACY · THE PATH</p><h2 id="legado-title">Not fame or fortune: <em>a path for those who come after.</em></h2></div>
+            <p>For more than four decades it was held that Latin America could only be a passive consumer and cheap labor. This entire hub is the answer built from Real del Monte, Hidalgo — and this section is its open manual: the guide so that whoever comes after, with their own dreams, does not have to go through being invisible or ignored.</p>
+          </div>
+          <blockquote>
+            <p>“{legacyQuote.textEn}”</p>
+            <cite>{legacyQuote.attributionEn}</cite>
+          </blockquote>
+          <div className="section-heading-row">
+            <div><p className="eyebrow">STEP-BY-STEP GUIDE</p><h2>The Path, <em>in eight steps.</em></h2></div>
+            <p>Each step produces concrete evidence. You do not advance by declaring: you advance by leaving the artifact the next step can verify.</p>
+          </div>
+          <div className="roadmap-list">
+            {legacyGuide.map((step, index) => (
+              <article className="roadmap-step" key={step.stepEn}>
+                <span className="roadmap-phase">0{index + 1}</span>
+                <div><h3>{step.titleEn}</h3><p>{step.subtitleEn} {step.textEn}</p><p><strong>Evidence when finished:</strong> {step.evidenceEn}</p></div>
+                <span className="roadmap-arrow" aria-hidden="true"><ArrowRight /></span>
+              </article>
+            ))}
+            <p className="roadmap-disclaimer">Editorial guide from the hub; each piece of evidence must be verifiable in a public artifact before it counts as complete.</p>
+          </div>
+          <div className="builders-actions">
+            <a className="button button-copper" href="/excelencia?lang=en">Academic excellence <ArrowRight aria-hidden="true" /></a>
+            <a className="button button-outline-dark" href="/hcu?lang=en">HCU transformative map <ArrowRight aria-hidden="true" /></a>
+            <a className="button button-outline-dark" href="/auditoria-creator?lang=en">Creator Intelligence audit <ArrowRight aria-hidden="true" /></a>
+          </div>
         </div>
       </section>
 

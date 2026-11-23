@@ -204,6 +204,12 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
           <a className="developer-subtle-link" href={issuesUrl} target="_blank" rel="noopener noreferrer">
             {english ? "Browse issues" : "Explorar incidencias"} <ArrowUpRight aria-hidden="true" />
           </a>
+          <Link className="developer-subtle-link" href={`/auditoria-creator?lang=${locale}`}>
+            {english ? "Creator Intelligence audit record" : "Ficha de auditoría Creator Intelligence"} <ArrowUpRight aria-hidden="true" />
+          </Link>
+          <Link className="developer-subtle-link" href={`/isabella?lang=${locale}`}>
+            {english ? "Isabella AI / TINA — FGAIS architecture, Policy Gate, and decision ledger" : "Isabella AI / TINA — arquitectura FGAIS, Policy Gate y ledger de decisiones"} <ArrowUpRight aria-hidden="true" />
+          </Link>
         </div>
 
         <div className="developer-trust-note">
@@ -237,6 +243,7 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
             <div className="developer-card-actions">
               <a href="/api/v1/exports/research">JSON-LD <ArrowUpRight aria-hidden="true" /></a>
               <a href="/api/v1/exports/research?format=csv">CSV <ArrowUpRight aria-hidden="true" /></a>
+              <Link href={`/proyectos?lang=${locale}`}>{english ? "Browse the public project catalog" : "Ver el catálogo público de proyectos"} <ArrowUpRight aria-hidden="true" /></Link>
             </div>
           </article>
           <article className="developer-entry-card">
