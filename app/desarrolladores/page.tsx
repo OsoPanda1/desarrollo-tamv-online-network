@@ -160,8 +160,8 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
             <h3>{english ? "Inspect public exports" : "Inspecciona los exportes públicos"}</h3>
             <p>{english ? "Read JSON-LD or download CSV. Check each record's source, license, maturity and limitations before reuse." : "Consulta JSON-LD o descarga CSV. Comprueba fuente, licencia, madurez y limitaciones antes de reutilizar cada registro."}</p>
             <div className="developer-card-actions">
-              <Link href="/api/v1/exports/research">{english ? "JSON-LD" : "JSON-LD"} <ArrowUpRight aria-hidden="true" /></Link>
-              <Link href="/api/v1/exports/research?format=csv">CSV <ArrowUpRight aria-hidden="true" /></Link>
+              <a href="/api/v1/exports/research">JSON-LD <ArrowUpRight aria-hidden="true" /></a>
+              <a href="/api/v1/exports/research?format=csv">CSV <ArrowUpRight aria-hidden="true" /></a>
             </div>
           </article>
           <article className="developer-entry-card">
@@ -207,7 +207,7 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
           </article>
         </div>
         <p className="developer-doc-links">
-          <Link href={`/api/v1/exports/research?format=csv`}>{english ? "Download current public metadata" : "Descargar metadatos públicos actuales"} <ArrowUpRight aria-hidden="true" /></Link>
+          <a href="/api/v1/exports/research?format=csv">{english ? "Download current public metadata" : "Descargar metadatos públicos actuales"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">{english ? "Contribution guide" : "Guía de contribución"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="/openapi.yaml" target="_blank" rel="noopener noreferrer">{english ? "OpenAPI 3.1 specification" : "Especificación OpenAPI 3.1"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/api/public-api-quickstart.md" target="_blank" rel="noopener noreferrer">{english ? "Public API guide" : "Guía de API pública"} <ArrowUpRight aria-hidden="true" /></a>
