@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS membership_subscriptions (
   currency text NOT NULL DEFAULT 'mxn' CHECK (currency = 'mxn'),
   business_name text,
   business_website text,
+  terms_version text NOT NULL,
+  terms_accepted_at timestamptz NOT NULL,
   stripe_customer_id text,
   stripe_subscription_id text UNIQUE,
   stripe_checkout_session_id text UNIQUE,
