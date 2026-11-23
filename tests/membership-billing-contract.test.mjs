@@ -126,3 +126,22 @@ test("subscription webhook, not the checkout browser redirect, controls paid acc
   assert.match(route, /form\.set\("expires_at"/);
   assert.match(route, /stripeCheckoutUrl: checkoutUrl\.toString\(\)/);
 });
+
+test("billing status is scoped to the authenticated user and never exposes the stored raw checkout field", () => {
+  const status = read("app/api/billing/me/route.ts");
+  assert.match(status, /auth\.api\.getSession/);
+  assert.match(status, /eq\(membershipSubscriptions\.userId, session\.user\.id\)/);
+  assert.match(status, /const \{ stripeCheckoutUrl, \.\.\.safeRecord \} = record/);
+  assert.match(status, /candidate\.hostname === "checkout\.stripe\.com"/);
+  assert.match(status, /return \{ \.\.\.safeRecord, checkoutUrl \}/);
+});
+
+test("company membership is explicitly per organization and current seat limitations are documented", () => {
+  const terms = read("app/membresias/condiciones/page.tsx");
+  const plans = read("app/membresias/page.tsx");
+  const runbook = read("docs/production/membership-billing-runbook.md");
+  assert.match(plans, /\$699/);
+  assert.match(terms, /No se han implementado invitaciones de empleados/);
+  assert.match(runbook, /employee invitations/);
+  assert.match(runbook, /not implemented/);
+});
