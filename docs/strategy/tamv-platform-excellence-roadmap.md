@@ -155,6 +155,12 @@ No emplear fingerprinting ni perfilar a personas individualmente para crear esta
 
 **Aceptar solo cuando:** el informe publique línea base, ventana, método, límites y decisión de continuar/cambiar/detener; si no hay datos, debe decir “no medido”.
 
+## 9. Readiness for external adoption
+
+The code-license gap is a release blocker for broad reuse. No root `LICENSE` file was found in the repository audit; a citation file and a public GitHub URL do not confer rights to copy, modify, redistribute, or incorporate code. Before promoting an external developer ecosystem, the rights holder should choose a license, audit third-party dependencies/assets, and publish compatible attribution and contribution terms. Keep this explicitly **pending** until resolved. See [licensing status](../governance/licensing-status.md).
+
+The contribution intake now includes a Code of Conduct, a citation record, and templates for bugs, feature proposals, research contributions, and pull requests. These raise the quality of intake but do not replace maintainer review, build/test evidence, or a security response process.
+
 ## 9. Norma de comunicación
 
 Evitar “mil veces superior” como claim público porque no es un indicador verificable. La superioridad real debe expresarse como mejoras medibles: menos peso de descarga, menor tiempo hasta una llamada útil, menos errores, contratos reproducibles, accesibilidad probada, mayor procedencia de datos y colaboración sostenible. Mostrar el resultado, el método, la fecha y la evidencia.
