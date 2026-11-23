@@ -27,7 +27,16 @@ export async function GET() {
       query_timeout: DATABASE_PROBE_TIMEOUT_MS,
     };
 
-    await pool.query(probeQuery);
+    const ready = await probeWithinBudget(
+      pool.query(probeQuery),
+      DATABASE_PROBE_TIMEOUT_MS,
+    );
+    if (!ready) {
+      return Response.json(readinessPayload(false), {
+        status: 503,
+        headers: noStoreHeaders,
+      });
+    }
   } catch {
     return Response.json(readinessPayload(false), {
       status: 503,
