@@ -70,6 +70,7 @@ The public developer entry point is [the developer guide](/desarrolladores). It 
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
 - [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
 - [Platform excellence roadmap](docs/strategy/tamv-platform-excellence-roadmap.md) — prioritized product, academic, security, operations, and adoption acceptance criteria.
+- [Evidence-to-production research plan](docs/strategy/evidence-driven-research-to-production.md) — selected scholarly evidence translated into prioritized engineering controls, release gates, and explicit limitations.
 - [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
 
 The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
