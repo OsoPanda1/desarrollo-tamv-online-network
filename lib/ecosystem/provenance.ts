@@ -1,0 +1,58 @@
+import { z } from "zod";
+
+const isoDateTimeWithZone = z.string().refine(
+  (value) =>
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) &&
+    !Number.isNaN(Date.parse(value)),
+  "Expected an ISO 8601 date-time with an explicit timezone",
+);
+
+const digestLengths = {
+  "sha-256": 64,
+  "sha-384": 96,
+  "sha-512": 128,
+} as const;
+
+/**
+ * Runtime validation for provenance envelopes received from external systems.
+ * This records origin/validation metadata; it does not establish authorship,
+ * trusted time, cryptographic signature validity, peer review or accreditation.
+ */
+export const provenanceRecordSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  sourceUri: z.string().url(),
+  sourceSystem: z.string().trim().min(1).max(200),
+  sourceRecordId: z.string().max(500).nullable().optional(),
+  sourceVersion: z.string().max(300).nullable().optional(),
+  observedAt: isoDateTimeWithZone,
+  license: z.string().trim().min(1).max(200).nullable().optional(),
+  contentDigest: z
+    .object({
+      algorithm: z.enum(["sha-256", "sha-384", "sha-512"]),
+      value: z.string().regex(/^[a-fA-F0-9]+$/),
+    })
+    .strict()
+    .nullable()
+    .optional()
+    .refine(
+      (digest) =>
+        digest === undefined ||
+        digest === null ||
+        digest.value.length === digestLengths[digest.algorithm],
+      "Digest length does not match its declared algorithm",
+    ),
+  validationState: z.enum([
+    "unreviewed",
+    "schema_valid",
+    "source_verified",
+    "rejected",
+  ]),
+  validationEvidenceUri: z.string().url().nullable().optional(),
+  notes: z.string().max(2000).nullable().optional(),
+}).strict();
+
+export type ProvenanceRecord = z.infer<typeof provenanceRecordSchema>;
+
+export function validateProvenanceRecord(input: unknown): ProvenanceRecord {
+  return provenanceRecordSchema.parse(input);
+}
