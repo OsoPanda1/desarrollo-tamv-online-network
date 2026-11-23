@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HCU Living Universe — the living map of the TAMV cognitive ecosystem — TAMV Online Network</title>
-<meta name="description" content="Interactive map of the TAMV Online Network ecosystem: twenty-five particles —one conceptual anchor, six density regions and eighteen entities with a record or a declared void—, seven relation propositions and a chronology of deposits. Each particle links the source that supports it or states that it has none.">
-<meta property="og:description" content="Interactive map of the TAMV Online Network ecosystem: twenty-five particles, seven relation propositions and a chronology of deposits. Each particle links the source that supports it or states that it has none.">
+<meta name="description" content="Interactive 3D HCU universe for TAMV Online Network with orbital perspective, analytical layers, evidence classification and documentary traceability. Descriptive visualization, not causal or predictive.">
+<meta property="og:description" content="Interactive three-dimensional HCU universe with orbiting nodes, expandable regions, analytical layers and traceable dossiers. Statistics describe the published corpus and do not imply independent validation.">
 <meta property="og:image" content="https://tamvonline-t78x4mdi9wa.qoder.website/assets/brand/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -16,7 +16,7 @@
 <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/site.css">
-<link rel="stylesheet" href="../assets/mapa/map.css">
+<link rel="stylesheet" href="../assets/mapa/map.css?v=hcu-observatory-v2">
 <script>/* Progressive layer: without JS the canvas is withdrawn and the text register is the page. */
 document.documentElement.classList.add("js");</script>
 <!-- schema:tamv-org:start -->
@@ -278,8 +278,8 @@ document.documentElement.classList.add("js");</script>
   <section class="section alt">
     <div class="wrap">
       <div class="section-head">
-        <div><span class="section-num">02 — The field</span><h2>Interactive canvas</h2></div>
-        <p>The canvas is a perception layer, not the only way to read. Everything it draws is written in the text register in section 03 and works without JavaScript; with JavaScript added you can orbit the particles, filter them and open their dossiers.</p>
+        <div><span class="section-num">02 — The field</span><h2>Interactive three-dimensional universe</h2></div>
+        <p>The field combines 3D perspective, projected orbits, expanding halos and animated flows. Select a region to spread its orbital system, inspect a particle to open its dossier, and combine layers to read evidence, over-interpretation risk and dependencies. Immersive view clears the panels; the analytical register below classifies the corpus without replacing the underlying records.</p>
       </div>
 
       <div class="hcu-stage" data-hcu-stage data-hcu-replace>
@@ -333,6 +333,7 @@ document.documentElement.classList.add("js");</script>
       <div class="hcu-controls" data-hcu-replace>
         <fieldset>
           <legend>Layers</legend>
+          <button type="button" class="hcu-btn" data-hcu-layer="orbits" aria-pressed="true">3D orbits</button>
           <button type="button" class="hcu-btn" data-hcu-layer="flow">Flows</button>
           <button type="button" class="hcu-btn" data-hcu-layer="density">Density</button>
           <button type="button" class="hcu-btn" data-hcu-layer="gravity">Dependencies</button>
@@ -349,6 +350,9 @@ document.documentElement.classList.add("js");</script>
         <fieldset>
           <legend>View</legend>
           <button type="button" class="hcu-btn" data-hcu-play aria-pressed="true">Pause rotation</button>
+          <button type="button" class="hcu-btn" data-hcu-zoom="out" aria-label="Zoom out of the 3D field">− Zoom out</button>
+          <button type="button" class="hcu-btn" data-hcu-zoom="in" aria-label="Zoom into the 3D field">＋ Zoom in</button>
+          <button type="button" class="hcu-btn" data-hcu-immersive aria-pressed="false">3D immersive view</button>
           <button type="button" class="hcu-btn" data-hcu-reset>Reset</button>
         </fieldset>
         <fieldset>
@@ -360,6 +364,10 @@ document.documentElement.classList.add("js");</script>
       <p class="hcu-status" data-hcu-status role="status" aria-live="polite"></p>
 
       <div class="hcu-tally" data-hcu-tally data-hcu-replace></div>
+
+      <section class="hcu-analysis" data-hcu-analysis aria-label="Descriptive analytics for the HCU universe">
+        <p class="hcu-analysis-fallback">This panel is computed from the map's published data. Its figures describe the documented corpus; they are not independent measurements of impact, causality, or institutional maturity.</p>
+      </section>
 
       <noscript>
         <div class="hcu-noscript">
@@ -943,7 +951,7 @@ document.documentElement.classList.add("js");</script>
 </footer>
 
 <script src="../assets/mapa/graph.js" defer></script>
-<script src="../assets/mapa/map.js" defer></script>
+<script src="../assets/mapa/map.js?v=hcu-observatory-v2" defer></script>
 <script src="../assets/site.js" defer></script>
 </body>
 </html>

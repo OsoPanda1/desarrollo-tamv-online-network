@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Developer guide and public API
+    url: https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/api/public-api-quickstart.md
+    about: Check public endpoint contracts and local setup before opening an integration question.
+  - name: Security and privacy reporting
+    url: https://github.com/OsoPanda1/desarrollo-tamv-online-network/security
+    about: Do not disclose vulnerabilities, credentials, or personal data in a public issue. Use private vulnerability reporting if it is enabled.
+  - name: Project roadmap
+    url: https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/strategy/tamv-platform-excellence-roadmap.md
+    about: Review project maturity, evidence boundaries, and acceptance criteria before proposing a broad change.

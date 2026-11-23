@@ -1,0 +1,65 @@
+name: Feature or UX proposal
+description: Propose a specific improvement with acceptance criteria and user impact.
+title: "[Proposal]: "
+body:
+  - type: markdown
+    attributes:
+      value: "A request is a proposal, not a commitment to implement. Start from the problem; avoid bundling unrelated redesigns into one issue."
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Primary audience
+      options:
+        - Developer / integrator
+        - Researcher / academic team
+        - Community / territorial participant
+        - Creator / educator
+        - Maintainer / moderator
+        - General public
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Who encounters this problem, and in what context?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired user outcome
+      description: Describe an observable improvement, not only a visual preference.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Give testable examples of what counts as complete.
+      placeholder: "Given ... when ... then ..."
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Data, privacy, security, accessibility and evidence boundaries
+      description: Mention potential impact or write "not assessed yet".
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and maintenance cost
+      description: Is there a smaller change with the same user benefit?
+    validations:
+      required: false
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I understand this proposal is not yet approved or scheduled.
+          required: true
+        - label: I have not included personal data or confidential security details.
+          required: true

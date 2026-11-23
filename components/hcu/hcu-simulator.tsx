@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import type { HcuSimulationOutput } from "@/lib/hcu/model"
 import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components/shared/portal-form-fields"
@@ -10,14 +10,14 @@ type SimulationResult = { id: string; modelVersion: string; inputHash: string; o
 type AtomOption = { id: string; nameEs: string; nameEn: string; isQuarantined: boolean }
 type ShockDraft = { atomId: string; year: number; intensity: number }
 
-export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en" }) {
+export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onShockAtomChange }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en"; shockAtomId: string; onShockAtomChange: (id: string) => void }) {
   const english = locale === "en"
   const [scenario, setScenario] = useState("baseline")
   const [startYear, setStartYear] = useState(2026)
   const [endYear, setEndYear] = useState(2050)
-  const [seed, setSeed] = useState(20261101)
-  const [mcRuns, setMcRuns] = useState(200)
-  const [shocks, setShocks] = useState<ShockDraft[]>([{ atomId: atoms[0]?.id ?? "", year: 2026, intensity: 0.3 }])
+  const [seed, setSeed] = useState(20261120)
+  const [mcRuns, setMcRuns] = useState(50)
+  const [shocks, setShocks] = useState<ShockDraft[]>([{ atomId: shockAtomId, year: 2026, intensity: 0.3 }])
   const [quarantine, setQuarantine] = useState<string[]>([])
   const [result, setResult] = useState<SimulationResult | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -48,22 +48,40 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOp
     setQuarantine((current) => checked ? [...current, id] : current.filter((atomId) => atomId !== id))
   }
 
+  useEffect(() => {
+    if (!shockAtomId) return
+    setShocks((current) => {
+      if (current.length === 0) return [{ atomId: shockAtomId, year: startYear, intensity: 0.3 }]
+      if (current[0].atomId === shockAtomId) return current
+      return current.map((shock, index) => index === 0 ? { ...shock, atomId: shockAtomId } : shock)
+    })
+  }, [shockAtomId, startYear])
+
   function updateShock(index: number, key: keyof ShockDraft, value: string) {
     setShocks((current) => current.map((shock, position) => position === index
       ? { ...shock, [key]: key === "atomId" ? value : Number(value) }
       : shock))
+    if (index === 0 && key === "atomId") onShockAtomChange(value)
+  }
+
+  function removeShock(index: number) {
+    const nextShocks = shocks.filter((_, position) => position !== index)
+    setShocks(nextShocks)
+    if (index === 0 && nextShocks[0]) onShockAtomChange(nextShocks[0].atomId)
   }
 
   function updateStartYear(value: number) {
+    const nextEndYear = Math.max(value, endYear)
     setStartYear(value)
-    if (value > endYear) setEndYear(value)
-    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.max(value, Math.min(endYear, shock.year)) })))
+    setEndYear(nextEndYear)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.max(value, Math.min(nextEndYear, shock.year)) })))
   }
 
   function updateEndYear(value: number) {
+    const nextStartYear = Math.min(value, startYear)
     setEndYear(value)
-    if (value < startYear) setStartYear(value)
-    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.min(value, Math.max(startYear, shock.year)) })))
+    setStartYear(nextStartYear)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.min(value, Math.max(nextStartYear, shock.year)) })))
   }
 
   return <div className="hcu-simulator-layout">
@@ -84,10 +102,10 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es" }: { atoms: AtomOp
             <PortalField id={`hcu-shock-atom-${index}`} label={`${english ? "Affected node" : "Nodo afectado"} ${index + 1}`}><select id={`hcu-shock-atom-${index}`} value={shock.atomId} onChange={(event) => updateShock(index, "atomId", event.target.value)} required>{atoms.map((atom) => <option key={atom.id} value={atom.id}>{english ? atom.nameEn : atom.nameEs}</option>)}</select></PortalField>
             <PortalField id={`hcu-shock-year-${index}`} label={english ? "Year" : "Año"}><Input id={`hcu-shock-year-${index}`} type="number" min={startYear} max={endYear} value={shock.year} onChange={(event) => updateShock(index, "year", event.target.value)} required /></PortalField>
             <PortalField id={`hcu-shock-intensity-${index}`} label={english ? "Intensity (−1 to 1)" : "Intensidad (−1 a 1)"}><Input id={`hcu-shock-intensity-${index}`} type="number" min={-1} max={1} step={0.1} value={shock.intensity} onChange={(event) => updateShock(index, "intensity", event.target.value)} required /></PortalField>
-            <button className="button button-quiet hcu-remove-shock" type="button" onClick={() => setShocks((current) => current.filter((_, position) => position !== index))} aria-label={`${english ? "Remove shock" : "Eliminar choque"} ${index + 1}`}>{english ? "Remove" : "Eliminar"}</button>
+            <button className="button button-quiet hcu-remove-shock" type="button" disabled={shocks.length <= 1} onClick={() => removeShock(index)} aria-label={`${english ? "Remove shock" : "Eliminar choque"} ${index + 1}`}>{english ? "Remove" : "Eliminar"}</button>
           </div>)}
         </div>
-        <button className="button button-outline-light" type="button" disabled={shocks.length >= 16 || atoms.length === 0} onClick={() => setShocks((current) => [...current, { atomId: atoms[0]?.id ?? "", year: startYear, intensity: 0.2 }])}>{english ? "Add a shock" : "Añadir choque"}</button>
+        <button className="button button-outline-light" type="button" disabled={shocks.length >= 16 || atoms.length === 0} onClick={() => setShocks((current) => [...current, { atomId: shockAtomId || atoms[0]?.id || "", year: startYear, intensity: 0.2 }])}>{english ? "Add a shock" : "Añadir choque"}</button>
       </fieldset>
       <fieldset className="portal-fieldset"><legend>{english ? "Quarantine nodes" : "Poner nodos en cuarentena"}</legend><p>{english ? "Quarantined nodes still receive effects but do not transmit signals." : "Los nodos en cuarentena siguen recibiendo efectos, pero no transmiten señales."}</p>
         <div className="hcu-checkbox-list">{atoms.map((atom) => <PortalCheckboxField id={`quarantine-${atom.id}`} key={atom.id} checked={quarantine.includes(atom.id)} onCheckedChange={(checked) => toggleQuarantine(atom.id, checked)} label={english ? atom.nameEn : atom.nameEs} />)}</div>

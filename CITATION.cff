@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite this project when you use its code, documentation, data structures, or methods. Cite the exact release or commit you used."
+title: "TAMV Online Network"
+abstract: >-
+  An evolving Mexican initiative connecting open research, digital
+  infrastructure, AI governance, creator tools, and living territorial memory.
+  This citation file identifies the repository; it does not imply peer review,
+  accreditation, production readiness, or a code license.
+authors:
+  - family-names: "Castillo Trejo"
+    given-names: "Edwin Oswaldo"
+    orcid: "https://orcid.org/0009-0008-5050-1539"
+repository-code: "https://github.com/OsoPanda1/desarrollo-tamv-online-network"
+url: "https://tamv.online"
