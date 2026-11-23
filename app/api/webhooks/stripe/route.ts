@@ -167,10 +167,14 @@ export async function POST(request: Request) {
         const subscriptionId = stripeId(checkout.subscription)
         const customerId = stripeId(checkout.customer)
         const [existing] = membershipId
-          ? await transaction.select({ id: membershipSubscriptions.id }).from(membershipSubscriptions)
+          ? await transaction.select({ id: membershipSubscriptions.id, userId: membershipSubscriptions.userId, planId: membershipSubscriptions.planId }).from(membershipSubscriptions)
               .where(eq(membershipSubscriptions.id, membershipId)).limit(1)
           : []
-        if (existing) {
+        if (
+          existing &&
+          checkout.metadata?.userId === existing.userId &&
+          checkout.metadata?.planId === existing.planId
+        ) {
           await syncMembership(transaction, existing.id, eventCreated, {
             stripeCheckoutSessionId: checkout.id,
             stripeCustomerId: customerId,
@@ -184,16 +188,32 @@ export async function POST(request: Request) {
         const checkout = object as unknown as StripeCheckoutSession
         const membershipId = checkout.metadata?.membershipId
         const [existing] = membershipId
-          ? await transaction.select({ id: membershipSubscriptions.id }).from(membershipSubscriptions)
+          ? await transaction.select({ id: membershipSubscriptions.id, userId: membershipSubscriptions.userId, planId: membershipSubscriptions.planId }).from(membershipSubscriptions)
               .where(eq(membershipSubscriptions.id, membershipId)).limit(1)
           : []
-        if (existing) await syncMembership(transaction, existing.id, eventCreated, {
+        if (
+          existing &&
+          checkout.metadata?.userId === existing.userId &&
+          checkout.metadata?.planId === existing.planId
+        ) await syncMembership(transaction, existing.id, eventCreated, {
           status: event.type === "checkout.session.expired" ? "checkout_expired" : "checkout_failed",
         })
       } else if (event.type.startsWith("customer.subscription.")) {
         const subscription = object as unknown as StripeSubscription
         const membershipId = await findMembership(transaction, subscription.metadata?.membershipId, subscription.id)
-        await syncMembership(transaction, membershipId, eventCreated, {
+        const [matching] = membershipId
+          ? await transaction.select({
+              id: membershipSubscriptions.id,
+              userId: membershipSubscriptions.userId,
+              planId: membershipSubscriptions.planId,
+            }).from(membershipSubscriptions).where(eq(membershipSubscriptions.id, membershipId)).limit(1)
+          : []
+        if (
+          matching &&
+          subscription.metadata?.membershipId === matching.id &&
+          subscription.metadata?.userId === matching.userId &&
+          subscription.metadata?.planId === matching.planId
+        ) await syncMembership(transaction, matching.id, eventCreated, {
           stripeSubscriptionId: subscription.id,
           stripeCustomerId: stripeId(subscription.customer),
           status: subscriptionStatus(subscription.status),
