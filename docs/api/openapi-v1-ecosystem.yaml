@@ -30,7 +30,84 @@ paths:
                 $ref: "#/components/schemas/EcosystemCatalog"
         "500":
           description: Unexpected server error.
+  /api/v1/provenance/validate:
+    post:
+      operationId: validateProvenanceRecord
+      summary: Validate a provenance record against the v1 schema
+      description: Stateless schema validation only. Does not fetch source URLs, persist records, verify authorship, or establish signature, trusted timestamp, peer review, or accreditation.
+      tags: [Provenance]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProvenanceRecord"
+      responses:
+        "200":
+          description: Record satisfies the schema. This is not source verification.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, schemaVersion, validationState, semantics]
+                properties:
+                  valid: { type: boolean, const: true }
+                  schemaVersion: { type: string, const: "1.0.0" }
+                  validationState: { type: string, enum: [unreviewed, schema_valid, source_verified, rejected] }
+                  semantics: { type: string }
+        "400":
+          description: Malformed JSON or invalid UTF-8.
+        "413":
+          description: Payload exceeds 65536 bytes.
+        "415":
+          description: Content-Type must be application/json.
+        "422":
+          description: JSON is valid but fails the provenance schema.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, error, issues]
+                properties:
+                  valid: { type: boolean, const: false }
+                  error: { type: string, const: schema_validation_failed }
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      required: [path, code, message]
+                      properties:
+                        path: { type: string }
+                        code: { type: string }
+                        message: { type: string }
 components:
+    ProvenanceRecord:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, sourceUri, sourceSystem, observedAt, validationState]
+      properties:
+        schemaVersion: { type: string, const: "1.0.0" }
+        sourceUri: { type: string, format: uri, minLength: 1, description: "Runtime accepts HTTP or HTTPS only." }
+        sourceSystem: { type: string, minLength: 1, maxLength: 200 }
+        sourceRecordId: { type: [string, "null"], maxLength: 500 }
+        sourceVersion: { type: [string, "null"], maxLength: 300 }
+        observedAt: { type: string, format: date-time, description: "Must include an explicit timezone and valid calendar date." }
+        license: { type: [string, "null"], maxLength: 200 }
+        contentDigest:
+          oneOf:
+            - type: "null"
+            - type: object
+              additionalProperties: false
+              required: [algorithm, value]
+              properties:
+                algorithm: { type: string, enum: [sha-256, sha-384, sha-512] }
+                value: { type: string, pattern: "^[a-fA-F0-9]+$" }
+              description: "Hex digest length must match the selected algorithm."
+        validationState:
+          type: string
+          enum: [unreviewed, schema_valid, source_verified, rejected]
+        validationEvidenceUri: { type: [string, "null"], format: uri, description: "Runtime accepts HTTP or HTTPS only." }
+        notes: { type: [string, "null"], maxLength: 2000 }
   schemas:
     EcosystemCatalog:
       type: object
