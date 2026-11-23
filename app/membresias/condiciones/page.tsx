@@ -3,6 +3,8 @@ import Link from "next/link"
 import { ArrowLeft, ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Condiciones de las membresías",
   description: "Condiciones de alcance y facturación de las membresías de TAMV Online Network.",
