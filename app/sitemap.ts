@@ -15,6 +15,7 @@ const publicPaths = [
   "/excelencia",
   "/auditoria-creator",
   "/desarrolladores",
+  "/membresias",
   "/apoyar",
   "/cuenta",
   "/unete",
