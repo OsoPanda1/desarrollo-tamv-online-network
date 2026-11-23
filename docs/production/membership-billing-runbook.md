@@ -19,6 +19,10 @@
 - AI Lounge is a third-party service. This repository has no confirmed commercial agreement, referral code, entitlement API or included paid pass. Only public links and guidance are part of this release.
 - Project collaboration is an application/selection pathway, not an automatic assignment to paid work, a guaranteed contract or a guaranteed investor introduction.
 
+## Future institutionalization and ROR objective
+
+The public page at /institucionalizacion documents a possible future destination for net operating revenue: legal and administrative formalization of TAMV and preparation of evidence for a Research Organization Registry (ROR) record. Any allocation requires a governance decision, an approved budget, transparent accounts and professional review. No current membership fee is contractually reserved for that purpose, and no date or ROR inclusion is guaranteed. The ROR identifier itself is free; legal and evidence-preparation costs are separate. This goal is not a substitute for the live-billing launch gate.
+
 ## Required environment variables
 
 Set through the deployment secret manager, never commit real values:
