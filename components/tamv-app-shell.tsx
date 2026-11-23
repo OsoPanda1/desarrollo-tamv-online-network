@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { TamvSiteHeader } from "@/components/tamv-site-header"
 import { localizedPath, type Locale } from "@/lib/i18n"
+import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 
 export function TamvAppShell({ children, locale = "es" }: { children: React.ReactNode; locale?: Locale }) {
   const english = locale === "en"
@@ -10,6 +11,7 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
       <a className="skip-link" href="#contenido">{english ? "Skip to content" : "Saltar al contenido"}</a>
       <TamvSiteHeader locale={locale} />
       <main id="contenido" className="app-main" lang={locale}>{children}</main>
+      <div className="container app-support-slot"><TamvDonationCTA locale={locale} variant="inline" /></div>
       <footer className="site-footer" lang={locale}>
         <div className="container footer-main">
           <Link className="footer-brand" href={localizedPath("/", locale)} aria-label={english ? "TAMV Online Network, home" : "TAMV Online Network, inicio"}>

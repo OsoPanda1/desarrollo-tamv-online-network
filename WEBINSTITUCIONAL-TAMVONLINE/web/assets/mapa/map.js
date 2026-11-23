@@ -134,6 +134,8 @@
   if (!holder || !field || !net || !net.getContext) { stage.remove(); return; }
   const fx = field.getContext('2d'), cx = net.getContext('2d');
   let W = 0, H = 0, DPR = 1, stars = [];
+  let frameId = 0, pageVisible = document.visibilityState !== 'hidden', inViewport = true;
+  let focusDomainId = '';
 
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -148,23 +150,28 @@
       a: Math.random() * 0.5 + 0.12, s: Math.random() * 0.06 + 0.01
     }));
   }
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => { resize(); requestRender(); });
 
   /* ── estado de la interfaz ────────────────────────────────────────────── */
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const layers = { field: true, flow: true, density: true, gravity: false, risk: false, evidence: false };
+  const layers = { field: true, orbits: true, flow: true, density: true, gravity: false, risk: false, evidence: false };
   let mode = 'community', running = !reduced, t = 0, sel = null, hover = null;
   let rx = -0.3, ry = 0.5, trx = -0.3, tryy = 0.5, zoom = 1, tz = 1, orbit = 0, drag = null;
   let filter = { q: '', state: 0, dom: '' };
 
   /* ── proyección ───────────────────────────────────────────────────────── */
-  function project(n) {
+  function projectCoordinates(x, y, z) {
     const cy = Math.cos(ry), sy = Math.sin(ry), ca = Math.cos(rx), sa = Math.sin(rx);
-    const x1 = n.x * cy - n.z * sy, z1 = n.z * cy + n.x * sy;
-    const y2 = n.y * ca - z1 * sa, z2 = z1 * ca + n.y * sa;
+    const x1 = x * cy - z * sy, z1 = z * cy + x * sy;
+    const y2 = y * ca - z1 * sa, z2 = z1 * ca + y * sa;
     const fov = 620, p = fov / (fov + z2);
-    n.sx = W / 2 + x1 * p * zoom; n.sy = H / 2 + y2 * p * zoom;
-    n.sz = z2; n.sr = Math.max(1.1, n.r * p * zoom); n.sp = p;
+    return { x: W / 2 + x1 * p * zoom, y: H / 2 + y2 * p * zoom, depth: z2, scale: p };
+  }
+
+  function project(n) {
+    const point = projectCoordinates(n.x, n.y, n.z);
+    n.sx = point.x; n.sy = point.y;
+    n.sz = point.depth; n.sr = Math.max(1.1, n.r * point.scale * zoom); n.sp = point.scale;
   }
 
   function physics() {
@@ -172,11 +179,16 @@
     rx += (trx - rx) * 0.14; ry += (tryy - ry) * 0.14; zoom += (tz - zoom) * 0.14;
     nodes.forEach(n => {
       if (n.kind === 'core') { n.x = 0; n.y = 0; n.z = 0; return; }
-      n.phase += 0.012;
-      if (n.kind === 'domain') { n.r = 13 + Math.sin(n.phase) * 1.3; return; }
+      if (running) n.phase += 0.012;
+      if (n.kind === 'domain') {
+        const focused = focusDomainId && n.dom.id === focusDomainId;
+        n.r = (focused ? 16 : 13) + (running ? Math.sin(n.phase) * 1.3 : 0);
+        return;
+      }
       const p = byId.get(n.domId); if (!p) return;
       const a = n.angle + orbit * n.wob;
-      const rr = n.orbit + Math.sin(n.phase * 0.8) * 7;
+      const focusScale = focusDomainId ? (n.ent && n.ent.dom === focusDomainId ? 1.34 : 0.82) : 1;
+      const rr = n.orbit * focusScale + (running ? Math.sin(n.phase * 0.8) * 7 : 0);
       n.x = p.x + Math.cos(a) * rr;
       n.y = p.y + Math.sin(a * 1.03) * rr * 0.62;
       n.z = p.z + Math.sin(a) * rr;
@@ -234,8 +246,10 @@
       const n = byId.get('dom:' + d.id);
       if (!n || !Number.isFinite(n.sx)) return;
       const count = G.entities.filter(e => e.dom === d.id).length;
-      const dens = layers.density ? Math.min(1, 0.32 + count * 0.12) : 0.42;
-      const rad = Math.max(70, 150 * n.sp * zoom);
+      const focused = focusDomainId === d.id;
+      const filterDim = filter.dom && filter.dom !== d.id ? 0.22 : 1;
+      const dens = (layers.density ? Math.min(1, 0.32 + count * 0.12) : 0.42) * (focused ? 1.35 : 1) * filterDim;
+      const rad = Math.max(70, (focused ? 184 : 150) * n.sp * zoom);
       const g = fx.createRadialGradient(n.sx, n.sy, 0, n.sx, n.sy, rad);
       g.addColorStop(0, hex(d.color, 0.30 * dens));
       g.addColorStop(0.35, hex(d.color, 0.14 * dens));
@@ -246,8 +260,54 @@
   }
 
   /* ── red ──────────────────────────────────────────────────────────────── */
+  /* ── guías orbitales 3D: posición derivada de las coordenadas del grafo ── */
+  function drawOrbits() {
+    if (!layers.orbits) return;
+    G.domains.forEach(d => {
+      const anchor = byId.get('dom:' + d.id);
+      if (!anchor) return;
+      const members = G.entities.filter(e => e.dom === d.id).map(e => byId.get(e.id)).filter(Boolean);
+      const baseRadius = members.length
+        ? members.reduce((sum, n) => sum + n.orbit, 0) / members.length
+        : 88;
+      const focused = focusDomainId === d.id;
+      const focusScale = focusDomainId ? (focused ? 1.34 : 0.82) : 1;
+      const filterDim = filter.dom && filter.dom !== d.id ? 0.16 : 1;
+      const breathe = focused && running ? Math.sin(t * 0.025 + anchor.phase) * 3 : 0;
+      cx.save();
+      cx.lineCap = 'round';
+      for (let ring = 0; ring < 2; ring++) {
+        const radius = (baseRadius + ring * 17 + breathe) * focusScale;
+        cx.beginPath();
+        for (let step = 0; step <= 88; step++) {
+          const theta = (step / 88) * Math.PI * 2;
+          const p = projectCoordinates(
+            anchor.x + Math.cos(theta) * radius,
+            anchor.y + Math.sin(theta * 1.03) * radius * 0.62,
+            anchor.z + Math.sin(theta) * radius
+          );
+          if (step === 0) cx.moveTo(p.x, p.y);
+          else cx.lineTo(p.x, p.y);
+        }
+        cx.strokeStyle = hex(d.color, (focused ? 0.42 : ring === 0 ? 0.20 : 0.10) * filterDim);
+        cx.lineWidth = focused ? (ring === 0 ? 1.45 : 0.95) : 0.75;
+        cx.setLineDash(focused ? (ring === 0 ? [3, 5] : [1, 8]) : (ring === 0 ? [2, 8] : [1, 10]));
+        cx.stroke();
+      }
+      cx.setLineDash([]);
+      if (focused) {
+        const p = projectCoordinates(anchor.x, anchor.y, anchor.z);
+        cx.strokeStyle = hex(d.color, 0.48);
+        cx.lineWidth = 1.2;
+        cx.beginPath(); cx.arc(p.x, p.y, Math.max(23, anchor.sr + 18), 0, Math.PI * 2); cx.stroke();
+      }
+      cx.restore();
+    });
+  }
+
   function drawNet() {
     cx.clearRect(0, 0, W, H);
+    drawOrbits();
 
     if (layers.gravity) {
       cx.lineWidth = 0.7;
@@ -266,7 +326,9 @@
       flows.forEach(f => {
         if (!f.a || !f.b) return;
         const on = visible(f.a) && visible(f.b);
-        cx.strokeStyle = hex(f.a.color || '#9ed4ff', on ? 0.14 : 0.04);
+        const touchesFocus = focusDomainId && [f.a, f.b].some(n => n && (n.ent && n.ent.dom === focusDomainId || n.kind === 'domain' && n.dom.id === focusDomainId));
+        const flowAlpha = focusDomainId ? (touchesFocus ? 0.34 : 0.035) : (on ? 0.14 : 0.04);
+        cx.strokeStyle = hex(f.a.color || '#9ed4ff', flowAlpha);
         cx.lineWidth = 0.9;
         const mx = (f.a.sx + f.b.sx) / 2 + Math.sin(t * 0.008 + f.a.phase) * 22;
         const my = (f.a.sy + f.b.sy) / 2 + Math.cos(t * 0.009 + f.b.phase) * 22;
@@ -320,7 +382,23 @@
       cx.fillStyle = coreG; cx.beginPath(); cx.arc(n.sx, n.sy, r, 0, 7); cx.fill();
 
       const isSel = sel && sel.id === n.id;
-      cx.strokeStyle = isSel ? '#ffffff' : (hover === n ? 'rgba(255,255,255,.75)' : hex(col, 0.6));
+      const isHover = hover === n;
+      if (isSel || isHover) {
+        const pulse = running ? 0.5 + 0.5 * Math.sin(t * 0.045 + n.phase) : 0.35;
+        cx.save();
+        cx.globalAlpha = on ? 1 : 0.35;
+        cx.strokeStyle = isSel ? 'rgba(234,243,251,.9)' : hex(col, 0.88);
+        cx.lineWidth = isSel ? 1.65 : 1.1;
+        cx.setLineDash(isSel ? [] : [2, 4]);
+        cx.beginPath(); cx.arc(n.sx, n.sy, r + (isSel ? 12 + pulse * 7 : 6), 0, Math.PI * 2); cx.stroke();
+        if (isSel) {
+          cx.setLineDash([1.5, 5]);
+          cx.strokeStyle = hex(col, 0.62);
+          cx.beginPath(); cx.arc(n.sx, n.sy, r + 22 + pulse * 8, 0, Math.PI * 2); cx.stroke();
+        }
+        cx.restore();
+      }
+      cx.strokeStyle = isSel ? '#ffffff' : (isHover ? 'rgba(255,255,255,.75)' : hex(col, 0.6));
       cx.lineWidth = isSel ? 2.2 : 1;
       cx.beginPath(); cx.arc(n.sx, n.sy, r, 0, 7); cx.stroke();
 
@@ -349,12 +427,34 @@
     });
   }
 
+  function requestRender() {
+    if (frameId || !pageVisible || !inViewport) return;
+    frameId = window.requestAnimationFrame(loop);
+  }
+
   function loop() {
+    frameId = 0;
+    if (!pageVisible || !inViewport) return;
+    const oldRx = rx, oldRy = ry, oldZoom = zoom;
     physics();
     nodes.forEach(project);
     drawField();
     drawNet();
-    window.requestAnimationFrame(loop);
+    const settling = Math.abs(rx - trx) > 0.001 || Math.abs(ry - tryy) > 0.001 || Math.abs(zoom - tz) > 0.001 ||
+      Math.abs(oldRx - rx) > 0.0005 || Math.abs(oldRy - ry) > 0.0005 || Math.abs(oldZoom - zoom) > 0.0005;
+    if (running || settling) requestRender();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    pageVisible = document.visibilityState !== 'hidden';
+    if (pageVisible) requestRender();
+  });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      inViewport = Boolean(entries[0] && entries[0].isIntersecting);
+      if (inViewport) requestRender();
+    }, { threshold: 0.02 });
+    observer.observe(stage);
   }
 
   /* ── panel: registro navegable (derivado de graph.js) ─────────────────── */
@@ -406,7 +506,15 @@
 
   function show(node) {
     sel = node;
+    focusDomainId = node.kind === 'domain' ? node.dom.id : (node.ent ? node.ent.dom : '');
+    if (node.kind !== 'core') {
+      aim(node);
+      tz = node.kind === 'domain' ? 1.14 : 1.08;
+    } else {
+      tz = 1;
+    }
     markSelection();
+    requestRender();
     if (!dossier) return;
     const e = node.ent;
     const s = e ? L(e) : null;
@@ -523,7 +631,7 @@
   function sub(txt) { const d = document.createElement('div'); d.className = 'hcu-sub'; d.textContent = txt; return d; }
   function par(txt) { const p = document.createElement('p'); p.textContent = String(txt || ''); return p; }
   function el(tag, txt, cls) { const n = document.createElement(tag); n.textContent = String(txt || ''); if (cls) n.className = cls; return n; }
-  function closeDossier() { if (dossier) dossier.classList.add('is-empty'); sel = null; markSelection(); }
+  function closeDossier() { if (dossier) dossier.classList.add('is-empty'); sel = null; focusDomainId = ''; markSelection(); requestRender(); }
 
   /* ── interacción ──────────────────────────────────────────────────────── */
   function pick(x, y) {
@@ -546,11 +654,13 @@
       tryy += dx * 0.005; trx += dy * 0.005;
       drag.x = e.clientX; drag.y = e.clientY;
       drag.moved += Math.abs(dx) + Math.abs(dy);
+      requestRender();
       return;
     }
     const b = net.getBoundingClientRect();
     hover = pick(e.clientX - b.left, e.clientY - b.top);
     net.style.cursor = hover ? 'pointer' : 'grab';
+    requestRender();
   });
   window.addEventListener('pointerup', e => {
     stage.classList.remove('is-dragging');
@@ -561,7 +671,7 @@
     const n = pick(e.clientX - b.left, e.clientY - b.top);
     if (n) show(n); else closeDossier();
   });
-  net.addEventListener('wheel', e => { e.preventDefault(); tz = Math.min(2.6, Math.max(0.45, tz * (e.deltaY < 0 ? 1.09 : 0.92))); }, { passive: false });
+  net.addEventListener('wheel', e => { e.preventDefault(); tz = Math.min(2.6, Math.max(0.45, tz * (e.deltaY < 0 ? 1.09 : 0.92))); requestRender(); }, { passive: false });
 
   holder.setAttribute('tabindex', '0');
   holder.setAttribute('role', 'application');
@@ -575,6 +685,7 @@
     else if (k === '+' || k === '=') { tz = Math.min(2.6, tz * 1.12); e.preventDefault(); }
     else if (k === '-' || k === '_') { tz = Math.max(0.45, tz * 0.89); e.preventDefault(); }
     else if (k === 'Escape') { closeDossier(); }
+    requestRender();
   });
   if (indexBody) indexBody.addEventListener('click', e => {
     const b = e.target.closest('.hcu-item'); if (!b) return;
@@ -603,6 +714,7 @@
       layers[key] = !layers[key];
       b.setAttribute('aria-pressed', String(layers[key]));
       say(T.layerWord + ' «' + b.textContent + '»: ' + (layers[key] ? T.on : T.off));
+      requestRender();
     });
   });
   document.querySelectorAll('[data-hcu-mode]').forEach(b => {
@@ -622,6 +734,7 @@
       const selSt = document.querySelector('[data-hcu-filter="state"]'); if (selSt) selSt.value = '0';
       buildIndex(); applyFilters();
       say(T.mode + ': ' + nm(m) + ' — ' + L(m).ask);
+      requestRender();
     });
   });
   const playBtn = document.querySelector('[data-hcu-play]');
@@ -629,6 +742,7 @@
     running = !running;
     this.setAttribute('aria-pressed', String(running));
     this.textContent = running ? T.pause : T.resume;
+    requestRender();
   });
   const q = document.querySelector('[data-hcu-search]');
   if (q) q.addEventListener('input', () => { filter.q = q.value.trim().toLowerCase(); applyIndexFilter(); applyFilters(); });
@@ -644,15 +758,36 @@
     const out = document.querySelector('[data-hcu-visible]');
     if (out) out.textContent = String(vis);
     say(es('Entidades visibles: ', 'Visible entities: ') + vis + ' / ' + G.entities.length);
+    requestRender();
   }
   document.querySelector('[data-hcu-close]')?.addEventListener('click', closeDossier);
   document.querySelector('[data-hcu-reset]')?.addEventListener('click', () => {
     filter = { q: '', state: 0, dom: '' };
     if (q) q.value = '';
     document.querySelectorAll('[data-hcu-filter]').forEach(s => s.value = s.dataset.hcuFilter === 'state' ? '0' : '');
-    trx = -0.3; tryy = 0.5; tz = 1;
+    trx = -0.3; tryy = 0.5; tz = 1; focusDomainId = ''; stage.classList.remove('is-immersive');
+    document.querySelectorAll('[data-hcu-immersive]').forEach(b => { b.setAttribute('aria-pressed', 'false'); b.textContent = es('Vista inmersiva 3D', '3D immersive view'); });
     closeDossier(); applyIndexFilter(); applyFilters();
-    say(T.reset);
+    say(T.reset); requestRender();
+  });
+
+  /* ── controles de cámara y enfoque espacial ────────────────────────────── */
+  document.querySelectorAll('[data-hcu-zoom]').forEach(b => b.addEventListener('click', () => {
+    const dir = b.dataset.hcuZoom;
+    tz = dir === 'in' ? Math.min(2.6, tz * 1.18) : Math.max(0.45, tz * 0.85);
+    requestRender();
+    say(es('Escala de cámara ajustada.', 'Camera scale adjusted.'));
+  }));
+  document.querySelectorAll('[data-hcu-immersive]').forEach(b => {
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => {
+      const active = !stage.classList.contains('is-immersive');
+      stage.classList.toggle('is-immersive', active);
+      b.setAttribute('aria-pressed', String(active));
+      b.textContent = active ? es('Salir de vista inmersiva', 'Exit immersive view') : es('Vista inmersiva 3D', '3D immersive view');
+      resize(); requestRender();
+      say(active ? es('Vista inmersiva: paneles ocultos para explorar el campo 3D.', 'Immersive view: panels hidden to explore the 3D field.') : es('Paneles analíticos restablecidos.', 'Analytical panels restored.'));
+    });
   });
 
   /* ── resumen calculado desde los datos ────────────────────────────────── */
@@ -678,6 +813,221 @@
       d.querySelector('span').textContent = s;
       box.appendChild(d);
     });
+  }
+
+  /* ── observatorio analítico calculado desde graph.js ───────────────────── */
+  function addMetric(parent, label, value, note) {
+    const item = document.createElement('div');
+    item.className = 'hcu-analysis-metric';
+    const title = el('span', label);
+    const number = el('b', String(value));
+    const caption = el('small', note || '');
+    item.append(title, number, caption);
+    parent.appendChild(item);
+    return item;
+  }
+
+  function addBarRow(parent, label, count, total, colorClass) {
+    const row = document.createElement('div');
+    row.className = 'hcu-analysis-bar-row' + (colorClass ? ' ' + colorClass : '');
+    const top = document.createElement('div');
+    top.className = 'hcu-analysis-bar-top';
+    top.append(el('span', label), el('b', String(count)));
+    const track = document.createElement('div');
+    track.className = 'hcu-analysis-track';
+    track.setAttribute('aria-label', label + ': ' + count + ' / ' + total);
+    const bar = document.createElement('i');
+    bar.style.width = (total ? Math.min(100, count / total * 100) : 0) + '%';
+    track.appendChild(bar);
+    row.append(top, track);
+    parent.appendChild(row);
+    return row;
+  }
+
+  function fillAnalysis() {
+    const box = document.querySelector('[data-hcu-analysis]');
+    if (!box) return;
+    box.replaceChildren();
+    const entities = G.entities;
+    const total = entities.length;
+    const sourceCount = entities.reduce((sum, entity) => sum + entity.src.length, 0);
+    const withSource = entities.filter(entity => entity.src.length > 0);
+    const noSource = entities.filter(entity => entity.src.length === 0);
+    const assessed = entities.filter(entity => entity.st >= 3);
+    const persistence = entities.filter(entity => entity.seals.persist === 'si');
+    const externalReview = entities.filter(entity => entity.seals.review === 'si');
+    const highRisk = entities.filter(entity => entity.rk === 'alto');
+    const highRiskNoSources = highRisk.filter(entity => entity.src.length === 0);
+    const sourceCountByState = G.states.map(state => ({ state, count: entities.filter(entity => entity.st === state.code).length }));
+    const domainRecords = G.domains.map(domain => {
+      const entries = entities.filter(entity => entity.dom === domain.id);
+      return {
+        domain,
+        entities: entries.length,
+        sourced: entries.filter(entity => entity.src.length > 0).length,
+        noSource: entries.filter(entity => entity.src.length === 0).length,
+        highRisk: entries.filter(entity => entity.rk === 'alto').length,
+        assessed: entries.filter(entity => entity.st >= 3).length,
+        flows: G.flows.filter(flow => flow.from.concat(flow.to).some(id => {
+          if (id === 'core') return false;
+          if (id.startsWith('dom:')) return id.slice(4) === domain.id;
+          const entity = entById.get(id);
+          return Boolean(entity && entity.dom === domain.id);
+        })).length
+      };
+    });
+    const domainForNode = id => {
+      if (id === 'core') return null;
+      if (id.startsWith('dom:')) return id.slice(4);
+      const entity = entById.get(id);
+      return entity ? entity.dom : null;
+    };
+    const crossDomainFlows = G.flows.filter(flow => {
+      const domains = new Set(flow.from.concat(flow.to).map(domainForNode).filter(Boolean));
+      return domains.size > 1;
+    });
+    const degree = entities.map(entity => ({
+      entity,
+      count: G.flows.filter(flow => flow.from.concat(flow.to).includes(entity.id)).length
+    })).sort((a, b) => b.count - a.count || nm(a.entity).localeCompare(nm(b.entity), lang));
+    const heading = document.createElement('div');
+    heading.className = 'hcu-analysis-heading';
+    const intro = document.createElement('div');
+    intro.append(
+      el('p', es('HCU / OBSERVATORIO ANALÍTICO', 'HCU / ANALYTICAL OBSERVATORY'), 'hcu-analysis-eyebrow'),
+      el('h3', es('Lectura estructural del universo', 'Structural reading of the universe')),
+      el('p', es('Indicadores calculados de la instantánea publicada: trazabilidad, estados de evidencia, distribución de riesgos de lectura y conectividad declarada. Son estadísticas descriptivas, no validación externa.', 'Computed indicators from the published snapshot: traceability, evidence states, reading-risk distribution, and declared connectivity. These are descriptive statistics, not external validation.'), 'hcu-analysis-description')
+    );
+    const stamp = document.createElement('div');
+    stamp.className = 'hcu-analysis-stamp';
+    stamp.append(el('span', es('VERSIÓN DEL CORPUS', 'CORPUS VERSION')), el('b', G.meta.version || '—'), el('span', es('FECHA DE AUDITORÍA DECLARADA', 'DECLARED AUDIT DATE')), el('b', G.meta.audited || '—'));
+    heading.append(intro, stamp);
+    box.appendChild(heading);
+
+    const cards = document.createElement('div');
+    cards.className = 'hcu-analysis-overview';
+    const evidenceCard = document.createElement('article');
+    evidenceCard.className = 'hcu-analysis-card hcu-analysis-card--evidence';
+    evidenceCard.append(el('p', es('01 / MADUREZ DOCUMENTAL', '01 / DOCUMENTARY MATURITY'), 'hcu-analysis-kicker'), el('h4', es('Estados de evidencia', 'Evidence states')), el('p', es('Distribución de las entidades según el estado registrado en el corpus.', 'Distribution of entities by the state recorded in the corpus.'), 'hcu-analysis-card-copy'));
+    const stateBars = document.createElement('div');
+    stateBars.className = 'hcu-analysis-bars';
+    sourceCountByState.forEach(({ state, count }) => addBarRow(stateBars, state.code + ' · ' + nm(state), count, total, 'is-state-e' + state.code));
+    evidenceCard.appendChild(stateBars);
+    const evidenceFoot = document.createElement('div');
+    evidenceFoot.className = 'hcu-analysis-foot';
+    addMetric(evidenceFoot, es('E3+ evaluadas', 'E3+ assessed'), assessed.length, es('Requieren evaluación documentada o revisión independiente.', 'Require documented assessment or independent review.'));
+    evidenceCard.appendChild(evidenceFoot);
+    cards.appendChild(evidenceCard);
+
+    const traceCard = document.createElement('article');
+    traceCard.className = 'hcu-analysis-card';
+    traceCard.append(el('p', es('02 / PROCEDENCIA', '02 / PROVENANCE'), 'hcu-analysis-kicker'), el('h4', es('Mapa de trazabilidad', 'Traceability map')), el('p', es('La presencia de una fuente habilita inspección; no demuestra que la fuente respalde la afirmación.', 'A recorded source enables inspection; it does not prove that the source supports the claim.'), 'hcu-analysis-card-copy'));
+    const sourceCoverage = document.createElement('div');
+    sourceCoverage.className = 'hcu-analysis-coverage';
+    sourceCoverage.append(el('span', es('Entidades con ≥ 1 fuente', 'Entities with ≥ 1 source')), el('b', withSource.length + ' / ' + total));
+    const coverageTrack = document.createElement('div');
+    coverageTrack.className = 'hcu-analysis-track hcu-analysis-track--coverage';
+    const coverageFill = document.createElement('i');
+    coverageFill.style.width = (total ? withSource.length / total * 100 : 0) + '%';
+    coverageTrack.appendChild(coverageFill);
+    sourceCoverage.appendChild(coverageTrack);
+    traceCard.appendChild(sourceCoverage);
+    const traceMetrics = document.createElement('div');
+    traceMetrics.className = 'hcu-analysis-metric-grid';
+    addMetric(traceMetrics, es('Referencias fuente', 'Source references'), sourceCount, es('Total declarado en entidades', 'Total recorded across entities'));
+    addMetric(traceMetrics, es('Sin fuente enlazada', 'No linked source'), noSource.length, es('Vacío de trazabilidad', 'Traceability gap'));
+    addMetric(traceMetrics, es('ID persistente cumplido', 'Persistent ID marked met'), persistence.length, es('Sello declarativo', 'Declared seal'));
+    addMetric(traceMetrics, es('Revisión externa marcada', 'External review marked'), externalReview.length, es('No equivale a verificación independiente', 'Not equivalent to independent verification'));
+    traceCard.appendChild(traceMetrics);
+    cards.appendChild(traceCard);
+
+    const riskCard = document.createElement('article');
+    riskCard.className = 'hcu-analysis-card';
+    riskCard.append(el('p', es('03 / RIESGO DE LECTURA', '03 / READING RISK'), 'hcu-analysis-kicker'), el('h4', es('Distribución declarada', 'Declared distribution')), el('p', es('La clasificación rk refleja el riesgo de sobreinterpretación descrito por el corpus; no es una puntuación clínica ni una métrica de seguridad validada.', 'The rk label reflects the corpus-described risk of over-interpretation; it is not a clinical score or validated security metric.'), 'hcu-analysis-card-copy'));
+    const riskBars = document.createElement('div');
+    riskBars.className = 'hcu-analysis-bars';
+    ['alto', 'medio', 'bajo'].forEach(level => addBarRow(
+      riskBars,
+      es(level === 'alto' ? 'Alto' : level === 'medio' ? 'Medio' : 'Bajo', level === 'alto' ? 'High' : level === 'medio' ? 'Medium' : 'Low'),
+      entities.filter(entity => entity.rk === level).length,
+      total,
+      level === 'alto' ? 'is-risk-high' : level === 'medio' ? 'is-risk-medium' : 'is-risk-low'
+    ));
+    riskCard.appendChild(riskBars);
+    const riskFoot = document.createElement('div');
+    riskFoot.className = 'hcu-analysis-callout';
+    riskFoot.append(el('b', String(highRiskNoSources.length)), el('span', es('entidades de riesgo alto sin fuente enlazada', 'high-risk entities with no linked source')));
+    riskCard.appendChild(riskFoot);
+    cards.appendChild(riskCard);
+
+    const networkCard = document.createElement('article');
+    networkCard.className = 'hcu-analysis-card';
+    networkCard.append(el('p', es('04 / TOPOLOGÍA', '04 / TOPOLOGY'), 'hcu-analysis-kicker'), el('h4', es('Conectividad declarada', 'Declared connectivity')), el('p', es('Las relaciones son proposiciones del corpus. Una conexión no prueba causalidad, influencia efectiva ni ejecución técnica.', 'Relationships are corpus propositions. A connection does not prove causation, effective influence, or technical execution.'), 'hcu-analysis-card-copy'));
+    const networkMetrics = document.createElement('div');
+    networkMetrics.className = 'hcu-analysis-metric-grid';
+    addMetric(networkMetrics, es('Proposiciones', 'Propositions'), G.flows.length, es('Relaciones registradas', 'Recorded relationships'));
+    addMetric(networkMetrics, es('Entre regiones', 'Cross-region'), crossDomainFlows.length, es('Cruzan más de un dominio', 'Cross more than one domain'));
+    addMetric(networkMetrics, es('Prueba propuesta', 'Proposed test'), G.flows.filter(flow => Boolean(L(flow).test)).length, es('Con criterio de contraste escrito', 'With a written test criterion'));
+    addMetric(networkMetrics, es('Entidades aisladas', 'Unlinked entities'), degree.filter(item => item.count === 0).length, es('Sin aristas incidentes en el registro', 'No incident edges in the register'));
+    networkCard.appendChild(networkMetrics);
+    const hubs = document.createElement('div');
+    hubs.className = 'hcu-analysis-hubs';
+    hubs.appendChild(el('p', es('Mayor conectividad registrada', 'Highest recorded connectivity'), 'hcu-analysis-subhead'));
+    degree.slice(0, 4).forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'hcu-analysis-hub';
+      const open = document.createElement('button');
+      open.type = 'button';
+      open.className = 'hcu-analysis-node-link';
+      open.textContent = codeOf(item.entity) + ' · ' + nm(item.entity);
+      open.addEventListener('click', () => {
+        const node = byId.get(item.entity.id);
+        if (!node) return;
+        stage.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        show(node);
+      });
+      row.append(open, el('b', String(item.count)));
+      hubs.appendChild(row);
+    });
+    networkCard.appendChild(hubs);
+    cards.appendChild(networkCard);
+    box.appendChild(cards);
+
+    const domainCard = document.createElement('article');
+    domainCard.className = 'hcu-analysis-card hcu-analysis-card--domains';
+    domainCard.append(el('p', es('05 / CLASIFICACIÓN TERRITORIAL', '05 / TERRITORIAL CLASSIFICATION'), 'hcu-analysis-kicker'), el('h4', es('Comparativa por región', 'Regional comparison')), el('p', es('Las regiones vacías se mantienen visibles: la ausencia de entidades modeladas es un vacío documental, no una valoración de seguridad.', 'Empty regions remain visible: the absence of modeled entities is a documentary gap, not a safety rating.'), 'hcu-analysis-card-copy'));
+    const tableScroll = document.createElement('div');
+    tableScroll.className = 'hcu-analysis-table-scroll';
+    const table = document.createElement('table');
+    table.className = 'hcu-analysis-table';
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    [es('Región', 'Region'), es('Entidades', 'Entities'), es('Con fuente', 'Sourced'), es('Riesgo alto', 'High risk'), es('E3+', 'E3+'), es('Relaciones', 'Relations')].forEach(label => headerRow.appendChild(el('th', label)));
+    thead.appendChild(headerRow);
+    const tbody = document.createElement('tbody');
+    domainRecords.forEach(record => {
+      const tr = document.createElement('tr');
+      const region = document.createElement('th');
+      region.scope = 'row';
+      const regionButton = document.createElement('button');
+      regionButton.type = 'button';
+      regionButton.className = 'hcu-analysis-node-link';
+      regionButton.textContent = nm(record.domain);
+      regionButton.addEventListener('click', () => {
+        filter.dom = filter.dom === record.domain.id ? '' : record.domain.id;
+        const selector = document.querySelector('[data-hcu-filter="dom"]');
+        if (selector) selector.value = filter.dom;
+        applyIndexFilter(); applyFilters();
+      });
+      region.appendChild(regionButton);
+      tr.append(region);
+      [record.entities, record.sourced, record.highRisk, record.assessed, record.flows].forEach(value => tr.appendChild(el('td', String(value))));
+      tbody.appendChild(tr);
+    });
+    table.append(thead, tbody);
+    tableScroll.appendChild(table);
+    domainCard.appendChild(tableScroll);
+    box.appendChild(domainCard);
   }
 
   /* ── instantánea con digestivo SHA-512 ───────────────────────────────── */
@@ -721,7 +1071,7 @@
   /* ── arranque ─────────────────────────────────────────────────────────── */
   resize();
   nodes.forEach(project);
-  buildIndex(); fillTally(); applyFilters();
+  buildIndex(); fillTally(); fillAnalysis(); applyFilters();
   const hint = stage.querySelector('[data-hcu-hint]'); if (hint) hint.textContent = T.rotate;
   if (reduced) { running = false; say(T.reduced); }
   if (playBtn) {
@@ -730,5 +1080,5 @@
   }
   const leadMode = document.querySelector('[data-hcu-mode="community"]');
   if (leadMode) leadMode.classList.add('is-lead');
-  loop();
+  requestRender();
 })();

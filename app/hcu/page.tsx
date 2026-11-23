@@ -15,8 +15,8 @@ type SearchParams = Promise<{ lang?: string }>
 export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
   const english = resolveLocale((await searchParams).lang) === "en"
   return english
-    ? { title: "HCU map and exploratory simulator", description: "A public HCU graph with sources, assumptions, and reproducible simulations saved to each researcher's account." }
-    : { title: "Mapa HCU y simulador exploratorio", description: "Mapa público HCU con fuentes, supuestos y simulaciones reproducibles almacenadas por investigador." }
+    ? { title: "HCU 3D observatory and exploratory simulator", description: "Interactive perspective-projected HCU field, evidence-bounded graph analytics, documented sources, assumptions and reproducible researcher simulations." }
+    : { title: "Observatorio HCU 3D y simulador exploratorio", description: "Campo HCU tridimensional interactivo, analítica descriptiva del grafo, fuentes documentadas, supuestos explícitos y simulaciones reproducibles por investigador." }
 }
 
 export default async function HcuPage({ searchParams }: { searchParams: SearchParams }) {
@@ -29,7 +29,7 @@ export default async function HcuPage({ searchParams }: { searchParams: SearchPa
     edges: edges.map(({ id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl }) => ({ id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl })),
   }
   return <TamvAppShell locale={locale}>
-    <PageIntro number="03" eyebrow={english ? "HCU / HUMAN-CENTRIC UNIFIED MAP" : "HCU / MAPA UNIFICADO CENTRADO EN LAS PERSONAS"} title={english ? "A map of" : "Un mapa de"} accent={english ? "declared relationships." : "relaciones declaradas."} description={english ? "The public graph connects research, governance, identity, learning, AI, and place. Every edge exposes its source and evidence status; the simulator is exploratory, not causal." : "El grafo público conecta investigación, gobernanza, identidad, aprendizaje, IA y territorio. Cada relación expone fuente y estado de evidencia; el simulador es exploratorio, no causal."} locale={locale} actions={<LanguageSwitch pathname="/hcu" locale={locale} />} />
+    <PageIntro number="03" eyebrow={english ? "HCU / SPATIAL KNOWLEDGE OBSERVATORY" : "HCU / OBSERVATORIO ESPACIAL DE CONOCIMIENTO"} title={english ? "A three-dimensional field of" : "Un universo tridimensional de"} accent={english ? "traceable relationships." : "relaciones trazables."} description={english ? "Explore the public graph as a perspective-projected 3D field with orbital groups, dynamic flows, selectable records, evidence-state filters and descriptive analytics. The geometry is a visual encoding of declarations, not a causal or predictive model." : "Explora el grafo público como un campo 3D en perspectiva con grupos orbitales, flujos dinámicos, registros seleccionables, filtros de evidencia y analítica descriptiva. La geometría codifica declaraciones; no constituye un modelo causal ni predictivo."} locale={locale} actions={<LanguageSwitch pathname="/hcu" locale={locale} />} />
     <section className="section hcu-overview-section"><div className="container"><div className="hcu-overview-grid">
       <article><span>{domains.length.toString().padStart(2, "0")}</span><h2>{english ? "registered domains" : "dominios registrados"}</h2><p>{english ? "Current public graph records." : "Registros vigentes del grafo público."}</p></article>
       <article><span>{atoms.length.toString().padStart(2, "0")}</span><h2>{english ? "modeled atoms" : "átomos modelados"}</h2><p>{english ? "Inputs declared for exploratory analysis." : "Entradas declaradas para el análisis exploratorio."}</p></article>

@@ -3,6 +3,8 @@
 import { Search, ArrowUpRight } from "lucide-react"
 import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react"
 import type { Locale } from "@/lib/i18n"
+import { Hcu3DCanvas } from "@/components/hcu/hcu-3d-canvas"
+import { HcuAnalyticsOverview } from "@/components/hcu/hcu-analytics-overview"
 
 type HcuDomain = { id: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; sortOrder: number }
 type HcuAtom = { id: string; domainId: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; influenceX: number; riskY: number; evidenceZ: number; isProvisional: boolean; isQuarantined: boolean }
@@ -11,6 +13,7 @@ export type HcuGraphData = { domains: HcuDomain[]; atoms: HcuAtom[]; edges: HcuE
 type Point = { x: number; y: number }
 type Selection = { kind: "atom" | "domain" | "edge"; id: string }
 type EvidenceFilter = "all" | "hypothesis" | "other"
+type GraphView = "3d" | "map" | "records"
 
 const MAP_WIDTH = 1000
 const MAP_HEIGHT = 680
@@ -92,7 +95,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
   const [query, setQuery] = useState("")
   const [domainFilter, setDomainFilter] = useState("all")
   const [evidenceFilter, setEvidenceFilter] = useState<EvidenceFilter>("all")
-  const [view, setView] = useState<"map" | "records">("map")
+  const [view, setView] = useState<GraphView>("3d")
   const [selection, setSelection] = useState<Selection | null>(() => graph.atoms[0] ? { kind: "atom", id: graph.atoms[0].id } : null)
   const coordinates = useMemo(() => buildMapCoordinates(graph), [graph])
   const normalizedQuery = query.trim().toLocaleLowerCase(english ? "en" : "es")
@@ -143,6 +146,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
   }
 
   return <div className="hcu-graph">
+    <HcuAnalyticsOverview graph={graph} locale={locale} onSelectDomain={(id) => { setDomainFilter(id); setSelection({ kind: "domain", id }); setView("3d") }} />
     <div className="hcu-explorer-toolbar">
       <label className="hcu-search-field">
         <Search aria-hidden="true" />
@@ -157,8 +161,9 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
           <option value="other">{english ? "Other recorded statuses" : "Otros estados registrados"}</option>
         </select>
       </label>
-      <div className="hcu-view-toggle" role="group" aria-label={english ? "Map display" : "Vista del mapa"}>
-        <button type="button" className={view === "map" ? "is-active" : ""} aria-pressed={view === "map"} onClick={() => setView("map")}>{english ? "Map" : "Mapa"}</button>
+      <div className="hcu-view-toggle" role="group" aria-label={english ? "Visualization mode" : "Modo de visualización"}>
+        <button type="button" className={view === "3d" ? "is-active" : ""} aria-pressed={view === "3d"} onClick={() => setView("3d")}>{english ? "3D field" : "Campo 3D"}</button>
+        <button type="button" className={view === "map" ? "is-active" : ""} aria-pressed={view === "map"} onClick={() => setView("map")}>{english ? "2D scheme" : "Esquema 2D"}</button>
         <button type="button" className={view === "records" ? "is-active" : ""} aria-pressed={view === "records"} onClick={() => setView("records")}>{english ? "Records" : "Registros"}</button>
       </div>
     </div>
@@ -182,7 +187,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
 
     <div className="hcu-explorer-grid">
       <div className="hcu-map-column">
-        {view === "map" ? <div className="hcu-map-panel">
+        {view === "3d" ? <Hcu3DCanvas graph={graph} visibleAtomIds={[...visibleAtomIds]} visibleEdgeIds={[...visibleEdgeIds]} domainFilter={domainFilter === "all" ? "" : domainFilter} selection={selection} locale={locale} onSelect={setSelection} /> : view === "map" ? <div className="hcu-map-panel">
           <p className="hcu-map-scroll-hint">{english ? "Swipe horizontally to explore every domain and relationship." : "Desliza horizontalmente para recorrer todos los dominios y relaciones."}</p>
           <div className="hcu-canvas-scroll" role="region" aria-label={english ? "Interactive HCU knowledge map; scroll horizontally on small screens" : "Mapa interactivo de conocimiento HCU; desplázate horizontalmente en pantallas pequeñas"} tabIndex={0}>
             <svg className="hcu-canvas" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-labelledby="hcu-canvas-title hcu-canvas-description">
@@ -279,7 +284,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
               <h3>{localized(domain.nameEs, domain.nameEn, english)}</h3>
               <p>{localized(domain.descriptionEs, domain.descriptionEn, english)}</p>
               {atoms.length ? <ul className="hcu-atom-list">{atoms.map((atom) => <li key={atom.id}>
-                <button type="button" className="hcu-record-atom" onClick={() => setSelection({ kind: "atom", id: atom.id })}>
+                <button type="button" className="hcu-record-atom" onClick={() => { setSelection({ kind: "atom", id: atom.id }); setView("3d") }}>
                   <strong>{localized(atom.nameEs, atom.nameEn, english)}</strong><span>{localized(atom.descriptionEs, atom.descriptionEn, english)}</span>
                   <span className="hcu-record-scores">{english ? "Influence" : "Influencia"} {atom.influenceX} · {english ? "Risk" : "Riesgo"} {atom.riskY} · {english ? "Evidence" : "Evidencia"} {atom.evidenceZ}</span>
                 </button>
@@ -337,7 +342,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
     <section className="hcu-edges" aria-labelledby="hcu-edges-title">
       <div className="hcu-section-heading hcu-relationships-heading"><div><p className="eyebrow">{english ? "RELATIONSHIP REGISTER" : "REGISTRO DE RELACIONES"}</p><h2 id="hcu-edges-title">{english ? "Trace the connections." : "Sigue cada conexión."}</h2></div><p>{english ? "Every public edge retains its declared status, sign, weight, delay and source details." : "Cada arista pública conserva su estado declarado, signo, peso, rezago y datos de procedencia."}</p></div>
       {visibleEdges.length ? <div className="hcu-edge-list">{visibleEdges.map((edge) => <article className="hcu-edge-card" key={edge.id}>
-        <button type="button" className="hcu-edge-select" onClick={() => { setSelection({ kind: "edge", id: edge.id }); setView("map") }}><span>{relationshipName(edge)}</span><ArrowUpRight aria-hidden="true" /></button>
+        <button type="button" className="hcu-edge-select" onClick={() => { setSelection({ kind: "edge", id: edge.id }); setView("3d") }}><span>{relationshipName(edge)}</span><ArrowUpRight aria-hidden="true" /></button>
         <div className="hcu-edge-meta"><span>{english ? "Weight" : "Peso"} {edge.weight}</span><span>{english ? "Delay" : "Rezago"} {edge.delayYears} {english ? "years" : "años"}</span><span>{edge.tqafLevel ?? "TQAF —"}</span><span>{localizedEvidenceStatus(edge.evidenceStatus, english)}</span></div>
         <p>{english ? "Source" : "Fuente"}: {safeExternalUrl(edge.sourceUrl) ? <a href={safeExternalUrl(edge.sourceUrl) ?? undefined} target="_blank" rel="noopener noreferrer">{edge.sourceTitle ?? edge.sourceUrl}<ArrowUpRight aria-hidden="true" /></a> : edge.sourceTitle ?? (english ? "No source recorded" : "Sin fuente registrada")}</p>
       </article>)}</div> : <p className="empty-state">{english ? "No public relationships match these filters." : "Ninguna relación pública coincide con estos filtros."}</p>}
