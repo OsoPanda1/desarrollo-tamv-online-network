@@ -16,7 +16,7 @@ const validRecord = {
   notes: null,
 };
 
-function request(body: BodyInit | null, contentType = "application/json", extraHeaders: Record<string, string> = {}) {
+function request(body, contentType = "application/json", extraHeaders = {}) {
   return new Request("https://tamv.online/api/v1/provenance/validate", {
     method: "POST",
     headers: { "content-type": contentType, ...extraHeaders },
