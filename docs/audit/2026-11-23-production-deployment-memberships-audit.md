@@ -98,6 +98,31 @@ La aplicación incluye enlaces públicos y orientación para crear un perfil, re
 - No se verificó la disponibilidad del dominio de producción o sus variables de entorno.
 - No se midieron adopción, conversiones, retención o usuarios nuevos.
 
+## 6A. Revisión estática de rutas y funcionalidades existentes
+
+Además de la nueva capa de membresías, se revisó una muestra representativa de las rutas de escritura que ya existían en `main`. En esa muestra se observaron controles concretos de sesión, origen y validación:
+
+| Área | Controles observados en código | Lo que todavía debe probarse |
+|---|---|---|
+| Propuestas de investigación | Sesión Better Auth, same-origin en POST, cuerpo limitado, `proposalSchema.safeParse`, verificación del tema y límite diario con respuesta 429. Las inserciones generan eventos de procedencia en la misma transacción. | Envío, límite concurrente, conflictos de estado, acceso a una propuesta ajena y recuperación de una transacción fallida. |
+| Consentimiento y evidencia | Sesión, same-origin, límites de tamaño, schemas Zod, asociación de evidencia a la propuesta y comprobación de estados disponibles. | Pruebas de no divulgación sin consentimiento, URLs anómalas, edición de referencias y doble envío. |
+| Apelaciones | Sesión, same-origin, schema de apelación, estado de propuesta y prevención de otra apelación en curso. | Carrera entre dos apelaciones, resultado en portal del autor y trazabilidad de la decisión editorial. |
+| Revisión/moderación | Verificación de moderador, validación de conflicto de interés, rol editorial/administrador para publicar, transición de estado y controles de consentimiento del autor. | E2E con roles member/moderator/editor/admin, intentos de autorrevisión y transición no válida. |
+| TQAF | Verificación de moderador, schema, fundamentos y enlace de evidencia al verificar criterios; la ruta distingue acciones de autor y revisor. | Matriz completa de permisos por rol y criterios de evidencia; prueba de que el UI no sugiere que una afirmación autodeclarada haya sido verificada externamente. |
+| HCU (simulaciones y grafo privado) | Sesión, same-origin en mutaciones, schema de simulación, límites del horizonte/cálculo, presupuesto de trabajo y rate limits por día/cuenta; los átomos y las hiperaristas tienen límites por cuenta. | Carga sostenida, concurrencia, tamaño máximo de payload, aislamiento entre usuarios, precisión de presupuestos y resultados persistidos tras una interrupción. |
+| Perfil del investigador | Sesión, cuerpo limitado, schema, normalización y validación del ORCID por dígito de control y del formato ISNI. | Unicidad/colisión al alta concurrente, perfiles incompletos y recorrido de edición ES/EN en navegador. |
+| Bootstrap de administración | Token del servidor con longitud mínima, comparación de secreto en tiempo constante, sesión requerida y transición inicial atómica de un solo uso. | Simular carrera entre administradores, comprobar que el secreto no se expone y verificar el procedimiento de recuperación antes de habilitarlo en un entorno público. |
+| Asistente IA | Se añadió a esta rama un guard de mismo origen antes de ejecutar la inferencia. | No se encontró un rate limit distribuido en esta integración. Antes de abrirlo a tráfico amplio deben configurarse límites de concurrencia/gasto, monitoreo y protección de abuso a nivel de aplicación/proveedor/edge. |
+
+Esta inspección de código es evidencia positiva sobre controles existentes, pero no implica que se hayan ejecutado las pruebas descritas. Las respuestas 401/403/409/429/503, los límites y la integridad de las transacciones deben comprobarse en el sistema levantado y con una base de datos de prueba.
+
+## 6B. Estado actualizado del lockfile, GitHub Actions y Vercel
+
+- El arreglo del lockfile se fusionó en el PR #25. La lectura actual de `pnpm-lock.yaml` en `main` tiene cero coincidencias de `19.2.4`; esto corrige la referencia concreta del log compartido, pero no prueba todavía que la instalación y el build de un commit actual terminen satisfactoriamente.
+- En el SHA de rama `7d37765b09dafa64977d2ca08a06f8c40adac15b`, los runs más recientes consultados muestran fallo: [CI](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45274759654), [CodeQL](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45274759526) y [Secret scanning](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45274759890). La descarga de logs devuelve `404 BlobNotFound` y los jobs no exponen sus steps a través de la integración. La causa es **desconocida**, no demostrada como un fallo concreto de la aplicación.
+- La conexión Vercel consultada devuelve `notLinked` para `main` y la rama; una consulta de proyecto `desarrollo-tamv-online-network` en el ámbito conectado devuelve `404 not_found`, y el listado de deployments para ese nombre devuelve cero. Esto significa que este conector no puede verificar un proyecto/deployment en su ámbito actual; no prueba por sí solo que no exista en otra cuenta/equipo de Vercel. Se necesita la comprobación del propietario del proyecto.
+- El estado correcto de release sigue siendo **bloqueado**, aunque el lockfile se haya corregido. No se deben ignorar o anular estos checks de seguridad para forzar una fusión.
+
 ## 7. Gate de liberación obligatorio
 
 El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
