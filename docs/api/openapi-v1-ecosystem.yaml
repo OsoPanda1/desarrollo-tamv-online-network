@@ -81,6 +81,7 @@ paths:
                         code: { type: string }
                         message: { type: string }
 components:
+  schemas:
     ProvenanceRecord:
       type: object
       additionalProperties: false
@@ -108,7 +109,6 @@ components:
           enum: [unreviewed, schema_valid, source_verified, rejected]
         validationEvidenceUri: { type: [string, "null"], format: uri, description: "Runtime accepts HTTP or HTTPS only." }
         notes: { type: [string, "null"], maxLength: 2000 }
-  schemas:
     EcosystemCatalog:
       type: object
       additionalProperties: false
