@@ -199,11 +199,9 @@ export function Hcu3DCanvas({
   const focusDomainRef = useRef("")
   const requestRenderRef = useRef<(() => void) | null>(null)
   const hoverIdRef = useRef<string | null>(null)
-  const immersiveRef = useRef(false)
   playingRef.current = playing
   layersRef.current = layers
   showLabelsRef.current = showLabels
-  immersiveRef.current = immersive
 
   useEffect(() => {
     const selected = selection
@@ -258,8 +256,8 @@ export function Hcu3DCanvas({
 
     const resize = () => {
       const rect = stage.getBoundingClientRect()
-      width = Math.max(320, rect.width)
-      height = Math.max(390, rect.height)
+      width = Math.max(1, rect.width)
+      height = Math.max(1, rect.height)
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
@@ -607,7 +605,7 @@ export function Hcu3DCanvas({
       ctx.fillText("HCU", coreX, coreY - 4)
       ctx.fillStyle = "rgba(164,210,223,.72)"
       ctx.font = '600 7px "IBM Plex Mono", ui-monospace, monospace'
-      ctx.fillText(english ? "KNOWLEDGE COMMONS" : "UNIVERSO DE CONOCIMIENTO", coreX, coreY + 14)
+      ctx.fillText(current.locale === "en" ? "KNOWLEDGE COMMONS" : "UNIVERSO DE CONOCIMIENTO", coreX, coreY + 14)
 
       const selected = currentSelection
       const activeLabel = selected
@@ -653,7 +651,11 @@ export function Hcu3DCanvas({
     const pick = (point: { x: number; y: number }): Hcu3DSelection => {
       let closest: WorldNode | null = null
       let closestDistance = Number.POSITIVE_INFINITY
+      const current = propsRef.current
+      const visibleAtoms = new Set(current.visibleAtomIds)
       for (const node of screenNodes) {
+        if (node.kind === "atom" && !visibleAtoms.has(node.id)) continue
+        if (node.kind === "domain" && current.domainFilter && node.id !== current.domainFilter) continue
         const distance = Math.hypot(node.sx - point.x, node.sy - point.y)
         const threshold = Math.max(12, node.screenRadius + 7)
         if (distance <= threshold && distance < closestDistance) {
