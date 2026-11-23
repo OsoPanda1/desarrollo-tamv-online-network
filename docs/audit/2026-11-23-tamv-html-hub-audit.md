@@ -106,3 +106,23 @@ Es una auditoría de fuente del archivo aportado y de los contratos públicos de
 La revisión HCU 3D y la primera integración del flujo de apoyo se fusionaron en el PR #21 el 2026-11-23. La siguiente fase debe trabajar desde la rama principal actual y no recrear esa entrega. Las páginas del sitio y el hub autónomo tienen fuentes de datos distintas; las estadísticas visuales deben etiquetarse como descriptivas y el grafo público no debe confundirse con una validación causal.
 
 **Regla de gobierno:** una mejora de presentación no es una mejora operativa hasta tener criterio de aceptación y evidencia de ejecución.
+
+
+## 8. Inventario de contenido absorbido del snapshot
+
+La inspección semántica de los encabezados, menús y arrays estáticos confirma 27 secciones con estos ámbitos: identidad, manifiesto, axiomas, líneas de trabajo, núcleo, runtime, proyectos, investigación, comunidad, doctrinas, gobernanza, resiliencia, gobernanza técnica, documentación, contribución, registro BookPI, seguridad, horizontes, fundador, documento maestro UTAMV, repositorios GitHub, foro, mapa HCU, apoyo, ciencia abierta, legado y declaración.
+
+El inventario visible de proyectos incluye 11 fichas:
+- **Core (2):** MD-X4 / MD-X5 y BookPI.
+- **Active (6):** Isabella Villaseñor AI, TAMV OS, UTAMV Campus Online, RDM Digital Hub, TAMV Creator Intelligence y Play & Go.
+- **Alpha (3):** Atlas Transcendence, LITLE y Xclusive.
+
+Los estados anteriores son etiquetas del propio snapshot y no se interpretan como pruebas independientes de despliegue o validación. El hub publica seis temas de investigación y once entradas en el foro. Entre ellas figuran preguntas abiertas sobre la correspondencia de los seis dominios HCU con las siete federaciones y sobre la interpretación/calibración de X/Y/Z; ambas deben conservarse como preguntas abiertas hasta contar con un método documentado.
+
+El mapa HCU del snapshot declara seis dominios (IA y Cognición, Economía Soberana, Gobernanza, Clima y Biosfera, Salud y Vida, Seguridad), 26 átomos y ocho hiperaristas. Sus valores y animaciones son representaciones del corpus/modelo publicado y no medidas independientes. La entrada de foro “BPI-2026-0001” se titula como revisión por pares pero su estado incluye “plantilla”; esa palabra debe seguir visible y prominente para que el ejemplo no se confunda con un dictamen real.
+
+## 9. Proyección de producto resultante
+
+La ruta de evolución debe preservar cuatro fortalezas del material: raíz territorial explícita, arquitectura técnica amplia, intereses de ciencia abierta y transparencia sobre límites. Debe reducir cuatro fricciones: amplitud inicial sin camino de entrada claro, distribución pesada por imágenes incrustadas, acciones que funcionan solo en el navegador/mailto y separación entre corpus documental y servicios de aplicación.
+
+La lista priorizada y sus criterios de aceptación se mantiene en [el plan de excelencia de plataforma](../strategy/tamv-platform-excellence-roadmap.md). Esta auditoría no declara completada la persistencia del foro, el flujo de pagos, la validación independiente del modelo HCU, ni la validación visual end-to-end del navegador.
