@@ -187,7 +187,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
 
     <div className="hcu-explorer-grid">
       <div className="hcu-map-column">
-        {view === "3d" ? <Hcu3DCanvas graph={graph} visibleAtomIds={[...visibleAtomIds]} visibleEdgeIds={[...visibleEdgeIds]} selection={selection} locale={locale} onSelect={setSelection} /> : view === "map" ? <div className="hcu-map-panel">
+        {view === "3d" ? <Hcu3DCanvas graph={graph} visibleAtomIds={[...visibleAtomIds]} visibleEdgeIds={[...visibleEdgeIds]} domainFilter={domainFilter === "all" ? "" : domainFilter} selection={selection} locale={locale} onSelect={setSelection} /> : view === "map" ? <div className="hcu-map-panel">
           <p className="hcu-map-scroll-hint">{english ? "Swipe horizontally to explore every domain and relationship." : "Desliza horizontalmente para recorrer todos los dominios y relaciones."}</p>
           <div className="hcu-canvas-scroll" role="region" aria-label={english ? "Interactive HCU knowledge map; scroll horizontally on small screens" : "Mapa interactivo de conocimiento HCU; desplázate horizontalmente en pantallas pequeñas"} tabIndex={0}>
             <svg className="hcu-canvas" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-labelledby="hcu-canvas-title hcu-canvas-description">
@@ -284,7 +284,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
               <h3>{localized(domain.nameEs, domain.nameEn, english)}</h3>
               <p>{localized(domain.descriptionEs, domain.descriptionEn, english)}</p>
               {atoms.length ? <ul className="hcu-atom-list">{atoms.map((atom) => <li key={atom.id}>
-                <button type="button" className="hcu-record-atom" onClick={() => setSelection({ kind: "atom", id: atom.id })}>
+                <button type="button" className="hcu-record-atom" onClick={() => { setSelection({ kind: "atom", id: atom.id }); setView("3d") }}>
                   <strong>{localized(atom.nameEs, atom.nameEn, english)}</strong><span>{localized(atom.descriptionEs, atom.descriptionEn, english)}</span>
                   <span className="hcu-record-scores">{english ? "Influence" : "Influencia"} {atom.influenceX} · {english ? "Risk" : "Riesgo"} {atom.riskY} · {english ? "Evidence" : "Evidencia"} {atom.evidenceZ}</span>
                 </button>
@@ -342,7 +342,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
     <section className="hcu-edges" aria-labelledby="hcu-edges-title">
       <div className="hcu-section-heading hcu-relationships-heading"><div><p className="eyebrow">{english ? "RELATIONSHIP REGISTER" : "REGISTRO DE RELACIONES"}</p><h2 id="hcu-edges-title">{english ? "Trace the connections." : "Sigue cada conexión."}</h2></div><p>{english ? "Every public edge retains its declared status, sign, weight, delay and source details." : "Cada arista pública conserva su estado declarado, signo, peso, rezago y datos de procedencia."}</p></div>
       {visibleEdges.length ? <div className="hcu-edge-list">{visibleEdges.map((edge) => <article className="hcu-edge-card" key={edge.id}>
-        <button type="button" className="hcu-edge-select" onClick={() => { setSelection({ kind: "edge", id: edge.id }); setView("map") }}><span>{relationshipName(edge)}</span><ArrowUpRight aria-hidden="true" /></button>
+        <button type="button" className="hcu-edge-select" onClick={() => { setSelection({ kind: "edge", id: edge.id }); setView("3d") }}><span>{relationshipName(edge)}</span><ArrowUpRight aria-hidden="true" /></button>
         <div className="hcu-edge-meta"><span>{english ? "Weight" : "Peso"} {edge.weight}</span><span>{english ? "Delay" : "Rezago"} {edge.delayYears} {english ? "years" : "años"}</span><span>{edge.tqafLevel ?? "TQAF —"}</span><span>{localizedEvidenceStatus(edge.evidenceStatus, english)}</span></div>
         <p>{english ? "Source" : "Fuente"}: {safeExternalUrl(edge.sourceUrl) ? <a href={safeExternalUrl(edge.sourceUrl) ?? undefined} target="_blank" rel="noopener noreferrer">{edge.sourceTitle ?? edge.sourceUrl}<ArrowUpRight aria-hidden="true" /></a> : edge.sourceTitle ?? (english ? "No source recorded" : "Sin fuente registrada")}</p>
       </article>)}</div> : <p className="empty-state">{english ? "No public relationships match these filters." : "Ninguna relación pública coincide con estos filtros."}</p>}
