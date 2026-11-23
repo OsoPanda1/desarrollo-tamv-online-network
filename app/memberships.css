@@ -151,3 +151,12 @@
   .membership-status-badge { white-space: normal; }
   .membership-refresh { width: 100%; justify-content: center; }
 }
+
+.membership-external-links { display: flex; gap: .7rem 1.2rem; flex-wrap: wrap; align-items: center; }
+.membership-legal-page { max-width: 880px; margin-inline: auto; }
+.membership-legal-page h1 { max-width: 18ch; margin: .4rem 0 1rem; font-size: clamp(2rem, 4vw, 3.1rem); letter-spacing: -.035em; line-height: 1.12; }
+.membership-legal-page h2 { margin: 2rem 0 .65rem; font-size: clamp(1.2rem, 2vw, 1.55rem); }
+.membership-legal-page p { max-width: 85ch; line-height: 1.75; }
+.membership-legal-lede { font-size: 1.05rem; color: var(--muted-foreground); }
+.course-external-network { margin-top: 2rem; }
+.course-external-network ol { display: grid; gap: .65rem; padding-left: 1.35rem; line-height: 1.65; }
