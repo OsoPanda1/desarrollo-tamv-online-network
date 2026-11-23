@@ -20,6 +20,7 @@ export async function GET(request: Request) {
         amountMxn: membershipSubscriptions.amountMxn,
         currency: membershipSubscriptions.currency,
         businessName: membershipSubscriptions.businessName,
+        stripeCheckoutUrl: membershipSubscriptions.stripeCheckoutUrl,
         currentPeriodStart: membershipSubscriptions.currentPeriodStart,
         currentPeriodEnd: membershipSubscriptions.currentPeriodEnd,
         cancelAtPeriodEnd: membershipSubscriptions.cancelAtPeriodEnd,
@@ -29,17 +30,17 @@ export async function GET(request: Request) {
       .where(eq(membershipSubscriptions.userId, session.user.id))
       .orderBy(desc(membershipSubscriptions.createdAt))
     const memberships = records.map((record) => {
+      const { stripeCheckoutUrl, ...safeRecord } = record
       let checkoutUrl: string | null = null
       const ageMs = Date.now() - record.createdAt.getTime()
-      if (record.status === "pending" && record.stripeCheckoutUrl && ageMs >= 0 && ageMs < 32 * 60 * 1000) {
+      if (record.status === "pending" && stripeCheckoutUrl && ageMs >= 0 && ageMs < 32 * 60 * 1000) {
         try {
-          const candidate = new URL(record.stripeCheckoutUrl)
+          const candidate = new URL(stripeCheckoutUrl)
           if (candidate.protocol === "https:" && candidate.hostname === "checkout.stripe.com") checkoutUrl = candidate.toString()
         } catch {
           checkoutUrl = null
         }
       }
-      const { stripeCheckoutUrl: _privateStoredUrl, ...safeRecord } = record
       return { ...safeRecord, checkoutUrl }
     })
     return apiJson({ memberships })
