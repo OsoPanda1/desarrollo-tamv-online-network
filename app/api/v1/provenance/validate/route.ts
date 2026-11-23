@@ -86,7 +86,7 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({
       valid: true,
       schemaVersion: record.schemaVersion,
-      validationState: record.validationState,
+      submittedValidationState: record.validationState,
       semantics: "Schema validation only; source truth, authorship, trusted time, signature, peer review and accreditation are not established.",
     }, { status: 200, headers });
   } catch (error) {
