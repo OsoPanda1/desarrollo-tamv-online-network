@@ -1,0 +1,61 @@
+name: Open research contribution
+description: Submit a public research question, method, or source review for discussion.
+title: "[Research]: "
+body:
+  - type: markdown
+    attributes:
+      value: "This form creates a public issue. Do not include confidential proposals, unpublished participant data, personal records, research subject identifiers, or protected traditional knowledge. Use the authenticated private proposal flow for confidential submissions."
+  - type: input
+    id: question
+    attributes:
+      label: Research question
+      description: State one answerable question.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Problem and relevance
+      description: Explain the context and who may benefit.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Proposed method or contribution
+      description: Data, protocol, artifact, comparative analysis, prototype, or review.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources and provenance
+      description: Add canonical links, identifiers, source versions and retrieval dates when available.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations, uncertainty and risks
+      description: Distinguish facts, author declarations, hypotheses, simulations and independent evidence.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: Data/code/material license
+      description: State the license if known; use "unknown" rather than guessing.
+      placeholder: "CC BY 4.0 / Apache-2.0 / unknown"
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Integrity checklist
+      options:
+        - label: I have authority to share the included material publicly.
+          required: true
+        - label: I have not presented a simulation, template, or hypothesis as independently verified evidence.
+          required: true
+        - label: I have not included confidential or personal information without an appropriate basis and consent.
+          required: true

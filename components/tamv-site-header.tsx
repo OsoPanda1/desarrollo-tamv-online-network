@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { ArrowUpRight, Menu, X } from "lucide-react"
 import { useState } from "react"
 import { LanguageSwitch } from "@/components/shared/language-switch"
+import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { localizedPath, type Locale } from "@/lib/i18n"
 import { TamvAssistant } from "@/components/tamv-assistant"
 
@@ -12,6 +13,7 @@ const links = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
   { href: "/comunidad", labelEs: "Comunidad", labelEn: "Community" },
+  { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/hcu", labelEs: "Mapa HCU", labelEn: "HCU map" },
   { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
   { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },
@@ -51,6 +53,7 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
           ))}
           <Link href={`${localizedPath("/", locale)}#guia`} onClick={closeMenu}>{english ? "Guide" : "Guía"}</Link>
           {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
+          <TamvDonationCTA locale={locale} variant="compact" />
           <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
           <Link className="nav-portal" href="/portal" onClick={closeMenu}>{english ? "Portal" : "Portal"} <ArrowUpRight aria-hidden="true" /></Link>
         </nav>

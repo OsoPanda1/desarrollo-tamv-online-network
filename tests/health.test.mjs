@@ -33,3 +33,25 @@ test("health responses explicitly disable caching and MIME sniffing", () => {
   assert.equal(noStoreHeaders["Cache-Control"], "no-store, max-age=0");
   assert.equal(noStoreHeaders["X-Content-Type-Options"], "nosniff");
 });
+
+
+test("readiness probe reports success when the dependency resolves within budget", async () => {
+  const { probeWithinBudget } = await import("../lib/health.ts");
+  assert.equal(await probeWithinBudget(Promise.resolve({ rows: [{ "?column?": 1 }] }), 50), true);
+});
+
+test("readiness probe fails closed when the dependency rejects", async () => {
+  const { probeWithinBudget } = await import("../lib/health.ts");
+  assert.equal(await probeWithinBudget(Promise.reject(new Error("private database detail")), 50), false);
+});
+
+test("readiness probe returns unavailable when the operation exceeds its budget", async () => {
+  const { probeWithinBudget } = await import("../lib/health.ts");
+  const operation = new Promise((resolve) => setTimeout(resolve, 100));
+  assert.equal(await probeWithinBudget(operation, 5), false);
+});
+
+test("readiness probe rejects invalid timeout budgets", async () => {
+  const { probeWithinBudget } = await import("../lib/health.ts");
+  await assert.rejects(() => probeWithinBudget(Promise.resolve(), 0), RangeError);
+});

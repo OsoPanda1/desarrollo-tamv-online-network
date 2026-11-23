@@ -1,0 +1,329 @@
+openapi: 3.1.0
+info:
+  title: TAMV Online Network — Public Research API
+  version: 1.0.0
+  description: >-
+    Contract for the public, read-only API routes implemented in the TAMV
+    Online Network repository. Responses depend on the configured application
+    database and may return HTTP 503. This specification documents source
+    contracts; it does not certify live deployment availability, third-party
+    validation, causal validity, or a license for linked materials.
+  termsOfService: https://tamv.online/gobernanza
+  contact:
+    name: TAMV Online Network
+    url: https://tamv.online/desarrolladores
+servers:
+  - url: /
+    description: Same-origin API; use the origin where this application is deployed.
+tags:
+  - name: Research
+    description: Public research topic and project catalogs.
+  - name: Researchers
+    description: Public profiles explicitly enabled for publication.
+  - name: HCU
+    description: Exploratory human-centric knowledge graph.
+  - name: Exports
+    description: Public metadata in JSON-LD or CSV format.
+paths:
+  /api/v1/research/topics:
+    get:
+      operationId: listPublicResearchTopics
+      tags: [Research]
+      summary: List public research topics
+      description: Editorial topics and contribution modes. A topic is not a publication guarantee or a commitment to fund a proposal.
+      responses:
+        "200":
+          description: Public topic catalog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopicCatalog"
+        "503":
+          $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/research/projects:
+    get:
+      operationId: listPublicResearchProjects
+      tags: [Research]
+      summary: List public project records
+      description: Public records include maturity, declared limitations and provenance metadata. A record's presence does not imply production deployment, peer review, certification or measured impact.
+      responses:
+        "200":
+          description: Public project catalog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectCatalog"
+        "503":
+          $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/researchers:
+    get:
+      operationId: listOptInResearchers
+      tags: [Researchers]
+      summary: List researcher profiles enabled for public display
+      description: Returns only public profile fields selected by the application query. Private email addresses are not included.
+      responses:
+        "200":
+          description: Public researcher directory.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, records]
+                properties:
+                  version:
+                    type: string
+                    example: "1.0"
+                  records:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ResearcherProfile"
+        "503":
+          $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/hcu/graph:
+    get:
+      operationId: getPublicHcuGraph
+      tags: [HCU]
+      summary: Retrieve the public HCU graph snapshot
+      description: >-
+        Returns visible domains, atoms and active, structurally valid public
+        relationships. The graph represents declared exploratory parameters;
+        it is not a causally validated model, a prediction, or a measurement
+        of social impact.
+      responses:
+        "200":
+          description: Public HCU graph.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HcuGraph"
+        "503":
+          $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/exports/research:
+    get:
+      operationId: exportPublicResearchCatalog
+      tags: [Exports]
+      summary: Export public research metadata
+      description: >-
+        Without a format query parameter, returns a Schema.org-oriented
+        DataCatalog with public project, topic and consented publication
+        metadata. Use format=csv for tabular output. A missing license remains
+        unspecified and does not grant reuse rights.
+      parameters:
+        - name: format
+          in: query
+          required: false
+          description: Choose CSV output. Omit to receive the JSON-LD catalog.
+          schema:
+            type: string
+            enum: [csv]
+      responses:
+        "200":
+          description: JSON-LD catalog or CSV export, selected by format.
+          content:
+            application/ld+json:
+              schema:
+                $ref: "#/components/schemas/DataCatalog"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataCatalog"
+            text/csv:
+              schema:
+                type: string
+                description: CSV metadata export; each record's license/provenance must be reviewed before redistribution.
+        "503":
+          $ref: "#/components/responses/CatalogUnavailable"
+components:
+  responses:
+    CatalogUnavailable:
+      description: A database-backed public catalog could not be read.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+      additionalProperties: true
+    BilingualText:
+      type: object
+      required: [es, en]
+      properties:
+        es: { type: string }
+        en: { type: string }
+      additionalProperties: false
+    TopicCatalog:
+      type: object
+      required: [version, records, note]
+      properties:
+        version:
+          type: string
+        records:
+          type: array
+          items:
+            type: object
+            required: [id, slug, area, title, question, contributors, formats, modes, status]
+            properties:
+              id: { type: string }
+              slug: { type: string }
+              area: { type: string }
+              title: { $ref: "#/components/schemas/BilingualText" }
+              question: { $ref: "#/components/schemas/BilingualText" }
+              contributors: { $ref: "#/components/schemas/BilingualText" }
+              formats: { $ref: "#/components/schemas/BilingualText" }
+              modes:
+                type: array
+                items: { type: string }
+              status: { type: string }
+              updatedAt:
+                type: [string, "null"]
+                format: date-time
+        note:
+          type: string
+    ProjectCatalog:
+      type: object
+      required: [version, records, note]
+      properties:
+        version: { type: string }
+        records:
+          type: array
+          items:
+            type: object
+            required: [id, slug, category, title, subtitle, description, maturity, limits, provenance]
+            properties:
+              id: { type: string }
+              slug: { type: string }
+              category: { type: string }
+              title: { $ref: "#/components/schemas/BilingualText" }
+              subtitle: { $ref: "#/components/schemas/BilingualText" }
+              description: { $ref: "#/components/schemas/BilingualText" }
+              maturity: { type: string }
+              limits: { $ref: "#/components/schemas/BilingualText" }
+              provenance:
+                type: object
+                required: [verificationStatus]
+                properties:
+                  sourceUrl:
+                    type: [string, "null"]
+                    format: uri
+                  sourceCommit:
+                    type: [string, "null"]
+                  license:
+                    type: [string, "null"]
+                  verificationStatus: { type: string }
+                  updatedAt:
+                    type: [string, "null"]
+                    format: date-time
+        note: { type: string }
+    ResearcherProfile:
+      type: object
+      required: [id, publicName, researchLines, verificationStatus]
+      properties:
+        id: { type: string }
+        publicName: { type: string }
+        roleCode: { type: [string, "null"] }
+        tri: { type: [string, "null"] }
+        orcid: { type: [string, "null"] }
+        isni: { type: [string, "null"] }
+        affiliation: { type: [string, "null"] }
+        researchLines:
+          type: array
+          items: { type: string }
+        verificationStatus: { type: string }
+      additionalProperties: false
+    HcuGraph:
+      type: object
+      required: [version, modelVersion, domains, atoms, edges, caveat]
+      properties:
+        version: { type: string }
+        modelVersion: { type: string }
+        domains:
+          type: array
+          items:
+            type: object
+            required: [id, nameEs, nameEn, descriptionEs, descriptionEn, sortOrder]
+            properties:
+              id: { type: string }
+              nameEs: { type: string }
+              nameEn: { type: string }
+              descriptionEs: { type: string }
+              descriptionEn: { type: string }
+              sortOrder: { type: integer }
+        atoms:
+          type: array
+          items:
+            type: object
+            required: [id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, isProvisional, isQuarantined]
+            properties:
+              id: { type: string }
+              domainId: { type: string }
+              nameEs: { type: string }
+              nameEn: { type: string }
+              descriptionEs: { type: string }
+              descriptionEn: { type: string }
+              influenceX: { type: number }
+              riskY: { type: number }
+              evidenceZ: { type: number }
+              isProvisional: { type: boolean }
+              isQuarantined: { type: boolean }
+        edges:
+          type: array
+          items:
+            type: object
+            required: [id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl]
+            properties:
+              id: { type: string }
+              sourceAtomIds:
+                type: array
+                items: { type: string }
+              targetAtomIds:
+                type: array
+                items: { type: string }
+              weight: { type: number }
+              sign: { type: integer }
+              delayYears: { type: integer }
+              tqafLevel: { type: [string, "null"] }
+              evidenceStatus: { type: string }
+              sourceTitle: { type: [string, "null"] }
+              sourceUrl:
+                type: [string, "null"]
+                format: uri
+        caveat: { type: string }
+    DataCatalog:
+      type: object
+      required: ["@context", "@type", name, url, dateModified, distribution, dataset, conditionsOfAccess, note]
+      properties:
+        "@context":
+          type: array
+          items: {}
+        "@type":
+          type: string
+          const: DataCatalog
+        name: { type: string }
+        url:
+          type: string
+          format: uri
+        dateModified:
+          type: string
+          format: date-time
+        distribution:
+          type: array
+          items:
+            type: object
+            properties:
+              "@type": { type: string }
+              encodingFormat: { type: string }
+              contentUrl:
+                type: string
+                format: uri
+        dataset:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        conditionsOfAccess: { type: string }
+        note: { type: string }
+      additionalProperties: true
