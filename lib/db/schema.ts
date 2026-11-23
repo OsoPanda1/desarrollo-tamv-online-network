@@ -68,6 +68,8 @@ export const membershipSubscriptions = pgTable("membership_subscriptions", {
   currency: text("currency").notNull().default("mxn"),
   businessName: text("business_name"),
   businessWebsite: text("business_website"),
+  termsVersion: text("terms_version").notNull(),
+  termsAcceptedAt: timestamptz("terms_accepted_at").notNull(),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   stripeCheckoutSessionId: text("stripe_checkout_session_id"),
