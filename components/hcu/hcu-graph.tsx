@@ -3,6 +3,7 @@
 import { Search, ArrowUpRight } from "lucide-react"
 import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react"
 import type { Locale } from "@/lib/i18n"
+import { Hcu3DCanvas } from "@/components/hcu/hcu-3d-canvas"
 
 type HcuDomain = { id: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; sortOrder: number }
 type HcuAtom = { id: string; domainId: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; influenceX: number; riskY: number; evidenceZ: number; isProvisional: boolean; isQuarantined: boolean }
@@ -11,6 +12,7 @@ export type HcuGraphData = { domains: HcuDomain[]; atoms: HcuAtom[]; edges: HcuE
 type Point = { x: number; y: number }
 type Selection = { kind: "atom" | "domain" | "edge"; id: string }
 type EvidenceFilter = "all" | "hypothesis" | "other"
+type GraphView = "3d" | "map" | "records"
 
 const MAP_WIDTH = 1000
 const MAP_HEIGHT = 680
@@ -92,7 +94,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
   const [query, setQuery] = useState("")
   const [domainFilter, setDomainFilter] = useState("all")
   const [evidenceFilter, setEvidenceFilter] = useState<EvidenceFilter>("all")
-  const [view, setView] = useState<"map" | "records">("map")
+  const [view, setView] = useState<GraphView>("3d")
   const [selection, setSelection] = useState<Selection | null>(() => graph.atoms[0] ? { kind: "atom", id: graph.atoms[0].id } : null)
   const coordinates = useMemo(() => buildMapCoordinates(graph), [graph])
   const normalizedQuery = query.trim().toLocaleLowerCase(english ? "en" : "es")
@@ -157,8 +159,9 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
           <option value="other">{english ? "Other recorded statuses" : "Otros estados registrados"}</option>
         </select>
       </label>
-      <div className="hcu-view-toggle" role="group" aria-label={english ? "Map display" : "Vista del mapa"}>
-        <button type="button" className={view === "map" ? "is-active" : ""} aria-pressed={view === "map"} onClick={() => setView("map")}>{english ? "Map" : "Mapa"}</button>
+      <div className="hcu-view-toggle" role="group" aria-label={english ? "Visualization mode" : "Modo de visualización"}>
+        <button type="button" className={view === "3d" ? "is-active" : ""} aria-pressed={view === "3d"} onClick={() => setView("3d")}>{english ? "3D field" : "Campo 3D"}</button>
+        <button type="button" className={view === "map" ? "is-active" : ""} aria-pressed={view === "map"} onClick={() => setView("map")}>{english ? "2D scheme" : "Esquema 2D"}</button>
         <button type="button" className={view === "records" ? "is-active" : ""} aria-pressed={view === "records"} onClick={() => setView("records")}>{english ? "Records" : "Registros"}</button>
       </div>
     </div>
@@ -182,7 +185,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
 
     <div className="hcu-explorer-grid">
       <div className="hcu-map-column">
-        {view === "map" ? <div className="hcu-map-panel">
+        {view === "3d" ? <Hcu3DCanvas graph={graph} visibleAtomIds={[...visibleAtomIds]} visibleEdgeIds={[...visibleEdgeIds]} selection={selection} locale={locale} onSelect={setSelection} /> : view === "map" ? <div className="hcu-map-panel">
           <p className="hcu-map-scroll-hint">{english ? "Swipe horizontally to explore every domain and relationship." : "Desliza horizontalmente para recorrer todos los dominios y relaciones."}</p>
           <div className="hcu-canvas-scroll" role="region" aria-label={english ? "Interactive HCU knowledge map; scroll horizontally on small screens" : "Mapa interactivo de conocimiento HCU; desplázate horizontalmente en pantallas pequeñas"} tabIndex={0}>
             <svg className="hcu-canvas" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-labelledby="hcu-canvas-title hcu-canvas-description">
