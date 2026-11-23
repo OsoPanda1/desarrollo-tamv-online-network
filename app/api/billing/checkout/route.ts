@@ -4,7 +4,7 @@ import { membershipSubscriptions, user } from "@/lib/db/schema"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { getMembershipPlan, LIVE_MEMBERSHIP_STATUSES, MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
 import { getAppBaseUrl, getStripeSecret, stripePost } from "@/lib/billing/stripe"
-import { and, eq, inArray, lt } from "drizzle-orm"
+import { and, eq, inArray } from "drizzle-orm"
 import { z } from "zod"
 
 export const runtime = "nodejs"
@@ -101,7 +101,6 @@ export async function POST(request: Request) {
 
   const membershipId = crypto.randomUUID()
   const now = new Date()
-  const staleBefore = new Date(now.getTime() - 30 * 60 * 1000)
   let reservation: { id: string } | null = null
 
   try {
@@ -113,18 +112,13 @@ export async function POST(request: Request) {
         .for("update")
       if (!account) return { state: "account_missing" as const }
 
-      await transaction
-        .update(membershipSubscriptions)
-        .set({ status: "checkout_expired", updatedAt: now })
-        .where(and(
-          eq(membershipSubscriptions.userId, session.user.id),
-          eq(membershipSubscriptions.planId, input.planId),
-          eq(membershipSubscriptions.status, "pending"),
-          lt(membershipSubscriptions.createdAt, staleBefore),
-        ))
-
       const [existing] = await transaction
-        .select({ id: membershipSubscriptions.id, status: membershipSubscriptions.status })
+        .select({
+          id: membershipSubscriptions.id,
+          status: membershipSubscriptions.status,
+          stripeCheckoutUrl: membershipSubscriptions.stripeCheckoutUrl,
+          createdAt: membershipSubscriptions.createdAt,
+        })
         .from(membershipSubscriptions)
         .where(and(
           eq(membershipSubscriptions.userId, session.user.id),
@@ -133,7 +127,18 @@ export async function POST(request: Request) {
         ))
         .limit(1)
 
-      if (existing) return { state: "existing" as const, status: existing.status }
+      if (existing) {
+        const ageMs = now.getTime() - existing.createdAt.getTime()
+        if (
+          existing.status === "pending" &&
+          existing.stripeCheckoutUrl &&
+          ageMs >= 0 &&
+          ageMs < 32 * 60 * 1000
+        ) {
+          return { state: "resume" as const, url: existing.stripeCheckoutUrl }
+        }
+        return { state: "existing" as const, status: existing.status }
+      }
 
       await transaction.insert(membershipSubscriptions).values({
         id: membershipId,
@@ -150,8 +155,22 @@ export async function POST(request: Request) {
     })
 
     if (result.state === "account_missing") return apiError("La cuenta ya no está disponible. Inicia sesión de nuevo.", 401)
+    if (result.state === "resume") {
+      try {
+        const resumeUrl = new URL(result.url)
+        if (resumeUrl.protocol === "https:" && resumeUrl.hostname === "checkout.stripe.com") {
+          return apiJson({ checkoutUrl: resumeUrl.toString(), resumed: true })
+        }
+      } catch {
+        // Do not redirect to an unexpected value read from persisted state.
+      }
+      return apiError("El checkout pendiente ya no tiene una URL segura. Espera a que Stripe confirme su vencimiento antes de volver a contratar.", 409)
+    }
     if (result.state === "existing") {
-      return apiError("Ya existe una suscripción o un checkout pendiente para este plan. Gestiona la suscripción actual o espera a que venza el checkout abandonado.", 409)
+      const message = result.status === "pending"
+        ? "Ya existe un checkout pendiente. Reanúdalo en tu otra pestaña o espera a que Stripe confirme su vencimiento; no se abrirá una segunda sesión para evitar un cobro duplicado."
+        : "Ya existe una suscripción para este plan. Gestiona la suscripción actual desde el portal de facturación."
+      return apiError(message, 409)
     }
     reservation = { id: result.id }
 
@@ -159,6 +178,7 @@ export async function POST(request: Request) {
     form.set("mode", "subscription")
     form.set("success_url", `${config.appBaseUrl}/membresias?checkout=success&session_id={CHECKOUT_SESSION_ID}`)
     form.set("cancel_url", `${config.appBaseUrl}/membresias?checkout=cancelled`)
+    form.set("expires_at", String(Math.floor(Date.now() / 1000) + 35 * 60))
     form.set("client_reference_id", session.user.id)
     form.set("customer_email", session.user.email)
     form.set("locale", "auto")
@@ -200,6 +220,7 @@ export async function POST(request: Request) {
 
     await db.update(membershipSubscriptions).set({
       stripeCheckoutSessionId: checkout.id,
+      stripeCheckoutUrl: checkoutUrl.toString(),
       stripeCustomerId: stripeId(checkout.customer),
       updatedAt: new Date(),
     }).where(eq(membershipSubscriptions.id, membershipId))
