@@ -108,14 +108,20 @@ test("course progression is server-gated to active or trialing membership and ow
   assert.match(coursePage, /activeMembership/);
 });
 
-test("assistant inference enforces same-origin and the checkout return path cannot redirect externally", () => {
+test("assistant inference enforces same-origin and auth redirects remain internal across sign-up", () => {
   const assistant = read("app/api/assistant/route.ts");
   const signin = read("app/sign-in/page.tsx");
+  const signup = read("app/sign-up/page.tsx");
+  const safeRedirect = read("lib/safe-redirect.ts");
+  const authForm = read("components/auth-form.tsx");
   assert.match(assistant, /if \(!isSameOriginRequest\(request\)\)/);
   assert.match(signin, /resolveInternalRedirect/);
-  assert.match(signin, /url\.origin !== "https:\/\/tamv\.invalid"/);
-  assert.match(signin, /String\.fromCharCode\(92\)/);
-});
+  assert.match(signup, /resolveInternalRedirect/);
+  assert.match(signup, /redirectTo=\{redirectTo\}/);
+  assert.match(safeRedirect, /url\.origin !== "https:\/\/tamv\.invalid"/);
+  assert.match(safeRedirect, /String\.fromCharCode\(92\)/);
+  assert.match(authForm, /encodeURIComponent\(redirectTo\)/);
+});;
 
 test("subscription webhook, not the checkout browser redirect, controls paid access", () => {
   const webhook = read("app/api/webhooks/stripe/route.ts");
