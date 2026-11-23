@@ -7,7 +7,7 @@ import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { getServerSession } from "@/lib/auth-helpers"
 import { resolveLocale } from "@/lib/i18n"
-import { getPublicHcuGraph } from "@/lib/research/queries"
+import { getPublicHcuGraph, getUserHcuModel } from "@/lib/research/queries"
 
 export const dynamic = "force-dynamic"
 type SearchParams = Promise<{ lang?: string }>
@@ -23,6 +23,8 @@ export default async function HcuPage({ searchParams }: { searchParams: SearchPa
   const locale = resolveLocale((await searchParams).lang)
   const english = locale === "en"
   const [{ domains, atoms, edges }, session] = await Promise.all([getPublicHcuGraph(), getServerSession()])
+  const privateModel = session?.user ? await getUserHcuModel(session.user.id) : { atoms: [], edges: [] }
+  const simulationAtoms = [...atoms, ...privateModel.atoms]
   const graph = {
     domains: domains.map(({ id, nameEs, nameEn, descriptionEs, descriptionEn, sortOrder }) => ({ id, nameEs, nameEn, descriptionEs, descriptionEn, sortOrder })),
     atoms: atoms.map(({ id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, isProvisional, isQuarantined }) => ({ id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, isProvisional, isQuarantined })),

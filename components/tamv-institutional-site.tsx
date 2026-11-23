@@ -15,6 +15,7 @@ import {
 import { TamvProjectExplorer } from "./tamv-project-explorer"
 import { TamvResearchTopics } from "./tamv-research-topics"
 import { TamvSiteHeader } from "./tamv-site-header"
+import { TamvSiteGuide } from "./tamv-site-guide"
 import { governancePrinciples, roadmapSteps, researchInventory } from "./tamv-data"
 import { getPublicProjects, getPublicResearchTopics } from "@/lib/research/queries"
 import type { Locale } from "@/lib/i18n"
@@ -182,6 +183,8 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
           </div>
         </section>
         <div className="container institutional-support-slot"><TamvDonationCTA locale={locale} variant="compact" label="Apoyar el ecosistema" /></div>
+
+        <TamvSiteGuide locale={locale} />
 
         <section className="section architecture-section" id="arquitectura">
           <div className="container architecture-layout">
@@ -383,7 +386,8 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
       <section className="section research-section" id="investigacion"><div className="container research-layout"><div><p className="eyebrow">05 / OPEN RESEARCH AND KNOWLEDGE</p><h2>Research also means <em>showing its limits.</em></h2><p className="lead-copy">The attached comparative inventory brings together research, development, governance, and scholarly publishing references to inform future TAMV design.</p><p className="body-copy">It is not a certified global ranking or an independent audit of each platform. Before becoming a requirement, every capability should be checked against official documentation, licensing, verification dates, and access conditions.</p><a className="inline-link" href="https://doi.org/10.5281/zenodo.19436662" target="_blank" rel="noopener noreferrer">View the documentary record on Zenodo <ArrowUpRight aria-hidden="true" /></a></div><aside className="research-card"><div className="research-card-label"><BookOpen aria-hidden="true" /> REFERENCE NOTEBOOK</div><strong>{researchInventory.platforms}<span>+</span></strong><h3>platforms reviewed</h3><div className="research-divider" /><div className="research-metadata"><span>INVENTORIED CAPABILITIES</span><b>{researchInventory.capabilities}</b></div><div className="research-metadata"><span>THEMATIC GROUPS</span><b>{researchInventory.categories}</b></div><p>Working inventory supplied to guide systematic verification.</p></aside></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support open research" /></div>
 
-      <TamvResearchTopics topics={topics} locale="en" />
+            <TamvResearchTopics topics={topics} locale="en" />
+      <TamvSiteGuide locale="en" />
 
       <section className="section governance-section" id="gobernanza"><div className="container"><div className="section-heading-row"><div><p className="eyebrow">07 / ETHICS AND GOVERNANCE</p><h2>Transparency requires <em>visible accountability.</em></h2></div><p>Technological ambition needs checks and balances, traceable sources, and ways to correct mistakes. These are design and working principles, not a certification label.</p></div><div className="governance-grid">{governancePrinciples.map((principle) => <article className="governance-card" key={principle.number}><span className="governance-number">{principle.number}</span><Check aria-hidden="true" /><h3>{principle.titleEn}</h3><p>{principle.textEn}</p></article>)}</div><div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>Records, DOIs, and public profiles support attribution. By themselves they do not establish peer review, accreditation, security, impact, or external institutional recognition.</p></div></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support responsible governance" /></div>
