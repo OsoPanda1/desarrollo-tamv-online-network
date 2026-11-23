@@ -155,3 +155,5 @@ The ecosystem now has a canonical, public discovery catalog at `GET /api/v1/ecos
 - Code-level consolidation remains subject to repository license, asset, dependency and cryptographic implementation review.
 
 The endpoint and registry tests live in `tests/ecosystem-registry.test.mjs`. They must pass in CI and the endpoint must be smoke-tested on a deployed preview before the catalog is used as a production integration surface.
+
+A stateless `POST /api/v1/provenance/validate` endpoint validates provenance envelopes against the v1 Zod schema. It enforces JSON input and a 64 KiB body limit, returns structured schema errors, does not persist or fetch submitted sources, and does not establish source truth or authorship. See the [OpenAPI contract](public/openapi.yaml) and [federation architecture](docs/architecture/ecosystem-federation-v1.md). Its route tests are in `tests/provenance-validation-route.test.mjs`.
