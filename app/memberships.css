@@ -96,3 +96,58 @@
   .billing-spinner { animation: none; }
   .course-progress-bar span { transition: none; }
 }
+
+.billing-terms-check {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: .65rem;
+  align-items: start;
+  margin: .25rem 0;
+  font-size: .86rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+.billing-terms-check input { width: 1rem; height: 1rem; margin-top: .2rem; accent-color: var(--ring); }
+.billing-terms-check a { color: var(--foreground); text-decoration: underline; text-underline-offset: .2em; }
+.billing-terms-check a:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.membership-status-section { margin: 0 0 2.2rem; }
+.membership-status-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+.membership-status-heading h2 { margin: .2rem 0 0; font-size: clamp(1.35rem, 2.3vw, 1.8rem); }
+.membership-status-list { display: grid; gap: .75rem; }
+.membership-status-card, .membership-status-box {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+}
+.membership-status-card p, .membership-status-box p { margin: 0; line-height: 1.55; }
+.membership-status-card-heading { display: flex; gap: 1rem; align-items: center; justify-content: space-between; }
+.membership-status-card-heading h3, .membership-status-box h3 { margin: 0; font-size: 1.05rem; }
+.membership-status-amount { margin-top: .2rem !important; color: var(--muted-foreground); font-size: .9rem; }
+.membership-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .35rem .55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  font-size: .8rem;
+  white-space: nowrap;
+}
+.membership-status-badge svg { width: .95rem; height: .95rem; }
+.membership-status-badge.is-active { border-color: var(--ring); }
+.membership-status-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+.membership-refresh { min-height: 2.35rem; padding: .45rem .7rem; }
+.membership-status-box { grid-template-columns: 1.4rem minmax(0, 1fr); align-items: start; }
+.membership-status-box > svg { width: 1.25rem; height: 1.25rem; margin-top: .2rem; }
+.membership-status-box > div { display: grid; gap: .6rem; }
+.membership-status-box .button { justify-self: start; }
+@media (max-width: 600px) {
+  .membership-status-card-heading { align-items: flex-start; flex-direction: column; }
+  .membership-status-badge { white-space: normal; }
+  .membership-refresh { width: 100%; justify-content: center; }
+}
