@@ -196,6 +196,10 @@ export async function POST(request: Request) {
     form.set("subscription_data[metadata][membershipId]", membershipId)
     form.set("subscription_data[metadata][userId]", session.user.id)
     form.set("subscription_data[metadata][planId]", plan.id)
+    if (input.planId === "business" && input.businessName) {
+      form.set("metadata[businessName]", input.businessName)
+      form.set("subscription_data[metadata][businessName]", input.businessName)
+    }
 
     if (config.automaticTax) {
       form.set("automatic_tax[enabled]", "true")
