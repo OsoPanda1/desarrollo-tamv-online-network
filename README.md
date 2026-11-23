@@ -15,7 +15,7 @@ Independent Mexican initiative connecting research, technology, digital communit
 
 Institutional pages, researchers/developers, projects, research topics and proposals, moderation/appeals, HCU transformation map and simulation, research exports, and a curated community-discovery hub.
 
-The companion repository separately contains Auth0/OIDC, Supabase-backed TAMV ID/member registry, ORCID linking, federated metadata search, DOI audit and VETRA workflows. These are separate applications, not automatically one runtime. Identity, data, APIs, authorization and deployment must be federated explicitly; copying screens or linking domains is not secure integration.
+The companion repository separately contains Auth0/OIDC, Supabase-backed TAMV ID/member registry, ORCID linking, federated metadata search, DOI audit and VETRA workflows. These are separate applications, not automatically one runtime. Identity, data, APIs, authorization and deployment must be federated explicitly; copying screens or linking domains is not secure integration. See [the federation contract](docs/architecture/federation-contract.md).
 
 ## Local development
 
@@ -25,6 +25,7 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
     cp .env.example .env.local
     pnpm test
     pnpm typecheck
+    pnpm build
     pnpm dev
 
 ## Operational health endpoints
@@ -36,11 +37,22 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
 
 ## Database operations
 
+- `PG_POOL_MAX` configures the maximum PostgreSQL connections per Node.js process. The default is 3; valid values are integers from 1 through 20. Choose the value against the provider connection limit, serverless instance concurrency and whether the database URL uses a connection pooler.
 - `pnpm db:preflight` — read-only schema and integrity diagnostics; set `DATABASE_URL` explicitly to a disposable/test database first.
 - `pnpm db:preflight -- --strict` — exits unsuccessfully if schema checks or integrity diagnostics find issues.
 - `pnpm db:migrate` — applies checksummed migrations only after the strict preflight passes. Do not run this against production until a backup restore has been rehearsed and the exact target database is confirmed.
 
-Do not commit .env.local, credentials, private keys, database dumps or real user data. Review docs/database/migrations.md before applying migrations; migrations assume the existing schema is present and do not bootstrap a blank database. A successful build does not prove authorization, database workflows or production integrations work.
+Do not commit .env.local, credentials, private keys, database dumps or real user data. Review [database migration guidance](docs/database/migrations.md) before applying migrations; migrations assume the existing schema is present and do not bootstrap a blank database. A successful build does not prove authorization, database workflows or production integrations work.
+
+## Security and release gates
+
+The project maintains separate controls for application identity, data integrity, supply chain, privacy and operational recovery. See:
+
+- [Triple hardening standard](docs/security/triple-hardening.md)
+- [Evidence-based release readiness gates](docs/security/release-readiness.md)
+- [Baseline technical audit](docs/audit/2026-11-baseline.md)
+
+A release is not production-ready merely because workflows or checklists exist. Record passing CI, dependency audit, CodeQL, secret scan, authorization tests, database recovery evidence and a smoke test for the exact deployed commit. If the runner provides no executable logs or the deployment version cannot be confirmed, mark validation as blocked rather than passed.
 
 ## Triple hardening
 
@@ -48,7 +60,7 @@ Do not commit .env.local, credentials, private keys, database dumps or real user
 2. Application/identity plane: deny-by-default authorization, server-side validation, session protection, rate limits, safe redirects, audit events and supply-chain checks.
 3. Governance/operations plane: consent, privacy/retention, moderation/appeals, release approvals, incident response and evidence-backed claims.
 
-See docs/security/triple-hardening.md and docs/audit/2026-11-baseline.md. A hash is not encryption, a digital signature, a trusted timestamp, or proof that a claim is true.
+A hash is not encryption, a digital signature, a trusted timestamp, or proof that a claim is true.
 
 ## Evidence policy
 
