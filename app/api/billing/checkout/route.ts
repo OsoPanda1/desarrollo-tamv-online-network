@@ -49,8 +49,10 @@ function validateBillingConfiguration() {
   }
 
   if (mode === "live") {
-    if (!isProductionDeployment()) {
-      return { error: "El checkout con cobros live solo se permite en el entorno de producción." } as const
+    // Vercel sets VERCEL_ENV for real deployments. Do not treat a local
+    // NODE_ENV=production build as permission to charge real payment methods.
+    if (process.env.VERCEL_ENV !== "production") {
+      return { error: "El checkout con cobros live solo se permite en un deployment Vercel de producción." } as const
     }
     if (!secret.startsWith("sk_live_")) {
       return { error: "El modo live requiere credenciales live verificadas de Stripe." } as const
