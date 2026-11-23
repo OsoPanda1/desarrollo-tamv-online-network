@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react"
 import { useState } from "react"
 import type { researchTopics } from "@/lib/db/schema"
 import { projectCategoryLabel, type Locale } from "@/lib/i18n"
+import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 
 type ParticipationMode = "join" | "cocreate" | "publish"
 type TopicFilter = "all" | ParticipationMode
@@ -71,7 +72,10 @@ export function TamvResearchTopics({ topics, locale = "es" }: { topics: Research
             <h3 id="topics-invitation-title">{english ? "Let’s discuss how to share it." : "Hablemos de cómo compartirla."}</h3>
             <p>{english ? "Submit a summary, material, or dataset. The first contact helps agree on scope, review, and licensing before anything is shared." : "Presenta un resumen, material o conjunto de datos. El primer contacto sirve para acordar alcance, revisión y licencia antes de cualquier difusión."}</p>
           </div>
-          <Link className="button button-copper" href="/portal/propuestas/nueva">{english ? "Propose research" : "Proponer una investigación"} <ArrowUpRight aria-hidden="true" /></Link>
+          <div className="topics-invitation-actions">
+            <Link className="button button-copper" href="/portal/propuestas/nueva">{english ? "Propose research" : "Proponer una investigación"} <ArrowUpRight aria-hidden="true" /></Link>
+            <TamvDonationCTA locale={locale} variant="compact" label={english ? "Support open research" : "Apoyar la investigación abierta"} />
+          </div>
         </aside>
 
         <p className="topics-editorial-note">{english ? "These are proposed editorial themes, not active calls for submissions. Receiving a proposal does not guarantee publication or peer review; the process, criteria, licenses, and any schedule must be agreed and announced separately. The Zenodo record linked above is not a TAMV community repository." : "Estas líneas son propuestas editoriales, no convocatorias activas. Recibir una propuesta no garantiza publicación ni revisión por pares; el proceso, los criterios, las licencias y cualquier calendario deben acordarse y anunciarse por separado. El registro documental de Zenodo enlazado en la sección anterior no equivale a un repositorio comunitario de TAMV."}</p>
