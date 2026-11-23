@@ -119,7 +119,21 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
 
     <section className="section"><div className="container">
       <div className="section-heading-row">
-        <div><p className="eyebrow">{english ? "04 / TERMS AT A GLANCE" : "04 / CONDICIONES ESENCIALES"}</p><h2>{english ? "Billing and scope." : "Cobro y alcance."}</h2></div>
+        <div><p className="eyebrow">{english ? "04 / FUTURE INSTITUTIONAL FOUNDATION" : "04 / FUTURA BASE INSTITUCIONAL"}</p><h2>{english ? "A long-term goal: formalization and a ROR profile." : "Una meta a largo plazo: formalización y ficha ROR."}</h2></div>
+        <p>{english ? "As the network becomes financially sustainable, future net membership revenue may help cover legal, accounting and administrative work to establish TAMV as a durable research organization. Any allocation requires a documented governance decision and published accounting." : "Cuando la red alcance sostenibilidad financiera, los ingresos netos futuros de las membresías podrían ayudar a cubrir trabajo jurídico, contable y administrativo para constituir TAMV como organización de investigación duradera. Cualquier asignación requiere una decisión documentada de gobernanza y rendición de cuentas pública."}</p>
+      </div>
+      <div className="membership-course-callout">
+        <div><ShieldCheck aria-hidden="true" /><h3>{english ? "A transparent roadmap, not a promise or extra fee" : "Una ruta transparente, no una promesa ni un cargo extra"}</h3></div>
+        <p>{english
+          ? "There is no fixed share of today's membership fees reserved for incorporation, and a membership does not buy equity or guarantee legal status. ROR IDs are free; legal formalization and research evidence work have separate costs. ROR inclusion is curated and cannot be guaranteed."
+          : "Hoy no existe una proporción fija de las cuotas reservada para constituir la entidad y una membresía no compra acciones ni garantiza un estatus jurídico. Los ROR ID son gratuitos; la formalización legal y la preparación de evidencia de investigación tienen costos separados. La inclusión en ROR pasa por curaduría y no puede garantizarse."}</p>
+        <Link className="text-link" href={english ? "/institucionalizacion?lang=en" : "/institucionalizacion"}>{english ? "Read the institutionalization and ROR roadmap" : "Consultar la ruta de institucionalización y ROR"} <ArrowUpRight aria-hidden="true" /></Link>
+      </div>
+    </div></section>
+
+    <section className="section"><div className="container">
+      <div className="section-heading-row">
+        <div><p className="eyebrow">{english ? "05 / TERMS AT A GLANCE" : "05 / CONDICIONES ESENCIALES"}</p><h2>{english ? "Billing and scope." : "Cobro y alcance."}</h2></div>
         <p>{english ? "Review the conditions before subscribing; the Stripe checkout will show the exact amount and payment method available for your account." : "Revisa las condiciones antes de contratar; el checkout de Stripe mostrará el importe exacto y los medios de pago disponibles para tu cuenta."}</p>
       </div>
       <div className="doc-grid">
