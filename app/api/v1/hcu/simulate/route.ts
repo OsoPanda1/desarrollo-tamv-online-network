@@ -4,8 +4,8 @@ import { hcuRuns, user } from "@/lib/db/schema"
 import { simulateHcu, HCU_MODEL_VERSION, type HcuAtom, type HcuEdge } from "@/lib/hcu/model"
 import { estimateHcuSimulationWork, isHcuGraphWithinLimits, MAX_HCU_SIMULATION_WORK } from "@/lib/hcu/budget"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
-import { sha256, canonicalJson } from "@/lib/research/provenance"
-import { getPublicHcuGraph } from "@/lib/research/queries"
+import { sha256, sha3_512, canonicalJson } from "@/lib/research/provenance"
+import { getUserHcuGraph } from "@/lib/research/queries"
 import { simulationSchema } from "@/lib/validation"
 import { and, count, eq, gte } from "drizzle-orm"
 
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     return apiError("Alcanzaste el límite de 20 simulaciones por día.", 429)
   }
 
-  const graph = await getPublicHcuGraph()
+  const graph = await getUserHcuGraph(session.user.id)
   if (!isHcuGraphWithinLimits(graph.atoms.length, graph.edges.length)) {
     return apiError("El grafo excede el presupuesto operativo de simulación. Reduce su complejidad.", 503)
   }
@@ -66,9 +66,13 @@ export async function POST(request: Request) {
     return apiError("El grafo cambió o incluye un nodo no disponible. Recarga la página.", 400)
   }
 
-  const atoms: HcuAtom[] = graph.atoms.map((atom) => ({ id: atom.id, influenceX: atom.influenceX, riskY: atom.riskY, evidenceZ: atom.evidenceZ, isQuarantined: atom.isQuarantined }))
+  const atoms: HcuAtom[] = graph.atoms.map((atom) => ({ id: atom.id, domainId: atom.domainId, influenceX: atom.influenceX, riskY: atom.riskY, evidenceZ: atom.evidenceZ, isQuarantined: atom.isQuarantined }))
   const edges: HcuEdge[] = graph.edges.map((edge) => ({ id: edge.id, sourceAtomIds: edge.sourceAtomIds, targetAtomIds: edge.targetAtomIds, weight: edge.weight, sign: edge.sign, delayYears: edge.delayYears, evidenceStatus: edge.evidenceStatus }))
-  const output = simulateHcu(atoms, edges, input)
+  const sourceGraphHash = sha3_512(canonicalJson({
+    atoms: graph.atoms.map(({ id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, tri, roleCode, isProvisional, isQuarantined }) => ({ id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, tri, roleCode, isProvisional, isQuarantined })).sort((left, right) => left.id.localeCompare(right.id)),
+    edges: graph.edges.map(({ id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl }) => ({ id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl })).sort((left, right) => left.id.localeCompare(right.id)),
+  }))
+  const output = simulateHcu(atoms, edges, input, sourceGraphHash)
   const outputHash = sha256(canonicalJson(output))
   const id = crypto.randomUUID()
 

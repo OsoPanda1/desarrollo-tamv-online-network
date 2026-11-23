@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import { AppealForm } from "@/components/portal/appeal-form"
 import { ConsentControl } from "@/components/portal/consent-control"
 import { EvidenceForm } from "@/components/portal/evidence-form"
+import { TqafAssessmentPanel } from "@/components/portal/tqaf-assessment-panel"
 import { PortalNav } from "@/components/portal/portal-nav"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 import { requireUser } from "@/lib/auth-helpers"
@@ -20,7 +21,7 @@ export default async function ProposalDetailPage({ params }: { params: Params })
   const { id } = await params
   const record = await getUserProposal(account.id, id)
   if (!record) notFound()
-  const { proposal, events, evidence, reviews, appeals } = record
+  const { proposal, events, evidence, reviews, appeals, tqaf } = record
   const status = proposalStatusLabels[proposal.status]?.[0] ?? proposal.status
   const isClosed = ["published", "withdrawn"].includes(proposal.status)
 
@@ -30,6 +31,7 @@ export default async function ProposalDetailPage({ params }: { params: Params })
     <div className="proposal-detail-grid">
       <div className="proposal-detail-main">
         <article className="portal-content-card"><p className="eyebrow">RESUMEN</p><p className="proposal-abstract">{proposal.abstract}</p><dl className="proposal-record-data"><div><dt>VISIBILIDAD</dt><dd>{proposal.visibility === "public" ? "Público" : "Privado"}</dd></div><div><dt>LICENCIA</dt><dd>{proposal.license ?? "No declarada"}</dd></div><div><dt>FUENTE</dt><dd>{proposal.sourceUrl ? <a href={proposal.sourceUrl} target="_blank" rel="noopener noreferrer">{proposal.sourceUrl} <ArrowUpRight aria-hidden="true" /></a> : "No proporcionada"}</dd></div></dl><p className="form-note">El consentimiento autoriza la difusión del resumen al publicarse; no hace públicas automáticamente las referencias de evidencia.</p>{proposal.status !== "withdrawn" && <ConsentControl proposalId={proposal.id} initialValue={proposal.shareConsent} published={proposal.status === "published"} />}</article>
+        <TqafAssessmentPanel proposalId={proposal.id} assessments={tqaf} mode="author" />
         <article className="portal-content-card"><div className="content-card-heading"><div><p className="eyebrow">PROCEDENCIA</p><h2>Referencias y versiones</h2></div><span>{evidence.length} {evidence.length === 1 ? "referencia" : "referencias"}</span></div>{evidence.length ? <ul className="evidence-list">{evidence.map((item) => <li key={item.id}><div><strong>{item.label}</strong><span>{item.kind} · v{item.version} · {item.verificationStatus}</span>{item.description && <p>{item.description}</p>}</div><a href={item.url} target="_blank" rel="noopener noreferrer">Abrir <ArrowUpRight aria-hidden="true" /></a></li>)}</ul> : <p className="form-note">Aún no hay referencias registradas.</p>}{!isClosed && <details className="inline-disclosure"><summary>Añadir referencia de evidencia</summary><EvidenceForm proposalId={proposal.id} /></details>}</article>
         <article className="portal-content-card"><p className="eyebrow">HISTORIAL</p><h2>Eventos editoriales</h2>{events.length ? <ol className="proposal-timeline">{events.map((event) => <li key={event.id}><span className="timeline-dot" /><div><strong>{event.action.replaceAll("_", " ")}</strong><time dateTime={event.createdAt.toISOString()}>{event.createdAt.toLocaleString("es-MX")}</time>{event.detail && <p>{event.detail}</p>}{event.eventHash && <code>SHA-256 · {event.eventHash.slice(0, 20)}…</code>}</div></li>)}</ol> : <p>No hay eventos registrados.</p>}
           {reviews.length > 0 && <div className="review-feedback-list"><h3>Retroalimentación</h3>{reviews.map((review) => <article key={review.id}><span>{review.conflictOfInterest ? "Recusación por conflicto" : review.outcome}</span><p>{review.feedback}</p><time dateTime={review.createdAt.toISOString()}>{review.createdAt.toLocaleDateString("es-MX")}</time></article>)}</div>}

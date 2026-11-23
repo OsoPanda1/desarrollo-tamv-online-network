@@ -20,10 +20,13 @@ const endpoints = [
   { method: "GET", path: "/api/v1/researchers", access: "Público", purpose: "Perfiles cuyo titular activó publicación; nunca incluye correo." },
   { method: "GET", path: "/api/v1/exports/research", access: "Público", purpose: "Catálogo JSON-LD orientado a interoperabilidad y reutilización." },
   { method: "GET", path: "/api/v1/exports/research?format=csv", access: "Público", purpose: "Exportación CSV de metadatos públicos." },
-  { method: "GET", path: "/api/v1/hcu/graph", access: "Público", purpose: "Dominios, átomos y relaciones públicas con estado de evidencia." },
+  { method: "GET", path: "/api/v1/hcu/graph", access: "Público", purpose: "Grafo público y huella SHA3-512 del snapshot; sin firma ni anclaje externo." },
   { method: "POST", path: "/api/v1/research/proposals", access: "Sesión requerida", purpose: "Crea una propuesta privada y registra el evento de recepción." },
   { method: "POST", path: "/api/v1/research/interests", access: "Sesión requerida", purpose: "Guarda interés privado; compartirlo externamente es opcional." },
-  { method: "POST", path: "/api/v1/hcu/simulate", access: "Sesión requerida", purpose: "Ejecuta y conserva semilla, hashes, versión y resultados." },
+  { method: "POST", path: "/api/v1/hcu/simulate", access: "Sesión requerida", purpose: "Simula el grafo público y el modelo privado de la cuenta; conserva parámetros, semilla y huellas." },
+  { method: "POST", path: "/api/v1/hcu/atoms", access: "Sesión requerida", purpose: "Crea átomos privados provisionales con límites por cuenta; nunca publica automáticamente." },
+  { method: "POST", path: "/api/v1/hcu/hyperedges", access: "Sesión requerida", purpose: "Crea relaciones privadas con fuentes, signo, peso, rezago y nivel TQAF declarado." },
+  { method: "POST", path: "/api/v1/research/proposals/{id}/tqaf", access: "Autor o revisor", purpose: "Registra declaraciones o evaluaciones por criterio en el historial del expediente." },
 ]
 
 export default async function DevelopersPage({ searchParams }: { searchParams: SearchParams }) {
@@ -35,6 +38,7 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
       <div className="api-endpoint-list">{endpoints.map((endpoint) => <article className="api-endpoint" key={`${endpoint.method}:${endpoint.path}`}><span className={`api-method method-${endpoint.method.toLowerCase()}`}>{endpoint.method}</span><code>{endpoint.path}</code><span className="api-access">{endpoint.access}</span><p>{endpoint.purpose}</p></article>)}</div>
       <div className="api-callout api-export-callout"><div><p className="eyebrow">{english ? "FAIR-ORIENTED EXPORTS" : "EXPORTACIONES ORIENTADAS A FAIR"}</p><h2>{english ? "Reuse metadata; respect the license." : "Reutiliza metadatos; respeta la licencia."}</h2><p>{english ? "JSON-LD and CSV exports contain public metadata only. An absent license grants no additional reuse rights." : "JSON-LD y CSV incluyen solo metadatos públicos. La ausencia de licencia no concede derechos adicionales de reutilización."}</p></div><Link className="button button-copper" href="/api/v1/exports/research">{english ? "Open JSON-LD" : "Abrir JSON-LD"} <ArrowUpRight aria-hidden="true" /></Link></div>
       <div className="api-rate-limits"><Braces aria-hidden="true" /><div><h3>{english ? "Validation and limits" : "Validación y límites"}</h3><p>{english ? "JSON request bodies are capped at 32 KiB; inputs have field and horizon limits; proposal and interest submissions have per-account daily caps; HCU permits up to 200 Monte Carlo runs and 20 saved simulations per day." : "Los cuerpos JSON se limitan a 32 KiB; cada campo y horizonte tiene límites; propuestas e intereses tienen topes diarios por cuenta; HCU permite hasta 200 corridas Monte Carlo y 20 simulaciones guardadas al día."}</p></div></div>
+      <div className="api-callout architecture-doc-callout"><div><p className="eyebrow">{english ? "ARCHITECTURE REFERENCE" : "REFERENCIA DE ARQUITECTURA"}</p><h2>{english ? "Separate the blueprint from the runtime." : "Separa el plano del runtime."}</h2><p>{english ? "Review the supplied Isabella Cero layers, fabrics, skills, risk policy, and what this site actually runs." : "Consulta las capas, fabrics, skills, política de riesgo y límites operativos de los documentos Isabella Cero."}</p></div><Link className="button button-copper" href="/arquitectura">{english ? "Open architecture register" : "Abrir registro de arquitectura"} <ArrowUpRight aria-hidden="true" /></Link></div>
     </div></section>
   </TamvAppShell>
 }

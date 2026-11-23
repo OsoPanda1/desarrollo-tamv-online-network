@@ -280,3 +280,15 @@ export const hcuShocks = pgTable("hcu_shocks", {
   note: text("note"),
   createdAt: timestamptz("created_at").notNull().defaultNow(),
 })
+
+export const tqafAssessments = pgTable("tqaf_assessments", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  proposalId: text("proposal_id").notNull(),
+  criterionCode: text("criterion_code").notNull(),
+  status: text("status").notNull().default("pending"),
+  rationale: text("rationale"),
+  evidenceUrl: text("evidence_url"),
+  reviewerId: text("reviewer_id"),
+  updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+})

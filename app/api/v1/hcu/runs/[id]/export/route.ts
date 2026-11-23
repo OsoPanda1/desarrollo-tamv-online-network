@@ -26,6 +26,8 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
       { "@type": "PropertyValue", name: "seed", value: run.seed },
       { "@type": "PropertyValue", name: "inputSha256", value: run.inputHash },
       { "@type": "PropertyValue", name: "outputSha256", value: run.outputHash },
+      { "@type": "PropertyValue", name: "sourceGraphSha3_512", value: (run.output as { sourceGraphHash?: string }).sourceGraphHash ?? "not recorded" },
+      { "@type": "PropertyValue", name: "inputParameters", value: (run.output as { input?: unknown }).input ?? "not recorded" },
       { "@type": "PropertyValue", name: "output", value: run.output },
     ],
     conditionsOfAccess: "Ejecución privada del investigador autenticado.",

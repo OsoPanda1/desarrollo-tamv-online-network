@@ -13,6 +13,10 @@ export function sha256(value: string) {
   return createHash("sha256").update(value, "utf8").digest("hex")
 }
 
+export function sha3_512(value: string) {
+  return createHash("sha3-512").update(value, "utf8").digest("hex")
+}
+
 export function makeProposalEventHash(payload: Record<string, unknown>, previousHash: string | null) {
   const canonicalPayload = canonicalJson(payload)
   return {

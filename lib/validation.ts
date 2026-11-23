@@ -105,6 +105,38 @@ export const simulationSchema = z.object({
   quarantine: z.array(z.string().min(1).max(120)).max(64),
 })
 
+const uniqueAtomIds = (ids: string[]) => new Set(ids).size === ids.length
+
+export const hcuAtomSchema = z.object({
+  domainId: z.string().trim().min(1).max(120),
+  nameEs: z.string().trim().min(2).max(80),
+  nameEn: z.string().trim().min(2).max(80).optional(),
+  descriptionEs: z.string().trim().min(10).max(500),
+  descriptionEn: z.string().trim().min(10).max(500).optional(),
+  influenceX: z.number().finite().min(0).max(100),
+  riskY: z.number().finite().min(0).max(100),
+  evidenceZ: z.number().finite().min(0).max(100),
+})
+
+export const hcuHyperedgeSchema = z.object({
+  sourceAtomIds: z.array(z.string().trim().min(1).max(120)).min(1).max(32).refine(uniqueAtomIds),
+  targetAtomIds: z.array(z.string().trim().min(1).max(120)).min(1).max(32).refine(uniqueAtomIds),
+  sourceTitle: z.string().trim().min(2).max(160),
+  sourceUrl: safeHttpUrl.optional().nullable(),
+  weight: z.number().finite().min(0.05).max(1),
+  sign: z.union([z.literal(1), z.literal(-1)]),
+  delayYears: z.number().int().min(1).max(15),
+  tqafLevel: z.enum(["N1", "N2", "N3"]).nullable().optional(),
+  evidenceStatus: z.enum(["hypothesis", "declared", "external"]).default("hypothesis"),
+})
+
+export const tqafAssessmentSchema = z.object({
+  criterionCode: z.enum(["TQAF-01", "TQAF-02", "TQAF-03", "TQAF-04", "TQAF-05", "TQAF-06", "TQAF-07", "TQAF-08", "TQAF-09", "TQAF-10"]),
+  status: z.enum(["verified", "declared", "partial", "pending", "external"]),
+  rationale: z.string().trim().max(1200).optional(),
+  evidenceUrl: safeHttpUrl.optional().nullable(),
+})
+
 export type ProposalInput = z.infer<typeof proposalSchema>
 export type InterestInput = z.infer<typeof interestSchema>
 export type ProfileInput = z.infer<typeof profileSchema>
