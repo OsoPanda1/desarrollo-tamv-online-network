@@ -55,7 +55,7 @@ export function AuthForm({ mode, locale = "es", redirectTo = "/portal" }: { mode
         {error && <p className="form-error" role="alert">{error}</p>}
         <button className="button button-copper" type="submit" disabled={loading || (isSignUp && !acceptedPolicy)}>{loading ? (english ? "Processing…" : "Procesando…") : isSignUp ? (english ? "Create account" : "Crear cuenta") : (english ? "Sign in" : "Iniciar sesión")}</button>
       </form>
-      <p className="auth-switch">{isSignUp ? (english ? "Already have an account? " : "¿Ya tienes cuenta? ") : (english ? "New to the portal? " : "¿Aún no tienes cuenta? ")}<Link href={isSignUp ? (english ? "/sign-in?lang=en" : "/sign-in") : (english ? "/sign-up?lang=en" : "/sign-up")}>{isSignUp ? (english ? "Sign in" : "Inicia sesión") : (english ? "Create an account" : "Crea una cuenta")}</Link></p>
+      <p className="auth-switch">{isSignUp ? (english ? "Already have an account? " : "¿Ya tienes cuenta? ") : (english ? "New to the portal? " : "¿Aún no tienes cuenta? ")}<Link href={(isSignUp ? "/sign-in" : "/sign-up") + (english ? "?lang=en&callbackURL=" : "?callbackURL=") + encodeURIComponent(redirectTo)}>{isSignUp ? (english ? "Sign in" : "Inicia sesión") : (english ? "Create an account" : "Crea una cuenta")}</Link></p>
       <p className="auth-privacy">{english ? "An account does not verify academic identity. Private data stays in your portal and authorized workflows." : "La cuenta no acredita identidad académica. Los datos privados solo aparecen en tu portal y en funciones autorizadas."}</p>
     </section>
   )
