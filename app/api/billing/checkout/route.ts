@@ -52,11 +52,15 @@ function validateBillingConfiguration() {
     if (!secret.startsWith("sk_live_")) {
       return { error: "El modo live requiere credenciales live verificadas de Stripe." } as const
     }
-    if (
-      process.env.TAMV_MEMBERSHIP_TERMS_VERSION !== MEMBERSHIP_TERMS_VERSION ||
-      process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED !== "true"
-    ) {
-      return { error: "El checkout live está bloqueado hasta que se aprueben explícitamente las condiciones y el aviso de privacidad." } as const
+    const launchApprovals = [
+      process.env.TAMV_MEMBERSHIP_TERMS_VERSION === MEMBERSHIP_TERMS_VERSION,
+      process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true",
+      process.env.TAMV_MEMBERSHIP_LEGAL_APPROVED === "true",
+      process.env.TAMV_MEMBERSHIP_TAX_APPROVED === "true",
+      process.env.TAMV_MEMBERSHIP_REFUNDS_APPROVED === "true",
+    ]
+    if (launchApprovals.some((approved) => !approved)) {
+      return { error: "El checkout live está bloqueado hasta aprobar las condiciones, privacidad, operación legal, tratamiento fiscal y política de reembolsos." } as const
     }
   }
 
