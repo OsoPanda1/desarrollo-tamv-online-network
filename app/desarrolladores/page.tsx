@@ -72,6 +72,78 @@ const endpoints = [
     purposeEs: "Dominios, átomos y relaciones del modelo exploratorio.",
     purposeEn: "Domains, atoms, and relationships in the exploratory model.",
   },
+  {
+    method: "POST",
+    path: "/api/v1/research/proposals",
+    accessEs: "Sesión requerida",
+    accessEn: "Session required",
+    purposeEs: "Crea una propuesta privada y registra su recepción.",
+    purposeEn: "Creates a private proposal and records its receipt.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/interests",
+    accessEs: "Sesión requerida",
+    accessEn: "Session required",
+    purposeEs: "Guarda un interés privado; compartirlo fuera de TAMV es opcional.",
+    purposeEn: "Stores a private interest; external sharing is optional.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/hcu/simulate",
+    accessEs: "Sesión + límites de cálculo",
+    accessEn: "Session + compute quotas",
+    purposeEs: "Ejecuta y conserva una simulación con entradas y huellas reproducibles.",
+    purposeEn: "Runs and stores a simulation with reproducible inputs and digests.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/hcu/atoms",
+    accessEs: "Sesión requerida",
+    accessEn: "Session required",
+    purposeEs: "Crea átomos provisionales privados; no los publica automáticamente.",
+    purposeEn: "Creates private provisional atoms; does not publish them automatically.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/hcu/hyperedges",
+    accessEs: "Sesión requerida",
+    accessEn: "Session required",
+    purposeEs: "Crea relaciones privadas con fuentes y parámetros declarados.",
+    purposeEn: "Creates private relationships with declared sources and parameters.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/proposals/{id}/tqaf",
+    accessEs: "Autor o revisor",
+    accessEn: "Author or reviewer",
+    purposeEs: "Registra declaraciones o evaluaciones TQAF en el historial del expediente.",
+    purposeEn: "Records TQAF declarations or reviews in the case history.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/proposals/{id}/consent",
+    accessEs: "Autor de la propuesta",
+    accessEn: "Proposal author",
+    purposeEs: "Actualiza el consentimiento de publicación y contacto externo.",
+    purposeEn: "Updates publication and external-contact consent.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/proposals/{id}/evidence",
+    accessEs: "Autor o revisor",
+    accessEn: "Author or reviewer",
+    purposeEs: "Adjunta evidencia y procedencia al expediente.",
+    purposeEn: "Adds evidence and provenance to the case.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/proposals/{id}/appeal",
+    accessEs: "Autor de la propuesta",
+    accessEn: "Proposal author",
+    purposeEs: "Registra una apelación privada contra una decisión editorial.",
+    purposeEn: "Records a private appeal against an editorial decision.",
+  },
 ]
 
 const contributionPaths = [
@@ -122,6 +194,9 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
         <div className="developer-action-bar">
           <Link className="button button-copper" href={`/hcu?lang=${locale}`}>
             {english ? "Explore the HCU field" : "Explorar el campo HCU"} <ArrowRight aria-hidden="true" />
+          </Link>
+          <Link className="button button-outline-dark" href="/proyectos">
+            {english ? "Browse projects" : "Explorar proyectos"} <ArrowUpRight aria-hidden="true" />
           </Link>
           <a className="button button-outline-dark" href={repoUrl} target="_blank" rel="noopener noreferrer">
             {english ? "Open GitHub repository" : "Abrir repositorio GitHub"} <ArrowUpRight aria-hidden="true" />
@@ -236,7 +311,7 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
         <div className="api-endpoint-list developer-api-endpoints">
           {endpoints.map((endpoint) => (
             <article className="api-endpoint" key={endpoint.path}>
-              <span className="api-method method-get">{endpoint.method}</span>
+              <span className={`api-method method-${endpoint.method.toLowerCase()}`}>{endpoint.method}</span>
               <code>{endpoint.path}</code>
               <span className="api-access">{english ? endpoint.accessEn : endpoint.accessEs}</span>
               <p>{english ? endpoint.purposeEn : endpoint.purposeEs}</p>
@@ -252,8 +327,13 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
             <li><code>POST /api/v1/research/proposals</code><span>{english ? "session + same-origin" : "sesión + mismo origen"}</span></li>
             <li><code>POST /api/v1/research/interests</code><span>{english ? "session + consent settings" : "sesión + configuración de consentimiento"}</span></li>
             <li><code>POST /api/v1/hcu/simulate</code><span>{english ? "session + compute quotas" : "sesión + límites de cálculo"}</span></li>
+            <li><code>POST /api/v1/hcu/atoms</code><span>{english ? "session + account ownership" : "sesión + propiedad de cuenta"}</span></li>
+            <li><code>POST /api/v1/hcu/hyperedges</code><span>{english ? "session + account ownership" : "sesión + propiedad de cuenta"}</span></li>
+            <li><code>POST /api/v1/research/proposals/{"{id}"}/tqaf</code><span>{english ? "proposal author or reviewer" : "autor o revisor de propuesta"}</span></li>
           </ul>
         </div>
+        <div className="api-rate-limits"><Braces aria-hidden="true" /><div><h3>{english ? "Validation and limits" : "Validación y límites"}</h3><p>{english ? "JSON request bodies are capped at 32 KiB; inputs and horizons are bounded; HCU accepts up to 200 sensitivity runs and stores up to 20 simulations per account per day." : "Los cuerpos JSON se limitan a 32 KiB; entradas y horizontes tienen límites; HCU admite hasta 200 corridas de sensibilidad y conserva hasta 20 simulaciones por cuenta al día."}</p></div></div>
+        <div className="api-callout architecture-doc-callout"><div><p className="eyebrow">{english ? "ARCHITECTURE REFERENCE" : "REFERENCIA DE ARQUITECTURA"}</p><h2>{english ? "Separate the blueprint from the runtime." : "Separa el plano del runtime."}</h2><p>{english ? "Review the Isabella Cero layers, fabrics, skills, risk policy, and what this site actually runs." : "Consulta las capas, fabrics, skills, política de riesgo y límites operativos de los documentos Isabella Cero."}</p></div><Link className="button button-copper" href="/arquitectura">{english ? "Open architecture register" : "Abrir registro de arquitectura"} <ArrowUpRight aria-hidden="true" /></Link></div>
         <p className="editorial-caveat">{english
           ? "A public endpoint is not a guarantee of availability, a source URL is not proof of a claim, and the HCU graph is explicitly exploratory rather than causally validated."
           : "Un endpoint público no garantiza disponibilidad, una URL de fuente no demuestra una afirmación y el grafo HCU es explícitamente exploratorio, no causalmente validado."}</p>

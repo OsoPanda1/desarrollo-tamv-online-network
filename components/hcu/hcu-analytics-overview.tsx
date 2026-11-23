@@ -10,6 +10,10 @@ type Props = {
   onSelectDomain: (id: string) => void
 }
 
+function localized(valueEs: string, valueEn: string, locale: Locale) {
+  return locale === "en" ? valueEn : valueEs
+}
+
 function metricMean(values: number[]) {
   const finite = values.filter(Number.isFinite)
   return finite.length ? Number((finite.reduce((sum, value) => sum + value, 0) / finite.length).toFixed(1)) : null

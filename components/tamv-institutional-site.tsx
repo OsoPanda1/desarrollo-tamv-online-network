@@ -82,6 +82,9 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
                 <a className="button button-outline-light" href="#investigacion">
                   Leer la investigación <ArrowUpRight aria-hidden="true" />
                 </a>
+                <a className="button button-outline-light" href="#guia">
+                  Cómo usar TAMV <BookOpen aria-hidden="true" />
+                </a>
                 <TamvDonationCTA locale={locale} variant="compact" label="Apoyar TAMV" />
               </div>
               <div className="hero-location">
@@ -487,7 +490,7 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
             <p className="eyebrow eyebrow-light"><span /> Independent Mexican initiative</p>
             <h1>Digital futures <em>need roots.</em></h1>
             <p className="hero-description">TAMV Online Network connects research, technology, and territorial memory through a Latin American perspective: creating knowledge that can be shared, examined, and sustained.</p>
-            <div className="hero-actions"><a className="button button-copper" href="#ecosistema">Explore the ecosystem <ArrowRight aria-hidden="true" /></a><a className="button button-outline-light" href="#investigacion">Explore research <ArrowUpRight aria-hidden="true" /></a><TamvDonationCTA locale="en" variant="compact" label="Support TAMV" /></div>
+            <div className="hero-actions"><a className="button button-copper" href="#ecosistema">Explore the ecosystem <ArrowRight aria-hidden="true" /></a><a className="button button-outline-light" href="#investigacion">Explore research <ArrowUpRight aria-hidden="true" /></a><a className="button button-outline-light" href="#guia">How to use TAMV <BookOpen aria-hidden="true" /></a><TamvDonationCTA locale="en" variant="compact" label="Support TAMV" /></div>
             <div className="hero-location"><span className="location-dot" aria-hidden="true" /><span>PLACE OF ORIGIN</span><strong>Real del Monte, Hidalgo, Mexico</strong></div>
           </div>
           <figure className="hero-visual"><div className="hero-image-frame"><Image src="/tamv-research-editorial.png" alt="Conceptual editorial image of an archival desk with a map, documents, notebook, and compass." fill priority sizes="(max-width: 760px) 100vw, 42vw" /><div className="hero-image-overlay"><div className="hero-image-topline"><span>FIELD NOTEBOOK</span><span>HIDALGO · MEXICO</span></div><div className="hero-image-caption"><span>TERRITORIAL MEMORY / 01</span><strong>Knowledge begins with context.</strong></div></div></div><figcaption className="hero-image-foot"><span>ROOTED RESEARCH</span><span>CONCEPTUAL EDITORIAL IMAGE</span></figcaption></figure>
