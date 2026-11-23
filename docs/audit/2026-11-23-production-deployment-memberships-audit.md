@@ -10,7 +10,7 @@
 
 ## 1. Dictamen ejecutivo
 
-Se identificó un bloqueo de compilación anterior a Next.js: `pnpm-lock.yaml` referenciaba `react@19.2.4` en la resolución de `@ai-sdk/react), pero esa versión no tenía una entrada de paquete disponible en el propio lockfile. El lockfile ya usaba `react@19.3.1`, resolución compatible con el rango de peers declarado por `@ai-sdk/react`. La rama de corrección alinea las cuatro referencias de React/SWR; la corrección se incorporó a esta rama de implementación, pero todavía no está en `main`.
+Se identificó un bloqueo de compilación anterior a Next.js: `pnpm-lock.yaml` referenciaba `react@19.2.4` en la resolución de `@ai-sdk/react`, pero esa versión no tenía una entrada de paquete disponible en el propio lockfile. El lockfile ya usaba `react@19.3.1`, resolución compatible con el rango de peers declarado por `@ai-sdk/react`. La corrección alineó las cuatro referencias de React/SWR. Después de iniciar esta rama, el PR #25 fue fusionado; la revisión del lockfile actual de `main` confirma cero referencias restantes a `19.2.4`. Esta rama conserva la misma corrección.
 
 En el modelo de producto, la página de cuenta original decía que Premium se acordaba por correo y que no había cobro en línea. Para materializar la membresía solicitada, la rama añade planes de pago recurrente, checkout de Stripe, webhook firmado con registro idempotente, portal de facturación, estado de membresía, persistencia del progreso formativo, curso con cinco módulos, condiciones y aviso de privacidad de trabajo, enlaces de navegación y gates explícitos para cobro live.
 
@@ -20,7 +20,7 @@ En el modelo de producto, la página de cuenta original decía que Premium se ac
 
 | Severidad | Hallazgo original / riesgo | Tratamiento en la rama | Evidencia pendiente |
 |---|---|---|---|
-| **P0 — bloquea build** | El lockfile de `main` referencia `react@19.2.4` sin entrada de paquete y Vercel termina en `ERR_PNPM_LOCKFILE_MISSING_DEPENDENCY`. | Se alinearon cuatro referencias de snapshot/importer a la resolución `react@19.3.1` existente y se preservó la versión declarada en `package.json`. | `pnpm install --frozen-lockfile` debe pasar en runner real; merge a `main` aún pendiente. |
+| **P0 — bloquea build** | El commit original que falló en Vercel referenciaba `react@19.2.4` sin entrada de paquete y terminaba en `ERR_PNPM_LOCKFILE_MISSING_DEPENDENCY`. | Se alinearon cuatro referencias de snapshot/importer a la resolución `react@19.3.1` ya existente y se preservó `package.json`; el PR #25 se fusionó y el lockfile actual de `main` ya no contiene esa referencia. | Ejecutar `pnpm install --frozen-lockfile` en runner real; falta confirmar la instalación/build del commit actual. |
 | **P0 — despliegue no comprobado** | La conexión Vercel no identifica un proyecto asociado a este repositorio o commit. | Se preparó una rama independiente para revisión; no se alteró producción directamente. | Vinculación correcta del proyecto Vercel, deployment Preview READY y logs visibles. |
 | **P0 — calidad CI indeterminada** | CI, CodeQL y Secret scanning aparecen como fallidos al poco de iniciar; la API de logs devuelve `404 BlobNotFound` y los resúmenes de jobs no incluyen steps. | Se agregaron pruebas de contrato y comprobaciones preventivas en código. | Acceso a logs de workflow, causa real de fallos y ejecución satisfactoria de tests, auditoría de dependencias, typecheck, build, CodeQL y secret scan. No se debe presumir que el origen es únicamente el código. |
 | **P1 — monetización ausente** | La página de cuenta describía Premium fuera de línea; no había flujo integrado de cobro recurrente en ese recorrido. | Se implementó UI y API de checkout/portal/estado de Stripe, control de precio en servidor, versión de condiciones y registro de aceptación. | Credenciales y configuración real de Stripe, webhook configurado, prueba de checkout y renovación en modo test. |
@@ -81,7 +81,7 @@ La aplicación incluye enlaces públicos y orientación para crear un perfil, re
 
 ### Lo comprobado por lectura de fuente
 
-- El error del lockfile estaba presente en `main`, y la rama de trabajo contiene una corrección consistente con las resoluciones ya presentes en el propio lockfile.
+- El error del lockfile estaba presente en el commit base auditado; el PR #25 se fusionó después y el archivo actual de `main` fue comprobado con cero coincidencias de `19.2.4`. La instalación congelada aún debe confirmarse en CI.
 - La rama contiene las rutas y componentes de checkout/portal/estado, webhook con verificación de firma, persistencia y curso.
 - Las rutas del curso y progreso requieren sesión y estado de membresía; las respuestas de estado filtran campos sensibles como la URL Stripe almacenada, exponiendo solo una URL pendiente validada al propietario.
 - `TAMV_BILLING_MODE` predetermina deshabilitado y el modo live exige producción y flags adicionales.
@@ -102,7 +102,7 @@ La aplicación incluye enlaces públicos y orientación para crear un perfil, re
 
 El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
 
-- [ ] Revisar y fusionar primero el arreglo del lockfile (incluido en la rama de implementación; `main` aún no tiene la corrección).
+- [ ] Confirmar en el commit actual de `main` que `pnpm install --frozen-lockfile` pasa; el arreglo del lockfile se fusionó por PR #25.
 - [ ] Restablecer acceso a logs de GitHub Actions e identificar por qué CI, CodeQL y secret scan fallan.
 - [ ] Ejecutar en runner: `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm typecheck`, `pnpm build`, auditoría de dependencias y análisis estático.
 - [ ] Vincular el repo al proyecto Vercel correcto, confirmar Node/pnpm/root/build settings, variables no secretas y proteger preview frente a cobros reales.
