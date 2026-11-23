@@ -165,6 +165,7 @@ export function Hcu3DCanvas({
   graph,
   visibleAtomIds,
   visibleEdgeIds,
+  domainFilter,
   selection,
   locale = "es",
   onSelect,
@@ -172,6 +173,7 @@ export function Hcu3DCanvas({
   graph: Graph
   visibleAtomIds: string[]
   visibleEdgeIds: string[]
+  domainFilter: string
   selection: Hcu3DSelection
   locale?: Locale
   onSelect: (selection: Hcu3DSelection) => void
@@ -182,9 +184,9 @@ export function Hcu3DCanvas({
   const stageRef = useRef<HTMLDivElement>(null)
   const layout = useMemo(() => buildWorldLayout(graph), [graph])
   const layoutRef = useRef(layout)
-  const propsRef = useRef({ graph, visibleAtomIds, visibleEdgeIds, selection, locale, onSelect })
+  const propsRef = useRef({ graph, visibleAtomIds, visibleEdgeIds, domainFilter, selection, locale, onSelect })
   layoutRef.current = layout
-  propsRef.current = { graph, visibleAtomIds, visibleEdgeIds, selection, locale, onSelect }
+  propsRef.current = { graph, visibleAtomIds, visibleEdgeIds, domainFilter, selection, locale, onSelect }
 
   const [playing, setPlaying] = useState(false)
   const [immersive, setImmersive] = useState(false)
@@ -226,6 +228,10 @@ export function Hcu3DCanvas({
     }
     requestRenderRef.current?.()
   }, [selection?.kind, selection?.id, graph])
+
+  useEffect(() => {
+    requestRenderRef.current?.()
+  }, [graph, visibleAtomIds, visibleEdgeIds, domainFilter, locale])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -371,6 +377,7 @@ export function Hcu3DCanvas({
       const currentLayout = layoutRef.current
       const currentLayers = layersRef.current
       const currentSelection = current.selection
+      const selectedFilterDomain = current.domainFilter
       const visibleAtoms = new Set(current.visibleAtomIds)
       const visibleEdges = new Set(current.visibleEdgeIds)
       const focusDomain = focusDomainRef.current
@@ -453,7 +460,8 @@ export function Hcu3DCanvas({
           const related = currentSelection?.kind === "atom" && [...edge.sourceAtomIds, ...edge.targetAtomIds].includes(currentSelection.id)
           const sourceDomains = new Set([...edge.sourceAtomIds, ...edge.targetAtomIds].map((atomId) => atomById.get(atomId)?.domainId).filter(Boolean))
           const crossDomain = sourceDomains.size > 1
-          const alpha = selected ? 0.94 : related ? 0.72 : isVisible ? (focusDomain ? (sourceDomains.has(focusDomain) ? 0.34 : 0.045) : crossDomain ? 0.28 : 0.17) : 0.045
+          const domainFiltered = Boolean(selectedFilterDomain) && !sourceDomains.has(selectedFilterDomain)
+          const alpha = selected ? 0.94 : related ? 0.72 : !isVisible || domainFiltered ? 0.035 : isVisible ? (focusDomain ? (sourceDomains.has(focusDomain) ? 0.34 : 0.045) : crossDomain ? 0.28 : 0.17) : 0.045
           const color = edge.sign < 0 ? "#f29bb3" : "#69ddd1"
           ctx.save()
           ctx.strokeStyle = rgba(color, alpha)
@@ -493,7 +501,9 @@ export function Hcu3DCanvas({
       currentLayout.domains.concat(currentLayout.atoms).sort((a, b) => b.sz - a.sz).forEach((node) => {
         const isSelected = currentSelection?.id === node.id && currentSelection.kind !== "edge"
         const isHovered = hoverIdRef.current === node.id
-        const filterVisible = node.kind === "domain" ? (!currentGraph.domains.length || currentGraph.domains.some((domain) => domain.id === node.id)) : visibleAtoms.has(node.id)
+        const filterVisible = node.kind === "domain"
+          ? (!selectedFilterDomain || node.id === selectedFilterDomain)
+          : visibleAtoms.has(node.id)
         const alpha = filterVisible || isSelected ? 1 : 0.14
         const radius = node.screenRadius
         const color = node.kind === "domain" ? node.color : node.atom?.riskY >= HIGH_RISK ? "#ff9ab2" : node.atom?.isQuarantined ? "#efce7b" : node.color
