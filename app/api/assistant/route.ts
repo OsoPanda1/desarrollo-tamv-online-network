@@ -1,6 +1,7 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai"
 import { z } from "zod"
 import { isabellaAgent } from "@/lib/isabella-agent"
+import { isSameOriginRequest } from "@/lib/http"
 
 export const maxDuration = 30
 
@@ -27,14 +28,8 @@ function extractTextParts(parts: unknown[]) {
 }
 
 export async function POST(request: Request) {
-  const origin = request.headers.get("origin")
-  const host = request.headers.get("host")
-  if (origin && host) {
-    try {
-      if (new URL(origin).host !== host) return Response.json({ error: "Forbidden" }, { status: 403 })
-    } catch {
-      return Response.json({ error: "Forbidden" }, { status: 403 })
-    }
+  if (!isSameOriginRequest(request)) {
+    return Response.json({ error: "Forbidden" }, { status: 403, headers: { "Cache-Control": "no-store" } })
   }
 
   const contentLength = Number(request.headers.get("content-length") ?? 0)

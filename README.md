@@ -41,6 +41,24 @@ The shared navigation, institutional landing sections, application footer, and r
 - The default support route offers institutional contact and governance information instead of inventing bank details or simulating a payment.
 - Never expose checkout session secrets, private donation records, donor identities, or payment-provider credentials in a public repository or client-side bundle.
 
+## Paid memberships, course access and external startup resources
+
+**Implementation state:** available in the `feat/production-memberships-stripe-course-2026-11-23` review branch, not yet merged or deployed. Billing is deliberately disabled by default.
+
+- `/membresias` — individual plan **MXN $229/month per user** and business plan **MXN $699/month per organization**. The application fixes the price server-side; the browser cannot supply or change it.
+- `/formacion` — five practical modules: verifiable developer profile, auditable portfolio, startup problem validation, business model/roadmap, and evidence-based investor pitch. Access is checked on the server for an active/trialing membership; module completion is stored against the authenticated user.
+- `POST /api/billing/checkout` — creates a Stripe recurring Checkout Session with current terms acceptance and a bounded session expiry.
+- `POST /api/webhooks/stripe` — verifies the raw-body Stripe signature, uses idempotent event receipt storage, and synchronizes subscription status. A browser success redirect alone does not activate access.
+- `POST /api/billing/portal` and `GET /api/billing/me` — authenticated subscription management and the current user's own billing status.
+- `/api/memberships/course-progress` — checks membership entitlement server-side and persists the authenticated user's own progress.
+- `/membresias/condiciones` and `/privacidad` — scope, recurring billing and data-treatment disclosures. Their production/legal fields require operator review; the live checkout stays blocked until explicit approval flags are configured.
+
+**Important scope boundaries:** the business membership is currently attached to the contracting user account and organization name. Team seats, invitations, workspace administration and transferring membership to employee accounts are not implemented. TAMV offers a route to apply for collaboration, not guaranteed project acceptance, paid work or funding.
+
+AI Lounge is an independent third-party platform. This branch provides public links and a profile/program discovery guide; it does not provide a paid pass, referral entitlement or a verified commercial partnership. External program eligibility and access remain subject to AI Lounge's current terms.
+
+See the [production and Stripe runbook](docs/production/membership-billing-runbook.md) and the [production/deployment audit](docs/audit/2026-11-23-production-deployment-memberships-audit.md) before configuring secrets, applying the migration or requesting a production release.
+
 ## Developer onboarding and adoption
 
 The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
