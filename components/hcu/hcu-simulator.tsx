@@ -8,6 +8,7 @@ import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components
 
 type SimulationResult = { id: string; modelVersion: string; inputHash: string; outputHash: string; output: HcuSimulationOutput }
 type AtomOption = { id: string; nameEs: string; nameEn: string; isQuarantined: boolean }
+type ShockDraft = { atomId: string; year: number; intensity: number }
 
 export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onShockAtomChange }: { atoms: AtomOption[]; loggedIn: boolean; locale?: "es" | "en"; shockAtomId: string; onShockAtomChange: (id: string) => void }) {
   const english = locale === "en"
@@ -32,7 +33,7 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onSh
       const response = await fetch("/api/v1/hcu/simulate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scenario, startYear, endYear, seed, mcRuns, shocks: [{ atomId: shockAtomId, year: shockYear, intensity }], quarantine }),
+        body: JSON.stringify({ scenario, startYear, endYear, seed, mcRuns, shocks, quarantine }),
       })
       const body = await response.json() as SimulationResult & { error?: string }
       if (!response.ok) throw new Error(body.error ?? "No fue posible ejecutar la simulación.")
@@ -46,6 +47,24 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onSh
 
   function toggleQuarantine(id: string, checked: boolean) {
     setQuarantine((current) => checked ? [...current, id] : current.filter((atomId) => atomId !== id))
+  }
+
+  function updateShock(index: number, key: keyof ShockDraft, value: string) {
+    setShocks((current) => current.map((shock, position) => position === index
+      ? { ...shock, [key]: key === "atomId" ? value : Number(value) }
+      : shock))
+  }
+
+  function updateStartYear(value: number) {
+    setStartYear(value)
+    if (value > endYear) setEndYear(value)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.max(value, Math.min(endYear, shock.year)) })))
+  }
+
+  function updateEndYear(value: number) {
+    setEndYear(value)
+    if (value < startYear) setStartYear(value)
+    setShocks((current) => current.map((shock) => ({ ...shock, year: Math.min(value, Math.max(startYear, shock.year)) })))
   }
 
   return <div className="hcu-simulator-layout">
