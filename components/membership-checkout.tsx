@@ -2,17 +2,21 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
 import { ArrowUpRight, CreditCard, LoaderCircle } from "lucide-react"
+import { MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
 import type { Locale } from "@/lib/i18n"
 
 type PlanId = "individual" | "business"
 
-function messageForStatus(status: number, fallback: string) {
-  if (status === 401) return "Inicia sesión para continuar."
-  if (status === 409) return "Ya existe un checkout o una suscripción de este plan."
-  if (status === 503) return "La facturación aún no está configurada o está temporalmente indisponible."
-  return fallback
+function statusMessage(status: number, english: boolean) {
+  if (status === 401) return english ? "Sign in to continue." : "Inicia sesión para continuar."
+  if (status === 409) return english
+    ? "A pending checkout or subscription already exists for this plan."
+    : "Ya existe un checkout pendiente o una suscripción para este plan."
+  if (status === 503) return english
+    ? "Membership checkout is not configured or is temporarily unavailable."
+    : "La contratación no está configurada o está temporalmente indisponible."
+  return english ? "The request could not be completed." : "No fue posible completar la solicitud."
 }
 
 function safeStripeUrl(value: unknown, allowedHost: string): string | null {
@@ -39,6 +43,7 @@ export function MembershipCheckout({
   const [error, setError] = useState("")
 
   async function beginCheckout() {
+    if (busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)) return
     setBusy(true)
     setError("")
     try {
@@ -59,13 +64,13 @@ export function MembershipCheckout({
           window.location.assign(`/sign-in?callbackURL=${encodeURIComponent("/membresias")}`)
           return
         }
-        throw new Error(messageForStatus(response.status, payload.error || "No fue posible iniciar el checkout."))
+        throw new Error(payload.error || statusMessage(response.status, english))
       }
       const url = safeStripeUrl(payload.checkoutUrl, "checkout.stripe.com")
-      if (!url) throw new Error("El proveedor no devolvió una URL de pago segura.")
+      if (!url) throw new Error(english ? "The provider did not return a trusted payment URL." : "El proveedor no devolvió una URL de pago confiable.")
       window.location.assign(url)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Error de conexión. Inténtalo de nuevo.")
+      setError(cause instanceof Error ? cause.message : (english ? "Connection error. Please try again." : "Error de conexión. Inténtalo de nuevo."))
     } finally {
       setBusy(false)
     }
@@ -86,16 +91,6 @@ export function MembershipCheckout({
           />
         </label>
       )}
-      <button
-        className="button membership-checkout-button"
-        type="button"
-        onClick={beginCheckout}
-        disabled={busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)}
-      >
-        {busy ? <LoaderCircle className="billing-spinner" aria-hidden="true" /> : <CreditCard aria-hidden="true" />}
-        {busy ? (english ? "Connecting to secure checkout…" : "Conectando con el checkout seguro…") : (english ? "Subscribe with Stripe" : "Contratar con Stripe")}
-        {!busy && <ArrowUpRight aria-hidden="true" />}
-      </button>
       <label className="billing-terms-check">
         <input
           type="checkbox"
@@ -106,13 +101,23 @@ export function MembershipCheckout({
         <span>
           {english ? "I have read and accept the " : "He leído y acepto las "}
           <Link href="/membresias/condiciones" target="_blank" rel="noopener noreferrer">{english ? "membership terms" : "condiciones de membresía"}</Link>
-          {english ? " and " : " y el "}
+          {english ? " and the " : " y el "}
           <Link href="/privacidad" target="_blank" rel="noopener noreferrer">{english ? "privacy notice" : "aviso de privacidad"}</Link>
           {english ? ` (version ${MEMBERSHIP_TERMS_VERSION}).` : ` (versión ${MEMBERSHIP_TERMS_VERSION}).`}
         </span>
       </label>
+      <button
+        className="button membership-checkout-button"
+        type="button"
+        onClick={beginCheckout}
+        disabled={busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)}
+      >
+        {busy ? <LoaderCircle className="billing-spinner" aria-hidden="true" /> : <CreditCard aria-hidden="true" />}
+        {busy ? (english ? "Connecting to secure checkout…" : "Conectando con el checkout seguro…") : (english ? "Subscribe with Stripe" : "Contratar con Stripe")}
+        {!busy && <ArrowUpRight aria-hidden="true" />}
+      </button>
       <p className="billing-hint">
-        {english ? "Recurring monthly subscription. Payment status and access are confirmed by a signed Stripe webhook. You can manage eligible cancellations from the Stripe customer portal." : "Suscripción mensual recurrente. El estado del pago y el acceso se confirman mediante un webhook firmado de Stripe. Podrás gestionar las cancelaciones disponibles desde el portal de clientes de Stripe."}
+        {english ? "Recurring monthly subscription. Access activates only after Stripe confirms the subscription through its signed webhook. You can manage eligible cancellations in the customer portal." : "Suscripción mensual recurrente. El acceso se activa solo cuando Stripe confirma la suscripción mediante su webhook firmado. Podrás gestionar las cancelaciones disponibles en el portal de clientes."}
       </p>
       {error && <p className="billing-error" role="alert">{error}</p>}
     </div>
@@ -146,13 +151,13 @@ export function MembershipPortalButton({
           window.location.assign(`/sign-in?callbackURL=${encodeURIComponent("/membresias")}`)
           return
         }
-        throw new Error(payload.error || "No fue posible abrir la gestión de facturación.")
+        throw new Error(payload.error || (english ? "Could not open subscription management." : "No fue posible abrir la gestión de facturación."))
       }
       const url = safeStripeUrl(payload.portalUrl, "billing.stripe.com")
-      if (!url) throw new Error("El proveedor no devolvió una URL de gestión segura.")
+      if (!url) throw new Error(english ? "The provider did not return a trusted billing URL." : "El proveedor no devolvió una URL de facturación confiable.")
       window.location.assign(url)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Error de conexión. Inténtalo de nuevo.")
+      setError(cause instanceof Error ? cause.message : (english ? "Connection error. Please try again." : "Error de conexión. Inténtalo de nuevo."))
     } finally {
       setBusy(false)
     }
