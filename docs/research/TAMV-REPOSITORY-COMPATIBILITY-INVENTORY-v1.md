@@ -1,7 +1,7 @@
 # TAMV Online Network — Repository Compatibility Inventory
 
 **Date:** 2026-11-23  
-**Status:** Initial read-only inventory based on GitHub metadata, root directory listings and package manifests. This is not a complete source audit or build verification.
+**Status:** Initial read-only inventory based on GitHub repository metadata, root directory listings and package manifests. Not a complete source audit or build verification.
 
 ## Executive finding
 
@@ -11,11 +11,11 @@ The eight projects are not one deployable application or a homogeneous monorepo.
 
 | Repository | Observed stack | Scripts / structure observed | Integration consequence |
 |---|---|---|---|
-| [desarrollo-tamv-online-network](https://github.com/OsoPanda1/desarrollo-tamv-online-network) | Next.js, React 19, TypeScript; PostgreSQL/Drizzle and Better Auth dependencies | pnpm; typecheck, test, build, DB preflight/migration | Candidate core service. Preserve its DB and auth boundary. |
+| [desarrollo-tamv-online-network](https://github.com/OsoPanda1/desarrollo-tamv-online-network) | Next.js, React 19, TypeScript; PostgreSQL/Drizzle and Better Auth dependencies | pnpm; typecheck, test, build, DB preflight/migration | Candidate core service. Preserve DB and auth boundaries. |
 | [tamvonline-weboficial.com](https://github.com/OsoPanda1/tamvonline-weboficial.com) | Next.js, React 19, TypeScript; Stripe dependency | pnpm; typecheck, build, site/app validation, route smoke tests | Separate institutional app and release process; integrate through versioned public APIs. |
 | [litle-atlas-suite](https://github.com/OsoPanda1/litle-atlas-suite) | Vite/TanStack Start, React 19, TypeScript; Supabase client and Drizzle dependencies | Bun lockfile; lint, test, build | Independent Atlas workspace; establish API contract and provenance before syncing content. |
 | [WEBINSTITUCIONAL-TAMVONLINE](https://github.com/OsoPanda1/WEBINSTITUCIONAL-TAMVONLINE) | Static HTML, bilingual i18n; repository metadata declares MIT | No root package.json observed in root listing; README and LICENSE exist | Static publishing surface, not a runtime API provider. Use generated metadata artefacts or a separate API. |
-| [tamv-core-atlas](https://github.com/OsoPanda1/tamv-core-atlas) | Vite/TanStack Start; npm workspace named tamv-core-atlas | lint, typecheck, build, atlas discover/build/validate scripts | Isolate discovery/build from execution of discovered code; export normalized metadata through a defined contract. |
+| [tamv-core-atlas](https://github.com/OsoPanda1/tamv-core-atlas) | Vite/TanStack Start; npm workspace named tamv-core-atlas | lint, typecheck, build, Atlas discovery/build/validation scripts | Isolate discovery/build from execution of discovered code; export normalized metadata through a defined contract. |
 | [heptafederate-heart-3f66f855](https://github.com/OsoPanda1/heptafederate-heart-3f66f855) | Vite/TanStack Start; root package manifest and workspace layout closely resemble tamv-core-atlas | Similar lint, typecheck, build and Atlas workspace scripts | Potential code/architecture overlap based on manifests and root listings only. Compare history and source before deciding whether these are distinct products, a fork or duplicated work. |
 | [metodo4l](https://github.com/OsoPanda1/metodo4l) | Turborepo workspaces, Next.js 15, React 18, Prisma, Express and Stripe | npm workspaces; build, lint, typecheck, database and curriculum sync scripts | Distinct runtime and older React/Next generation; integrate curriculum through APIs/events rather than direct dependency sharing. |
 | [litle-verified-trust](https://github.com/OsoPanda1/litle-verified-trust) | Vite/TanStack Start, React 19; Supabase and AI SDK dependencies | Bun; build, lint and format observed; no test script shown in package manifest | Treat as proposed evidence/provenance service until trust semantics and tests are defined. Root listing contains a .env path: potential secret exposure requiring immediate owner review. |
@@ -28,7 +28,7 @@ The default-branch root directory listing includes a path named .env. This is a 
 2. If it contains real credentials, revoke/rotate them immediately and check provider audit logs.
 3. Remove the file from the repository; ensure .env* is ignored while retaining only a redacted .env.example.
 4. Scan current tree and Git history. Removing a file in a later commit does not invalidate exposed credentials or erase historical blobs.
-5. Check CI logs, deployment logs and build artefacts for accidental disclosure.
+5. Check CI logs, build artefacts and deployment logs for accidental disclosure.
 6. Record remediation evidence without including secret values.
 
 Do not assume secret scanning has passed; a prior check was reported as failing, and detailed logs were unavailable.
@@ -70,4 +70,4 @@ Repository API metadata returned explicit repository-level licenses for WEBINSTI
 
 ## Evidence limitations
 
-This inventory reflects repository metadata, root listings and package manifests fetched from default branches. It is not a complete source audit, vulnerability scan, legal opinion, successful build or production validation. The .env finding is only a path-level signal. Similarity between the Atlas/Kodex projects is a manifest/tree observation, not a conclusion that they are duplicates.
+This inventory reflects repository metadata, root listings and package manifests fetched from default branches. It is not a complete source audit, vulnerability scan, legal opinion, successful build or production validation. The .env finding is only a path-level signal. Similarity between the Atlas/Kodex projects is a manifest/tree observation, not a conclusion that the repositories are duplicates.

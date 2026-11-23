@@ -70,6 +70,7 @@ The public developer entry point is [the developer guide](/desarrolladores). It 
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
 - [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
 - [Platform excellence roadmap](docs/strategy/tamv-platform-excellence-roadmap.md) — prioritized product, academic, security, operations, and adoption acceptance criteria.
+- [Evidence-to-production research plan](docs/strategy/evidence-driven-research-to-production.md) — selected scholarly evidence translated into prioritized engineering controls, release gates, and explicit limitations.
 - [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
 
 The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
@@ -142,3 +143,15 @@ External links are discovery resources only. No affiliation, endorsement, data s
 ## Institutional attribution
 
 TAMV materials identify Edwin Oswaldo Castillo Trejo, also known by the creative signature Anubis Villaseñor. Public claims must remain bounded by their available evidence.
+
+
+## TAMV ecosystem federation
+
+The ecosystem now has a canonical, public discovery catalog at `GET /api/v1/ecosystem`, backed by [the typed system registry](lib/ecosystem/registry.ts). It lists the core app, institutional Next.js app, static institutional site, Core Atlas, Heptafederate/Core Kodex, Método 4L, LITLE Atlas Suite and LITLE Verified Trust with explicit responsibilities and data boundaries.
+
+- [Ecosystem federation contract v1.0.0](docs/architecture/ecosystem-federation-v1.md) defines identity boundaries, canonical data ownership, provenance, phased adapter rollout, licensing review and release gates.
+- Catalog states distinguish `catalogued`, `contracted`, `adapter_implemented` and `verified`. A repository being listed is not proof of a live connection.
+- The first increment is intentionally read-only discovery. It does not merge databases, share authentication sessions, synchronize records, or assert remote service health.
+- Code-level consolidation remains subject to repository license, asset, dependency and cryptographic implementation review.
+
+The endpoint and registry tests live in `tests/ecosystem-registry.test.mjs`. They must pass in CI and the endpoint must be smoke-tested on a deployed preview before the catalog is used as a production integration surface.
