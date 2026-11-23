@@ -73,6 +73,7 @@ export const membershipSubscriptions = pgTable("membership_subscriptions", {
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   stripeCheckoutSessionId: text("stripe_checkout_session_id"),
+  stripeCheckoutUrl: text("stripe_checkout_url"),
   currentPeriodStart: timestamptz("current_period_start"),
   currentPeriodEnd: timestamptz("current_period_end"),
   cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
