@@ -110,6 +110,12 @@ async function syncMembership(
     .for("update")
     .limit(1)
   if (!current || eventCreated < current.stripeEventCreated) return
+  // A session expiry/failure is terminal for this Checkout flow. Do not let a
+  // delayed "incomplete" subscription event reopen a failed reservation.
+  if (
+    (current.status === "checkout_expired" || current.status === "checkout_failed") &&
+    values.status === "incomplete"
+  ) return
 
   await transaction.update(membershipSubscriptions).set({
     ...values,
@@ -179,9 +185,6 @@ export async function POST(request: Request) {
             stripeCheckoutSessionId: checkout.id,
             stripeCustomerId: customerId,
             stripeSubscriptionId: subscriptionId,
-            status: checkout.payment_status === "paid" || checkout.payment_status === "no_payment_required"
-              ? "active"
-              : "pending",
           })
         }
       } else if (event.type === "checkout.session.async_payment_failed" || event.type === "checkout.session.expired") {
