@@ -74,6 +74,14 @@ test("provenance validator accepts a valid record and rejects invalid digest cla
   }));
   assert.throws(() => validateProvenanceRecord({
     ...valid,
+    observedAt: "2026-02-31T12:00:00Z",
+  }));
+  assert.throws(() => validateProvenanceRecord({
+    ...valid,
+    sourceUri: "javascript:alert(1)",
+  }));
+  assert.throws(() => validateProvenanceRecord({
+    ...valid,
     unexpectedPrivilegedFlag: true,
   }));
 });
