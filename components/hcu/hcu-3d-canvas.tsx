@@ -576,7 +576,7 @@ export function Hcu3DCanvas({
           ctx.strokeText(label, tx, ty)
           ctx.fillStyle = isSelected ? "#f4ffff" : node.kind === "domain" ? "#e4f3ff" : "#afc7d8"
           ctx.fillText(label, tx, ty)
-          if (node.atom && (isSelected || showLabels)) {
+          if (node.atom && (isSelected || showLabelsRef.current)) {
             ctx.font = '500 8px "IBM Plex Mono", ui-monospace, monospace'
             ctx.fillStyle = node.atom.riskY >= HIGH_RISK ? "#ffb0c2" : "#82c6db"
             ctx.fillText("X " + node.atom.influenceX + " · Y " + node.atom.riskY + " · Z " + node.atom.evidenceZ, tx, ty + 14)
