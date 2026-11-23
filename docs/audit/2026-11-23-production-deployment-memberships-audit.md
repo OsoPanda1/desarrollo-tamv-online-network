@@ -123,6 +123,14 @@ Esta inspección de código es evidencia positiva sobre controles existentes, pe
 - La conexión Vercel consultada devuelve `notLinked` para `main` y la rama; una consulta de proyecto `desarrollo-tamv-online-network` en el ámbito conectado devuelve `404 not_found`, y el listado de deployments para ese nombre devuelve cero. Esto significa que este conector no puede verificar un proyecto/deployment en su ámbito actual; no prueba por sí solo que no exista en otra cuenta/equipo de Vercel. Se necesita la comprobación del propietario del proyecto.
 - El estado correcto de release sigue siendo **bloqueado**, aunque el lockfile se haya corregido. No se deben ignorar o anular estos checks de seguridad para forzar una fusión.
 
+## 6C. Hardening posterior: lockfile, Vercel Connect e institucionalización
+
+- En seguimiento al PR #25, esta rama fija las dependencias directas de React y React DOM en `19.3.1`, ya resueltas por el lockfile actual, y añade `tests/pnpm-lock-react-contract.test.mjs`. La prueba verifica la concordancia de los importers y la ausencia de la referencia histórica `react@19.2.4`. La prueba y la instalación congelada necesitan ejecutarse en CI; no se declara que hayan pasado desde este entorno.
+- Se incorporan tres guías de Vercel Connect/Chat SDK: [SDK y seguridad](../integrations/vercel-connect-sdk.md), [optimización de costos](../operations/vercel-connect-cost-optimization.md) y [Chat SDK](../integrations/chat-sdk-with-vercel-connect.md). Son documentación y patrones de integración, no una activación del SDK. No se instaló `@vercel/connect`, no se creó un bot de Chat SDK y la conexión consultada de Vercel sigue sin asociar el repositorio con un proyecto verificable.
+- Se publicó la ruta [Institucionalización y ROR](/institucionalizacion) y el [plan de gobernanza correspondiente](../strategy/institutional-legalization-and-ror-roadmap.md). Describe un uso futuro potencial de ingresos netos de membresías para costos legales, contables y de documentación, sujeto a presupuesto, aprobación y rendición de cuentas. No asigna actualmente un porcentaje fijo ni declara que TAMV esté constituida o que haya obtenido un ROR ID.
+- ROR no es una tarifa de constitución ni un registro de empresas: su identificador y sus datos son gratuitos, y la inclusión está sujeta a criterios y curaduría. Fuentes oficiales: [About ROR](https://ror.org/about), [FAQ](https://ror.org/about/faqs/) y [criterios de inclusión](https://ror.org/registry).
+- El error de Vercel aportado corresponde al commit histórico `e294d91`; el lockfile actual de `main` ya no contiene referencias a `react@19.2.4`. Para cerrar el incidente en producción hace falta un build READY sobre un commit actual, no reutilizar como validación el log del commit anterior.
+
 ## 7. Gate de liberación obligatorio
 
 El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
@@ -144,6 +152,9 @@ El orden recomendado es deliberado; no se debe activar cobro live para descubrir
 ## 8. Artefactos de referencia
 
 - [Runbook de producción y Stripe](../production/membership-billing-runbook.md)
+- [Lockfile y procedimiento de validación](../production/pnpm-lockfile-repair.md)
+- [Ruta de institucionalización y ROR](../strategy/institutional-legalization-and-ror-roadmap.md)
+- [Vercel Connect y Chat SDK](../integrations/chat-sdk-with-vercel-connect.md)
 - [Estado de licencia del código](../governance/licensing-status.md)
 - [Contrato de API pública](../api/public-api-quickstart.md)
 - [README del repositorio](../../README.md)
