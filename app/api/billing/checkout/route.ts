@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { membershipSubscriptions, user } from "@/lib/db/schema"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
-import { getMembershipPlan, isMembershipPlanId, LIVE_MEMBERSHIP_STATUSES } from "@/lib/billing/plans"
+import { getMembershipPlan, LIVE_MEMBERSHIP_STATUSES, MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
 import { getAppBaseUrl, getStripeSecret, stripePost } from "@/lib/billing/stripe"
 import { and, eq, inArray, lt } from "drizzle-orm"
 import { z } from "zod"
@@ -13,6 +13,8 @@ export const dynamic = "force-dynamic"
 const checkoutInputSchema = z.object({
   planId: z.enum(["individual", "business"]),
   businessName: z.string().trim().min(2).max(160).optional(),
+  acceptedTerms: z.literal(true),
+  termsVersion: z.literal(MEMBERSHIP_TERMS_VERSION),
 }).strict()
 
 type StripeCheckoutSession = {
@@ -23,6 +25,47 @@ type StripeCheckoutSession = {
 
 function stripeId(value: string | { id: string } | null | undefined) {
   return typeof value === "string" ? value : value?.id ?? null
+}
+
+function isProductionDeployment() {
+  if (process.env.VERCEL_ENV) return process.env.VERCEL_ENV === "production"
+  return process.env.NODE_ENV === "production"
+}
+
+function validateBillingConfiguration() {
+  const mode = process.env.TAMV_BILLING_MODE?.trim() || "disabled"
+  const secret = getStripeSecret()
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim()
+  const appBaseUrl = getAppBaseUrl()
+
+  if (mode === "disabled") return { error: "La contratación de membresías está deshabilitada hasta completar la configuración y aprobación de producción." } as const
+  if (mode !== "test" && mode !== "live") return { error: "La configuración de facturación no es válida." } as const
+  if (!secret || !webhookSecret || !appBaseUrl) return { error: "La facturación está incompleta. Verifica las variables de entorno requeridas." } as const
+
+  if (mode === "test") {
+    if (!secret.startsWith("sk_test_") || isProductionDeployment()) {
+      return { error: "El checkout de prueba solo puede usarse con credenciales Stripe de prueba fuera de producción." } as const
+    }
+  }
+
+  if (mode === "live") {
+    if (!secret.startsWith("sk_live_")) {
+      return { error: "El modo live requiere credenciales live verificadas de Stripe." } as const
+    }
+    if (
+      process.env.TAMV_MEMBERSHIP_TERMS_VERSION !== MEMBERSHIP_TERMS_VERSION ||
+      process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED !== "true"
+    ) {
+      return { error: "El checkout live está bloqueado hasta que se aprueben explícitamente las condiciones y el aviso de privacidad." } as const
+    }
+  }
+
+  const automaticTax = process.env.STRIPE_AUTOMATIC_TAX_ENABLED === "true"
+  const taxBehavior = process.env.STRIPE_TAX_BEHAVIOR
+  if (automaticTax && taxBehavior !== "inclusive" && taxBehavior !== "exclusive") {
+    return { error: "La configuración fiscal del checkout está incompleta." } as const
+  }
+  return { mode, secret, webhookSecret, appBaseUrl, automaticTax, taxBehavior } as const
 }
 
 export async function POST(request: Request) {
@@ -39,25 +82,15 @@ export async function POST(request: Request) {
   }
 
   const parsed = checkoutInputSchema.safeParse(body)
-  if (!parsed.success) return apiError("Selecciona un plan válido y completa los datos obligatorios.", 400)
+  if (!parsed.success) return apiError("Acepta las condiciones vigentes y selecciona un plan válido.", 400)
   const input = parsed.data
   const plan = getMembershipPlan(input.planId)
   if (!plan || (input.planId === "business" && !input.businessName)) {
     return apiError("La membresía empresarial requiere el nombre de la organización.", 400)
   }
 
-  const stripeSecret = getStripeSecret()
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim()
-  const appBaseUrl = getAppBaseUrl()
-  if (!stripeSecret || !webhookSecret || !appBaseUrl) {
-    return apiError("La contratación está temporalmente deshabilitada hasta completar la configuración segura de facturación.", 503)
-  }
-
-  const automaticTax = process.env.STRIPE_AUTOMATIC_TAX_ENABLED === "true"
-  const taxBehavior = process.env.STRIPE_TAX_BEHAVIOR
-  if (automaticTax && taxBehavior !== "inclusive" && taxBehavior !== "exclusive") {
-    return apiError("La configuración fiscal del checkout está incompleta.", 503)
-  }
+  const config = validateBillingConfiguration()
+  if ("error" in config) return apiError(config.error, 503)
 
   const membershipId = crypto.randomUUID()
   const now = new Date()
@@ -103,20 +136,22 @@ export async function POST(request: Request) {
         amountMxn: plan.amountMxn,
         currency: plan.currency,
         businessName: input.planId === "business" ? input.businessName ?? null : null,
+        termsVersion: input.termsVersion,
+        termsAcceptedAt: now,
       })
       return { state: "reserved" as const, id: membershipId }
     })
 
     if (result.state === "account_missing") return apiError("La cuenta ya no está disponible. Inicia sesión de nuevo.", 401)
     if (result.state === "existing") {
-      return apiError("Ya existe una suscripción o un checkout pendiente para este plan. Gestiona la suscripción actual o espera 30 minutos si abandonaste el checkout.", 409)
+      return apiError("Ya existe una suscripción o un checkout pendiente para este plan. Gestiona la suscripción actual o espera a que venza el checkout abandonado.", 409)
     }
     reservation = { id: result.id }
 
     const form = new URLSearchParams()
     form.set("mode", "subscription")
-    form.set("success_url", `${appBaseUrl}/membresias?checkout=success&session_id={CHECKOUT_SESSION_ID}`)
-    form.set("cancel_url", `${appBaseUrl}/membresias?checkout=cancelled`)
+    form.set("success_url", `${config.appBaseUrl}/membresias?checkout=success&session_id={CHECKOUT_SESSION_ID}`)
+    form.set("cancel_url", `${config.appBaseUrl}/membresias?checkout=cancelled`)
     form.set("client_reference_id", session.user.id)
     form.set("customer_email", session.user.email)
     form.set("locale", "auto")
@@ -135,9 +170,9 @@ export async function POST(request: Request) {
     form.set("subscription_data[metadata][userId]", session.user.id)
     form.set("subscription_data[metadata][planId]", plan.id)
 
-    if (automaticTax) {
+    if (config.automaticTax) {
       form.set("automatic_tax[enabled]", "true")
-      form.set("line_items[0][price_data][tax_behavior]", taxBehavior!)
+      form.set("line_items[0][price_data][tax_behavior]", config.taxBehavior!)
     }
 
     const checkout = await stripePost<StripeCheckoutSession>(
@@ -174,10 +209,11 @@ export async function POST(request: Request) {
           eq(membershipSubscriptions.status, "pending"),
         ))
       } catch {
-        // Preserve the original failure; the pending reservation expires after 30 minutes.
+        // Preserve the original failure; the pending reservation is recoverable after 30 minutes.
       }
     }
     console.error("TAMV membership checkout could not be created", {
+      mode: config.mode,
       errorType: error instanceof Error ? error.name : "unknown",
     })
     return apiError("No fue posible iniciar el checkout. No se ha confirmado ningún cobro; vuelve a intentarlo más tarde.", 503)
