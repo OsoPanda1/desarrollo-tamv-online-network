@@ -207,6 +207,9 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
           </article>
         </div>
         <p className="developer-doc-links">
+          <a href="/openapi.yaml" target="_blank" rel="noopener noreferrer">{english ? "OpenAPI 3.1 contract" : "Contrato OpenAPI 3.1"} <ArrowUpRight aria-hidden="true" /></a>
+          <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CITATION.cff" target="_blank" rel="noopener noreferrer">{english ? "How to cite TAMV" : "Cómo citar TAMV"} <ArrowUpRight aria-hidden="true" /></a>
+          <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">{english ? "Community code of conduct" : "Código de conducta"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="/api/v1/exports/research?format=csv">{english ? "Download current public metadata" : "Descargar metadatos públicos actuales"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">{english ? "Contribution guide" : "Guía de contribución"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="/openapi.yaml" target="_blank" rel="noopener noreferrer">{english ? "OpenAPI 3.1 specification" : "Especificación OpenAPI 3.1"} <ArrowUpRight aria-hidden="true" /></a>
@@ -274,6 +277,22 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
           <div className="developer-action-bar">
             <a className="button button-copper" href={issuesUrl} target="_blank" rel="noopener noreferrer">{english ? "Choose an issue" : "Elegir una incidencia"} <ArrowUpRight aria-hidden="true" /></a>
             <a className="button button-outline-dark" href={`${repoUrl}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer">{english ? "Read contribution rules" : "Leer las reglas de contribución"} <ArrowUpRight aria-hidden="true" /></a>
+          </div>
+        </div>
+      </div>
+
+      <div className="developer-license-note" role="note">
+        <div>
+          <ShieldCheck aria-hidden="true" />
+          <div>
+            <strong>{english ? "Code license status: pending maintainer decision" : "Licencia del código: decisión del mantenedor pendiente"}</strong>
+            <p>{english
+              ? "The repository audit did not find a root LICENSE file. Public access is not a reuse license; CITATION.cff supports attribution but grants no copying or redistribution rights. Check the licensing note before adopting code or assets."
+              : "La auditoría del repositorio no encontró un archivo LICENSE en la raíz. El acceso público no concede derechos de reutilización; CITATION.cff facilita la atribución, pero no autoriza copiar ni redistribuir. Consulta la nota de licencia antes de adoptar código o recursos."}</p>
+            <div className="developer-license-links">
+              <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/governance/licensing-status.md" target="_blank" rel="noopener noreferrer">{english ? "Licensing status" : "Estado de licencias"} <ArrowUpRight aria-hidden="true" /></a>
+              <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CITATION.cff" target="_blank" rel="noopener noreferrer">{english ? "Citation metadata" : "Metadatos de cita"} <ArrowUpRight aria-hidden="true" /></a>
+            </div>
           </div>
         </div>
       </div>
