@@ -272,6 +272,40 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
         </section>
         <div className="container institutional-support-slot"><TamvDonationCTA locale={locale} variant="compact" label="Apoyar la continuidad del proyecto" /></div>
 
+        <section className="section builders-section" id="desarrolladores" aria-labelledby="builders-title">
+          <div className="container">
+            <div className="section-heading-row">
+              <div><p className="eyebrow">09 / DESARROLLO ABIERTO</p><h2 id="builders-title">Del descubrimiento a <em>la primera contribución.</em></h2></div>
+              <p>Una ruta de entrada práctica para desarrolladores, investigadores y comunidades: entender un dato público, explorar el campo HCU y proponer una mejora que pueda revisarse y reproducirse.</p>
+            </div>
+            <div className="builders-grid">
+              <article className="builders-card">
+                <div className="builders-card-top"><span>01 / EXPLORAR</span><Network aria-hidden="true" /></div>
+                <h3>Comprende el grafo HCU</h3>
+                <p>Inspecciona dominios, relaciones y parámetros declarados en una visualización 3D. La geometría es exploratoria, no una prueba de causalidad.</p>
+                <a href="/hcu">Abrir observatorio HCU <ArrowUpRight aria-hidden="true" /></a>
+              </article>
+              <article className="builders-card">
+                <div className="builders-card-top"><span>02 / REUTILIZAR</span><BookOpen aria-hidden="true" /></div>
+                <h3>Prueba contratos públicos</h3>
+                <p>Consulta el catálogo interoperable o descarga metadatos en CSV. Comprueba la procedencia y la licencia de cada registro antes de reutilizarlo.</p>
+                <div className="builders-card-links"><a href="/api/v1/exports/research">JSON-LD <ArrowUpRight aria-hidden="true" /></a><a href="/api/v1/exports/research?format=csv">CSV <ArrowUpRight aria-hidden="true" /></a></div>
+              </article>
+              <article className="builders-card">
+                <div className="builders-card-top"><span>03 / CONTRIBUIR</span><ShieldCheck aria-hidden="true" /></div>
+                <h3>Empieza con un cambio acotado</h3>
+                <p>Documentación, pruebas, accesibilidad, traducción y trazabilidad son buenas puertas de entrada para mejorar una parte sin aceptar todo el ecosistema.</p>
+                <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues" target="_blank" rel="noopener noreferrer">Explorar incidencias <ArrowUpRight aria-hidden="true" /></a>
+              </article>
+            </div>
+            <div className="builders-actions">
+              <a className="button button-copper" href="/desarrolladores">Abrir guía de desarrolladores <ArrowRight aria-hidden="true" /></a>
+              <a className="button button-outline-dark" href="https://github.com/OsoPanda1/desarrollo-tamv-online-network" target="_blank" rel="noopener noreferrer">Ver código fuente <ArrowUpRight aria-hidden="true" /></a>
+            </div>
+            <p className="builders-caveat">El repositorio no garantiza que cada módulo esté desplegado ni que toda propuesta sea aceptada. Las contribuciones se evalúan por alcance, evidencia, pruebas, licencia y capacidad real de mantenimiento.</p>
+          </div>
+        </section>
+
         <section className="section contact-section" id="contacto">
           <div className="container contact-panel">
             <div className="contact-emblem"><span className="brand-mark contact-brand-emblem" aria-hidden="true" /><span>HIDALGO<br />MÉXICO</span></div>
@@ -356,6 +390,40 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
 
       <section className="section roadmap-section" id="hoja-de-ruta"><div className="container roadmap-layout"><div className="roadmap-heading"><p className="eyebrow">08 / NEXT HORIZONS</p><h2>Grow at the pace of <em>evidence.</em></h2><p>A proposed path for turning documentation and vision into capabilities that can be evaluated and shared.</p></div><div className="roadmap-list">{roadmapSteps.map((step) => <article className="roadmap-step" key={step.phase}><span className="roadmap-phase">{step.phase}</span><div><h3>{step.titleEn}</h3><p>{step.textEn}</p></div><span className="roadmap-arrow" aria-hidden="true"><ArrowRight /></span></article>)}<p className="roadmap-disclaimer">Suggested sequence; not a committed schedule or evidence of execution.</p></div></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support project continuity" /></div>
+
+      <section className="section builders-section" id="desarrolladores" aria-labelledby="builders-title">
+        <div className="container">
+          <div className="section-heading-row">
+            <div><p className="eyebrow">09 / OPEN DEVELOPMENT</p><h2 id="builders-title">From discovery to <em>a first contribution.</em></h2></div>
+            <p>A practical entry path for developers, researchers and communities: inspect public data, explore HCU, then propose a change that can be reviewed and reproduced.</p>
+          </div>
+          <div className="builders-grid">
+            <article className="builders-card">
+              <div className="builders-card-top"><span>01 / EXPLORE</span><Network aria-hidden="true" /></div>
+              <h3>Understand the HCU graph</h3>
+              <p>Inspect domains, relationships and declared parameters in a 3D visualization. Its geometry is exploratory, not proof of causality.</p>
+              <a href="/hcu?lang=en">Open HCU observatory <ArrowUpRight aria-hidden="true" /></a>
+            </article>
+            <article className="builders-card">
+              <div className="builders-card-top"><span>02 / REUSE</span><BookOpen aria-hidden="true" /></div>
+              <h3>Try public contracts</h3>
+              <p>Read the interoperable catalog or download CSV metadata. Check provenance and each record's license before reuse.</p>
+              <div className="builders-card-links"><a href="/api/v1/exports/research">JSON-LD <ArrowUpRight aria-hidden="true" /></a><a href="/api/v1/exports/research?format=csv">CSV <ArrowUpRight aria-hidden="true" /></a></div>
+            </article>
+            <article className="builders-card">
+              <div className="builders-card-top"><span>03 / CONTRIBUTE</span><ShieldCheck aria-hidden="true" /></div>
+              <h3>Start with a focused change</h3>
+              <p>Documentation, tests, accessibility, translation and provenance are useful ways to improve one part without adopting the entire ecosystem.</p>
+              <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues" target="_blank" rel="noopener noreferrer">Browse issues <ArrowUpRight aria-hidden="true" /></a>
+            </article>
+          </div>
+          <div className="builders-actions">
+            <a className="button button-copper" href="/desarrolladores?lang=en">Open developer guide <ArrowRight aria-hidden="true" /></a>
+            <a className="button button-outline-dark" href="https://github.com/OsoPanda1/desarrollo-tamv-online-network" target="_blank" rel="noopener noreferrer">View source code <ArrowUpRight aria-hidden="true" /></a>
+          </div>
+          <p className="builders-caveat">The repository does not guarantee every module is deployed or every proposal accepted. Contributions are evaluated on scope, evidence, tests, licensing and actual maintenance capacity.</p>
+        </div>
+      </section>
 
       <section className="section contact-section" id="contacto"><div className="container contact-panel"><div className="contact-emblem"><span className="brand-mark contact-brand-emblem" aria-hidden="true" /><span>HIDALGO<br />MEXICO</span></div><div className="contact-copy"><p className="eyebrow eyebrow-light">INSTITUTIONAL COLLABORATION</p><h2>Knowledge grows <em>when it is shared.</em></h2><p>For research, partnerships, press, or technical collaboration, start a conversation with the TAMV team.</p><a className="button button-copper" href="mailto:anubiscastillo@visitarealdelmonte.online?subject=TAMV%20Online%20Network%20collaboration">Institutional contact <ArrowUpRight aria-hidden="true" /></a><div className="contact-support-action"><TamvDonationCTA locale="en" variant="compact" label="Contribute to TAMV" /></div></div><div className="contact-side"><Fingerprint aria-hidden="true" /><span>INDEPENDENT<br />INITIATIVE</span></div></div></section>
     </main>
