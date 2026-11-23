@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPage() {
-  const approvalConfigured = process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true"
+  const approvalConfigured = process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true" &&
+    process.env.TAMV_MEMBERSHIP_LEGAL_APPROVED === "true"
   return <TamvAppShell locale="es">
     <section className="section"><div className="container membership-legal-page">
       <p className="eyebrow">GOBERNANZA · DATOS PERSONALES</p>
