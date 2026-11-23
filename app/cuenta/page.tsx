@@ -28,12 +28,12 @@ const freeFeatures: Pair[] = [
 ]
 
 const premiumFeatures: Pair[] = [
-  { es: "Todo lo de Free, con rol TRI pleno según tu matriz (TRI-R / TRI-D / TRI-E / TRI-A).", en: "Everything in Free, with a full TRI role under your matrix (TRI-R / TRI-D / TRI-E / TRI-A)." },
-  { es: "Integrarte a un proyecto TAMV activo o registrar el tuyo como proyecto de la red.", en: "Join an active TAMV project or register yours as a network project." },
-  { es: "Acompañamiento editorial para publicar: ficha FAIR, revisión TQAF guiada y ruta al DOI.", en: "Editorial support for publishing: FAIR record, guided TQAF review, and the route to a DOI." },
-  { es: "Prioridad en la cola de arbitraje del Foro Académico.", en: "Priority in the Academic Forum arbitration queue." },
-  { es: "Mentoría técnica documentada y sesiones de trabajo sobre el Mapa HCU.", en: "Documented technical mentorship and working sessions on the HCU Map." },
-  { es: "Registro BookPI acompañado de tus decisiones y constancia de participación verificable.", en: "BookPI record accompanying your decisions and a verifiable participation record." },
+  { es: "Acceso al curso práctico de perfil profesional, portafolio verificable, validación de startup y presentación para inversionistas.", en: "Access to the practical course on professional profile, verifiable portfolio, startup validation, and investor presentation." },
+  { es: "Progreso del curso guardado en tu cuenta mientras la membresía esté activa.", en: "Course progress saved to your account while the membership is active." },
+  { es: "Ruta para postular a oportunidades de colaboración en proyectos TAMV; participar depende de la revisión y capacidad de cada proyecto.", en: "A route to apply for TAMV project collaboration; participation depends on each project's review and capacity." },
+  { es: "Plantillas para modelo de negocio, hitos, evidencias y pitch; no reemplazan asesoría profesional financiera o jurídica.", en: "Templates for business model, milestones, evidence, and pitch; they do not replace professional financial or legal advice." },
+  { es: "Guía para explorar AI Lounge y crear un perfil externo. Las membresías Pro, contactos privados y beneficios externos no están incluidos.", en: "Guidance to explore AI Lounge and create an external profile. Pro memberships, private contacts, and external benefits are not included." },
+  { es: "Para empresas existe un plan separado por organización; compara alcances y condiciones antes de contratar.", en: "A separate per-organization business plan is available; compare scope and terms before subscribing." },
 ]
 
 const roles: { code: string; title: Pair }[] = [
@@ -67,7 +67,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         <article className="doc-card">
           <p className="eyebrow">{english ? "MODE · PREMIUM · RESEARCH" : "MODALIDAD · PREMIUM · INVESTIGACIÓN"}</p>
           <h3>{english ? "$229 MXN/month individual · $699 MXN/month per business" : "$229 MXN/mes individual · $699 MXN/mes por empresa"}</h3>
-          <p>{english ? "For developers and organizations that want structured collaboration, the five-module profile-and-pitch course, and a guided route to external startup resources. Checkout and recurring billing run through Stripe." : "Para desarrolladores y organizaciones que buscan colaboración estructurada, el curso de cinco módulos de perfil y pitch, y una ruta guiada a recursos externos para startups. La contratación y los cobros recurrentes se procesan mediante Stripe."}</p>
+          <p>{english ? "The individual plan is billed per user; the business plan is billed per organization. Compare the included scope and current third-party conditions on the memberships page. Checkout and recurring billing run through Stripe when the deployment is configured and approved." : "El plan individual se cobra por usuario; el empresarial, por organización. Compara el alcance incluido y las condiciones vigentes de terceros en la página de membresías. El checkout y el cobro recurrente funcionan mediante Stripe cuando el despliegue está configurado y aprobado."}</p>
           <ul>{premiumFeatures.map((feature) => <li key={feature.es}>{t(english, feature)}</li>)}</ul>
           <p><Link className="text-link" href={`/membresias?lang=${locale}`}>{english ? "Compare paid memberships" : "Comparar membresías de pago"} <ArrowUpRight aria-hidden="true" /></Link></p>
         </article>
