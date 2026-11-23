@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import { MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
 import { ArrowUpRight, CreditCard, LoaderCircle } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 
@@ -32,6 +34,7 @@ export function MembershipCheckout({
 }) {
   const english = locale === "en"
   const [businessName, setBusinessName] = useState("")
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState("")
 
@@ -45,6 +48,8 @@ export function MembershipCheckout({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           planId,
+          acceptedTerms: termsAccepted,
+          termsVersion: MEMBERSHIP_TERMS_VERSION,
           ...(planId === "business" ? { businessName: businessName.trim() } : {}),
         }),
       })
@@ -85,14 +90,29 @@ export function MembershipCheckout({
         className="button membership-checkout-button"
         type="button"
         onClick={beginCheckout}
-        disabled={busy || (planId === "business" && businessName.trim().length < 2)}
+        disabled={busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)}
       >
         {busy ? <LoaderCircle className="billing-spinner" aria-hidden="true" /> : <CreditCard aria-hidden="true" />}
         {busy ? (english ? "Connecting to secure checkout…" : "Conectando con el checkout seguro…") : (english ? "Subscribe with Stripe" : "Contratar con Stripe")}
         {!busy && <ArrowUpRight aria-hidden="true" />}
       </button>
+      <label className="billing-terms-check">
+        <input
+          type="checkbox"
+          checked={termsAccepted}
+          onChange={(event) => setTermsAccepted(event.target.checked)}
+          required
+        />
+        <span>
+          {english ? "I have read and accept the " : "He leído y acepto las "}
+          <Link href="/membresias/condiciones" target="_blank" rel="noopener noreferrer">{english ? "membership terms" : "condiciones de membresía"}</Link>
+          {english ? " and " : " y el "}
+          <Link href="/privacidad" target="_blank" rel="noopener noreferrer">{english ? "privacy notice" : "aviso de privacidad"}</Link>
+          {english ? ` (version ${MEMBERSHIP_TERMS_VERSION}).` : ` (versión ${MEMBERSHIP_TERMS_VERSION}).`}
+        </span>
+      </label>
       <p className="billing-hint">
-        {english ? "Recurring monthly subscription. Payment status and access are confirmed by a signed Stripe webhook." : "Suscripción mensual recurrente. El estado del pago y el acceso se confirman mediante un webhook firmado de Stripe."}
+        {english ? "Recurring monthly subscription. Payment status and access are confirmed by a signed Stripe webhook. You can manage eligible cancellations from the Stripe customer portal." : "Suscripción mensual recurrente. El estado del pago y el acceso se confirman mediante un webhook firmado de Stripe. Podrás gestionar las cancelaciones disponibles desde el portal de clientes de Stripe."}
       </p>
       {error && <p className="billing-error" role="alert">{error}</p>}
     </div>
