@@ -160,3 +160,14 @@
 .membership-legal-lede { font-size: 1.05rem; color: var(--muted-foreground); }
 .course-external-network { margin-top: 2rem; }
 .course-external-network ol { display: grid; gap: .65rem; padding-left: 1.35rem; line-height: 1.65; }
+
+.membership-institutional-roadmap { max-width: 1000px; margin-inline: auto; }
+.membership-institutional-roadmap h2 { margin: 2.2rem 0 .65rem; font-size: clamp(1.35rem, 2.2vw, 1.8rem); }
+.membership-institutional-roadmap p, .membership-institutional-roadmap li { line-height: 1.75; }
+.membership-institutional-roadmap > ol { display: grid; gap: .7rem; padding-left: 1.35rem; }
+.membership-roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.6rem 0 2rem; }
+.membership-roadmap-card { display: grid; align-content: start; gap: .75rem; padding: 1.2rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--card); }
+.membership-roadmap-card > svg { width: 1.4rem; height: 1.4rem; color: var(--ring); }
+.membership-roadmap-card h2 { margin: 0; font-size: 1.25rem; }
+.membership-roadmap-card p { margin: 0; }
+@media (max-width: 900px) { .membership-roadmap-grid { grid-template-columns: minmax(0, 1fr); } }
