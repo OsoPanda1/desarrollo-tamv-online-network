@@ -28,10 +28,13 @@ Set through the deployment secret manager, never commit real values:
 | `TAMV_BILLING_MODE` | `disabled`, `test`, or `live`; default is disabled | Checkout kill switch |
 | `TAMV_MEMBERSHIP_TERMS_VERSION` | Approved version identifier: `TAMV-MEMBERSHIP-TERMS-2026-11-23-v1` | Live checkout only |
 | `TAMV_MEMBERSHIP_PRIVACY_APPROVED` | Set to `true` only after the definitive notice is approved | Live checkout only |
+| `TAMV_MEMBERSHIP_LEGAL_APPROVED` | Set to `true` only after the legal operator/entity and terms review | Live checkout only |
+| `TAMV_MEMBERSHIP_TAX_APPROVED` | Set to `true` only after the price/tax treatment is determined for the actual operator | Live checkout only |
+| `TAMV_MEMBERSHIP_REFUNDS_APPROVED` | Set to `true` only after cancellation, refund and support policies are finalized | Live checkout only |
 | `STRIPE_AUTOMATIC_TAX_ENABLED` | Optional Stripe Tax activation; defaults off | Optional tax calculation |
 | `STRIPE_TAX_BEHAVIOR` | `inclusive` or `exclusive` when automatic tax is enabled | Optional tax calculation |
 
-`TAMV_BILLING_MODE=disabled` disables new checkout by default. `test` is for non-production deployments with a test key. `live` requires a live key; production checkout additionally requires the approved terms version and privacy approval flag. These flags are deployment gates, not a substitute for legal or tax review. The Customer Portal must be configured in Stripe to permit the intended cancellation and payment-method flows.
+`TAMV_BILLING_MODE=disabled` disables new checkout by default. `test` is for non-production deployments with a test key. `live` requires a live key; production checkout additionally requires the approved terms version and explicit privacy, legal, tax and refunds approval flags. These flags are deployment gates, not a substitute for legal or tax review. The Customer Portal must be configured in Stripe to permit the intended cancellation and payment-method flows.
 
 ## Database migration
 
