@@ -24,7 +24,6 @@ const allowedDonationHosts = new Set([
   "www.donorbox.org",
   "liberapay.com",
   "www.liberapay.com",
-  "github.com",
 ])
 
 function resolveDonationTarget(rawValue: string | undefined) {
