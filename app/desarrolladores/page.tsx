@@ -279,7 +279,6 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
             <a className="button button-outline-dark" href={`${repoUrl}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer">{english ? "Read contribution rules" : "Leer las reglas de contribución"} <ArrowUpRight aria-hidden="true" /></a>
           </div>
         </div>
-      </div>
 
       <div className="developer-license-note" role="note">
         <div>
@@ -295,6 +294,7 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   </TamvAppShell>
