@@ -10,6 +10,7 @@ import { localizedPath, type Locale } from "@/lib/i18n"
 const links = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
+  { href: "/comunidad", labelEs: "Comunidad", labelEn: "Community" },
   { href: "/hcu", labelEs: "Mapa HCU", labelEn: "HCU map" },
   { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
   { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },

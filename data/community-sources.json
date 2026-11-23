@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "updatedAt": "2026-11-20",
+  "policy": "External discovery links only. No affiliation, endorsement, scraping authorization, or content-republication rights are implied.",
+  "categories": [
+    {
+      "id": "technology-news",
+      "title": "Actualidad tecnológica",
+      "sources": [
+        {
+          "name": "Xataka",
+          "url": "https://www.xataka.com",
+          "type": "publication"
+        },
+        {
+          "name": "Geeknetic",
+          "url": "https://www.geeknetic.es",
+          "type": "publication-community"
+        }
+      ],
+      "description": "Noticias, análisis y contexto tecnológico."
+    },
+    {
+      "id": "hardware-networks",
+      "title": "Hardware, redes y telecomunicaciones",
+      "sources": [
+        {
+          "name": "Hard2mano",
+          "url": "https://www.hard2mano.com",
+          "type": "community"
+        },
+        {
+          "name": "ADSLZone",
+          "url": "https://www.adslzone.net",
+          "type": "publication-community"
+        },
+        {
+          "name": "BandaAncha.eu",
+          "url": "https://bandaancha.eu",
+          "type": "community"
+        },
+        {
+          "name": "HTCMania",
+          "url": "https://www.htcmania.com",
+          "type": "community"
+        },
+        {
+          "name": "El Chapuzas Informático",
+          "url": "https://www.elchapuzasinformatico.com",
+          "type": "publication-community"
+        }
+      ],
+      "description": "Componentes, conectividad, diagnóstico y experiencias técnicas."
+    },
+    {
+      "id": "software-development",
+      "title": "Software, programación y soporte",
+      "sources": [
+        {
+          "name": "La Web del Programador",
+          "url": "https://www.lawebdelprogramador.com",
+          "type": "community"
+        },
+        {
+          "name": "Foros del Web",
+          "url": "https://www.forosdelweb.com",
+          "type": "community"
+        },
+        {
+          "name": "ElOtroLado.net",
+          "url": "https://www.elotrolado.net",
+          "type": "community"
+        },
+        {
+          "name": "YoReparo",
+          "url": "https://www.yoreparo.com",
+          "type": "community"
+        },
+        {
+          "name": "TodoExcel",
+          "url": "https://www.todoexcel.com",
+          "type": "community"
+        },
+        {
+          "name": "ElHacker.net",
+          "url": "https://www.elhacker.net",
+          "type": "community"
+        },
+        {
+          "name": "ForoSpyware",
+          "url": "https://www.forospyware.com",
+          "type": "community"
+        }
+      ],
+      "description": "Desarrollo, solución de problemas y aprendizaje entre pares."
+    },
+    {
+      "id": "creative-audio",
+      "title": "Audio, música y creación",
+      "sources": [
+        {
+          "name": "Hispasonic",
+          "url": "https://www.hispasonic.com",
+          "type": "community"
+        },
+        {
+          "name": "Auriculares HiFi",
+          "url": "https://www.auriculares-hifi.com",
+          "type": "community"
+        }
+      ],
+      "description": "Producción musical, audio, equipos y colaboración creativa."
+    },
+    {
+      "id": "creator-economy",
+      "title": "Creadores y economía digital",
+      "sources": [
+        {
+          "name": "ForoBeta",
+          "url": "https://forobeta.com",
+          "type": "community"
+        }
+      ],
+      "description": "Herramientas, publicación y comunidades de profesionales digitales."
+    },
+    {
+      "id": "manufacturers-carriers",
+      "title": "Fabricantes y operadores",
+      "sources": [
+        {
+          "name": "Comunidad Movistar",
+          "url": "https://comunidad.movistar.es",
+          "type": "community"
+        },
+        {
+          "name": "Comunidad Sony",
+          "url": "https://community.sony.com",
+          "type": "community"
+        }
+      ],
+      "description": "Canales comunitarios de soporte y experiencias de usuarios."
+    },
+    {
+      "id": "ai-development",
+      "title": "IA y desarrollo",
+      "sources": [
+        {
+          "name": "OpenAI Community",
+          "url": "https://community.openai.com",
+          "type": "community"
+        },
+        {
+          "name": "Google for Developers",
+          "url": "https://developers.google.com",
+          "type": "developer-platform"
+        }
+      ],
+      "description": "Documentación, herramientas y discusión sobre tecnología emergente."
+    }
+  ]
+}
