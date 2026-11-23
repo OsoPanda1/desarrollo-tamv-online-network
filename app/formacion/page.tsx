@@ -222,6 +222,21 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
               </article>
             ))}
           </div>
+          <div className="membership-course-callout course-external-network">
+            <div><ShieldCheck aria-hidden="true" /><h2>{english ? "External network: AI Lounge" : "Red externa: AI Lounge"}</h2></div>
+            <p>{english
+              ? "Use this path to review your builder profile, highlight verifiable work, and check which external startup perks match your actual company stage. AI Lounge is independently operated; TAMV does not issue an access token or paid membership pass, and eligibility for contacts, warm introductions, masterminds, credits, or investor programs is set by the provider."
+              : "Usa esta ruta para revisar tu perfil como creador, destacar trabajos verificables y comprobar qué beneficios externos para startups corresponden a la etapa real de tu empresa. AI Lounge es independiente; TAMV no emite un token de acceso ni una membresía de pago y los requisitos para contactos, presentaciones, sesiones, créditos o programas de inversión los determina el proveedor."}</p>
+            <ol>
+              <li>{english ? "Create or sign in to an AI Lounge account you control." : "Crea tu cuenta de AI Lounge o inicia sesión en una que ya controles."}</li>
+              <li>{english ? "Complete your builder profile with accurate stage and evidence; do not inflate revenue or credentials." : "Completa el perfil con etapa y evidencias exactas; no exageres ingresos ni credenciales."}</li>
+              <li>{english ? "Review eligibility and terms before applying or sharing confidential information." : "Revisa los requisitos y términos antes de postular o compartir información confidencial."}</li>
+            </ol>
+            <div className="membership-external-links">
+              <a className="text-link" href="https://ai.lounge.ai/" target="_blank" rel="noopener noreferrer">{english ? "Open AI Lounge" : "Abrir AI Lounge"} <ArrowUpRight aria-hidden="true" /></a>
+              <a className="text-link" href="https://ai.lounge.ai/perks" target="_blank" rel="noopener noreferrer">{english ? "Check startup perks" : "Consultar beneficios para startups"} <ArrowUpRight aria-hidden="true" /></a>
+            </div>
+          </div>
           <div className="governance-notice"><ShieldCheck aria-hidden="true" /><p>{english ? "Completion is a personal learning record, not an accredited qualification, a TAMV project acceptance, or a promise of funding. Validate legal, financial and market assumptions with qualified professionals." : "La finalización es un registro de aprendizaje personal, no una acreditación, aceptación automática en un proyecto TAMV ni promesa de financiamiento. Valida los supuestos legales, financieros y de mercado con profesionales competentes."}</p></div>
         </>
       )}
