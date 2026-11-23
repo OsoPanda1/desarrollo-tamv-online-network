@@ -69,6 +69,15 @@ export default function CommunityPage() {
           <Link href="/gobernanza" className="rounded-full border border-border px-5 py-3 text-sm font-medium">Consultar gobernanza</Link>
         </div>
       </section>
+      <section className="mt-10 rounded-2xl border border-border p-6 sm:p-8">
+        <h2 className="text-xl font-semibold">Entra por la puerta correcta</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">Únete a la red por una puerta concreta — investigar en un proyecto, aportar ingeniería, dictaminar o colaborar desde el territorio — y crea tu cuenta TAMV para participar en el portal real, con moderación, revisión y apelación.</p>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground" lang="en">Join the network through a concrete door — research in a project, contribute engineering, arbitrate, or collaborate from the territory — and create your TAMV account to take part in the real portal, with moderation, review, and appeal.</p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link href="/unete" className="rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground">Únete a TAMV</Link>
+          <Link href="/cuenta" className="rounded-full border border-border px-5 py-3 text-sm font-medium">Crear mi cuenta</Link>
+        </div>
+      </section>
       <p className="mt-8 text-xs leading-5 text-muted-foreground">Este directorio ofrece enlaces y descripciones editoriales originales. Las marcas y contenidos pertenecen a sus respectivos titulares. La presencia en el directorio no constituye una recomendación comercial ni autorización para copiar contenido.</p>
     </main>
   )

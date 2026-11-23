@@ -1,0 +1,1086 @@
+{
+  "_note": "SEED DECLARADA DEL HUB TAMV (tamv-online-network.html, expediente v0.1.0, §8–§9), NO APLICADA A LA BASE DE DATOS. No hay DATABASE_URL en este entorno y no se ejecutó ninguna escritura contra la DB; la aplicación de esta semilla a hcu_domains / hcu_atoms / hcu_hyperedges queda PENDIENTE y debe hacerse con revisión humana (upsert por id, userId 'system', visibility 'public'). Todos los valores X/Y/Z, pesos w, rezagos y signos son HIPÓTESIS DECLARADAS procedentes de los prototipos del autor, no mediciones independientes ni estimaciones empíricas calibradas (hub §9.4; preguntas abiertas Q2 y Q3). El hub no publica nombres ni descripciones en inglés: nameEn/descriptionEn quedan null y deben aportarse con traducción revisada antes de insertar, porque las columnas name_es/name_en de hcu_atoms son NOT NULL. Los ids de dominio ('hub-...') son propuestos para esta semilla y deben reconciliarse con las filas existentes de hcu_domains (el grafo público del repo declara siete ámbitos de referencia; véase docs/architecture/hcu-reconciliation.md) antes de insertar. Caso preparado de referencia: falla de ciberseguridad con choque −1 en 2030, 2031 y 2032; en el estado demostrativo por defecto del hub (que incluye además un choque inicial +1 en IA Generativa en 2026), el escenario B deja a Ciberseguridad en error en 2033 con activación A −0,58 (umbral de error |A| > 0,05; verificado reejecutando la función simulate() del propio hub). Sin ese choque inicial de 2026, el mismo caso en B da −0,73 en 2033.",
+  "hcu_domains": [
+    {
+      "id": "hub-ia-y-cognicion",
+      "userId": "system",
+      "nameEs": "IA y Cognición",
+      "nameEn": null,
+      "descriptionEs": "La inteligencia artificial redefine la producción de conocimiento, la toma de decisiones y la organización del trabajo.",
+      "descriptionEn": null,
+      "sortOrder": 1,
+      "visibility": "public"
+    },
+    {
+      "id": "hub-economia-soberana",
+      "userId": "system",
+      "nameEs": "Economía Soberana",
+      "nameEn": null,
+      "descriptionEs": "El valor económico se desplaza hacia activos cognitivos, datos verificables y capacidades de ejecución.",
+      "descriptionEn": null,
+      "sortOrder": 2,
+      "visibility": "public"
+    },
+    {
+      "id": "hub-gobernanza",
+      "userId": "system",
+      "nameEs": "Gobernanza",
+      "nameEn": null,
+      "descriptionEs": "La legitimidad depende de evidencia, transparencia, participación y rendición de cuentas.",
+      "descriptionEn": null,
+      "sortOrder": 3,
+      "visibility": "public"
+    },
+    {
+      "id": "hub-clima-y-biosfera",
+      "userId": "system",
+      "nameEs": "Clima y Biosfera",
+      "nameEn": null,
+      "descriptionEs": "El clima reorganiza economía, salud, seguridad y estabilidad geopolítica.",
+      "descriptionEn": null,
+      "sortOrder": 4,
+      "visibility": "public"
+    },
+    {
+      "id": "hub-salud-y-vida",
+      "userId": "system",
+      "nameEs": "Salud y Vida",
+      "nameEn": null,
+      "descriptionEs": "La salud se vuelve preventiva, personalizada y dependiente de datos, biotecnología y confianza pública.",
+      "descriptionEn": null,
+      "sortOrder": 5,
+      "visibility": "public"
+    },
+    {
+      "id": "hub-seguridad",
+      "userId": "system",
+      "nameEs": "Seguridad",
+      "nameEn": null,
+      "descriptionEs": "La seguridad ya no es solo militar: es digital, informacional, biológica y cognitiva.",
+      "descriptionEn": null,
+      "sortOrder": 6,
+      "visibility": "public"
+    }
+  ],
+  "hcu_atoms": [
+    {
+      "id": "ia",
+      "userId": "system",
+      "domainId": "hub-ia-y-cognicion",
+      "nameEs": "IA Generativa",
+      "nameEn": null,
+      "descriptionEs": "La IA generativa transforma la creación de conocimiento, pero exige gobernanza, trazabilidad y validación de evidencia.",
+      "descriptionEn": null,
+      "influenceX": 94,
+      "riskY": 72,
+      "evidenceZ": 98,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "ag",
+      "userId": "system",
+      "domainId": "hub-ia-y-cognicion",
+      "nameEs": "Agentes Autónomos",
+      "nameEn": null,
+      "descriptionEs": "Los agentes autónomos ejecutan tareas complejas y redistribuyen capacidad cognitiva entre personas, organizaciones y sistemas.",
+      "descriptionEn": null,
+      "influenceX": 88,
+      "riskY": 86,
+      "evidenceZ": 95,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "mem",
+      "userId": "system",
+      "domainId": "hub-ia-y-cognicion",
+      "nameEs": "Memoria Ejecutiva",
+      "nameEn": null,
+      "descriptionEs": "La memoria persistente permite continuidad contextual, aprendizaje institucional y decisiones más coherentes.",
+      "descriptionEn": null,
+      "influenceX": 86,
+      "riskY": 68,
+      "evidenceZ": 93,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "rns",
+      "userId": "system",
+      "domainId": "hub-ia-y-cognicion",
+      "nameEs": "Razonamiento Neuro-Simbólico",
+      "nameEn": null,
+      "descriptionEs": "La fusión de redes neuronales, lógica y grafos mejora explicabilidad, verificación y razonamiento complejo.",
+      "descriptionEn": null,
+      "influenceX": 91,
+      "riskY": 74,
+      "evidenceZ": 96,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "edu",
+      "userId": "system",
+      "domainId": "hub-ia-y-cognicion",
+      "nameEs": "Educación",
+      "nameEn": null,
+      "descriptionEs": "La educación se redefine con IA: personalización, evaluación y nuevas competencias; exige evidencia sobre el aprendizaje real.",
+      "descriptionEn": null,
+      "influenceX": 88,
+      "riskY": 62,
+      "evidenceZ": 84,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": true,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. Átomo PROVISIONAL según el hub (§9.4): referido por los prototipos pero sin puntajes medidos; sus valores X/Y/Z son provisionales y están marcados."
+    },
+    {
+      "id": "mia",
+      "userId": "system",
+      "domainId": "hub-economia-soberana",
+      "nameEs": "Mercados de IA",
+      "nameEn": null,
+      "descriptionEs": "Los mercados de capacidades cognitivas convierten skills, agentes y datos en activos económicos licenciables.",
+      "descriptionEn": null,
+      "influenceX": 87,
+      "riskY": 79,
+      "evidenceZ": 92,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "edig",
+      "userId": "system",
+      "domainId": "hub-economia-soberana",
+      "nameEs": "Economía Digital",
+      "nameEn": null,
+      "descriptionEs": "La economía digital reorganiza producción, distribución y captura de valor mediante plataformas e infraestructura digital.",
+      "descriptionEn": null,
+      "influenceX": 91,
+      "riskY": 74,
+      "evidenceZ": 94,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "fsos",
+      "userId": "system",
+      "domainId": "hub-economia-soberana",
+      "nameEs": "Finanzas Sostenibles",
+      "nameEn": null,
+      "descriptionEs": "El capital se alinea con riesgo climático, impacto social y resiliencia de largo plazo.",
+      "descriptionEn": null,
+      "influenceX": 83,
+      "riskY": 68,
+      "evidenceZ": 90,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "isa",
+      "userId": "system",
+      "domainId": "hub-economia-soberana",
+      "nameEs": "Créditos ISA",
+      "nameEn": null,
+      "descriptionEs": "Los créditos cognitivos permiten microtransacciones, acceso progresivo y liquidez dentro de ecosistemas digitales.",
+      "descriptionEn": null,
+      "influenceX": 78,
+      "riskY": 62,
+      "evidenceZ": 88,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "trab",
+      "userId": "system",
+      "domainId": "hub-economia-soberana",
+      "nameEs": "Trabajo",
+      "nameEn": null,
+      "descriptionEs": "El trabajo se reorganiza por automatización y agentes: nuevas ocupaciones, transición de habilidades y protección social.",
+      "descriptionEn": null,
+      "influenceX": 90,
+      "riskY": 74,
+      "evidenceZ": 82,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": true,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. Átomo PROVISIONAL según el hub (§9.4): referido por los prototipos pero sin puntajes medidos; sus valores X/Y/Z son provisionales y están marcados."
+    },
+    {
+      "id": "ggl",
+      "userId": "system",
+      "domainId": "hub-gobernanza",
+      "nameEs": "Gobernanza Global",
+      "nameEn": null,
+      "descriptionEs": "La gobernanza global coordina Estados, empresas, ciencia y sociedad frente a riesgos transnacionales.",
+      "descriptionEn": null,
+      "influenceX": 89,
+      "riskY": 84,
+      "evidenceZ": 95,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "icie",
+      "userId": "system",
+      "domainId": "hub-gobernanza",
+      "nameEs": "Integridad Científica",
+      "nameEn": null,
+      "descriptionEs": "La integridad científica sostiene la confianza pública mediante reproducibilidad, transparencia y revisión independiente.",
+      "descriptionEn": null,
+      "influenceX": 95,
+      "riskY": 72,
+      "evidenceZ": 98,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "ddig",
+      "userId": "system",
+      "domainId": "hub-gobernanza",
+      "nameEs": "Democracia Digital",
+      "nameEn": null,
+      "descriptionEs": "La democracia digital enfrenta desinformación, concentración de poder y nuevas formas de participación ciudadana.",
+      "descriptionEn": null,
+      "influenceX": 81,
+      "riskY": 76,
+      "evidenceZ": 91,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "vet",
+      "userId": "system",
+      "domainId": "hub-gobernanza",
+      "nameEs": "VETRA Governance",
+      "nameEn": null,
+      "descriptionEs": "VETRA integra evidencia, seguridad, ética y gobernanza en una certificación integral de confianza.",
+      "descriptionEn": null,
+      "influenceX": 97,
+      "riskY": 64,
+      "evidenceZ": 99,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "cc",
+      "userId": "system",
+      "domainId": "hub-clima-y-biosfera",
+      "nameEs": "Cambio Climático",
+      "nameEn": null,
+      "descriptionEs": "El cambio climático es una fuerza sistémica que reconfigura economía, salud, migración y seguridad global.",
+      "descriptionEn": null,
+      "influenceX": 97,
+      "riskY": 95,
+      "evidenceZ": 99,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "ten",
+      "userId": "system",
+      "domainId": "hub-clima-y-biosfera",
+      "nameEs": "Transición Energética",
+      "nameEn": null,
+      "descriptionEs": "La transición energética sustituye sistemas fósiles por arquitecturas limpias, distribuidas y resilientes.",
+      "descriptionEn": null,
+      "influenceX": 92,
+      "riskY": 86,
+      "evidenceZ": 96,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "bio",
+      "userId": "system",
+      "domainId": "hub-clima-y-biosfera",
+      "nameEs": "Biodiversidad",
+      "nameEn": null,
+      "descriptionEs": "La biodiversidad sostiene la estabilidad ecológica, alimentaria y climática del planeta.",
+      "descriptionEn": null,
+      "influenceX": 88,
+      "riskY": 81,
+      "evidenceZ": 94,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "ecir",
+      "userId": "system",
+      "domainId": "hub-clima-y-biosfera",
+      "nameEs": "Economía Circular",
+      "nameEn": null,
+      "descriptionEs": "La economía circular reduce residuos, presión material y dependencia de recursos finitos.",
+      "descriptionEn": null,
+      "influenceX": 84,
+      "riskY": 66,
+      "evidenceZ": 92,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "sg",
+      "userId": "system",
+      "domainId": "hub-salud-y-vida",
+      "nameEs": "Salud Global",
+      "nameEn": null,
+      "descriptionEs": "La salud global depende de equidad, vigilancia, prevención y cooperación científica internacional.",
+      "descriptionEn": null,
+      "influenceX": 90,
+      "riskY": 83,
+      "evidenceZ": 95,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "sm",
+      "userId": "system",
+      "domainId": "hub-salud-y-vida",
+      "nameEs": "Salud Mental",
+      "nameEn": null,
+      "descriptionEs": "La salud mental es un determinante central de productividad, cohesión social y resiliencia.",
+      "descriptionEn": null,
+      "influenceX": 85,
+      "riskY": 71,
+      "evidenceZ": 92,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "bte",
+      "userId": "system",
+      "domainId": "hub-salud-y-vida",
+      "nameEs": "Biotecnología",
+      "nameEn": null,
+      "descriptionEs": "La biotecnología transforma medicina, alimentos y bioeconomía, pero exige gobernanza ética rigurosa.",
+      "descriptionEn": null,
+      "influenceX": 89,
+      "riskY": 77,
+      "evidenceZ": 94,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "mp",
+      "userId": "system",
+      "domainId": "hub-salud-y-vida",
+      "nameEs": "Medicina Preventiva",
+      "nameEn": null,
+      "descriptionEs": "La medicina preventiva desplaza el foco del tratamiento hacia detección temprana y resiliencia.",
+      "descriptionEn": null,
+      "influenceX": 86,
+      "riskY": 69,
+      "evidenceZ": 93,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "cib",
+      "userId": "system",
+      "domainId": "hub-seguridad",
+      "nameEs": "Ciberseguridad",
+      "nameEn": null,
+      "descriptionEs": "La ciberseguridad protege identidades, infraestructura crítica, datos y confianza digital.",
+      "descriptionEn": null,
+      "influenceX": 96,
+      "riskY": 91,
+      "evidenceZ": 98,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "cdel",
+      "userId": "system",
+      "domainId": "hub-seguridad",
+      "nameEs": "Ciberdelito",
+      "nameEn": null,
+      "descriptionEs": "El ciberdelito evoluciona como amenaza transnacional, automatizada y adaptativa.",
+      "descriptionEn": null,
+      "influenceX": 93,
+      "riskY": 94,
+      "evidenceZ": 90,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "ghib",
+      "userId": "system",
+      "domainId": "hub-seguridad",
+      "nameEs": "Guerra Híbrida",
+      "nameEn": null,
+      "descriptionEs": "La guerra híbrida combina presión ciber, informativa, económica y geopolítica sobre sociedades.",
+      "descriptionEn": null,
+      "influenceX": 90,
+      "riskY": 88,
+      "evidenceZ": 89,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    },
+    {
+      "id": "sdig",
+      "userId": "system",
+      "domainId": "hub-seguridad",
+      "nameEs": "Soberanía Digital",
+      "nameEn": null,
+      "descriptionEs": "La soberanía digital determina quién controla datos, identidad, infraestructura y decisiones algorítmicas.",
+      "descriptionEn": null,
+      "influenceX": 92,
+      "riskY": 79,
+      "evidenceZ": 96,
+      "tri": null,
+      "roleCode": null,
+      "isProvisional": false,
+      "isQuarantined": false,
+      "visibility": "public",
+      "hubStateAtRest2026": "Latente",
+      "hubStateNote": "El estado (Fluye / En error / Sobrecarga / Latente / Cuarentena) NO es un atributo almacenado en el hub: lo calcula su función stateOf() a cada año simulado (En error si la salud < −0,05; Sobrecarga si polaridad positiva y activación ≥ 0,92; Latente si |activación| < 0,04; en otro caso Fluye; Cuarentena si el nodo está en cuarentena). Sin choques, la activación inicial es 0 para todos los átomos, por lo que el estado en reposo en 2026 es Latente en los 26 átomos. "
+    }
+  ],
+  "hcu_hyperedges": [
+    {
+      "id": "h1",
+      "userId": "system",
+      "labelEs": "Transformación cognitiva-económica",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "ia",
+        "ag",
+        "mia"
+      ],
+      "targetAtomIds": [
+        "ggl",
+        "edig",
+        "cib"
+      ],
+      "weight": 0.35,
+      "sign": 1,
+      "delayYears": 2,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "ggl",
+          1
+        ],
+        [
+          "edig",
+          1
+        ],
+        [
+          "cib",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h2",
+      "userId": "system",
+      "labelEs": "Resiliencia planetaria",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "cc",
+        "ten"
+      ],
+      "targetAtomIds": [
+        "sg",
+        "edig"
+      ],
+      "weight": 0.3,
+      "sign": 1,
+      "delayYears": 3,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "sg",
+          1
+        ],
+        [
+          "edig",
+          1
+        ],
+        [
+          "D5",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "targetDomainIds": [
+        "hub-seguridad"
+      ],
+      "hubTargetNote": "El hub declara como receptor al nodo de dominio D5 (Seguridad), que NO es un átomo: el modelo de la base de datos solo acepta ids de átomos en source_atom_ids/target_atom_ids (getPublicHcuGraph filtra las aristas con extremos no atómicos), por lo que D5 se registra aparte en targetDomainIds y NO se expande silenciosamente a los 4 átomos de Seguridad.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h3",
+      "userId": "system",
+      "labelEs": "Estabilidad digital",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "cib",
+        "cdel",
+        "ghib"
+      ],
+      "targetAtomIds": [
+        "ddig",
+        "sdig",
+        "ggl"
+      ],
+      "weight": 0.3,
+      "sign": 1,
+      "delayYears": 2,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "ddig",
+          1
+        ],
+        [
+          "sdig",
+          1
+        ],
+        [
+          "ggl",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h4",
+      "userId": "system",
+      "labelEs": "Confianza verificable",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "icie",
+        "vet"
+      ],
+      "targetAtomIds": [
+        "ia",
+        "sg",
+        "mia"
+      ],
+      "weight": 0.3,
+      "sign": 1,
+      "delayYears": 2,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "ia",
+          1
+        ],
+        [
+          "sg",
+          1
+        ],
+        [
+          "mia",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h5",
+      "userId": "system",
+      "labelEs": "Cognición humana aumentada",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "sm",
+        "mem",
+        "bte"
+      ],
+      "targetAtomIds": [
+        "edu",
+        "trab",
+        "sg"
+      ],
+      "weight": 0.3,
+      "sign": 1,
+      "delayYears": 3,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "edu",
+          1
+        ],
+        [
+          "trab",
+          1
+        ],
+        [
+          "sg",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h6",
+      "userId": "system",
+      "labelEs": "IA transversal",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "ia"
+      ],
+      "targetAtomIds": [
+        "edu",
+        "edig",
+        "trab",
+        "cib",
+        "ggl",
+        "sg",
+        "bio"
+      ],
+      "weight": 0.3,
+      "sign": 1,
+      "delayYears": 2,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "proto",
+      "hubTargetRefs": [
+        [
+          "edu",
+          1
+        ],
+        [
+          "edig",
+          1
+        ],
+        [
+          "trab",
+          1
+        ],
+        [
+          "cib",
+          1
+        ],
+        [
+          "ggl",
+          1
+        ],
+        [
+          "sg",
+          1
+        ],
+        [
+          "bio",
+          1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'proto' en el hub: procede de los prototipos del autor, sin fuente citada."
+    },
+    {
+      "id": "h7",
+      "userId": "system",
+      "labelEs": "Mitigación climática",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "ten",
+        "ecir",
+        "fsos"
+      ],
+      "targetAtomIds": [
+        "cc"
+      ],
+      "weight": 0.35,
+      "sign": -1,
+      "delayYears": 5,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "hipótesis",
+      "hubTargetRefs": [
+        [
+          "cc",
+          -1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'hipótesis' en el hub (§9.4): añadida por quien implementó el instrumento; no proviene de los prototipos."
+    },
+    {
+      "id": "h8",
+      "userId": "system",
+      "labelEs": "Contención del ciberdelito",
+      "labelEn": null,
+      "sourceAtomIds": [
+        "cib",
+        "vet"
+      ],
+      "targetAtomIds": [
+        "cdel"
+      ],
+      "weight": 0.35,
+      "sign": -1,
+      "delayYears": 1,
+      "tqafLevel": null,
+      "evidenceStatus": "hypothesis",
+      "sourceTitle": null,
+      "sourceUrl": null,
+      "visibility": "public",
+      "isActive": true,
+      "hubOrigin": "hipótesis",
+      "hubTargetRefs": [
+        [
+          "cdel",
+          -1
+        ]
+      ],
+      "hubSourceNote": "SIN FUENTE: el hub no registra DOI ni URL para esta hiperarista (campo de referencia vacío en SEED_H); el expediente declara 0 de 8 hiperaristas con fuente válida (TQAF criterio 4, Pendiente). evidenceStatus queda en 'hypothesis' para las 8, incluidas las de origen 'proto', porque ninguna cita fuente verificable.",
+      "hubOriginNote": "Origen 'hipótesis' en el hub (§9.4): añadida por quien implementó el instrumento; no proviene de los prototipos."
+    }
+  ],
+  "derivedAggregates": {
+    "note": "Agregados CALCULADOS como medias de los átomos miembros (fórmula del hub §9.1: los valores de dominio y Ω Core son agregados —medias— de sus átomos). No son columnas de hcu_domains y no se insertan en la DB; se incluyen solo como referencia de verificación. El ejemplo transcrito del hub (§8, Seguridad) declara X 92,8 · Y 88 · Z 93,3, coherente con estas medias (92,75 / 88 / 93,25).",
+    "domains": [
+      {
+        "domainId": "hub-ia-y-cognicion",
+        "nameEs": "IA y Cognición",
+        "meanInfluenceX": 89.4,
+        "meanRiskY": 72.4,
+        "meanEvidenceZ": 93.2,
+        "atomCount": 5
+      },
+      {
+        "domainId": "hub-economia-soberana",
+        "nameEs": "Economía Soberana",
+        "meanInfluenceX": 85.8,
+        "meanRiskY": 71.4,
+        "meanEvidenceZ": 89.2,
+        "atomCount": 5
+      },
+      {
+        "domainId": "hub-gobernanza",
+        "nameEs": "Gobernanza",
+        "meanInfluenceX": 90.5,
+        "meanRiskY": 74.0,
+        "meanEvidenceZ": 95.75,
+        "atomCount": 4
+      },
+      {
+        "domainId": "hub-clima-y-biosfera",
+        "nameEs": "Clima y Biosfera",
+        "meanInfluenceX": 90.25,
+        "meanRiskY": 82.0,
+        "meanEvidenceZ": 95.25,
+        "atomCount": 4
+      },
+      {
+        "domainId": "hub-salud-y-vida",
+        "nameEs": "Salud y Vida",
+        "meanInfluenceX": 87.5,
+        "meanRiskY": 75.0,
+        "meanEvidenceZ": 93.5,
+        "atomCount": 4
+      },
+      {
+        "domainId": "hub-seguridad",
+        "nameEs": "Seguridad",
+        "meanInfluenceX": 92.75,
+        "meanRiskY": 88.0,
+        "meanEvidenceZ": 93.25,
+        "atomCount": 4
+      }
+    ],
+    "omegaCore": {
+      "nameEs": "Ω Core",
+      "nameEn": null,
+      "note": "Nodo virtual de lectura agregada (media de los 6 dominios); no es una fila de hcu_domains ni un átomo.",
+      "meanInfluenceX": 89.3667,
+      "meanRiskY": 77.1333,
+      "meanEvidenceZ": 93.3583
+    }
+  },
+  "hubScenarios": {
+    "note": "Parámetros del hub §9.2 (γ ganancia, δ persistencia, α amplificación por riesgo). No son los escenarios del simulador del repo; la correspondencia propuesta está en docs/architecture/hcu-reconciliation.md.",
+    "A": {
+      "nameEs": "Expansión controlada",
+      "gamma": 0.8,
+      "delta": 0.6,
+      "alpha": 0.2
+    },
+    "B": {
+      "nameEs": "Transformación estructural",
+      "gamma": 1,
+      "delta": 0.72,
+      "alpha": 0.5
+    },
+    "C": {
+      "nameEs": "Mutación sistémica",
+      "gamma": 1.3,
+      "delta": 0.85,
+      "alpha": 1
+    }
+  },
+  "preparedFailureCases": [
+    {
+      "id": "hub-falla-ciberseguridad-2030-32",
+      "titleEs": "Falla de ciberseguridad 2030–32",
+      "shocks": [
+        {
+          "atomId": "cib",
+          "year": 2030,
+          "intensity": -1
+        },
+        {
+          "atomId": "cib",
+          "year": 2031,
+          "intensity": -1
+        },
+        {
+          "atomId": "cib",
+          "year": 2032,
+          "intensity": -1
+        }
+      ],
+      "noteEs": "Caso demostrativo cargado por defecto en el hub (con choque inicial +1 en IA Generativa en 2026). Escenario B: Ciberseguridad en error en 2033 con A −0,58."
+    },
+    {
+      "id": "hub-escalada-guerra-hibrida-2030-32",
+      "titleEs": "Escalada de guerra híbrida 2030–32",
+      "shocks": [
+        {
+          "atomId": "ghib",
+          "year": 2030,
+          "intensity": 1
+        },
+        {
+          "atomId": "ghib",
+          "year": 2031,
+          "intensity": 1
+        },
+        {
+          "atomId": "ghib",
+          "year": 2032,
+          "intensity": 1
+        }
+      ],
+      "noteEs": "Caso preparado del hub (PRESETS). Intensidad +1: amenaza que escala."
+    },
+    {
+      "id": "hub-choque-climatico-2030-31",
+      "titleEs": "Choque climático 2030–31",
+      "shocks": [
+        {
+          "atomId": "cc",
+          "year": 2030,
+          "intensity": 1
+        },
+        {
+          "atomId": "cc",
+          "year": 2031,
+          "intensity": 1
+        }
+      ],
+      "noteEs": "Caso preparado del hub (PRESETS)."
+    },
+    {
+      "id": "hub-perdida-confianza-gobernanza-2031-33",
+      "titleEs": "Pérdida de confianza en gobernanza 2031–33",
+      "shocks": [
+        {
+          "atomId": "ggl",
+          "year": 2031,
+          "intensity": -1
+        },
+        {
+          "atomId": "ggl",
+          "year": 2032,
+          "intensity": -1
+        },
+        {
+          "atomId": "ggl",
+          "year": 2033,
+          "intensity": -1
+        }
+      ],
+      "noteEs": "Caso preparado del hub (PRESETS)."
+    },
+    {
+      "id": "hub-colapso-datos-salud-2032-34",
+      "titleEs": "Colapso de datos de salud 2032–34",
+      "shocks": [
+        {
+          "atomId": "sg",
+          "year": 2032,
+          "intensity": -1
+        },
+        {
+          "atomId": "sg",
+          "year": 2033,
+          "intensity": -1
+        },
+        {
+          "atomId": "sg",
+          "year": 2034,
+          "intensity": -1
+        }
+      ],
+      "noteEs": "Caso preparado del hub (PRESETS)."
+    }
+  ]
+}

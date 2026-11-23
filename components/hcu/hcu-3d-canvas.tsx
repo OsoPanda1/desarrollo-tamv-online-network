@@ -279,7 +279,7 @@ export function Hcu3DCanvas({
       })
     }
 
-    const projectWorld = (x: number, y: number, z: number, radius = 0) => {
+    function projectWorld(x: number, y: number, z: number, radius = 0) {
       const sceneScale = Math.max(0.48, Math.min(width / 1100, height / 670, 1.15))
       const wx = x * sceneScale
       const wy = y * sceneScale
@@ -349,7 +349,8 @@ export function Hcu3DCanvas({
       ctx.restore()
     }
 
-    const drawOrbit = (domainNode: WorldNode, radius: number, alpha: number, dashed: boolean) => {
+    function drawOrbit(domainNode: WorldNode, radius: number, alpha: number, dashed: boolean) {
+      if (!ctx) return
       ctx.beginPath()
       const points = 76
       for (let step = 0; step <= points; step += 1) {
@@ -504,7 +505,7 @@ export function Hcu3DCanvas({
           : visibleAtoms.has(node.id)
         const alpha = filterVisible || isSelected ? 1 : 0.14
         const radius = node.screenRadius
-        const color = node.kind === "domain" ? node.color : node.atom?.riskY >= HIGH_RISK ? "#ff9ab2" : node.atom?.isQuarantined ? "#efce7b" : node.color
+        const color = node.kind === "domain" ? node.color : (node.atom?.riskY ?? 0) >= HIGH_RISK ? "#ff9ab2" : node.atom?.isQuarantined ? "#efce7b" : node.color
         ctx.save()
         ctx.globalAlpha = alpha
         const glowRadius = radius * (isSelected ? 5.6 : isHovered ? 4.8 : 3.9)
