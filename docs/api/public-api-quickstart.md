@@ -6,6 +6,10 @@ This guide documents the read-only public endpoints present in the current repos
 
 Use the deployed application origin approved for your environment, or `http://localhost:3000` after local setup. Do not send production secrets in requests.
 
+## Machine-readable contract
+
+The public API is described in the [OpenAPI 3.1 specification](/openapi.yaml), also served as the repository file `public/openapi.yaml`. It documents the public read endpoints only; session-authenticated write routes are intentionally not advertised as anonymous integration endpoints.
+
 ## First requests
 
 ### 1. Project catalog
