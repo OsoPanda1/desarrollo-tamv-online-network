@@ -30,7 +30,7 @@ Use a supported Node.js LTS and pnpm compatible with the lockfile.
 ## Operational health endpoints
 
 - `GET /api/health` — application liveness. This is intentionally independent of PostgreSQL so a database outage does not cause a healthy application process to be treated as dead.
-- `GET /api/health/ready` — readiness probe. Executes a bounded `SELECT 1` against PostgreSQL and returns HTTP 200 only when `DATABASE_URL` is configured and the database responds; otherwise returns HTTP 503.
+- `GET /api/health/ready` — readiness probe. Executes `SELECT 1` against PostgreSQL with a 1.5-second response budget and a driver-level query timeout; returns HTTP 200 only when `DATABASE_URL` is configured and the database responds within budget, otherwise HTTP 503. A timed-out query may finish or be cancelled later at the driver/pool layer; the HTTP response itself is bounded.
 - Both endpoints send `Cache-Control: no-store`. Readiness failures return a generic dependency state and never include connection strings, database hosts, exception text or credentials.
 - These endpoints are operational signals, not a full synthetic transaction, authentication check, schema migration validation or proof that every feature is healthy.
 
