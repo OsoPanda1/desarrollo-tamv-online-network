@@ -32,6 +32,17 @@ The shared navigation, institutional landing sections, application footer, and r
 - The default support route offers institutional contact and governance information instead of inventing bank details or simulating a payment.
 - Never expose checkout session secrets, private donation records, donor identities, or payment-provider credentials in a public repository or client-side bundle.
 
+## Developer onboarding and adoption
+
+The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
+
+- [Public API quickstart](docs/api/public-api-quickstart.md) — reproducible `curl` examples, response boundaries, and license/provenance notes.
+- [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
+- [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
+- [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
+
+The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
+
 ## Local development
 
 Use a supported Node.js LTS and pnpm compatible with the lockfile.
