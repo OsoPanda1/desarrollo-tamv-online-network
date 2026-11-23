@@ -51,3 +51,5 @@ export type CourseModuleId = (typeof COURSE_MODULE_IDS)[number]
 export function isCourseModuleId(value: unknown): value is CourseModuleId {
   return typeof value === "string" && (COURSE_MODULE_IDS as readonly string[]).includes(value)
 }
+
+export const MEMBERSHIP_TERMS_VERSION = "TAMV-MEMBERSHIP-TERMS-2026-11-23-v1" as const
