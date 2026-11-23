@@ -49,6 +49,9 @@ function validateBillingConfiguration() {
   }
 
   if (mode === "live") {
+    if (!isProductionDeployment()) {
+      return { error: "El checkout con cobros live solo se permite en el entorno de producción." } as const
+    }
     if (!secret.startsWith("sk_live_")) {
       return { error: "El modo live requiere credenciales live verificadas de Stripe." } as const
     }
