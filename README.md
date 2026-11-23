@@ -11,6 +11,15 @@ Independent Mexican initiative connecting research, technology, digital communit
 - Companion institutional repository: https://github.com/OsoPanda1/tamvonline-weboficial.com
 - Deployment URL reported by GitHub metadata: https://desarrollo-tamv-online-network.vercel.app
 
+## Licensing, citation and reuse
+
+**Repository code license status: pending maintainer decision.** A root `LICENSE` file was not present in the repository tree during the 2026-11-23 audit. Public visibility is not a grant of rights to copy, modify, redistribute or use the code commercially. See [licensing status and required decision](docs/governance/licensing-status.md) before reusing the implementation.
+
+- [CITATION.cff](CITATION.cff) provides citation metadata; it is not a license, peer-review claim, accreditation or evidence of production readiness.
+- [Code of Conduct](CODE_OF_CONDUCT.md) defines respectful participation and research-integrity expectations.
+- GitHub issue templates and [the pull-request template](.github/PULL_REQUEST_TEMPLATE.md) standardize reproducible bug reports, feature proposals, research contributions and review evidence.
+- The license of code, documents, data, images, and model materials may differ. Check each source and its rights before reuse.
+
 ## Current product areas
 
 Institutional pages, researchers/developers, projects, research topics and proposals, moderation/appeals, HCU transformation map and simulation, research exports, and a curated community-discovery hub.
