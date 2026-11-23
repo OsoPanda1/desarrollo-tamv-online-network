@@ -40,6 +40,7 @@ The public developer entry point is [the developer guide](/desarrolladores). It 
 - [OpenAPI 3.1 contract](public/openapi.yaml) — machine-readable specification for current public read endpoints; session-protected write routes are intentionally not documented as anonymous integrations.
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
 - [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
+- [Platform excellence roadmap](docs/strategy/tamv-platform-excellence-roadmap.md) — prioritized product, academic, security, operations, and adoption acceptance criteria.
 - [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
 
 The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
