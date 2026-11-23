@@ -143,7 +143,7 @@ export function MembershipStatus({ locale = "es" }: { locale?: Locale }) {
                     {english ? "Resume secure checkout" : "Reanudar checkout seguro"} <ArrowUpRight aria-hidden="true" />
                   </a>
                 )}
-                {["active", "trialing", "past_due", "unpaid", "paused"].includes(membership.status) && <MembershipPortalButton planId={membership.planId} locale={locale} />}
+                {["active", "trialing", "past_due", "unpaid", "paused", "incomplete"].includes(membership.status) && <MembershipPortalButton planId={membership.planId} locale={locale} />}
               </div>
             </article>
           )
