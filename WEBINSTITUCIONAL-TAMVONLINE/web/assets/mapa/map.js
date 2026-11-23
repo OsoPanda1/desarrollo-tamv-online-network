@@ -911,12 +911,11 @@
     evidenceCard.append(el('p', es('01 / MADUREZ DOCUMENTAL', '01 / DOCUMENTARY MATURITY'), 'hcu-analysis-kicker'), el('h4', es('Estados de evidencia', 'Evidence states')), el('p', es('Distribución de las entidades según el estado registrado en el corpus.', 'Distribution of entities by the state recorded in the corpus.'), 'hcu-analysis-card-copy'));
     const stateBars = document.createElement('div');
     stateBars.className = 'hcu-analysis-bars';
-    sourceCountByState.forEach(({ state, count }) => addBarRow(state.code + ' · ' + nm(state), count, total, 'is-state-e' + state.code));
-    sourceCountByState.forEach(({ state, count }) => addBarRow(state.code + ' · ' + nm(state), count, total, 'is-state-e' + state.code));
+    sourceCountByState.forEach(({ state, count }) => addBarRow(stateBars, state.code + ' · ' + nm(state), count, total, 'is-state-e' + state.code));
     evidenceCard.appendChild(stateBars);
     const evidenceFoot = document.createElement('div');
     evidenceFoot.className = 'hcu-analysis-foot';
-    evidenceFoot.append(addMetric(evidenceFoot, es('E3+ evaluadas', 'E3+ assessed'), assessed.length, es('Requieren evaluación documentada o revisión independiente.', 'Require documented assessment or independent review.')));
+    addMetric(evidenceFoot, es('E3+ evaluadas', 'E3+ assessed'), assessed.length, es('Requieren evaluación documentada o revisión independiente.', 'Require documented assessment or independent review.'));
     evidenceCard.appendChild(evidenceFoot);
     cards.appendChild(evidenceCard);
 
@@ -948,6 +947,7 @@
     const riskBars = document.createElement('div');
     riskBars.className = 'hcu-analysis-bars';
     ['alto', 'medio', 'bajo'].forEach(level => addBarRow(
+      riskBars,
       es(level === 'alto' ? 'Alto' : level === 'medio' ? 'Medio' : 'Bajo', level === 'alto' ? 'High' : level === 'medio' ? 'Medium' : 'Low'),
       entities.filter(entity => entity.rk === level).length,
       total,
