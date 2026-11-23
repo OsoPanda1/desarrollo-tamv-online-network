@@ -456,11 +456,11 @@ const G = loadGraph(WEB);
     ['projection', /function projectCoordinates\(/, 'la cámara perdió su proyección con perspectiva'],
     ['orbits', /function drawOrbits\(/, 'el motor perdió las órbitas espaciales'],
     ['orbit layer', /orbits:\s*true/, 'la capa orbital 3D no tiene un estado inicial explícito'],
-    ['focal expansion', /focusDomainId[\s\S]{0,250}1\.34/, 'no existe expansión espacial de la región seleccionada'],
+    ['focal expansion', /focusScale = focusDomainId[\s\S]{0,180}1\.34/, 'no existe expansión espacial de la región seleccionada'],
     ['adaptive animation', /function requestRender\([\s\S]*?requestAnimationFrame\(loop\)/, 'el render adaptativo no agenda frames'],
     ['page visibility', /document\.visibilityState/, 'el motor no respeta la visibilidad de la pestaña'],
     ['viewport observation', /IntersectionObserver/, 'el motor no suspende el render fuera del viewport'],
-    ['analysis derivation', /function fillAnalysis\([\s\S]*?G\.states[\s\S]*?G\.entities[\s\S]*?G\.flows[\s\S]*?G\.domains/, 'la analítica ya no se deriva del corpus y de sus relaciones']
+    ['analysis derivation', /function fillAnalysis\([\s\S]*?G\.entities[\s\S]*?G\.states[\s\S]*?G\.domains[\s\S]*?G\.flows/, 'la analítica ya no se deriva del corpus y de sus relaciones']
   ];
   engineContracts.forEach(([name, re, message]) => {
     if (!re.test(engine)) fail('E13', message);
