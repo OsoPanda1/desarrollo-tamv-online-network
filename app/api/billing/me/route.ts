@@ -28,7 +28,21 @@ export async function GET(request: Request) {
       .from(membershipSubscriptions)
       .where(eq(membershipSubscriptions.userId, session.user.id))
       .orderBy(desc(membershipSubscriptions.createdAt))
-    return apiJson({ memberships: records })
+    const memberships = records.map((record) => {
+      let checkoutUrl: string | null = null
+      const ageMs = Date.now() - record.createdAt.getTime()
+      if (record.status === "pending" && record.stripeCheckoutUrl && ageMs >= 0 && ageMs < 32 * 60 * 1000) {
+        try {
+          const candidate = new URL(record.stripeCheckoutUrl)
+          if (candidate.protocol === "https:" && candidate.hostname === "checkout.stripe.com") checkoutUrl = candidate.toString()
+        } catch {
+          checkoutUrl = null
+        }
+      }
+      const { stripeCheckoutUrl: _privateStoredUrl, ...safeRecord } = record
+      return { ...safeRecord, checkoutUrl }
+    })
+    return apiJson({ memberships })
   } catch {
     return apiError("El estado de facturación no está disponible. Comprueba que las migraciones estén aplicadas.", 503)
   }
