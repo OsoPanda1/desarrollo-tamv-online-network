@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { ArrowUpRight, Menu, X } from "lucide-react"
 import { useState } from "react"
 import { LanguageSwitch } from "@/components/shared/language-switch"
+import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
 const links = [
@@ -48,6 +49,7 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
             <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
           ))}
           {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
+          <TamvDonationCTA locale={locale} variant="compact" />
           <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
           <Link className="nav-portal" href="/portal" onClick={closeMenu}>{english ? "Portal" : "Portal"} <ArrowUpRight aria-hidden="true" /></Link>
         </nav>
