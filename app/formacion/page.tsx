@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { headers } from "next/headers"
-import { ArrowLeft, ArrowUpRight, BookOpenCheck, CheckCircle2, FileText, Lightbulb, ShieldCheck, Target } from "lucide-react"
+import { ArrowLeft, ArrowUpRight, BookOpenCheck, CheckCircle2, FileText, Lightbulb, ShieldAlert, ShieldCheck, Target } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 import { PageIntro } from "@/components/shared/page-intro"
 import { MembershipCheckout } from "@/components/membership-checkout"
@@ -184,6 +184,12 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
           <p>{english ? "Member lessons and saved progress require a TAMV account with an active individual or business subscription." : "Las lecciones para miembros y el progreso guardado requieren una cuenta TAMV con una suscripción individual o empresarial activa."}</p>
           <div className="membership-gate-actions"><Link className="button" href="/sign-in">{english ? "Sign in" : "Iniciar sesión"}</Link><Link className="button button-secondary" href="/membresias">{english ? "View memberships" : "Ver membresías"}</Link></div>
         </div>
+      ) : !activeMembership && !progressAvailable ? (
+        <div className="membership-gate" role="alert">
+          <ShieldAlert aria-hidden="true" /><h2>{english ? "We could not verify your membership" : "No pudimos verificar tu membresía"}</h2>
+          <p>{english ? "The membership database is temporarily unavailable. We have not changed your subscription and will not ask you to purchase a duplicate. Retry the membership status page or contact the platform operator." : "La base de datos de membresías no está disponible temporalmente. No hemos modificado tu suscripción y no te pediremos que compres otra. Vuelve a consultar el estado de membresías o contacta al responsable de la plataforma."}</p>
+          <div className="membership-gate-actions"><Link className="button button-secondary" href="/membresias">{english ? "Review membership status" : "Consultar estado de membresías"}</Link></div>
+        </div>
       ) : !activeMembership ? (
         <div className="membership-gate">
           <ShieldCheck aria-hidden="true" /><h2>{english ? "This course is included with a paid membership" : "Este curso está incluido en una membresía de pago"}</h2>
@@ -233,6 +239,7 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
               <li>{english ? "Review eligibility and terms before applying or sharing confidential information." : "Revisa los requisitos y términos antes de postular o compartir información confidencial."}</li>
             </ol>
             <div className="membership-external-links">
+              <a className="text-link" href="https://ai.lounge.ai/%40tamvonline" target="_blank" rel="noopener noreferrer">{english ? "View TAMV community profile" : "Ver el perfil comunitario de TAMV"} <ArrowUpRight aria-hidden="true" /></a>
               <a className="text-link" href="https://ai.lounge.ai/" target="_blank" rel="noopener noreferrer">{english ? "Open AI Lounge" : "Abrir AI Lounge"} <ArrowUpRight aria-hidden="true" /></a>
               <a className="text-link" href="https://ai.lounge.ai/perks" target="_blank" rel="noopener noreferrer">{english ? "Check startup perks" : "Consultar beneficios para startups"} <ArrowUpRight aria-hidden="true" /></a>
             </div>

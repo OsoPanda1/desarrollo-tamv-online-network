@@ -43,7 +43,7 @@ The shared navigation, institutional landing sections, application footer, and r
 
 ## Paid memberships, course access and external startup resources
 
-**Implementation state:** available in the `feat/production-memberships-stripe-course-2026-11-23` review branch, not yet merged or deployed. Billing is deliberately disabled by default.
+**Implementation state:** the core membership/course implementation was merged through [PR #27](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/27). A follow-up branch adds an exact React lockfile pin, regression checks, Vercel Connect/Chat SDK guidance and the future institutionalization/ROR roadmap; that follow-up is not yet merged or deployed. Billing remains deliberately disabled by default.
 
 - `/membresias` — individual plan **MXN $229/month per user** and business plan **MXN $699/month per organization**. The application fixes the price server-side; the browser cannot supply or change it.
 - `/formacion` — five practical modules: verifiable developer profile, auditable portfolio, startup problem validation, business model/roadmap, and evidence-based investor pitch. Access is checked on the server for an active/trialing membership; module completion is stored against the authenticated user.
@@ -56,6 +56,8 @@ The shared navigation, institutional landing sections, application footer, and r
 **Important scope boundaries:** the business membership is currently attached to the contracting user account and organization name. Team seats, invitations, workspace administration and transferring membership to employee accounts are not implemented. TAMV offers a route to apply for collaboration, not guaranteed project acceptance, paid work or funding.
 
 AI Lounge is an independent third-party platform. This branch provides public links and a profile/program discovery guide; it does not provide a paid pass, referral entitlement or a verified commercial partnership. External program eligibility and access remain subject to AI Lounge's current terms.
+
+A future institutionalization goal is documented at [Institutionalization and ROR roadmap](/institucionalizacion) and [in the governance plan](docs/strategy/institutional-legalization-and-ror-roadmap.md). Future net membership revenue could contribute to legal and administrative costs only after a documented governance decision and transparent accounting. There is no fixed allocation or guarantee today. ROR IDs are free; a ROR ID is not legal incorporation and registry inclusion is curated.
 
 See the [production and Stripe runbook](docs/production/membership-billing-runbook.md) and the [production/deployment audit](docs/audit/2026-11-23-production-deployment-memberships-audit.md) before configuring secrets, applying the migration or requesting a production release.
 
@@ -71,6 +73,16 @@ The public developer entry point is [the developer guide](/desarrolladores). It 
 - [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
 
 The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
+
+## Vercel Connect, Chat SDK and provider credentials
+
+The project maintains design documentation for secure optional connectors. These guides do **not** mean the Connect SDK or a chat bot has been installed or connected; the repository's Vercel project and provider connectors must be verified and configured before activating the integration.
+
+- [Vercel Connect SDK and security model](docs/integrations/vercel-connect-sdk.md) — OIDC identity, temporary provider credentials, user/app subjects, least privilege and experimental MCP event limits.
+- [Vercel Connect cost optimization](docs/operations/vercel-connect-cost-optimization.md) — token cache, refresh policy, trigger destinations, retries and observability.
+- [Chat SDK with Vercel Connect](docs/integrations/chat-sdk-with-vercel-connect.md) — adapter examples, OIDC webhook trust boundaries, idempotency and rollout plan.
+- [Lockfile incident report](docs/production/pnpm-lockfile-repair.md) — React 19.2.4 missing-dependency incident, current pin and required frozen-install verification.
+- [Institutionalization and ROR roadmap](docs/strategy/institutional-legalization-and-ror-roadmap.md) — future legal and accounting pathway, evidence gates and ROR criteria.
 
 ## Local development
 

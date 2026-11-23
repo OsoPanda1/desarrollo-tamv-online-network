@@ -2,7 +2,7 @@
 
 **Fecha de revisión:** 23 de noviembre de 2026  
 **Repositorio:** `OsoPanda1/desarrollo-tamv-online-network`  
-**Base auditada:** `main` en `e294d9119b34c2aa81f4c41d599df77676a0bfd5`  
+**Commit del error de Vercel aportado:** `e294d9119b34c2aa81f4c41d599df77676a0bfd5` (la base de producción puede haber avanzado desde ese commit)  
 **Rama de implementación:** `feat/production-memberships-stripe-course-2026-11-23`  
 **Estado de salida:** **IMPLEMENTACIÓN EN REVISIÓN · PRODUCCIÓN NO VALIDADA**
 
@@ -10,9 +10,9 @@
 
 ## 1. Dictamen ejecutivo
 
-Se identificó un bloqueo de compilación anterior a Next.js: `pnpm-lock.yaml` referenciaba `react@19.2.4` en la resolución de `@ai-sdk/react`, pero esa versión no tenía una entrada de paquete disponible en el propio lockfile. El lockfile ya usaba `react@19.3.1`, resolución compatible con el rango de peers declarado por `@ai-sdk/react`. La corrección alineó las cuatro referencias de React/SWR. Después de iniciar esta rama, el PR #25 fue fusionado; la revisión del lockfile actual de `main` confirma cero referencias restantes a `19.2.4`. Esta rama conserva la misma corrección.
+Se identificó un bloqueo de compilación anterior a Next.js: `pnpm-lock.yaml` referenciaba `react@19.2.4` en la resolución de `@ai-sdk/react`, pero esa versión no tenía una entrada de paquete disponible en el propio lockfile. El lockfile ya usaba `react@19.3.1`, resolución compatible con el rango de peers declarado por `@ai-sdk/react`. La corrección alineó las cuatro referencias de React/SWR. Después de iniciar esta rama, el PR #25 fue fusionado; la revisión del lockfile actual de `main` confirma cero referencias restantes a `19.2.4`. El estado actual del lockfile de `main` conserva esta corrección.
 
-En el modelo de producto, la página de cuenta original decía que Premium se acordaba por correo y que no había cobro en línea. Para materializar la membresía solicitada, la rama añade planes de pago recurrente, checkout de Stripe, webhook firmado con registro idempotente, portal de facturación, estado de membresía, persistencia del progreso formativo, curso con cinco módulos, condiciones y aviso de privacidad de trabajo, enlaces de navegación y gates explícitos para cobro live.
+El núcleo de membresías se fusionó mediante el PR #27: planes recurrentes, checkout de Stripe, webhook firmado con registro idempotente, portal de facturación, estado de suscripción, progreso formativo, curso de cinco módulos, condiciones de trabajo y gates explícitos para cobro live. La revisión posterior documenta controles adicionales, la ruta futura de formalización/ROR y guías de Vercel Connect/Chat SDK; esas guías no activan por sí solas integraciones runtime.
 
 **Todavía no es válido declarar el proyecto listo para producción.** Los workflows de GitHub Actions se marcan como fallidos sin aportar registros de steps legibles a través de la integración disponible. Vercel indica que no hay proyecto vinculado al repositorio/commit consultado, por lo que no hay una preview comprobable desde esa conexión. No se ejecutó instalación congelada, test suite, typecheck, build, migración ni transacción real con Stripe desde este entorno.
 
@@ -123,6 +123,14 @@ Esta inspección de código es evidencia positiva sobre controles existentes, pe
 - La conexión Vercel consultada devuelve `notLinked` para `main` y la rama; una consulta de proyecto `desarrollo-tamv-online-network` en el ámbito conectado devuelve `404 not_found`, y el listado de deployments para ese nombre devuelve cero. Esto significa que este conector no puede verificar un proyecto/deployment en su ámbito actual; no prueba por sí solo que no exista en otra cuenta/equipo de Vercel. Se necesita la comprobación del propietario del proyecto.
 - El estado correcto de release sigue siendo **bloqueado**, aunque el lockfile se haya corregido. No se deben ignorar o anular estos checks de seguridad para forzar una fusión.
 
+## 6C. Hardening posterior: lockfile, Vercel Connect e institucionalización
+
+- El lockfile actual de `main` y `package.json` fijan React y React DOM en `19.3.1`; `pnpm-lock.yaml` contiene entradas y snapshots coincidentes y no contiene `react@19.2.4`. Existe `tests/pnpm-lock-react-contract.test.mjs` para impedir que esa divergencia reaparezca. La prueba y la instalación congelada necesitan ejecutarse en CI; no se declara que hayan pasado desde este entorno.
+- Se incorporan tres guías de Vercel Connect/Chat SDK: [SDK y seguridad](../integrations/vercel-connect-sdk.md), [optimización de costos](../operations/vercel-connect-cost-optimization.md) y [Chat SDK](../integrations/chat-sdk-with-vercel-connect.md). Son documentación y patrones de integración, no una activación del SDK. No se instaló `@vercel/connect`, no se creó un bot de Chat SDK y la conexión consultada de Vercel sigue sin asociar el repositorio con un proyecto verificable.
+- Se publicó la ruta [Institucionalización y ROR](/institucionalizacion) y el [plan de gobernanza correspondiente](../strategy/institutional-legalization-and-ror-roadmap.md). Describe un uso futuro potencial de ingresos netos de membresías para costos legales, contables y de documentación, sujeto a presupuesto, aprobación y rendición de cuentas. No asigna actualmente un porcentaje fijo ni declara que TAMV esté constituida o que haya obtenido un ROR ID.
+- ROR no es una tarifa de constitución ni un registro de empresas: su identificador y sus datos son gratuitos, y la inclusión está sujeta a criterios y curaduría. Fuentes oficiales: [About ROR](https://ror.org/about), [FAQ](https://ror.org/about/faqs/) y [criterios de inclusión](https://ror.org/registry).
+- El error de Vercel aportado corresponde al commit histórico `e294d91`; el lockfile actual de `main` ya no contiene referencias a `react@19.2.4`. Para cerrar el incidente en producción hace falta un build READY sobre un commit actual, no reutilizar como validación el log del commit anterior.
+
 ## 7. Gate de liberación obligatorio
 
 El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
@@ -144,6 +152,9 @@ El orden recomendado es deliberado; no se debe activar cobro live para descubrir
 ## 8. Artefactos de referencia
 
 - [Runbook de producción y Stripe](../production/membership-billing-runbook.md)
+- [Lockfile y procedimiento de validación](../production/pnpm-lockfile-repair.md)
+- [Ruta de institucionalización y ROR](../strategy/institutional-legalization-and-ror-roadmap.md)
+- [Vercel Connect y Chat SDK](../integrations/chat-sdk-with-vercel-connect.md)
 - [Estado de licencia del código](../governance/licensing-status.md)
 - [Contrato de API pública](../api/public-api-quickstart.md)
 - [README del repositorio](../../README.md)
