@@ -1,0 +1,130 @@
+# Auditoría de producción y despliegue — TAMV Online Network
+
+**Fecha de revisión:** 23 de noviembre de 2026  
+**Repositorio:** `OsoPanda1/desarrollo-tamv-online-network`  
+**Base auditada:** `main` en `e294d9119b34c2aa81f4c41d599df77676a0bfd5`  
+**Rama de implementación:** `feat/production-memberships-stripe-course-2026-11-23`  
+**Estado de salida:** **IMPLEMENTACIÓN EN REVISIÓN · PRODUCCIÓN NO VALIDADA**
+
+> Este informe distingue entre hallazgos visibles en el código, cambios ya escritos en la rama y validaciones que siguen bloqueadas. Un archivo creado, una prueba de contrato o un workflow configurado no equivalen a una compilación correcta, una transacción real ni a un despliegue aprobado.
+
+## 1. Dictamen ejecutivo
+
+Se identificó un bloqueo de compilación anterior a Next.js: `pnpm-lock.yaml` referenciaba `react@19.2.4` en la resolución de `@ai-sdk/react), pero esa versión no tenía una entrada de paquete disponible en el propio lockfile. El lockfile ya usaba `react@19.3.1`, resolución compatible con el rango de peers declarado por `@ai-sdk/react`. La rama de corrección alinea las cuatro referencias de React/SWR; la corrección se incorporó a esta rama de implementación, pero todavía no está en `main`.
+
+En el modelo de producto, la página de cuenta original decía que Premium se acordaba por correo y que no había cobro en línea. Para materializar la membresía solicitada, la rama añade planes de pago recurrente, checkout de Stripe, webhook firmado con registro idempotente, portal de facturación, estado de membresía, persistencia del progreso formativo, curso con cinco módulos, condiciones y aviso de privacidad de trabajo, enlaces de navegación y gates explícitos para cobro live.
+
+**Todavía no es válido declarar el proyecto listo para producción.** Los workflows de GitHub Actions se marcan como fallidos sin aportar registros de steps legibles a través de la integración disponible. Vercel indica que no hay proyecto vinculado al repositorio/commit consultado, por lo que no hay una preview comprobable desde esa conexión. No se ejecutó instalación congelada, test suite, typecheck, build, migración ni transacción real con Stripe desde este entorno.
+
+## 2. Hallazgos y severidad
+
+| Severidad | Hallazgo original / riesgo | Tratamiento en la rama | Evidencia pendiente |
+|---|---|---|---|
+| **P0 — bloquea build** | El lockfile de `main` referencia `react@19.2.4` sin entrada de paquete y Vercel termina en `ERR_PNPM_LOCKFILE_MISSING_DEPENDENCY`. | Se alinearon cuatro referencias de snapshot/importer a la resolución `react@19.3.1` existente y se preservó la versión declarada en `package.json`. | `pnpm install --frozen-lockfile` debe pasar en runner real; merge a `main` aún pendiente. |
+| **P0 — despliegue no comprobado** | La conexión Vercel no identifica un proyecto asociado a este repositorio o commit. | Se preparó una rama independiente para revisión; no se alteró producción directamente. | Vinculación correcta del proyecto Vercel, deployment Preview READY y logs visibles. |
+| **P0 — calidad CI indeterminada** | CI, CodeQL y Secret scanning aparecen como fallidos al poco de iniciar; la API de logs devuelve `404 BlobNotFound` y los resúmenes de jobs no incluyen steps. | Se agregaron pruebas de contrato y comprobaciones preventivas en código. | Acceso a logs de workflow, causa real de fallos y ejecución satisfactoria de tests, auditoría de dependencias, typecheck, build, CodeQL y secret scan. No se debe presumir que el origen es únicamente el código. |
+| **P1 — monetización ausente** | La página de cuenta describía Premium fuera de línea; no había flujo integrado de cobro recurrente en ese recorrido. | Se implementó UI y API de checkout/portal/estado de Stripe, control de precio en servidor, versión de condiciones y registro de aceptación. | Credenciales y configuración real de Stripe, webhook configurado, prueba de checkout y renovación en modo test. |
+| **P1 — derechos de acceso y estado de pago** | Sin estado persistente de suscripción no es posible gestionar acceso de pago con coherencia. | Se añadieron tablas de suscripciones, eventos de webhook y progreso de curso; el acceso formativo exige estado `active` o `trialing`. | Aplicar migración en base de datos no productiva con respaldo; validar en integración eventos de alta, renovación fallida, cancelación, duplicado y reordenamiento. |
+| **P1 — protección del cobro live** | Configurar una llave por sí sola no debe habilitar cobros al público. | `TAMV_BILLING_MODE` es `disabled` por defecto; modo test solo en un deployment no productivo y con `sk_test_`; modo live requiere producción, `sk_live_` y flags explícitos de aprobación legal, privacidad, impuestos y reembolsos. | Que el operador complete y apruebe esos requisitos. No activar flags por conveniencia ni usar credenciales live en preview. |
+| **P1 — entorno legal/fiscal incompleto** | Sin responsable identificado, aviso final, política de cancelación/reembolso y tratamiento fiscal aprobado, la membresía no se debe vender live. | Se publicaron páginas de trabajo de condiciones y privacidad, con aviso visible de pendientes y gate del checkout live. | Completar datos de entidad responsable, domicilio, contacto, retención, derechos, condiciones finales, impuestos y reembolsos con revisión profesional aplicable. Estas páginas no son asesoría jurídica ni certifican cumplimiento. |
+| **P1 — riesgo de estados y cobros duplicados** | No debe abrirse una segunda sesión si la primera puede haberse pagado y su webhook llega tarde. | La reserva se serializa por usuario, la sesión Stripe tiene vencimiento de 35 min, la URL segura se puede reanudar durante una ventana acotada, y no se marca una reserva expirada solo por tiempo local. El estado de entitlement lo gobiernan eventos de suscripción verificados. | Prueba real con reloj/entrega de eventos, reintentos de Stripe, sesión expirando y webhook fuera de orden. |
+| **P1 — endpoint de IA** | El endpoint de asistente puede generar costes por solicitud y requiere límites contra solicitudes entre sitios. | Se añadió verificación de mismo origen antes de procesar la solicitud. | Añadir rate limit distribuido y límites de gasto/concurrencia a nivel de proveedor/edge antes de exposición pública amplia; hacer prueba de carga/control de abuso. |
+| **P2 — retorno de autenticación** | Un parámetro de retorno sin validación puede crear una redirección abierta. | El inicio de sesión ahora acepta únicamente destinos internos sanitizados, y el formulario usa ese destino tras autenticarse. | Validar el flujo en browser E2E y revisar las variantes en mobile/idioma. |
+| **P2 — readiness** | `/api/health/ready` debe responder con plazo limitado sin filtrar errores internos. | Se usa el presupuesto de 1,5 s del helper de readiness además del timeout de la consulta y un payload no-cache genérico. | Comprobar en preview con PostgreSQL normal, desconectado y saturado; el `SELECT 1` no verifica por sí solo migraciones ni toda la aplicación. |
+| **P2 — promesas de producto** | La membresía no debe prometer participación, dinero o beneficios de terceros que TAMV no controla. | Se reescribió la copia de los planes para delimitar la postulación a proyectos y el resultado no garantizado; se retiraron beneficios Premium que no estaban operativamente conectados. | Revisión del texto final con responsable de producto y soporte. |
+| **P2 — membresía empresarial** | La etiqueta “por empresa” no debe implicar asientos para empleados que no existen. | El plan se asocia a la cuenta titular y al nombre de la organización. Las condiciones explican que no hay invitaciones, asientos, workspace o transferencia multiusuario. | Si el producto comercial exige varios empleados, diseñar y probar el modelo de organización, asientos, invitaciones, roles y asignación de licencias antes de prometerlo. |
+| **P2 — AI Lounge** | No existe evidencia verificable de una integración contractual o un pase incluido de Lounge. | Se incorporó un recorrido de descubrimiento hacia sitio público, planes y programas externos con aviso de que TAMV no emite una membresía paga ni garantiza contactos. | Para entregar un pase o acceso incluido, negociar y verificar convenio, código/API/entitlement, criterios de elegibilidad y autorización expresa del proveedor. |
+| **P2 — licencia de código** | El árbol auditado no contiene una licencia raíz; el repositorio público no otorga por sí mismo permiso de reutilización. | Se preserva la advertencia y no se inventó una licencia. | Decisión explícita del titular, revisión de assets/dependencias y publicación de la licencia adecuada. |
+
+## 3. Diseño de membresías incorporado
+
+### Precios y alcance publicado
+
+| Plan | Precio | Unidad y ciclo | Alcance implementado |
+|---|---:|---|---|
+| Individual | **$229 MXN** | Por usuario, al mes | Ruta para postular a oportunidades de colaboración TAMV; curso de perfil profesional, portafolio, validación de startup, modelo de negocio y pitch. |
+| Empresarial | **$699 MXN** | Por organización, al mes | La misma ruta formativa y de presentación orientada a iniciativa empresarial; nombre de empresa registrado en suscripción ligada a la cuenta titular. |
+
+Los precios son elegidos en el servidor y se transmiten a Stripe como importes fijos en MXN, no aceptados como cantidad arbitraria del cliente. El cobro es recurrente; la cancelación y el método de pago se administran por el portal de clientes de Stripe una vez configurado.
+
+La implementación no garantiza aceptación en un proyecto, empleo, contrato, financiación, inversión ni reunión con inversionistas. El alcance correcto es la preparación y la oportunidad de postular.
+
+### Flujo técnico
+
+1. Persona autenticada selecciona un plan en `/membresias` y acepta explícitamente la versión vigente de las condiciones y el aviso.
+2. `POST /api/billing/checkout` valida la sesión, origen, plan, empresa si aplica, consentimiento y configuración de billing. Registra la reserva y la aceptación antes de iniciar checkout.
+3. Stripe aloja la página de pago. TAMV no almacena los datos completos de tarjeta.
+4. `POST /api/webhooks/stripe` verifica firma sobre el cuerpo original, rechaza timestamp fuera de tolerancia, guarda el ID de evento para idempotencia y sincroniza la suscripción.
+5. `GET /api/billing/me` muestra solo las membresías del usuario autenticado y, en estado pending, una URL de reanudación solo si pasa la allowlist de host y edad.
+6. `POST /api/billing/portal` abre el portal Stripe para una suscripción del mismo usuario.
+7. `/formacion` y `/api/memberships/course-progress` exigen membresía `active` o `trialing`; el progreso se guarda por módulo en PostgreSQL.
+
+Se exige prueba de los eventos Stripe realmente configurados. En particular, el endpoint debe recibir los eventos de creación/actualización/baja de suscripción y los de checkout e invoice indicados en el runbook. No se considera integrado solo porque exista un endpoint.
+
+## 4. Curso y trayectoria de desarrollo
+
+La ruta `/formacion` tiene cinco módulos y entregables prácticos:
+
+1. Perfil profesional verificable: propuesta de valor, especialidad y evidencias.
+2. Portafolio auditable: README, arquitectura, pruebas, licencias y estado real del proyecto.
+3. Validación de problema/startup: hipótesis falsables, entrevistas y experimento mínimo.
+4. Modelo de negocio: ingresos/costes y supuestos explícitos, métricas y plan de 90 días.
+5. Pitch: problema, cliente, propuesta, evidencia, mercado, equipo, riesgos, hitos y solicitud de inversión.
+
+El curso se declara como ruta formativa no acreditada. La finalización es un registro personal y no un certificado académico ni una garantía de inversión. El progreso de cada usuario se guarda en servidor, no solo en localStorage.
+
+## 5. AI Lounge: alcance exacto y riesgo de promesa comercial
+
+La aplicación incluye enlaces públicos y orientación para crear un perfil, revisar los beneficios que el proveedor publica y comprobar elegibilidad. AI Lounge es independiente; no se ha configurado en esta rama una API de entitlement, código de referido, convenio comercial ni pase de pago incluido. Los planes, la comunidad privada, las presentaciones de inversionistas y los programas externos permanecen sujetos a las reglas del proveedor. El acceso público a un sitio de terceros no demuestra una afiliación.
+
+## 6. Auditoría de disponibilidad/validación
+
+### Lo comprobado por lectura de fuente
+
+- El error del lockfile estaba presente en `main`, y la rama de trabajo contiene una corrección consistente con las resoluciones ya presentes en el propio lockfile.
+- La rama contiene las rutas y componentes de checkout/portal/estado, webhook con verificación de firma, persistencia y curso.
+- Las rutas del curso y progreso requieren sesión y estado de membresía; las respuestas de estado filtran campos sensibles como la URL Stripe almacenada, exponiendo solo una URL pendiente validada al propietario.
+- `TAMV_BILLING_MODE` predetermina deshabilitado y el modo live exige producción y flags adicionales.
+- Se publicaron documentación operativa y pruebas estáticas de contrato.
+
+### Bloqueado/no comprobado en este entorno
+
+- No se pudieron ejecutar `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm typecheck` ni `pnpm build`: el ejecutor local no tiene pnpm disponible y las consultas GitHub necesarias para clonar dependencias fallan por resolución DNS.
+- En los runs de Actions, CI, CodeQL y Secret scanning aparecen como fallidos. Los jobs no devolvieron steps legibles y la descarga de logs produjo `404 BlobNotFound`. Sin el log, no se imputa la causa a un error de aplicación ni se marca el bloqueo como resuelto.
+- El conector Vercel respondió que no existe proyecto vinculado al repositorio/commit solicitado; no se verificó preview ni producción.
+- No se aplicó la migración `0003_memberships_billing.sql` a ninguna base real y no se validó restauración de backup.
+- No hubo checkout de Stripe de prueba, evento webhook real, renovación, cancelación, reembolso ni transacción live.
+- No se realizó prueba de navegador/lector de pantalla/dispositivo, prueba E2E ni carga.
+- No se verificó la disponibilidad del dominio de producción o sus variables de entorno.
+- No se midieron adopción, conversiones, retención o usuarios nuevos.
+
+## 7. Gate de liberación obligatorio
+
+El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
+
+- [ ] Revisar y fusionar primero el arreglo del lockfile (incluido en la rama de implementación; `main` aún no tiene la corrección).
+- [ ] Restablecer acceso a logs de GitHub Actions e identificar por qué CI, CodeQL y secret scan fallan.
+- [ ] Ejecutar en runner: `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm typecheck`, `pnpm build`, auditoría de dependencias y análisis estático.
+- [ ] Vincular el repo al proyecto Vercel correcto, confirmar Node/pnpm/root/build settings, variables no secretas y proteger preview frente a cobros reales.
+- [ ] Crear un preview READY, probar navegación móvil/ES/EN, inscripción/inicio de sesión, retorno de checkout, estado de membresía, curso y endpoints con sesión/no sesión.
+- [ ] Respaldar el PostgreSQL de destino y ensayar restauración; ejecutar preflight/migración/postflight solo contra el entorno identificado.
+- [ ] En Stripe test: configurar webhook, Customer Portal, cancelación y método de pago; probar checkout de ambos planes, renovación fallida, cancelación, repetición y orden inverso de eventos.
+- [ ] Confirmar los eventos de Stripe: `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `checkout.session.expired`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `customer.subscription.paused`, `customer.subscription.resumed`, `invoice.payment_failed`, `invoice.paid` y `invoice.payment_succeeded`.
+- [ ] Completar y aprobar la identidad de la entidad operadora, aviso de privacidad, política de cancelación/reembolso, tratamiento fiscal y condiciones; probar qué ocurre si hay una disputa o un pago fallido.
+- [ ] Confirmar el modelo empresarial: este release es por organización pero está ligado a una cuenta titular. No anunciar seats de empleados sin implementarlos.
+- [ ] Negociar un acuerdo comprobable con AI Lounge si se necesita un pase incluido; no asumirlo del enlace público.
+- [ ] Mantener `TAMV_BILLING_MODE=disabled` hasta que se cumpla el gate. En modo live, establecer las flags de aprobación solo tras las revisiones reales y utilizar secretos live solo en el entorno de producción autorizado.
+- [ ] Publicar el release y verificar HTTP/health, errores de runtime, entrega de webhooks y primera suscripción end-to-end; guardar evidencia con el SHA exacto desplegado.
+
+## 8. Artefactos de referencia
+
+- [Runbook de producción y Stripe](../production/membership-billing-runbook.md)
+- [Estado de licencia del código](../governance/licensing-status.md)
+- [Contrato de API pública](../api/public-api-quickstart.md)
+- [README del repositorio](../../README.md)
+
+## 9. Conclusión
+
+Se ha construido una ruta de implementación coherente para la membresía, el curso, la persistencia de progreso y el proveedor de pago, y se endurecieron varias condiciones de seguridad que podían causar costes, redirects no deseados o activación incorrecta de acceso. La rama evita modificar directamente `main) y deja el cobro live deshabilitado por defecto.
+
+El siguiente resultado aceptable no es otra descripción de avance: es un commit de esta rama con CI y build pasando, una preview comprobada, migración probada y un recorrido de Stripe test registrado. Hasta que esos artefactos existan, el estado de producción sigue siendo **bloqueado/no validado**.
