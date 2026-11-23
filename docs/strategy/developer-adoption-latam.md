@@ -6,10 +6,11 @@ Transformar la curiosidad por TAMV en una primera experiencia técnica exitosa, 
 
 **Estado actual:** plan operativo propuesto, no una campaña ya ejecutada. No se declaran volúmenes de visitantes, contribuyentes, alianzas ni conversiones sin datos comprobables.
 
-### Licensing gate
+### Condición de licencia
 
-Before a campaign invites external contributors to reuse or redistribute code, resolve the repository's root license status. The audit did not find a root `LICENSE` file; citation metadata is not a license, and public visibility does not grant reuse rights. Until the rights holder makes and publishes a license decision, onboarding should explicitly say that reuse permission is unresolved. See [licensing status](../governance/licensing-status.md).
- 
+Antes de invitar a colaboradores externos a reutilizar o redistribuir código, debe resolverse el estado de licencia raíz del repositorio. La auditoría no encontró un archivo `LICENSE`; los metadatos de cita no son una licencia y la visibilidad pública no concede derechos de reutilización. Hasta que la persona titular decida y publique la licencia, el proceso de incorporación debe indicar explícitamente que los permisos de reutilización siguen pendientes. Consulta el [estado de licencias](../governance/licensing-status.md).
+
+
 ## Promesa para quien contribuye
 
 TAMV conecta un catálogo de proyectos con límites explícitos, temas de investigación, datos públicos versionados, exportes JSON-LD/CSV y un grafo HCU exploratorio. La experiencia de entrada debe permitir examinar evidencia, probar un endpoint, comprender el modelo de contribución y abrir una modificación pequeña sin tener que adoptar toda la visión del ecosistema.
