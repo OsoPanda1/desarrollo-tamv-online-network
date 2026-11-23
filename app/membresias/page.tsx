@@ -4,7 +4,7 @@ import { ArrowUpRight, BookOpenCheck, Building2, CircleHelp, GraduationCap, Netw
 import { TamvAppShell } from "@/components/tamv-app-shell"
 import { PageIntro } from "@/components/shared/page-intro"
 import { LanguageSwitch } from "@/components/shared/language-switch"
-import { MembershipCheckout, MembershipPortalButton } from "@/components/membership-checkout"
+import { MembershipCheckout } from "@/components/membership-checkout"
 import { MembershipStatus } from "@/components/membership-status"
 import { resolveLocale } from "@/lib/i18n"
 
@@ -70,7 +70,6 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
           <p>{english ? "For developers, researchers, students, and independent builders who want a clearer professional path." : "Para desarrolladores, investigadores, estudiantes y creadores independientes que buscan una ruta profesional más clara."}</p>
           <ul className="membership-benefits">{individualBenefits.map(({ es, en, Icon }) => <li key={es}><Icon aria-hidden="true" /><span>{english ? en : es}</span></li>)}</ul>
           <MembershipCheckout planId="individual" locale={locale} />
-          <div className="membership-manage"><MembershipPortalButton planId="individual" locale={locale} /></div>
         </article>
 
         <article className="membership-card membership-card-business">
@@ -80,7 +79,6 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
           <p>{english ? "For companies and startup teams preparing a credible profile, a project narrative and a structured pitch." : "Para empresas y equipos startup que buscan organizar su proyecto y preparar una presentación estructurada. La suscripción se vincula a la cuenta titular; no crea asientos para empleados."}</p>
           <ul className="membership-benefits">{businessBenefits.map(({ es, en, Icon }) => <li key={es}><Icon aria-hidden="true" /><span>{english ? en : es}</span></li>)}</ul>
           <MembershipCheckout planId="business" locale={locale} />
-          <div className="membership-manage"><MembershipPortalButton planId="business" locale={locale} /></div>
         </article>
       </div>
 
