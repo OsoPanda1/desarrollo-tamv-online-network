@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { MEMBERSHIP_PLANS, COURSE_MODULE_IDS } from "../lib/billing/plans.ts";
+import { MEMBERSHIP_PLANS, COURSE_MODULE_IDS, MEMBERSHIP_TERMS_VERSION } from "../lib/billing/plans.ts";
 import { verifyStripeSignature } from "../lib/billing/signature.ts";
 
 const read = (path) => readFileSync(resolve(process.cwd(), path), "utf8");
@@ -55,4 +55,63 @@ test("membership materials disclose the third-party AI Lounge boundary", () => {
   assert.match(page, /tercer|third.party|suscripción externa/i);
   assert.match(course, /membershipSubscriptions/);
   assert.match(course, /active/);
+});
+
+test("checkout requires an explicit current terms version and never accepts client-selected prices", () => {
+  const checkout = read("app/api/billing/checkout/route.ts");
+  const schema = read("lib/db/schema.ts");
+  const migration = read("migrations/0003_memberships_billing.sql");
+  assert.match(checkout, /acceptedTerms: z\.literal\(true\)/);
+  assert.match(checkout, /termsVersion: z\.literal\(MEMBERSHIP_TERMS_VERSION\)/);
+  assert.match(checkout, /termsAcceptedAt: now/);
+  assert.match(checkout, /plan\.amountMxn \* 100/);
+  assert.doesNotMatch(checkout, /body\.amount|input\.amount|clientPrice/i);
+  assert.match(schema, /termsVersion: text\("terms_version"\)\.notNull\(\)/);
+  assert.match(migration, /terms_version text NOT NULL/);
+  assert.match(migration, /terms_accepted_at timestamptz NOT NULL/);
+  assert.equal(MEMBERSHIP_TERMS_VERSION, "TAMV-MEMBERSHIP-TERMS-2026-11-23-v1");
+});
+
+test("billing is disabled by default and live checkout requires all production approvals", () => {
+  const checkout = read("app/api/billing/checkout/route.ts");
+  const env = read(".env.example");
+  assert.match(checkout, /\|\| "disabled"/);
+  assert.match(checkout, /isProductionDeployment\(\)/);
+  assert.match(checkout, /sk_test_/);
+  assert.match(checkout, /sk_live_/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_LEGAL_APPROVED/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_TAX_APPROVED/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_REFUNDS_APPROVED/);
+  assert.match(env, /TAMV_BILLING_MODE=disabled/);
+  assert.match(env, /STRIPE_WEBHOOK_SECRET=/);
+});
+
+test("checkout recovery avoids replacing a possibly paid session and uses an expiring Stripe session", () => {
+  const checkout = read("app/api/billing/checkout/route.ts");
+  const migration = read("migrations/0003_memberships_billing.sql");
+  assert.match(checkout, /form\.set\("expires_at"/);
+  assert.match(checkout, /stripeCheckoutUrl: checkoutUrl\.toString\(\)/);
+  assert.match(checkout, /resumeUrl\.hostname === "checkout\.stripe\.com"/);
+  assert.match(checkout, /no se abrirá una segunda sesión para evitar un cobro duplicado/);
+  assert.doesNotMatch(checkout, /staleBefore/);
+  assert.match(migration, /stripe_checkout_url text/);
+});
+
+test("course progression is server-gated to active or trialing membership and owner data", () => {
+  const progressApi = read("app/api/memberships/course-progress/route.ts");
+  const coursePage = read("app/formacion/page.tsx");
+  assert.match(progressApi, /auth\.api\.getSession/);
+  assert.match(progressApi, /inArray\(membershipSubscriptions\.status, \["active", "trialing"\]\)/);
+  assert.match(progressApi, /eq\(memberCourseProgress\.userId, session\.user\.id\)/);
+  assert.match(coursePage, /courseSlug: COURSE_SLUG/);
+  assert.match(coursePage, /activeMembership/);
+});
+
+test("assistant inference enforces same-origin and the checkout return path cannot redirect externally", () => {
+  const assistant = read("app/api/assistant/route.ts");
+  const signin = read("app/sign-in/page.tsx");
+  assert.match(assistant, /if \(!isSameOriginRequest\(request\)\)/);
+  assert.match(signin, /resolveInternalRedirect/);
+  assert.match(signin, /url\.origin !== "https:\/\/tamv\.invalid"/);
+  assert.match(signin, /String\.fromCharCode\(92\)/);
 });
