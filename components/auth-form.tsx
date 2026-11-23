@@ -8,7 +8,7 @@ import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components
 import { authClient } from "@/lib/auth-client"
 import type { Locale } from "@/lib/i18n"
 
-export function AuthForm({ mode, locale = "es" }: { mode: "sign-in" | "sign-up"; locale?: Locale }) {
+export function AuthForm({ mode, locale = "es", redirectTo = "/portal" }: { mode: "sign-in" | "sign-up"; locale?: Locale; redirectTo?: string }) {
   const router = useRouter()
   const english = locale === "en"
   const [name, setName] = useState("")
@@ -31,7 +31,7 @@ export function AuthForm({ mode, locale = "es" }: { mode: "sign-in" | "sign-up";
         setError(english ? "We could not complete sign-in. Check your details and try again." : "No pudimos completar el acceso. Revisa tus datos e inténtalo de nuevo.")
         return
       }
-      router.push("/portal")
+      router.push(redirectTo)
       router.refresh()
     } catch {
       setError(english ? "We could not connect to the sign-in service. Please try again." : "No fue posible conectar con el servicio de acceso. Inténtalo de nuevo.")
