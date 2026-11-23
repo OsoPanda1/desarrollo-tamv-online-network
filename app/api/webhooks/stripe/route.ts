@@ -2,11 +2,13 @@ import { db } from "@/lib/db"
 import { billingWebhookEvents, membershipSubscriptions } from "@/lib/db/schema"
 import { apiError, apiJson } from "@/lib/http"
 import { verifyStripeSignature } from "@/lib/billing/signature"
-import { and, eq, or } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 export const revalidate = 0
+
+type BillingTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0]
 
 type StripeEvent = {
   id: string
@@ -75,7 +77,7 @@ async function readRawBody(request: Request, maxBytes = 1_048_576) {
   return new TextDecoder("utf-8", { fatal: true }).decode(bytes)
 }
 
-async function findMembership(transaction: Parameters<Parameters<typeof db.transaction>[0]>[0], membershipId?: string, subscriptionId?: string) {
+async function findMembership(transaction: BillingTransaction, membershipId?: string, subscriptionId?: string) {
   if (membershipId) {
     const [byId] = await transaction.select({ id: membershipSubscriptions.id })
       .from(membershipSubscriptions)
@@ -94,7 +96,7 @@ async function findMembership(transaction: Parameters<Parameters<typeof db.trans
 }
 
 async function syncMembership(
-  transaction: Parameters<Parameters<typeof db.transaction>[0]>[0],
+  transaction: BillingTransaction,
   membershipId: string | null,
   eventCreated: number,
   values: Partial<typeof membershipSubscriptions.$inferInsert>,
@@ -145,7 +147,7 @@ export async function POST(request: Request) {
   } catch {
     return apiError("JSON de webhook no válido.", 400)
   }
-  if (!event || typeof event.id !== "string" || typeof event.type !== "string" || !event.data || typeof event.data.object !== "object") {
+  if (!event || typeof event.id !== "string" || typeof event.type !== "string" || !event.data || typeof event.data.object !== "object" || event.data.object === null) {
     return apiError("Estructura de evento no válida.", 400)
   }
   const eventCreated = typeof event.created === "number" && Number.isSafeInteger(event.created) ? event.created : Math.floor(Date.now() / 1000)
