@@ -111,7 +111,11 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
         <p>{english
           ? "Your TAMV membership includes a guided route to create or review your external profile and explore public resources. Private investor contacts, warm introductions, premium masterminds, credits, and other external perks remain subject to AI Lounge's current plans, eligibility and terms; they are not included or guaranteed by TAMV."
           : "Tu membresía TAMV incluye una ruta guiada para crear o revisar tu perfil externo y explorar recursos públicos. Los contactos privados de inversionistas, las presentaciones, las sesiones premium, los créditos y otros beneficios externos dependen de los planes, criterios y términos vigentes de AI Lounge; TAMV no los incluye ni los garantiza."}</p>
-        <a className="text-link" href="https://ai.lounge.ai/" target="_blank" rel="noopener noreferrer">{english ? "Visit official AI Lounge" : "Visitar AI Lounge oficial"} <ArrowUpRight aria-hidden="true" /></a>
+        <div className="membership-external-links">
+          <a className="text-link" href="https://ai.lounge.ai/" target="_blank" rel="noopener noreferrer">{english ? "Open AI Lounge community" : "Abrir la comunidad AI Lounge"} <ArrowUpRight aria-hidden="true" /></a>
+          <a className="text-link" href="https://ai.lounge.ai/upgrade" target="_blank" rel="noopener noreferrer">{english ? "Review the provider's current plans" : "Consultar los planes vigentes del proveedor"} <ArrowUpRight aria-hidden="true" /></a>
+          <a className="text-link" href="https://ai.lounge.ai/perks" target="_blank" rel="noopener noreferrer">{english ? "Browse startup programs and eligibility" : "Explorar programas para startups y requisitos"} <ArrowUpRight aria-hidden="true" /></a>
+        </div>
       </div>
     </div></section>
 
