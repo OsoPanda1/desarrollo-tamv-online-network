@@ -3,6 +3,8 @@ import Link from "next/link"
 import { ArrowLeft, ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Aviso de privacidad",
   description: "Información provisional sobre los datos que procesa TAMV Online Network.",
