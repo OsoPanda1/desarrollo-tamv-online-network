@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       .where(and(
         eq(membershipSubscriptions.userId, session.user.id),
         eq(membershipSubscriptions.planId, parsed.data.planId),
-        inArray(membershipSubscriptions.status, ["active", "trialing", "past_due", "unpaid", "paused"]),
+        inArray(membershipSubscriptions.status, ["active", "trialing", "past_due", "unpaid", "paused", "incomplete"]),
       ))
       .orderBy(desc(membershipSubscriptions.createdAt))
       .limit(1)
