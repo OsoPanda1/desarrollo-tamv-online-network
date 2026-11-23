@@ -17,6 +17,7 @@ type Membership = {
   currentPeriodEnd: string | null
   cancelAtPeriodEnd: boolean
   createdAt: string
+  checkoutUrl: string | null
 }
 
 type StatusState = "loading" | "anonymous" | "available" | "unavailable"
@@ -136,8 +137,13 @@ export function MembershipStatus({ locale = "es" }: { locale?: Locale }) {
                 : (english ? `Current period ends ${periodEnd}.` : `El periodo actual termina el ${periodEnd}.`)}</p>}
               {membership.status === "pending" && <p className="billing-hint">{english ? "Waiting for a signed Stripe event. The success redirect by itself does not activate access." : "Esperando un evento firmado de Stripe. El regreso del checkout por sí solo no activa el acceso."}</p>}
               <div className="membership-status-actions">
-                {entitled && <Link className="text-link" href="/formacion">{english ? "Open member course" : "Abrir el curso de miembros"} <ArrowUpRight aria-hidden="true" /></Link>}
-                {membership.status !== "canceled" && membership.status !== "checkout_failed" && membership.status !== "checkout_expired" && <MembershipPortalButton planId={membership.planId} locale={locale} />}
+                {entitled && <Link className="text-link" href={english ? "/formacion?lang=en" : "/formacion"}>{english ? "Open member course" : "Abrir el curso de miembros"} <ArrowUpRight aria-hidden="true" /></Link>}
+                {membership.status === "pending" && membership.checkoutUrl && (
+                  <a className="text-link" href={membership.checkoutUrl} rel="noopener noreferrer">
+                    {english ? "Resume secure checkout" : "Reanudar checkout seguro"} <ArrowUpRight aria-hidden="true" />
+                  </a>
+                )}
+                {["active", "trialing", "past_due", "unpaid", "paused"].includes(membership.status) && <MembershipPortalButton planId={membership.planId} locale={locale} />}
               </div>
             </article>
           )
