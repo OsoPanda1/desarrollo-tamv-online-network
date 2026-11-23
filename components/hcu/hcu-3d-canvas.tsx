@@ -179,6 +179,7 @@ export function Hcu3DCanvas({
   const english = locale === "en"
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
   const layout = useMemo(() => buildWorldLayout(graph), [graph])
   const layoutRef = useRef(layout)
   const propsRef = useRef({ graph, visibleAtomIds, visibleEdgeIds, selection, locale, onSelect })
@@ -191,6 +192,7 @@ export function Hcu3DCanvas({
   const [layers, setLayers] = useState({ orbits: true, flows: true, density: true, risk: false, evidence: true })
   const playingRef = useRef(false)
   const layersRef = useRef(layers)
+  const showLabelsRef = useRef(showLabels)
   const cameraRef = useRef<CameraState>({ ...INITIAL_CAMERA })
   const focusDomainRef = useRef("")
   const requestRenderRef = useRef<(() => void) | null>(null)
@@ -198,6 +200,7 @@ export function Hcu3DCanvas({
   const immersiveRef = useRef(false)
   playingRef.current = playing
   layersRef.current = layers
+  showLabelsRef.current = showLabels
   immersiveRef.current = immersive
 
   useEffect(() => {
@@ -227,7 +230,8 @@ export function Hcu3DCanvas({
   useEffect(() => {
     const canvas = canvasRef.current
     const shell = shellRef.current
-    if (!canvas || !shell) return
+    const stage = stageRef.current
+    if (!canvas || !shell || !stage) return
     const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true })
     if (!ctx) return
 
@@ -235,6 +239,7 @@ export function Hcu3DCanvas({
     let height = 0
     let dpr = 1
     let frameId: number | null = null
+    let intersectionObserver: IntersectionObserver | null = null
     let pageVisible = document.visibilityState !== "hidden"
     let inViewport = true
     let tick = 0
@@ -246,9 +251,9 @@ export function Hcu3DCanvas({
     const camera = cameraRef.current
 
     const resize = () => {
-      const rect = shell.getBoundingClientRect()
+      const rect = stage.getBoundingClientRect()
       width = Math.max(320, rect.width)
-      height = Math.max(390, rect.height - 102)
+      height = Math.max(390, rect.height)
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
@@ -481,7 +486,7 @@ export function Hcu3DCanvas({
               y: (1 - u) * (1 - u) * start.y + 2 * (1 - u) * u * control.y + u * u * end.y,
             })
           }
-          screenEdges.push({ edge, points: samples })
+          if (isVisible) screenEdges.push({ edge, points: samples })
         })
       }
 
@@ -547,7 +552,7 @@ export function Hcu3DCanvas({
           ctx.setLineDash([])
         }
 
-        const showText = node.kind === "domain" || showLabels || isSelected || isHovered || camera.zoom > 1.28 && node.kind === "atom"
+        const showText = node.kind === "domain" || showLabelsRef.current || isSelected || isHovered || camera.zoom > 1.28 && node.kind === "atom"
         if (showText) {
           const text = node.kind === "domain"
             ? localized(node.domain?.nameEs ?? node.id, node.domain?.nameEn ?? node.id, current.locale)
@@ -715,15 +720,15 @@ export function Hcu3DCanvas({
       if (pageVisible) requestRender()
     }
     const resizeObserver = "ResizeObserver" in window ? new ResizeObserver(() => { resize(); requestRender() }) : null
-    resizeObserver?.observe(shell)
+    resizeObserver?.observe(stage)
     window.addEventListener("resize", resize)
     document.addEventListener("visibilitychange", onVisibilityChange)
     if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
+      intersectionObserver = new IntersectionObserver((entries) => {
         inViewport = Boolean(entries[0]?.isIntersecting)
         if (inViewport) requestRender()
       }, { threshold: 0.02 })
-      observer.observe(shell)
+      intersectionObserver.observe(stage)
       shell.dataset.hcuObserver = "attached"
     }
     canvas.addEventListener("pointerdown", onPointerDown)
@@ -745,6 +750,7 @@ export function Hcu3DCanvas({
       disposed = true
       if (frameId !== null) window.cancelAnimationFrame(frameId)
       resizeObserver?.disconnect()
+      intersectionObserver?.disconnect()
       window.removeEventListener("resize", resize)
       document.removeEventListener("visibilitychange", onVisibilityChange)
       canvas.removeEventListener("pointerdown", onPointerDown)
@@ -795,7 +801,7 @@ export function Hcu3DCanvas({
       </div>
     </header>
 
-    <div className="hcu-3d-stage">
+    <div className="hcu-3d-stage" ref={stageRef}>
       <canvas
         ref={canvasRef}
         className="hcu-3d-canvas"
