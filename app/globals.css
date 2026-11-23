@@ -2142,3 +2142,22 @@ p, li { text-wrap: pretty; }
   .builders-card, .developer-api-endpoints .api-endpoint { transition: none !important; }
   .builders-card:hover { transform: none; }
 }
+
+.developer-license-note {
+  margin-top: 18px;
+  padding: 18px 19px;
+  border: 1px solid #e5d6b8;
+  border-left: 3px solid #ad8050;
+  background: linear-gradient(145deg, #fffaf0, #f7f3e9);
+}
+.developer-license-note > div { display: flex; align-items: flex-start; gap: 12px; }
+.developer-license-note > div > svg { flex: none; width: 20px; height: 20px; color: #926b3f; }
+.developer-license-note strong { display: block; color: #59472f; font: 700 10px/1.6 var(--sans); }
+.developer-license-note p { margin: 6px 0 0; color: #72634c; font-size: 9px; line-height: 1.8; }
+.developer-license-links { display: flex; gap: 8px 18px; flex-wrap: wrap; margin-top: 10px; }
+.developer-license-links a { display: inline-flex; align-items: center; gap: 6px; color: #795a35; font-size: 9px; font-weight: 800; text-underline-offset: 3px; }
+.developer-license-links svg { width: 12px; height: 12px; }
+@media (max-width: 640px) {
+  .developer-license-note { padding: 14px; }
+  .developer-license-note > div { gap: 9px; }
+}
