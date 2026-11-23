@@ -19,7 +19,7 @@ test("TAMV membership plan amounts and monthly recurrence are authoritative", ()
 });
 
 test("Stripe signature verifier accepts valid signatures and rejects tampering/replay", () => {
-  const secret = "whsec_test_contract_secret";
+  const secret = "local-signature-fixture-not-a-credential";
   const now = 1_800_000_000_000;
   const timestamp = Math.floor(now / 1000);
   const body = '{"id":"evt_contract","type":"checkout.session.completed"}';
@@ -114,4 +114,15 @@ test("assistant inference enforces same-origin and the checkout return path cann
   assert.match(signin, /resolveInternalRedirect/);
   assert.match(signin, /url\.origin !== "https:\/\/tamv\.invalid"/);
   assert.match(signin, /String\.fromCharCode\(92\)/);
+});
+
+test("subscription webhook, not the checkout browser redirect, controls paid access", () => {
+  const webhook = read("app/api/webhooks/stripe/route.ts");
+  const page = read("app/membresias/page.tsx");
+  const route = read("app/api/billing/checkout/route.ts");
+  assert.match(webhook, /customer\.subscription\./);
+  assert.doesNotMatch(webhook, /status: checkout\.payment_status === "paid"/);
+  assert.match(page, /Stripe confirma la suscripción mediante el webhook firmado/);
+  assert.match(route, /form\.set\("expires_at"/);
+  assert.match(route, /stripeCheckoutUrl: checkoutUrl\.toString\(\)/);
 });
