@@ -43,7 +43,7 @@ The shared navigation, institutional landing sections, application footer, and r
 
 ## Paid memberships, course access and external startup resources
 
-**Implementation state:** available in the `feat/production-memberships-stripe-course-2026-11-23` review branch, not yet merged or deployed. Billing is deliberately disabled by default.
+**Implementation state:** the core membership/course implementation was merged through [PR #27](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/27). A follow-up branch adds an exact React lockfile pin, regression checks, Vercel Connect/Chat SDK guidance and the future institutionalization/ROR roadmap; that follow-up is not yet merged or deployed. Billing remains deliberately disabled by default.
 
 - `/membresias` — individual plan **MXN $229/month per user** and business plan **MXN $699/month per organization**. The application fixes the price server-side; the browser cannot supply or change it.
 - `/formacion` — five practical modules: verifiable developer profile, auditable portfolio, startup problem validation, business model/roadmap, and evidence-based investor pitch. Access is checked on the server for an active/trialing membership; module completion is stored against the authenticated user.
