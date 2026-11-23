@@ -156,11 +156,11 @@ paths:
             application/json:
               schema:
                 type: object
-                required: [valid, schemaVersion, validationState, semantics]
+                required: [valid, schemaVersion, submittedValidationState, semantics]
                 properties:
                   valid: { type: boolean, const: true }
                   schemaVersion: { type: string, const: "1.0.0" }
-                  validationState: { type: string, enum: [unreviewed, schema_valid, source_verified, rejected] }
+                  submittedValidationState: { type: string, enum: [unreviewed, schema_valid, source_verified, rejected], description: Claimed input state; not independently verified by this endpoint. }
                   semantics: { type: string }
         "400":
           description: Malformed JSON or invalid UTF-8.
