@@ -13,6 +13,12 @@
 - Collaboration benefits provide a path to apply and are subject to project review and capacity. No investment, financing, acceptance, or investor meeting is guaranteed.
 - AI Lounge is an independent third party. TAMV has not configured or verified an affiliate partnership, invitation entitlement or included AI Lounge Pro access. The current integration links to the public site only.
 
+## Product boundaries that must remain visible
+
+- The business plan is billed per organization name but, in this release, the subscription and course entitlement are tied to the contracting user account. Organization workspaces, employee invitations, seat management and transfers are **not implemented**.
+- AI Lounge is a third-party service. This repository has no confirmed commercial agreement, referral code, entitlement API or included paid pass. Only public links and guidance are part of this release.
+- Project collaboration is an application/selection pathway, not an automatic assignment to paid work, a guaranteed contract or a guaranteed investor introduction.
+
 ## Required environment variables
 
 Set through the deployment secret manager, never commit real values:
