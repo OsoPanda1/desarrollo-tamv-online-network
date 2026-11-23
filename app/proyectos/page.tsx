@@ -34,6 +34,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Sea
         <Link className="text-link" href={`/proyectos/${project.slug}?lang=${locale}`}>{english ? "View record" : "Ver ficha"} <ArrowUpRight aria-hidden="true" /></Link>
       </article>)}</div>
       <p className="editorial-caveat">{english ? "Maturity terms are descriptive labels from project documentation, not a standardized readiness score." : "Las etiquetas de madurez describen el material del proyecto; no constituyen una escala estandarizada de preparación."}</p>
+      <p><Link className="text-link" href={`/isabella?lang=${locale}`}>{english ? "Isabella AI / TINA — governed federated intelligence, 54% overall progress, not certified for production" : "Isabella AI / TINA — inteligencia federada gobernada, 54% de avance global, no certificada para producción"} <ArrowUpRight aria-hidden="true" /></Link></p>
     </div></section>
   </TamvAppShell>
 }

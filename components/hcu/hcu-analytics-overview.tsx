@@ -120,7 +120,7 @@ export function HcuAnalyticsOverview({ graph, locale, onSelectDomain }: Props) {
           <table className="hcu-analytics-table">
             <thead><tr><th>{english ? "Domain" : "Dominio"}</th><th>{english ? "Atoms" : "Átomos"}</th><th>{english ? "Mean risk" : "Riesgo medio"}</th><th>{english ? "Risk ≥ 65" : "Riesgo ≥ 65"}</th><th>{english ? "Relations" : "Relaciones"}</th></tr></thead>
             <tbody>{stats.domains.map((row) => <tr key={row.domain.id}>
-              <th scope="row"><button type="button" className="hcu-analytics-domain-link" onClick={() => onSelectDomain(row.domain.id)}>{localized(row.domain.nameEs, row.domain.nameEn, locale)}</button></th>
+              <th scope="row"><button type="button" className="hcu-analytics-domain-link" onClick={() => onSelectDomain(row.domain.id)}>{english ? row.domain.nameEn : row.domain.nameEs}</button></th>
               <td>{row.atoms}</td><td>{fmt(row.meanRisk)}</td><td>{row.highRisk}</td><td>{row.relationships}</td>
             </tr>)}</tbody>
           </table>

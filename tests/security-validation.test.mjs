@@ -3,7 +3,8 @@ import assert from "node:assert/strict"
 import { canTransitionProposal } from "../lib/research/workflow.ts"
 import { csvCell } from "../lib/research/csv.ts"
 import { estimateHcuSimulationWork, isHcuGraphWithinLimits, isHcuSimulationWithinBudget } from "../lib/hcu/budget.ts"
-import { appealSchema, moderationSchema, proposalSchema, simulationSchema } from "../lib/validation.ts"
+import { appealSchema, hcuAtomSchema, hcuHyperedgeSchema, moderationSchema, proposalSchema, simulationSchema, tqafAssessmentSchema } from "../lib/validation.ts"
+import { simulateHcu } from "../lib/hcu/model.ts"
 
 test("proposal workflow allows only declared transitions", () => {
   assert.equal(canTransitionProposal("received", "triage"), true)
@@ -72,4 +73,60 @@ test("HCU simulation budget rejects excessive graph and compute workloads", () =
   assert.equal(isHcuSimulationWithinBudget(small), true)
   assert.equal(isHcuSimulationWithinBudget({ ...small, mcRuns: 200, atomCount: 100, edgeCount: 100 }), false)
   assert.equal(isHcuSimulationWithinBudget({ ...small, edgeFanout: 64 }), false)
+})
+
+test("private HCU inputs validate bounded values, ownership-safe references, and TQAF states", () => {
+  assert.equal(hcuAtomSchema.safeParse({
+    domainId: "research",
+    nameEs: "Memoria territorial",
+    descriptionEs: "Registro de conocimiento territorial documentado.",
+    influenceX: 45,
+    riskY: 30,
+    evidenceZ: 20,
+  }).success, true)
+  assert.equal(hcuAtomSchema.safeParse({
+    domainId: "research",
+    nameEs: "Memoria territorial",
+    descriptionEs: "Registro de conocimiento territorial documentado.",
+    influenceX: 101,
+    riskY: 30,
+    evidenceZ: 20,
+  }).success, false)
+  assert.equal(hcuHyperedgeSchema.safeParse({
+    sourceAtomIds: ["atom-a"],
+    targetAtomIds: ["atom-b"],
+    sourceTitle: "Fuente registrada",
+    sourceUrl: "https://doi.org/10.1234/example",
+    weight: 0.3,
+    sign: 1,
+    delayYears: 2,
+    tqafLevel: "N2",
+  }).success, true)
+  assert.equal(hcuHyperedgeSchema.safeParse({
+    sourceAtomIds: ["atom-a", "atom-a"],
+    targetAtomIds: ["atom-b"],
+    sourceTitle: "Fuente registrada",
+    weight: 0.3,
+    sign: 1,
+    delayYears: 2,
+  }).success, false)
+  assert.equal(tqafAssessmentSchema.safeParse({ criterionCode: "TQAF-01", status: "verified", evidenceUrl: "https://example.org/evidence", rationale: "Revisión manual documentada con evidencia." }).success, true)
+  assert.equal(tqafAssessmentSchema.safeParse({ criterionCode: "TQAF-99", status: "verified" }).success, false)
+})
+
+test("HCU runs are deterministic and bind inputs to the source graph digest", () => {
+  const atoms = [
+    { id: "atom-a", domainId: "domain-a", influenceX: 80, riskY: 30, evidenceZ: 45, isQuarantined: false },
+    { id: "atom-b", domainId: "domain-b", influenceX: 50, riskY: 55, evidenceZ: 25, isQuarantined: false },
+  ]
+  const edges = [{ id: "edge-a", sourceAtomIds: ["atom-a"], targetAtomIds: ["atom-b"], weight: 0.3, sign: 1, delayYears: 1, evidenceStatus: "hypothesis" }]
+  const input = { scenario: "baseline", startYear: 2026, endYear: 2030, seed: 20261101, mcRuns: 20, shocks: [{ atomId: "atom-a", year: 2026, intensity: 0.5 }], quarantine: [] }
+  const first = simulateHcu(atoms, edges, input, "graph-digest-a")
+  const repeated = simulateHcu(atoms, edges, input, "graph-digest-a")
+  const updatedGraph = simulateHcu(atoms, edges, input, "graph-digest-b")
+  assert.deepEqual(first, repeated)
+  assert.notEqual(first.inputHash, updatedGraph.inputHash)
+  assert.equal(first.sourceGraphHash, "graph-digest-a")
+  assert.equal(first.input?.shocks.length, 1)
+  assert.equal(first.series.length, 5)
 })

@@ -10,8 +10,14 @@ const publicPaths = [
   "/hcu",
   "/fuentes",
   "/gobernanza",
+  "/utamv",
+  "/isabella",
+  "/excelencia",
+  "/auditoria-creator",
   "/desarrolladores",
   "/apoyar",
+  "/cuenta",
+  "/unete",
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

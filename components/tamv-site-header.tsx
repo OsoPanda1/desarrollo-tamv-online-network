@@ -7,6 +7,7 @@ import { useState } from "react"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { localizedPath, type Locale } from "@/lib/i18n"
+import { TamvAssistant } from "@/components/tamv-assistant"
 
 const links = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
@@ -30,6 +31,7 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
   }
 
   return (
+    <>
     <header className="site-header" lang={locale}>
       <div className="utility-bar">
         <div className="container utility-inner">
@@ -49,6 +51,7 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
           {links.map((link) => (
             <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
           ))}
+          <Link href={`${localizedPath("/", locale)}#guia`} onClick={closeMenu}>{english ? "Guide" : "Guía"}</Link>
           {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
           <TamvDonationCTA locale={locale} variant="compact" />
           <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
@@ -56,5 +59,7 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
         </nav>
       </div>
     </header>
+    <TamvAssistant locale={locale} />
+    </>
   )
 }

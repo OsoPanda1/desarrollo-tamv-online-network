@@ -15,6 +15,7 @@ import {
   researchProposals,
   researchTopics,
   researcherProfiles,
+  tqafAssessments,
 } from "@/lib/db/schema"
 import { and, count, desc, eq, inArray } from "drizzle-orm"
 
@@ -95,6 +96,37 @@ export async function getPublicHcuGraph() {
   }
 }
 
+export async function getUserHcuModel(userId: string) {
+  const [atoms, edges, publicGraph] = await Promise.all([
+    db.select().from(hcuAtoms).where(and(eq(hcuAtoms.userId, userId), eq(hcuAtoms.visibility, "private"))).orderBy(hcuAtoms.createdAt),
+    db.select().from(hcuHyperedges).where(and(eq(hcuHyperedges.userId, userId), eq(hcuHyperedges.visibility, "private"), eq(hcuHyperedges.isActive, true))).orderBy(hcuHyperedges.createdAt),
+    getPublicHcuGraph(),
+  ])
+  const atomIds = new Set([...publicGraph.atoms, ...atoms].map((atom) => atom.id))
+  return {
+    atoms,
+    edges: edges.filter((edge) =>
+      edge.sourceAtomIds.length > 0 && edge.targetAtomIds.length > 0 &&
+      edge.sourceAtomIds.length <= 32 && edge.targetAtomIds.length <= 32 &&
+      edge.sourceAtomIds.every((id) => atomIds.has(id)) &&
+      edge.targetAtomIds.every((id) => atomIds.has(id)),
+    ),
+  }
+}
+
+export async function getUserHcuGraph(userId: string) {
+  const [publicGraph, privateModel] = await Promise.all([getPublicHcuGraph(), getUserHcuModel(userId)])
+  const atoms = [...publicGraph.atoms, ...privateModel.atoms]
+  const atomIds = new Set(atoms.map((atom) => atom.id))
+  const edges = [...publicGraph.edges, ...privateModel.edges].filter((edge) =>
+    edge.sourceAtomIds.length > 0 && edge.targetAtomIds.length > 0 &&
+    edge.sourceAtomIds.length <= 32 && edge.targetAtomIds.length <= 32 &&
+    edge.sourceAtomIds.every((id) => atomIds.has(id)) &&
+    edge.targetAtomIds.every((id) => atomIds.has(id)),
+  )
+  return { domains: publicGraph.domains, atoms, edges }
+}
+
 export async function getPublicResearchers() {
   return db
     .select({
@@ -161,7 +193,7 @@ export async function getUserProposal(userId: string, proposalId: string) {
     .limit(1)
   if (!proposal) return null
 
-  const [events, evidence, reviews, appeals] = await Promise.all([
+  const [events, evidence, reviews, appeals, tqaf] = await Promise.all([
     db
       .select({ id: proposalEvents.id, action: proposalEvents.action, fromStatus: proposalEvents.fromStatus, toStatus: proposalEvents.toStatus, detail: proposalEvents.detail, createdAt: proposalEvents.createdAt, eventHash: proposalEvents.eventHash, previousHash: proposalEvents.previousHash })
       .from(proposalEvents)
@@ -182,8 +214,18 @@ export async function getUserProposal(userId: string, proposalId: string) {
       .from(proposalAppeals)
       .where(and(eq(proposalAppeals.proposalId, proposalId), eq(proposalAppeals.userId, userId)))
       .orderBy(desc(proposalAppeals.createdAt)),
+    getTqafAssessmentsForProposal(proposalId, userId),
   ])
-  return { proposal, events, evidence, reviews, appeals }
+  return { proposal, events, evidence, reviews, appeals, tqaf }
+}
+
+export async function getTqafAssessmentsForProposal(proposalId: string, ownerId: string) {
+  const records = await db
+    .select({ criterionCode: tqafAssessments.criterionCode, status: tqafAssessments.status, rationale: tqafAssessments.rationale, evidenceUrl: tqafAssessments.evidenceUrl, reviewerId: tqafAssessments.reviewerId, updatedAt: tqafAssessments.updatedAt })
+    .from(tqafAssessments)
+    .where(and(eq(tqafAssessments.proposalId, proposalId), eq(tqafAssessments.userId, ownerId)))
+    .orderBy(tqafAssessments.criterionCode)
+  return records.map(({ reviewerId, ...record }) => ({ ...record, isReviewed: Boolean(reviewerId) }))
 }
 
 export async function getUserInterests(userId: string) {
