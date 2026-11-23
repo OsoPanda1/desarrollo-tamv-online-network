@@ -43,6 +43,12 @@ Some pages and APIs depend on PostgreSQL and a configured Better Auth secret. A 
 - [ ] External assets and dependencies have compatible licenses and a documented purpose.
 - [ ] The PR explains any unmet checks or deployment requirement.
 
+## Licensing and permission to reuse
+
+A root `LICENSE` file was not found during the repository audit dated 2026-11-23. Until the copyright holder selects and publishes a license, do not assume the code is permissively licensed or that public access grants permission to redistribute, modify, sublicense or incorporate it into a product. Read [the licensing status note](docs/governance/licensing-status.md).
+
+`CITATION.cff` helps attribute the repository but does not grant reuse rights. Project records and individual documents may declare a separate license; such a declaration must not be applied to the entire codebase or to images/models by implication. If a proposed contribution introduces third-party code or assets, document the source and compatible license. Maintainers should resolve code licensing before advertising broad external reuse or an unrestricted developer ecosystem.
+
 ## Research integrity and provenance
 
 Keep facts, author declarations, hypotheses, simulation outputs and independently verified evidence separate. For new source records, preserve the canonical URL, identifier, retrieval date, license/terms where relevant, inspected version and validation status. A hash identifies bytes; it does not establish that a claim is true. A DOI or ORCID record does not by itself demonstrate peer review, accreditation or impact.
