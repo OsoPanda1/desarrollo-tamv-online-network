@@ -43,6 +43,7 @@ test("federation contract preserves security and licensing boundaries", () => {
   assert.match(contract, /No direct dual writes/i);
   assert.match(openapi, /openapi: 3\.1\.0/);
   assert.match(openapi, /\/api\/v1\/ecosystem/);
+  assert.match(openapi, /\/api\/v1\/provenance\/validate/);
   assert.equal(provenanceSchema.required.includes("sourceUri"), true);
   assert.equal(provenanceSchema.required.includes("observedAt"), true);
   assert.equal(provenanceSchema.additionalProperties, false);
