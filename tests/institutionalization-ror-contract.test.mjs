@@ -13,7 +13,7 @@ test("institutionalization road map distinguishes future funding, legal entity a
 
   assert.match(page, /objetivo futuro propuesto/i);
   assert.match(page, /No hay una proporción fija/i);
-  assert.match(page, /ROR IDs son gratuitos/i);
+  assert.match(page, /ROR ID son gratuitos/i);
   assert.match(page, /no es una acreditación/i);
   assert.match(page, /ror\.org\/registry/);
   assert.match(terms, /no es un porcentaje comprometido/i);
