@@ -17,6 +17,21 @@ Institutional pages, researchers/developers, projects, research topics and propo
 
 The companion repository separately contains Auth0/OIDC, Supabase-backed TAMV ID/member registry, ORCID linking, federated metadata search, DOI audit and VETRA workflows. These are separate applications, not automatically one runtime. Identity, data, APIs, authorization and deployment must be federated explicitly; copying screens or linking domains is not secure integration. See [the federation contract](docs/architecture/federation-contract.md).
 
+## HCU observatory and institutional interface
+
+The active `/hcu` route defaults to an interactive perspective-projected 3D field. It uses the public graph returned by the PostgreSQL application layer and supports orbit rotation, zoom, domain focus, layer controls, selection, and descriptive analytics. The former 2D scheme and record list remain as alternate reading modes.
+
+The institutional Living Universe under `WEBINSTITUCIONAL-TAMVONLINE/web/mapa.html` has its own browser-rendered canvas and the corpus `WEBINSTITUCIONAL-TAMVONLINE/web/assets/mapa/graph.js`. That static documentary corpus is not automatically synchronized with the application's PostgreSQL graph. The 3D layout and metrics are descriptive encodings, not causal predictions or evidence of independent validation. See [HCU observatory v2 architecture](docs/architecture/hcu-observatory-v2.md).
+
+## Support and donation checkout
+
+The shared navigation, institutional landing sections, application footer, and research-theme invitation link to `/apoyar`. The route is deliberately transparent when no payment provider is configured: it does not collect payment details or claim that a transaction took place.
+
+- `TAMV_DONATION_URL` is an optional server-side hosted-checkout URL; leave it empty until the recipient, terms, fees, and reporting process are ready.
+- Redirects require HTTPS and a pre-approved host. GitHub links are accepted only in the `/sponsors/<account>` form; new providers require an explicit reviewed allowlist update in `app/apoyar/page.tsx`.
+- The default support route offers institutional contact and governance information instead of inventing bank details or simulating a payment.
+- Never expose checkout session secrets, private donation records, donor identities, or payment-provider credentials in a public repository or client-side bundle.
+
 ## Local development
 
 Use a supported Node.js LTS and pnpm compatible with the lockfile.
