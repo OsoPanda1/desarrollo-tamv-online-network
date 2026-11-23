@@ -59,6 +59,43 @@ export const verification = pgTable("verification", {
   updatedAt: timestamptz("updatedAt").defaultNow(),
 })
 
+export const membershipSubscriptions = pgTable("membership_subscriptions", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  planId: text("plan_id").notNull(),
+  status: text("status").notNull().default("pending"),
+  amountMxn: integer("amount_mxn").notNull(),
+  currency: text("currency").notNull().default("mxn"),
+  businessName: text("business_name"),
+  businessWebsite: text("business_website"),
+  stripeCustomerId: text("stripe_customer_id"),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  stripeCheckoutSessionId: text("stripe_checkout_session_id"),
+  currentPeriodStart: timestamptz("current_period_start"),
+  currentPeriodEnd: timestamptz("current_period_end"),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
+  stripeEventCreated: integer("stripe_event_created").notNull().default(0),
+  createdAt: timestamptz("created_at").notNull().defaultNow(),
+  updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+})
+
+export const billingWebhookEvents = pgTable("billing_webhook_events", {
+  eventId: text("event_id").primaryKey(),
+  eventType: text("event_type").notNull(),
+  receivedAt: timestamptz("received_at").notNull().defaultNow(),
+  processedAt: timestamptz("processed_at").notNull().defaultNow(),
+})
+
+export const memberCourseProgress = pgTable("member_course_progress", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  courseSlug: text("course_slug").notNull(),
+  moduleId: text("module_id").notNull(),
+  completedAt: timestamptz("completed_at").notNull().defaultNow(),
+  createdAt: timestamptz("created_at").notNull().defaultNow(),
+  updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+})
+
 export const researchTopics = pgTable("research_topics", {
   id: text("id").primaryKey(),
   userId: text("user_id").notNull(),
