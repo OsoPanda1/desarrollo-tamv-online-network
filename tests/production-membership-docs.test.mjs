@@ -15,6 +15,9 @@ test("production runbook keeps live billing and legal approval gated", () => {
   assert.match(checkout, /TAMV_BILLING_MODE/);
   assert.match(checkout, /TAMV_MEMBERSHIP_TERMS_VERSION/);
   assert.match(checkout, /TAMV_MEMBERSHIP_PRIVACY_APPROVED/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_LEGAL_APPROVED/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_TAX_APPROVED/);
+  assert.match(checkout, /TAMV_MEMBERSHIP_REFUNDS_APPROVED/);
   assert.match(terms, /inversion|inversionistas/i);
   assert.match(privacy, /responsable|derechos/i);
 });
