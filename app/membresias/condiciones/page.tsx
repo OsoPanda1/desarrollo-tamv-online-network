@@ -27,6 +27,7 @@ export default function MembershipTermsPage() {
       <h2>1. Planes y alcance</h2>
       <p><strong>Membresía individual:</strong> $229 MXN al mes por cuenta. Incluye la ruta de aprendizaje de perfil profesional, portafolio y presentación de proyectos, además de la posibilidad de postular a oportunidades de colaboración en TAMV.</p>
       <p><strong>Membresía empresarial:</strong> $699 MXN al mes por organización. Incluye la ruta de preparación de la organización y su proyecto, y la posibilidad de presentar iniciativas para evaluación y colaboración con TAMV. El precio empresarial no implica asientos ilimitados ni licencias para un número ilimitado de personas.</p>
+      <p>En esta versión, la suscripción empresarial se asocia a la cuenta titular que contrata y al nombre de organización indicado en el checkout. No se han implementado invitaciones de empleados, asientos adicionales, administración multiusuario ni transferencia automática a otras cuentas. No compartas credenciales; TAMV debe publicar y probar esas funciones antes de ofrecer acceso de equipo.</p>
       <p>Las dos membresías se cobran mensualmente, no son una acreditación académica y no sustituyen asesoría jurídica, fiscal o financiera profesional.</p>
 
       <h2>2. Renovación y cancelación</h2>
