@@ -77,6 +77,7 @@ test("billing is disabled by default and live checkout requires all production a
   const env = read(".env.example");
   assert.match(checkout, /\|\| "disabled"/);
   assert.match(checkout, /isProductionDeployment\(\)/);
+  assert.match(checkout, /process\.env\.VERCEL_ENV !== "production"/);
   assert.match(checkout, /sk_test_/);
   assert.match(checkout, /sk_live_/);
   assert.match(checkout, /TAMV_MEMBERSHIP_LEGAL_APPROVED/);
