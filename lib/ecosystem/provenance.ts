@@ -1,9 +1,15 @@
 import { z } from "zod";
 
 const isoDateTimeWithZone = z.string().refine(
-  (value) =>
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) &&
-    !Number.isNaN(Date.parse(value)),
+  (value) => {
+    const match = /^(\d{4})-(\d{2})-(\d{2})T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:0\d|1\d|2[0-3]):[0-5]\d)$/.exec(value);
+    if (!match || Number.isNaN(Date.parse(value))) return false;
+    const [, year, month, day] = match;
+    const calendarDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+    return calendarDate.getUTCFullYear() === Number(year) &&
+      calendarDate.getUTCMonth() === Number(month) - 1 &&
+      calendarDate.getUTCDate() === Number(day);
+  },
   "Expected an ISO 8601 date-time with an explicit timezone",
 );
 
@@ -20,7 +26,7 @@ const digestLengths = {
  */
 export const provenanceRecordSchema = z.object({
   schemaVersion: z.literal("1.0.0"),
-  sourceUri: z.string().url(),
+  sourceUri: z.string().url().refine((value) => ["http:", "https:"].includes(new URL(value).protocol), "Source URI must use HTTP or HTTPS"),
   sourceSystem: z.string().trim().min(1).max(200),
   sourceRecordId: z.string().max(500).nullable().optional(),
   sourceVersion: z.string().max(300).nullable().optional(),
@@ -47,7 +53,7 @@ export const provenanceRecordSchema = z.object({
     "source_verified",
     "rejected",
   ]),
-  validationEvidenceUri: z.string().url().nullable().optional(),
+  validationEvidenceUri: z.string().url().refine((value) => ["http:", "https:"].includes(new URL(value).protocol), "Evidence URI must use HTTP or HTTPS").nullable().optional(),
   notes: z.string().max(2000).nullable().optional(),
 }).strict();
 
