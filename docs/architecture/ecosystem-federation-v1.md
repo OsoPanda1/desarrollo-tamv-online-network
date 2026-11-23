@@ -57,6 +57,11 @@ Every synchronized record must preserve source URI, source system ID, retrieved/
 - [x] Explicit distinction between catalogued and verified integration.
 - [x] Versioned public discovery route.
 - [ ] Verify endpoint on a deployed preview and record HTTP response.
+- [x] Publish OpenAPI 3.1 contract for the public discovery endpoint.
+- [x] Publish JSON Schema for provenance envelopes; it records provenance facts and does not assert signatures or trusted timestamps.
+- [x] Add `contract_tested` as a distinct evidence state between adapter implementation and verified deployment.
+
+The OpenAPI contract is at `docs/api/openapi-v1-ecosystem.yaml`; the provenance envelope schema is at `docs/architecture/provenance-record.schema.json`. The current test suite checks their presence and key invariants, but must still be executed in CI before the contract is considered tested.
 
 ### Phase 1 — read-only adapters
 - [ ] Confirm public API route schemas and rate limits for each source.
