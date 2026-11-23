@@ -12,6 +12,7 @@ const links = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
   { href: "/comunidad", labelEs: "Comunidad", labelEn: "Community" },
+  { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/hcu", labelEs: "Mapa HCU", labelEn: "HCU map" },
   { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
   { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },

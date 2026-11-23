@@ -76,8 +76,8 @@ export default async function SupportPage({ searchParams }: { searchParams: Sear
             <p className="eyebrow">{english ? "VOLUNTARY SUPPORT" : "APOYO VOLUNTARIO"}</p>
             <h2>{english ? "Sustain independent work, with transparent boundaries." : "Sostener el trabajo independiente, con límites transparentes."}</h2>
             <p>{english
-              ? "Support can help cover hosting, domain renewal, backups, accessibility, research materials, and maintenance of open tools. The project does not publish amounts, impact figures, or funding claims that have not been documented."
-              : "El apoyo puede contribuir a alojamiento, renovación de dominios, respaldos, accesibilidad, materiales de investigación y mantenimiento de herramientas abiertas. El proyecto no publica cantidades, cifras de impacto ni afirmaciones de financiación que no estén documentadas."}</p>
+              ? "Support can help cover hosting, domain renewal, backups, accessibility, research materials, and maintenance of digital tools and documentation. The project does not publish amounts, impact figures, or funding claims that have not been documented."
+              : "El apoyo puede contribuir a alojamiento, renovación de dominios, respaldos, accesibilidad, materiales de investigación y mantenimiento de herramientas digitales y documentación. El proyecto no publica cantidades, cifras de impacto ni afirmaciones de financiación que no estén documentadas."}</p>
             <div className="support-status" role="status">
               {state === "rejected" ? <ShieldCheck aria-hidden="true" /> : <BookOpen aria-hidden="true" />}
               <div>

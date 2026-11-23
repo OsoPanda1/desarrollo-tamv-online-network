@@ -1,0 +1,79 @@
+name: Bug report
+description: Report a reproducible functional, accessibility, data, or visual defect.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "Report only systems you are authorized to test. Never include passwords, tokens, personal records, production database dumps, or private vulnerability details."
+  - type: input
+    id: location
+    attributes:
+      label: Page, route, endpoint, or component
+      description: Include the affected URL/path or a repository file.
+      placeholder: "/hcu or GET /api/v1/hcu/graph"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: Describe what failed and the user impact.
+      placeholder: "What did you expect, and what happened instead?"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest repeatable sequence.
+      placeholder: "1. Open ... 2. Select ... 3. Observe ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected versus actual result
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Affected area
+      options:
+        - Frontend / responsive UI
+        - HCU visualization
+        - Public API / exports
+        - Authentication / authorization
+        - Accessibility / reduced motion
+        - Data provenance / research integrity
+        - Installation / build / CI
+        - Documentation / translation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser/OS, Node/pnpm version, branch/commit, and deployment target when relevant.
+      placeholder: "Chrome version, Windows/macOS/Linux, commit SHA"
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Add screenshots, sanitized logs, request status codes, or a minimal example. Remove tokens and personal data.
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Review checklist
+      options:
+        - label: I checked for an existing issue and kept this report focused.
+          required: true
+        - label: I have removed credentials, personal data and private vulnerability details.
+          required: true
+        - label: I can reproduce this issue or have clearly stated why it is intermittent.
+          required: true

@@ -59,3 +59,14 @@ test("institutional and application HCU surfaces remain distinct and documented"
   assert.match(readme, /Support and donation checkout/)
   assert.match(readme, /HCU observatory and institutional interface/)
 })
+
+test("donation copy does not imply an unconfirmed open-source license for TAMV code", () => {
+  const cta = read("components/shared/tamv-donation-cta.tsx");
+  const page = read("app/apoyar/page.tsx");
+  assert.match(cta, /independent research and digital tools/);
+  assert.match(cta, /investigación independiente y las herramientas digitales/);
+  assert.doesNotMatch(cta, /open tools|herramientas abiertas/);
+  assert.match(page, /maintenance of digital tools and documentation/);
+  assert.match(page, /mantenimiento de herramientas digitales y documentación/);
+  assert.doesNotMatch(page, /maintenance of open tools|mantenimiento de herramientas abiertas/);
+});
