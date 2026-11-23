@@ -283,7 +283,7 @@ components:
                 type: array
                 items: { type: string }
               weight: { type: number }
-              sign: { type: integer, enum: [-1, 1] }
+              sign: { type: integer }
               delayYears: { type: integer }
               tqafLevel: { type: [string, "null"] }
               evidenceStatus: { type: string }
