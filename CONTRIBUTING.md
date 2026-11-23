@@ -6,11 +6,12 @@ TAMV is evolving. A public project record does not imply production readiness, p
 
 ## Where to start / Por dónde empezar
 
-1. Read [the README](README.md), [the developer API guide](docs/api/public-api-quickstart.md), and [the architecture boundaries](docs/architecture/federation-contract.md).
-2. Choose a small, verifiable issue: documentation, Spanish/English parity, accessibility, test coverage, source provenance, safe error handling, or a narrowly scoped feature.
-3. Open or review an [issue in GitHub](https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues) before large refactors so the intended result and acceptance criteria are clear.
-4. Reproduce the problem and record environment, steps, actual result, expected result and relevant logs. Remove tokens, personal data and production identifiers.
-5. Submit a focused pull request with tests, screenshots when the change is visual, migration/backout notes when data or schema is affected, and the evidence needed to reproduce the outcome.
+1. Read the [README](README.md), [developer API guide](docs/api/public-api-quickstart.md), [architecture boundaries](docs/architecture/federation-contract.md), and [Code of Conduct](CODE_OF_CONDUCT.md).
+2. Review [licensing status](docs/governance/licensing-status.md). The repository currently has no root `LICENSE` file, so do not infer rights to reuse or redistribute code.
+3. Choose a small, verifiable issue: documentation, Spanish/English parity, accessibility, test coverage, source provenance, safe error handling, or a narrowly scoped feature.
+4. Open or review an [issue in GitHub](https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues) before large refactors so the intended result and acceptance criteria are clear.
+5. Reproduce the problem and record environment, steps, actual result, expected result and relevant logs. Remove tokens, personal data and production identifiers.
+6. Submit a focused pull request with tests, screenshots when the change is visual, migration/backout notes when data or schema is affected, and the evidence needed to reproduce the outcome.
 
 ## Local workflow
 
