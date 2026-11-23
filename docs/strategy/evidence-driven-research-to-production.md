@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Prepared:** 2026-11-23  
-**Status:** implementation plan; scholarly review is in progress. This document is not a security certification, deployment attestation, or claim that all recommendations are implemented.
+**Status:** implementation plan; two Undermind deep literature searches completed on 2026-11-23, with targeted full-text reading of selected papers. This document is not a security certification, deployment attestation, or claim that all recommendations are implemented.
 
 ## Purpose
 
@@ -91,7 +91,38 @@ Persistent identifiers and explicit metadata relationships can connect people, o
 - Do not infer peer review, institutional incorporation, funding, affiliation or scientific impact from a DOI, ORCID, ISNI or ROR identifier alone.
 - Make external metadata refreshes traceable and idempotent; do not silently overwrite user-curated claims.
 
-### 4. Public-interest AI governance
+### 4. CI/CD supply-chain security and research artefact provenance
+
+**Muralee et al. (2023), “ARGUS: A Framework for Staged Static Taint Analysis of GitHub Workflows and Actions.”**
+[Paper record](https://www.semanticscholar.org/paper/f133e893a8ef96c61a4f63525910c8c0350e1c6b)
+
+The literature review identified ARGUS and related large-scale analyses of GitHub Actions as relevant evidence that workflow files and action integrations are security-sensitive code. The available full-text PDF was not retrievable in this workspace, so this plan does not attribute a specific effect size or claim to ARGUS. The implementation implications below are conservative controls, not a reproduction of the paper's experimental results.
+
+**Engineering decisions**
+- Pin third-party GitHub Actions to reviewed full commit SHAs and update them through a reviewed process.
+- Grant workflows only the token permissions they require; use read-only permissions by default and elevate narrowly for specific jobs.
+- Never expose production secrets to code from untrusted pull requests or forked branches. Separate build/test jobs from privileged release jobs.
+- Review expressions that interpolate untrusted event data into shell commands; prefer environment variables and typed inputs over direct expression interpolation.
+- Treat CI failures as unresolved until step-level logs or a reproducible run establish the cause. A missing or expired log artifact is an observability limitation, not proof of a source-code defect.
+
+**Wilkinson et al. (2016), “The FAIR Guiding Principles for scientific data management and stewardship.”**
+[DOI: 10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18)
+
+FAIR encourages findable, accessible, interoperable and reusable research data. Accessibility does not mean unrestricted public access; metadata can remain accessible while underlying data require authorization. FAIR is not a scientific-validity certificate and does not by itself guarantee correctness or completeness.
+
+**Carroll et al. (2021), “Operationalizing the CARE and FAIR Principles for Indigenous data futures.”**
+[DOI: 10.1038/s41597-021-00892-0](https://doi.org/10.1038/s41597-021-00892-0)
+
+For a platform that includes territorial memory and community knowledge, FAIR should not be applied as an unconditional push toward openness. CARE adds Collective Benefit, Authority to Control, Responsibility and Ethics, emphasizing that the communities concerned need a meaningful role in decisions about their data. This is particularly important where knowledge is culturally sensitive, collectively governed or not appropriate for open redistribution.
+
+**Engineering decisions**
+- Attach provenance, license/terms, source, retrieval time and access policy to data exports.
+- Separate public metadata from restricted records and private community submissions.
+- Require an explicit, documented decision before publishing sensitive territorial or community knowledge; provide correction, withdrawal and appeal processes where applicable.
+- Do not treat an open data format as permission to redistribute the data.
+- Version schemas and research artefacts; include reproducible manifests and dependency/version metadata where feasible.
+
+### 5. Public-interest AI governance
 
 **Züger & Asghari (2022), “AI for the public: How public interest theory shifts the discourse on AI.”**  
 [DOI: 10.1007/s00146-022-01480-5](https://doi.org/10.1007/s00146-022-01480-5)
@@ -147,10 +178,8 @@ Use public-interest analysis to ask who benefits, who bears risks, who can conte
 
 ## Research workspace
 
-The associated Undermind workspace contains two ongoing deep searches:
-- Architectures, AI governance and digital ecosystems.
-- Trustworthy AI, agent workflows and production security.
+The two completed deep searches and their ranked results are preserved in Undermind:
+- [Architectures, AI governance and digital ecosystems](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2FArquitecturas%20soberanas%2C%20gobernanza%20IA%20y%20ecosistemas%20digitales)
+- [Trustworthy AI, agent workflows and production security](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2FIA%20confiable%2C%20agentes%20y%20seguridad%20de%20producci%C3%B3n)
 
-Workspace: https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53
-
-The bibliography and this plan should be updated when those searches complete, with the final selected papers read in full text and their limitations recorded.
+The search results cover hundreds of candidate papers. This document uses a selected subset, with full-text analysis performed for prompt-injection/agent security, the AgentDojo benchmark, identity ecosystem governance and FAIR data principles. Not every candidate paper was read in full text, and conclusions are limited accordingly.
