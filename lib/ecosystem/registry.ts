@@ -9,6 +9,7 @@ export type EcosystemIntegrationState =
   | "catalogued"
   | "contracted"
   | "adapter_implemented"
+  | "contract_tested"
   | "verified";
 
 export type EcosystemSystem = {
@@ -125,6 +126,7 @@ export function getPublicEcosystemCatalog() {
       catalogued: "Repository and intended role are listed; runtime connectivity is not asserted.",
       contracted: "A versioned interface and data ownership are agreed.",
       adapter_implemented: "An adapter exists in code but still requires deployment and integration tests.",
+      contract_tested: "Versioned consumer/provider contract tests passed for the recorded commit and contract version; deployment health is not implied.",
       verified: "The named integration passed recorded end-to-end checks for the stated scope.",
     },
     securityBoundary: "Catalog visibility does not grant authentication, authorization, write access, or trust.",

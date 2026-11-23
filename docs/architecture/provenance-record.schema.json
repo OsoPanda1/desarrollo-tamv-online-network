@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tamv.online/schemas/provenance-record-v1.json",
+  "title": "TAMV Provenance Record v1",
+  "description": "Minimal provenance envelope for imported public metadata. It records source and validation facts; it is not a digital signature, trusted timestamp, peer review or accreditation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceUri",
+    "sourceSystem",
+    "observedAt",
+    "validationState"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "sourceUri": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1
+    },
+    "sourceSystem": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRecordId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sourceVersion": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Source commit SHA, version or ETag where available; null if unavailable."
+    },
+    "observedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "license": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "SPDX identifier or source license statement where verified; null means unknown, not unrestricted."
+    },
+    "contentDigest": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "sha-256",
+            "sha-384",
+            "sha-512"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]+$"
+        }
+      }
+    },
+    "validationState": {
+      "type": "string",
+      "enum": [
+        "unreviewed",
+        "schema_valid",
+        "source_verified",
+        "rejected"
+      ]
+    },
+    "validationEvidenceUri": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 2000
+    }
+  }
+}
