@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 export default function MembershipTermsPage() {
   const version = "TAMV-MEMBERSHIP-TERMS-2026-11-23-v1"
   const liveApproved = process.env.TAMV_MEMBERSHIP_TERMS_VERSION === version &&
-    process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true"
+    process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true" &&
+    process.env.TAMV_MEMBERSHIP_LEGAL_APPROVED === "true" &&
+    process.env.TAMV_MEMBERSHIP_TAX_APPROVED === "true" &&
+    process.env.TAMV_MEMBERSHIP_REFUNDS_APPROVED === "true"
 
   return <TamvAppShell locale="es">
     <section className="section"><div className="container membership-legal-page">
