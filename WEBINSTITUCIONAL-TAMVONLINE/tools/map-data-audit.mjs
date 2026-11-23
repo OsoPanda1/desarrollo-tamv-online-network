@@ -42,6 +42,9 @@
  *  E12 islote de rutas — el bloque estático publica <script id="hcu-paths">
  *     con la traducción de cada enlace interno del grafo al idioma de la página,
  *     y el motor lo lee para resolver las fuentes del expediente.
+ *  E13 observatorio 3D — perspectiva orbital, expansión focal, control de cámara,
+ *     render condicionado a visibilidad, modo inmersivo y analítica derivada deben
+ *     estar cableados en las dos páginas sin duplicar el corpus ni ocultar el fallback.
  */
 import { readFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
@@ -442,6 +445,56 @@ const G = loadGraph(WEB);
     if (!errors.some((e) => e.startsWith('E12') && e.includes(rel))) {
       pass('E12', rel + ': islote #hcu-paths con ' + Object.keys(map).length + ' rutas del idioma de la pagina, todas comprobadas en disco');
     }
+  }
+}
+
+/* ── E13 observatorio 3D y capa analítica ─────────────────────────────── */
+{
+  const engine = readFileSync(join(WEB, 'assets', 'mapa', 'map.js'), 'utf8');
+  const css = readFileSync(join(WEB, 'assets', 'mapa', 'map.css'), 'utf8');
+  const engineContracts = [
+    ['projection', /function projectCoordinates\(/, 'la cámara perdió su proyección con perspectiva'],
+    ['orbits', /function drawOrbits\(/, 'el motor perdió las órbitas espaciales'],
+    ['orbit layer', /orbits:\s*true/, 'la capa orbital 3D no tiene un estado inicial explícito'],
+    ['focal expansion', /focusDomainId[\s\S]{0,250}1\.34/, 'no existe expansión espacial de la región seleccionada'],
+    ['adaptive animation', /function requestRender\([\s\S]*?requestAnimationFrame\(loop\)/, 'el render adaptativo no agenda frames'],
+    ['page visibility', /document\.visibilityState/, 'el motor no respeta la visibilidad de la pestaña'],
+    ['viewport observation', /IntersectionObserver/, 'el motor no suspende el render fuera del viewport'],
+    ['analysis derivation', /function fillAnalysis\([\s\S]*?G\.states[\s\S]*?G\.entities[\s\S]*?G\.flows[\s\S]*?G\.domains/, 'la analítica ya no se deriva del corpus y de sus relaciones']
+  ];
+  engineContracts.forEach(([name, re, message]) => {
+    if (!re.test(engine)) fail('E13', message);
+  });
+
+  [
+    ['orbit rings', /\.hcu-analysis-bars/],
+    ['immersive mode', /\.hcu-stage\.is-immersive/],
+    ['analytical matrix', /\.hcu-analysis-table/],
+    ['reduced motion', /@media\s*\(prefers-reduced-motion:\s*reduce\)/]
+  ].forEach(([name, re]) => {
+    if (!re.test(css)) fail('E13', 'map.css perdió el contrato visual: ' + name);
+  });
+
+  const LOCALES = JSON.parse(readFileSync(join(ROOT, 'i18n', 'locales.json'), 'utf8')).locales.filter((l) => l.status === 'live');
+  const defs = JSON.parse(readFileSync(join(ROOT, 'i18n', 'pages.json'), 'utf8')).pages;
+  for (const locale of LOCALES) {
+    const rel = (locale.prefix || '') + defs.map.file[locale.code];
+    const html = readFileSync(join(WEB, rel), 'utf8');
+    const requirements = [
+      ['3D orbital control', /data-hcu-layer="orbits"/],
+      ['immersive control', /data-hcu-immersive/],
+      ['zoom controls', /data-hcu-zoom="in"[\s\S]*?data-hcu-zoom="out"|data-hcu-zoom="out"[\s\S]*?data-hcu-zoom="in"/],
+      ['analytical dashboard', /<section class="hcu-analysis" data-hcu-analysis/],
+      ['no-script analytical fallback', /hcu-analysis-fallback/],
+      ['versioned map stylesheet', /mapa\/map\.css\?v=hcu-observatory-v2/],
+      ['versioned 3D engine', /mapa\/map\.js\?v=hcu-observatory-v2/]
+    ];
+    requirements.forEach(([name, re]) => {
+      if (!re.test(html)) fail('E13', rel + ': falta ' + name);
+    });
+  }
+  if (!errors.some((e) => e.startsWith('E13'))) {
+    pass('E13', 'campo orbital 3D, selección expansiva, render adaptativo, control inmersivo y observatorio analítico presentes en todos los idiomas publicados');
   }
 }
 
