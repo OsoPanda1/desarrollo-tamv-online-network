@@ -4,6 +4,7 @@ import { Search, ArrowUpRight } from "lucide-react"
 import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react"
 import type { Locale } from "@/lib/i18n"
 import { Hcu3DCanvas } from "@/components/hcu/hcu-3d-canvas"
+import { HcuAnalyticsOverview } from "@/components/hcu/hcu-analytics-overview"
 
 type HcuDomain = { id: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; sortOrder: number }
 type HcuAtom = { id: string; domainId: string; nameEs: string; nameEn: string; descriptionEs: string; descriptionEn: string; influenceX: number; riskY: number; evidenceZ: number; isProvisional: boolean; isQuarantined: boolean }
@@ -145,6 +146,7 @@ export function HcuGraph({ graph, locale = "es", onUseAtom }: { graph: HcuGraphD
   }
 
   return <div className="hcu-graph">
+    <HcuAnalyticsOverview graph={graph} locale={locale} onSelectDomain={(id) => { setDomainFilter(id); setSelection({ kind: "domain", id }); setView("3d") }} />
     <div className="hcu-explorer-toolbar">
       <label className="hcu-search-field">
         <Search aria-hidden="true" />
