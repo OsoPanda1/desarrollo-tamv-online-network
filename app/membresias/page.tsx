@@ -5,6 +5,7 @@ import { TamvAppShell } from "@/components/tamv-app-shell"
 import { PageIntro } from "@/components/shared/page-intro"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { MembershipCheckout, MembershipPortalButton } from "@/components/membership-checkout"
+import { MembershipStatus } from "@/components/membership-status"
 import { resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string; checkout?: string }>
@@ -55,6 +56,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
 
     <section className="section"><div className="container">
       {checkoutNotice && <p className="membership-status-notice" role="status"><ShieldCheck aria-hidden="true" />{checkoutNotice}</p>}
+      <MembershipStatus locale={locale} />
       <div className="section-heading-row">
         <div><p className="eyebrow">{english ? "01 / PLANS" : "01 / PLANES"}</p><h2>{english ? "Choose your membership." : "Elige tu membresía."}</h2></div>
         <p>{english ? "The monthly amount is set in Mexican pesos. Checkout and recurring billing are processed by Stripe; TAMV does not store card details." : "El importe mensual se establece en pesos mexicanos. Stripe procesa el checkout y los cobros recurrentes; TAMV no almacena los datos de tu tarjeta."}</p>
