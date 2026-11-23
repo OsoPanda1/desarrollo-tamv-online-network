@@ -233,6 +233,7 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
               <li>{english ? "Review eligibility and terms before applying or sharing confidential information." : "Revisa los requisitos y términos antes de postular o compartir información confidencial."}</li>
             </ol>
             <div className="membership-external-links">
+              <a className="text-link" href="https://ai.lounge.ai/%40tamvonline" target="_blank" rel="noopener noreferrer">{english ? "View TAMV community profile" : "Ver el perfil comunitario de TAMV"} <ArrowUpRight aria-hidden="true" /></a>
               <a className="text-link" href="https://ai.lounge.ai/" target="_blank" rel="noopener noreferrer">{english ? "Open AI Lounge" : "Abrir AI Lounge"} <ArrowUpRight aria-hidden="true" /></a>
               <a className="text-link" href="https://ai.lounge.ai/perks" target="_blank" rel="noopener noreferrer">{english ? "Check startup perks" : "Consultar beneficios para startups"} <ArrowUpRight aria-hidden="true" /></a>
             </div>
