@@ -50,7 +50,11 @@ export default function MembershipTermsPage() {
 
       <h2>7. Aprobación de versión</h2>
       <p>Esta versión es una base operativa del producto, no una opinión jurídica. Antes del cobro live, el responsable debe comprobar que corresponde a su entidad operadora, obligaciones fiscales y normativa aplicable, y fijar la variable <code>TAMV_MEMBERSHIP_TERMS_VERSION</code> al identificador de esta versión solo tras aprobar las condiciones finales.</p>
-      <p className="membership-back-link"><Link className="text-link" href="/membresias"><ArrowLeft aria-hidden="true" /> Volver a membresías</Link> · <Link className="text-link" href="/privacidad">Aviso de privacidad</Link></p>
+            <h2>8. Meta futura: formalización institucional y ROR</h2>
+      <p>Si los recursos netos futuros de la operación lo permiten y el órgano de gobernanza competente lo aprueba, TAMV podrá evaluar asignar una parte documentada de esos recursos a asesoría y gastos de formalización jurídica, contabilidad, documentación institucional y preparación de evidencias para solicitar una ficha en el Research Organization Registry (ROR).</p>
+      <p>Esta posibilidad es una meta futura, no una promesa contractual ni un porcentaje comprometido de las cuotas actuales. No supone una donación restringida, compra de acciones, participación de propiedad ni depósito separado. Cualquier asignación requiere presupuesto, decisión interna, registros contables e informes transparentes.</p>
+      <p>ROR no cobra por el identificador ni por el acceso a sus datos. Un ROR ID tampoco constituye jurídicamente una empresa, no sustituye registros legales o fiscales y no es una acreditación. La inclusión depende del alcance y la revisión de evidencias de ROR. Consulta la <a href="https://ror.org/registry" target="_blank" rel="noopener noreferrer">política y los criterios oficiales del registro</a>.</p>
+<p className="membership-back-link"><Link className="text-link" href="/membresias"><ArrowLeft aria-hidden="true" /> Volver a membresías</Link> · <Link className="text-link" href="/privacidad">Aviso de privacidad</Link></p>
     </div></section>
   </TamvAppShell>
 }
