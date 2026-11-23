@@ -29,6 +29,8 @@ test("provenance API returns valid schema result without claiming source truth",
   const result = await response.json();
   assert.equal(response.status, 200);
   assert.equal(result.valid, true);
+  assert.equal(result.submittedValidationState, "schema_valid");
+  assert.equal("validationState" in result, false);
   assert.match(result.semantics, /Schema validation only/);
   assert.equal(response.headers.get("cache-control"), "no-store");
 });
