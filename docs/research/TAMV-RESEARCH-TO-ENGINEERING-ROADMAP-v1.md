@@ -125,3 +125,67 @@ Requirements:
 ## Next review gate
 
 After the quota resets, read full text for the highest-priority papers, complete the three new searches, and map each evidence-backed recommendation to a TAMV repository/component, test, result, commit and deployment URL. No control is closed without implementation evidence.
+
+
+
+## Research update — 23 November 2026
+
+The three specialized Undermind searches are now marked **completed**. Their results are based on available abstracts and metadata; full-text PDF review remains pending because the free reading quota was still active.
+
+### Federated interoperability and API contracts
+
+The search returned 209 relevant works. Main conclusion: a shared catalog or identity provider does not itself create trust. The resource-owning domain must verify authorization for each operation.
+
+- Follow OAuth 2.0 Security BCP, restrict tokens to intended resources, and evaluate mTLS-bound tokens or DPoP based on a threat model; do not add mechanisms without validating provider support. [Lod25]
+- Preserve service ownership of data and avoid cross-service database writes; microservice data coordination has persistent consistency and transaction challenges. [Lai21]
+- Version API contracts, preserve backward compatibility, communicate changes and test consumers against providers. Interviews across 11 companies identified outdated consumers and change-impact analysis as practical challenges. [Ler23]
+- Event-driven systems commonly face schema, payload size, ordering, audit and debugging problems. [Lai24]
+- Consumer-driven contract testing can detect syntactic incompatibilities before production. [Sch25c]
+- Differential regression tests across 17 versions of Azure APIs detected 14 regressions; this supports testing both API specifications and service behavior, but does not guarantee exhaustive detection. [God20]
+- Zero-trust federation using attestation has proof-of-concept evidence only; this is not evidence that TAMV itself is Zero Trust. [Poi25b]
+
+**Implementation decision:** versioned OpenAPI contracts, read-only adapters first, consumer/provider contract tests in CI, idempotency, rate limits, timeouts, correlation IDs and recovery behavior. For asynchronous messaging, assume at-least-once delivery and make consumers idempotent unless stronger guarantees are proven for the specific system.
+
+### Open research infrastructure and provenance
+
+The search returned 189 relevant works. Mature practices include DOI for outputs and versions when applicable, ORCID for people, ROR for organizations, interoperable metadata, W3C PROV for provenance and RO-Crate for packaging research artefacts and execution context. Retain source language and evaluate discovery in Spanish and Portuguese.
+
+FAIR should be treated as an incremental diagnostic, not a universal score: tools and metrics may diverge, so publish the criteria, version, scope and results of each assessment. GRADE should not be used as a universal quality scale for a general technology platform. Verifiable credentials and trust registries remain better treated as scoped pilots than replacements for provenance or governance.
+
+**Implementation decision:** build a metadata register that records source, version, license, language, relationships, review state and validation evidence; support interoperable export; pilot RO-Crate/PROV on selected projects; document the criteria used for any FAIR assessment.
+
+Relevant references surfaced: [Bat23b], [Bil15], [Soi21], [Can24], [Car20], [Mea19], [Gou23], [Hen20], [Leb13], [Leo23], [Ces24], [Pet20], [Bar20], [Bie25].
+
+### Community governance and Latin American digital sovereignty
+
+The search returned 232 relevant works. Research supports the plausibility of territorially grounded federations that share infrastructure and learning while preserving local authority over priorities, labor and data. Evidence is moderate for contextual organizational mechanisms but insufficient to claim general scalability, sustainability or proven impact: much of the literature consists of qualitative case studies in an emerging field.
+
+- The CoopCycle Argentina case identifies implementation opportunities and constraints; it does not prove direct transferability to TAMV. [Kas24]
+- Studies of worker-owned and solidarity-economy technologies in Latin America describe political, economic and technical challenges in context. [Gro23], [Man24], [Fol26b], [Alv26b], [Ben26]
+- Research on network sovereignty in rural Mexico and Tanzania highlights community participation, local knowledge, digital education and economic ownership. [Par21]
+- Studies of Indigenous community networks in Chiapas and Oaxaca describe community participation in infrastructure design and governance. [Ros21]
+- The Oyster Model emphasizes reciprocal relationships among teams, partners, contributors, users and allies as part of sustaining community cultural knowledge infrastructure. [Fen25]
+- A failed Brazilian platform-cooperativism case warns that dependence on global infrastructure can constrain practical autonomy. [Est25]
+
+**Implementation decision:** define local, federated and shared-infrastructure decision rights; publish a responsibility matrix, appeal mechanism and review cadence; measure effective participation, decision concentration, appeal times, technical continuity and provider dependence. Do not claim community representation, effective sovereignty, sustainability or social impact without explicit indicators and evaluation.
+
+### Additional bibliography (DOIs surfaced by Undermind)
+
+- [Lod25] *Best Current Practice for OAuth 2.0 Security*. https://doi.org/10.17487/rfc9700
+- [Lai21] *Data Management in Microservices: State of the Practice, Challenges, and Research Directions*. https://doi.org/10.48550/arXiv.2103.00170
+- [Lai24] *An Empirical Study on Challenges of Event Management in Microservice Architectures*. https://doi.org/10.1145/3776581
+- [Ler23] *Microservice API Evolution in Practice: A Study on Strategies and Challenges*. https://doi.org/10.1016/j.jss.2024.112110
+- [Poi25b] *Building a Zero Trust Federation*. https://doi.org/10.1109/JSAC.2025.3560014
+- [Sch25c] *Ensuring Syntactic Interoperability Using Consumer-Driven Contract Testing*. https://doi.org/10.1002/stvr.70006
+- [God20] *Differential regression testing for REST APIs*. https://doi.org/10.1145/3395363.3397374
+- [Par21] *Digital empowerment for whom? An analysis of ‘Network sovereignty’ in low-income, rural communities in Mexico and Tanzania*. https://doi.org/10.1080/1369118X.2021.1928264
+- [Ros21] *From community networks to shared networks: the paths of Latin-Centric Indigenous networks to a pluriversal internet*. https://doi.org/10.1080/1369118X.2022.2085614
+- [Fen25] *The Oyster Model: understanding community roles in sustaining digital cultural knowledge infrastructures*. https://doi.org/10.1007/s10502-025-09510-z
+- [Fol26b] *Beyond platform capitalism: Digital solidarity economy and free culture networks in Argentina and Brazil*. https://doi.org/10.14763/2026.1.2061
+- [Alv26b] *Engineering platform cooperativism: Contributions from the Brazilian solidarity economy*. https://doi.org/10.14763/2026.1.2051
+- [Ben26] *Building Worker-Owned Technologies in Latin America: Shared Learning, Intersectionality, and Collective Futures*. https://doi.org/10.1163/24714607-bja10222
+- [Man24] *Cooperativismo de plataformas e federações de cooperativas: unindo forças na busca por soberania digital e autonomia no trabalho no contexto Norte-Sul*. https://doi.org/10.18617/liinc.v20i2.7294
+
+### Validation gate
+
+The next step is full-text review of [Deb24], [Abd23], [Fet17], [Soi21], [Can24], [Car20] and the API/event-management papers once Undermind reading becomes available. Map each accepted finding to a TAMV component, test, result, commit and deployment evidence. A recommendation is not implemented merely because it appears in this document.
