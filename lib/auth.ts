@@ -31,8 +31,8 @@ const trustedOrigins = [...new Set(configuredTrustedOrigins.map(trustedOrigin).f
 export const auth = betterAuth({
   database: pool,
   baseURL:
-    process.env.BETTER_AUTH_URL ??
     process.env.APP_URL ??
+    process.env.BETTER_AUTH_URL ??
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : process.env.VERCEL_URL
