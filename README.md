@@ -37,6 +37,7 @@ The shared navigation, institutional landing sections, application footer, and r
 The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
 
 - [Public API quickstart](docs/api/public-api-quickstart.md) — reproducible `curl` examples, response boundaries, and license/provenance notes.
+- [OpenAPI 3.1 contract](public/openapi.yaml) — machine-readable specification for current public read endpoints; session-protected write routes are intentionally not documented as anonymous integrations.
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
 - [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
 - [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
