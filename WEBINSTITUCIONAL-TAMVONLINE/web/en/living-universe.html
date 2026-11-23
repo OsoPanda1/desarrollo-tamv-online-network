@@ -333,6 +333,7 @@ document.documentElement.classList.add("js");</script>
       <div class="hcu-controls" data-hcu-replace>
         <fieldset>
           <legend>Layers</legend>
+          <button type="button" class="hcu-btn" data-hcu-layer="orbits" aria-pressed="true">3D orbits</button>
           <button type="button" class="hcu-btn" data-hcu-layer="flow">Flows</button>
           <button type="button" class="hcu-btn" data-hcu-layer="density">Density</button>
           <button type="button" class="hcu-btn" data-hcu-layer="gravity">Dependencies</button>
@@ -349,6 +350,9 @@ document.documentElement.classList.add("js");</script>
         <fieldset>
           <legend>View</legend>
           <button type="button" class="hcu-btn" data-hcu-play aria-pressed="true">Pause rotation</button>
+          <button type="button" class="hcu-btn" data-hcu-zoom="out" aria-label="Zoom out of the 3D field">− Zoom out</button>
+          <button type="button" class="hcu-btn" data-hcu-zoom="in" aria-label="Zoom into the 3D field">＋ Zoom in</button>
+          <button type="button" class="hcu-btn" data-hcu-immersive aria-pressed="false">3D immersive view</button>
           <button type="button" class="hcu-btn" data-hcu-reset>Reset</button>
         </fieldset>
         <fieldset>
@@ -360,6 +364,10 @@ document.documentElement.classList.add("js");</script>
       <p class="hcu-status" data-hcu-status role="status" aria-live="polite"></p>
 
       <div class="hcu-tally" data-hcu-tally data-hcu-replace></div>
+
+      <section class="hcu-analysis" data-hcu-analysis aria-label="Descriptive analytics for the HCU universe">
+        <p class="hcu-analysis-fallback">This panel is computed from the map's published data. Its figures describe the documented corpus; they are not independent measurements of impact, causality, or institutional maturity.</p>
+      </section>
 
       <noscript>
         <div class="hcu-noscript">
