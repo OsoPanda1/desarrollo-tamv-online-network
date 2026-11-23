@@ -131,6 +131,13 @@ Esta inspección de código es evidencia positiva sobre controles existentes, pe
 - ROR no es una tarifa de constitución ni un registro de empresas: su identificador y sus datos son gratuitos, y la inclusión está sujeta a criterios y curaduría. Fuentes oficiales: [About ROR](https://ror.org/about), [FAQ](https://ror.org/about/faqs/) y [criterios de inclusión](https://ror.org/registry).
 - El error de Vercel aportado corresponde al commit histórico `e294d91`; el lockfile actual de `main` ya no contiene referencias a `react@19.2.4`. Para cerrar el incidente en producción hace falta un build READY sobre un commit actual, no reutilizar como validación el log del commit anterior.
 
+## 6D. Corrección de expectativas en la prueba de gobernanza ROR
+
+- Una revisión estática encontró dos expresiones regulares que no coincidían con el texto publicado: el enunciado sobre gratuidad del identificador ROR y la frase de condiciones que aclara que el objetivo futuro no es un compromiso contractual de porcentaje.
+- El PR #29 corrige esas expectativas y añade aserciones para diferenciar un identificador ROR de la constitución jurídica de una empresa.
+- Se verificaron 12 coincidencias fuente/prueba en el contenido de los archivos, pero esto **no** equivale a ejecutar el archivo de pruebas mediante Node ni a pasar toda la suite de tests.
+- El PR #29 permanece abierto y en borrador. Los runs de GitHub Actions siguen fallando y no exponen logs/steps legibles mediante la conexión actual, por lo que el fallo de CI no se atribuye a esta prueba ni a otra causa no confirmada.
+
 ## 7. Gate de liberación obligatorio
 
 El orden recomendado es deliberado; no se debe activar cobro live para descubrir fallos de integración.
