@@ -8,7 +8,7 @@ import { resolveLocale } from "@/lib/i18n"
 type SearchParams = Promise<{ lang?: string; next?: string; callbackURL?: string }>
 
 function resolveInternalRedirect(value: string | undefined): string {
-  if (!value || !value.startsWith("/") || value.startsWith("//") || value.includes("\\\\")) return "/portal"
+  if (!value || !value.startsWith("/") || value.startsWith("//") || value.includes(String.fromCharCode(92))) return "/portal"
   try {
     const url = new URL(value, "https://tamv.invalid")
     if (url.origin !== "https://tamv.invalid") return "/portal"
