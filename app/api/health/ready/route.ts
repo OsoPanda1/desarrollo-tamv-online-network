@@ -21,10 +21,12 @@ export async function GET() {
   }
 
   try {
-    await pool.query({
+    const probeQuery = {
       text: "SELECT 1",
       query_timeout: DATABASE_PROBE_TIMEOUT_MS,
-    });
+    };
+
+    await pool.query(probeQuery);
 
     return Response.json(readinessPayload(true), {
       status: 200,
