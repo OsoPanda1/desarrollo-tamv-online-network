@@ -23,6 +23,7 @@ Bring the eight repositories into one coherent ecosystem without forcing incompa
 
 - Typed catalog: `lib/ecosystem/registry.ts`.
 - Public discovery endpoint: `GET /api/v1/ecosystem`.
+- Stateless provenance validator: `POST /api/v1/provenance/validate` with a 64 KiB request-body limit, JSON-only input, and structured schema errors.
 - This contract and its explicit state semantics.
 - Catalog states are evidence-gated: `catalogued`, `contracted`, `adapter_implemented`, `verified`.
 - No secrets, private URLs, tokens, or privileged configuration are returned.
@@ -109,3 +110,7 @@ For each adapter, record:
 - operator/reviewer and known limitations.
 
 Only then may its catalog state advance from `catalogued` to `contracted`, `adapter_implemented`, or `verified`.
+
+## Provenance validation endpoint
+
+`POST /api/v1/provenance/validate` validates a provenance envelope against the v1 Zod schema. It does not perform network requests, store submitted records, or upgrade a record's evidence state. A `200` means schema-valid input only; a `422` returns field-level validation issues; malformed JSON returns `400`; unsupported media type returns `415`; payloads larger than 65,536 bytes return `413`. Responses use `Cache-Control: no-store` and do not echo the submitted record.
