@@ -170,6 +170,21 @@ test("adapter classifies rate limits, timeout and upstream failure without refle
   }
 });
 
+test("adapter classifies a locked upstream response body without throwing", async () => {
+  const previous = process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+  process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = "https://research.tamv.online/api/research/search";
+  const response = jsonResponse(validResearchResponse());
+  const lock = response.body.getReader();
+  try {
+    const result = await fetchInstitutionalResearch("memoria viva", "research", async () => response);
+    assert.deepEqual(result, { ok: false, error: "provider_invalid_response", httpStatus: 502 });
+  } finally {
+    lock.releaseLock();
+    if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+    else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
+  }
+});
+
 test("adapter rejects wrong query, invalid URLs, malformed JSON and oversized responses", async () => {
   const previous = process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
   process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = "https://research.tamv.online/api/research/search";
