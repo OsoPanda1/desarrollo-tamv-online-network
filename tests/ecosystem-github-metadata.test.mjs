@@ -13,6 +13,7 @@ test("both OpenAPI contracts describe the metadata endpoint and bounded result s
     assert.match(document, /EcosystemRepositoryMetadataResponse/);
     assert.match(document, /metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response/);
     assert.match(document, /does not assert deployed application health/i);
+    assert.match(document, /snapshot assembly time.*900 seconds/i);
   }
 });
 
