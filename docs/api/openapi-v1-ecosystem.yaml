@@ -68,6 +68,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FederatedResearchError"
+        "403":
+          description: Browser request Origin differs from the API origin. Requests without Origin (such as server-to-server clients) are not origin-checked.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
         "413":
           description: Request body exceeds 2048 bytes.
           content:
@@ -245,7 +251,7 @@ components:
         ok: { type: boolean, const: false }
         error:
           type: string
-          enum: [unsupported_media_type, payload_too_large, invalid_utf8, request_body_unreadable, invalid_json, invalid_query, provider_not_configured, provider_configuration_invalid, provider_timeout, provider_rate_limited, provider_unavailable, provider_response_too_large, provider_invalid_response]
+          enum: [origin_not_allowed, unsupported_media_type, payload_too_large, invalid_utf8, request_body_unreadable, invalid_json, invalid_query, provider_not_configured, provider_configuration_invalid, provider_timeout, provider_rate_limited, provider_unavailable, provider_response_too_large, provider_invalid_response]
         expected: { type: string }
         maxBytes: { type: integer }
         issues:
