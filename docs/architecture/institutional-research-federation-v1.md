@@ -34,6 +34,7 @@ Responses use `Cache-Control: no-store` because search terms may be sensitive. U
 ## Trust boundary
 
 This bridge imports public metadata only. Search-result rank is not a quality score; a result does not establish author identity, ownership, peer review, scientific validity, accreditation, legal licensing rights or independent source verification. The two applications keep their own authentication, sessions, databases and authorization policies. The bridge never writes to either application.
+Search text is forwarded to the institutional endpoint and may then be sent to its configured external metadata providers. Do not submit personal, confidential or sensitive terms. The core route uses `Cache-Control: no-store`; it cannot dictate how external providers retain request logs.
 
 ## Release gate
 
