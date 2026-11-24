@@ -56,6 +56,7 @@ test("metadata adapter calls only the fixed GitHub API and returns a minimal pub
   assert.equal(capturedInit.method, "GET");
   assert.equal(capturedInit.redirect, "error");
   assert.equal(capturedInit.cache, "force-cache");
+  assert.equal(capturedInit.next.revalidate, 900);
   assert.equal(capturedInit.headers.Authorization, undefined);
   assert.equal(capturedInit.headers.Accept, "application/vnd.github+json");
   assert.equal(response.sourceMetadataStatus, "metadata_available");
