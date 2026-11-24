@@ -106,6 +106,19 @@ test("metadata adapter rejects upstream identity mismatches, invalid JSON, and o
   assert.equal(oversized.sourceMetadataStatus, "invalid_response");
 });
 
+test("metadata adapter classifies a locked upstream body as invalid instead of throwing", async () => {
+  const system = ecosystemSystems[0];
+  const response = jsonResponse(payloadFor(system));
+  const lock = response.body.getReader();
+  try {
+    const result = await fetchPublicRepositoryMetadata(system, async () => response);
+    assert.equal(result.sourceMetadataStatus, "invalid_response");
+    assert.equal(result.metadata, null);
+  } finally {
+    lock.releaseLock();
+  }
+});
+
 test("metadata adapter rejects unregistered hosts before issuing a request", async () => {
   const system = { ...ecosystemSystems[4], repository: "https://example.org/attacker/repository" };
   let called = false;
