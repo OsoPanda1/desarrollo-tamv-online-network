@@ -65,7 +65,7 @@ const institutionalSearchResponseSchema = z.object({
   results: z.array(researchItemSchema).max(24),
   providers: z.array(providerStateSchema).max(12),
   methodology: z.string().min(1).max(3000),
-}).passthrough();
+}).strip();
 
 export type InstitutionalResearchResult = z.infer<typeof institutionalSearchResponseSchema>;
 
