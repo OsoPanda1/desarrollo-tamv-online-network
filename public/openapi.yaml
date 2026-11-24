@@ -26,6 +26,8 @@ tags:
     description: Public metadata in JSON-LD or CSV format.
   - name: Provenance
     description: Stateless schema validation for provenance envelopes.
+  - name: Ecosystem
+    description: Public ecosystem repository discovery and metadata.
 paths:
   /api/v1/research/topics:
     get:
@@ -134,6 +136,29 @@ paths:
                 description: CSV metadata export; each record's license/provenance must be reviewed before redistribution.
         "503":
           $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/ecosystem/metadata:
+    get:
+      operationId: getPublicEcosystemRepositoryMetadata
+      tags: [Ecosystem]
+      summary: Retrieve bounded public GitHub repository metadata for the ecosystem catalog
+      description: >-
+        Reads metadata only from the fixed GitHub REST API origin for repository URLs already present in the static registry.
+        Per-repository failures are returned in the response. This does not assert deployed application health,
+        authentication, authorization, data synchronization, source correctness, or trust.
+      responses:
+        "200":
+          description: Per-repository public metadata results; individual upstream failures do not fail the overall response.
+          headers:
+            Cache-Control:
+              schema: { type: string }
+            X-Content-Type-Options:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemRepositoryMetadataResponse"
+        "500":
+          description: Unexpected failure while constructing the response.
   /api/v1/provenance/validate:
     post:
       operationId: validateProvenanceRecord
@@ -196,6 +221,44 @@ components:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
   schemas:
+    EcosystemRepositoryMetadataResponse:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, checkedAt, scope, systems]
+      properties:
+        schemaVersion: { type: string, const: "1.0.0" }
+        checkedAt: { type: string, format: date-time }
+        scope: { type: string }
+        systems:
+          type: array
+          items:
+            $ref: "#/components/schemas/EcosystemRepositoryMetadataEntry"
+    EcosystemRepositoryMetadataEntry:
+      type: object
+      additionalProperties: false
+      required: [systemId, name, repository, sourceMetadataStatus, checkedAt, metadata]
+      properties:
+        systemId: { type: string, pattern: "^[a-z0-9-]+$" }
+        name: { type: string, minLength: 1 }
+        repository: { type: string, format: uri }
+        sourceMetadataStatus:
+          type: string
+          enum: [metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response]
+        checkedAt: { type: string, format: date-time }
+        metadata:
+          type: [object, "null"]
+          additionalProperties: false
+          required: [repositoryId, fullName, url, defaultBranch, archived, updatedAt, pushedAt, primaryLanguage, licenseSpdxId]
+          properties:
+            repositoryId: { type: integer, minimum: 1 }
+            fullName: { type: string }
+            url: { type: string, format: uri }
+            defaultBranch: { type: string, minLength: 1 }
+            archived: { type: boolean }
+            updatedAt: { type: string, format: date-time }
+            pushedAt: { type: [string, "null"], format: date-time }
+            primaryLanguage: { type: [string, "null"] }
+            licenseSpdxId: { type: [string, "null"] }
     ProvenanceRecord:
       type: object
       additionalProperties: false
