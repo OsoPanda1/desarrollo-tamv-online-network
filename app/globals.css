@@ -2953,7 +2953,7 @@ body {
 @media (max-width: 620px) {
   body { font-size: 16px; }
   .container { width: min(var(--container), calc(100% - 32px)); }
-  .utility-inner { font-size: 9px; gap: 8px; }
+  .utility-inner { min-height: 0; flex-wrap: wrap; justify-content: center; gap: 3px 10px; padding-block: 6px; font-size: 10px; line-height: 1.45; text-align: center; }
   .brand-type strong, .footer-brand strong { font-size: 19px; }
   .primary-navigation { gap: 9px; }
   .primary-navigation a { font-size: 14px; }
