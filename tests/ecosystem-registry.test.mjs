@@ -26,6 +26,22 @@ test("ecosystem registry catalogs all eight systems", () => {
   }
 });
 
+test("ecosystem GET route returns the real catalog with explicit security semantics", async () => {
+  const { GET } = await import("../app/api/v1/ecosystem/route.ts");
+  const response = await GET();
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.match(response.headers.get("cache-control") ?? "", /max-age=60/);
+  assert.equal(body.system, "TAMV Online Network");
+  assert.equal(body.schemaVersion, "1.0.0");
+  assert.equal(body.systems.length, 8);
+  assert.equal(new Set(body.systems.map((system) => system.id)).size, 8);
+  assert.ok(body.systems.every((system) => system.integrationState === "catalogued"));
+  assert.match(body.securityBoundary, /does not grant authentication/i);
+});
+
 test("public route returns discovery metadata and no synthetic health claim", () => {
   assert.match(route, /getPublicEcosystemCatalog/);
   assert.match(route, /Cache-Control/);
