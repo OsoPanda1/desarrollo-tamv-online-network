@@ -40,7 +40,7 @@ const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
 
 test("both OpenAPI files document the institutional research bridge", () => {
   for (const document of [canonicalOpenApi, publicOpenApi]) {
-    assert.match(document, /\/api\/v1\/research\/federated/);
+    assert.match(document, /^  \/api\/v1\/research\/federated:\n/m);
     assert.match(document, /FederatedResearchRequest/);
     assert.match(document, /FederatedResearchResponse/);
     assert.match(document, /provider_not_configured/);
