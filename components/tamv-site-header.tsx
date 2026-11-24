@@ -12,12 +12,10 @@ import { TamvAssistant } from "@/components/tamv-assistant"
 const links = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
-  { href: "/comunidad", labelEs: "Comunidad", labelEn: "Community" },
+  { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
+  { href: "/guia", labelEs: "Guía práctica", labelEn: "Practical guide" },
   { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
-  { href: "/hcu", labelEs: "Mapa HCU", labelEn: "HCU map" },
-  { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
-  { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },
 ]
 
 export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
@@ -52,7 +50,6 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
           {links.map((link) => (
             <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
           ))}
-          <Link href={`${localizedPath("/", locale)}#guia`} onClick={closeMenu}>{english ? "Guide" : "Guía"}</Link>
           {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
           <TamvDonationCTA locale={locale} variant="compact" />
           <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
