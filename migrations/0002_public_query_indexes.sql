@@ -26,7 +26,7 @@ CREATE INDEX IF NOT EXISTS hcu_shocks_atom_year_idx
   ON hcu_shocks (atom_id, year, user_id);
 
 CREATE INDEX IF NOT EXISTS research_proposals_topic_created_idx
-  ON research_proposals (topic_id, "createdAt" DESC);
+  ON research_proposals (topic_id, created_at DESC);
 
 CREATE INDEX IF NOT EXISTS collaboration_interests_topic_created_idx
   ON collaboration_interests (topic_id, created_at DESC);

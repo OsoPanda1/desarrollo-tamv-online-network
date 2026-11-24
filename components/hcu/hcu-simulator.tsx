@@ -54,6 +54,10 @@ export function HcuSimulator({ atoms, loggedIn, locale = "es", shockAtomId, onSh
       : shock))
   }
 
+  function removeShock(index: number) {
+    setShocks((current) => current.filter((_, position) => position !== index))
+  }
+
   function updateStartYear(value: number) {
     setStartYear(value)
     if (value > endYear) setEndYear(value)

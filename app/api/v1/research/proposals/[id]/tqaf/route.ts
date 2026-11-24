@@ -76,26 +76,32 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     }
     const event = makeProposalEventHash(payload, lastEvent?.eventHash ?? null)
 
-    await transaction.insert(tqafAssessments).values({
-      id: crypto.randomUUID(),
-      userId: proposal.userId,
-      proposalId,
-      criterionCode: input.criterionCode,
+    const assessmentValues = {
       status: input.status,
       rationale: rationale || null,
       evidenceUrl: input.evidenceUrl ?? null,
       reviewerId: isReviewer ? actorId : null,
       updatedAt: now,
-    }).onConflictDoUpdate({
-      target: [tqafAssessments.proposalId, tqafAssessments.criterionCode],
-      set: {
-        status: input.status,
-        rationale: rationale || null,
-        evidenceUrl: input.evidenceUrl ?? null,
-        reviewerId: isReviewer ? actorId : null,
-        updatedAt: now,
-      },
-    })
+    }
+    if (existing) {
+      // The proposal row is locked above, so this read-then-write stays
+      // serialized without requiring a unique index that the schema does not
+      // declare on (proposal_id, criterion_code).
+      await transaction.update(tqafAssessments)
+        .set(assessmentValues)
+        .where(and(
+          eq(tqafAssessments.proposalId, proposalId),
+          eq(tqafAssessments.criterionCode, input.criterionCode),
+        ))
+    } else {
+      await transaction.insert(tqafAssessments).values({
+        id: crypto.randomUUID(),
+        userId: proposal.userId,
+        proposalId,
+        criterionCode: input.criterionCode,
+        ...assessmentValues,
+      })
+    }
     await transaction.insert(proposalEvents).values({
       id: crypto.randomUUID(),
       userId: actorId,
