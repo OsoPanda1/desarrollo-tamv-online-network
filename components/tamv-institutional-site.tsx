@@ -33,6 +33,7 @@ import {
 import { getPublicProjects, getPublicResearchTopics } from "@/lib/research/queries"
 import type { Locale } from "@/lib/i18n"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
+import { TamvIntentionDiscovery } from "./tamv-intention-discovery"
 
 const workAreas = [
   {
@@ -201,6 +202,8 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
         <div className="container institutional-support-slot"><TamvDonationCTA locale={locale} variant="compact" label="Apoyar el ecosistema" /></div>
 
         <TamvSiteGuide locale={locale} />
+
+        <TamvIntentionDiscovery locale={locale} />
 
         <section className="section architecture-section" id="arquitectura">
           <div className="container architecture-layout">
@@ -520,6 +523,8 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
 
       <section className="section ecosystem-section" id="ecosistema"><div className="container"><div className="section-heading-row ecosystem-heading"><div><p className="eyebrow">03 / TAMV ECOSYSTEM</p><h2>Purposeful components, <em>explicit maturity.</em></h2></div><p>Explore projects described in TAMV materials. Each record separates stated purpose from work that still needs implementation or external verification.</p></div><TamvProjectExplorer projects={projects} locale="en" /></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Support the TAMV ecosystem" /></div>
+
+      <TamvIntentionDiscovery locale="en" />
 
       <section className="section architecture-section" id="arquitectura"><div className="container architecture-layout"><div className="architecture-intro"><p className="eyebrow eyebrow-light">04 / REFERENCE ARCHITECTURE</p><h2>Federate capabilities. <em>Preserve context.</em></h2><p>The heptafederated architecture is presented as a model for connecting autonomous domains. The labels below organize this editorial overview; they are not a canonical technical specification.</p><a className="button button-outline-light" href="/gobernanza?lang=en">Governance principles <ArrowRight aria-hidden="true" /></a><a className="button button-outline-light" href="/isabella">Isabella AI <ArrowRight aria-hidden="true" /></a></div><div className="federation-panel"><div className="federation-panel-header"><span>MODEL DOMAINS</span><span>7 / FEDERATIONS</span></div><div className="federation-list">{federations.map((area, index) => <div className="federation-item" key={area}><span>0{index + 1}</span><strong>{area}</strong><span className="federation-status">Framed</span></div>)}</div><p className="federation-note">Reference outline based on the supplied documents. Operational boundaries require validation and public governance.</p><p className="federation-note">This is the repository&apos;s reference map. The Drive documents contain six historical variants of the seven federations, unreconciled with each other; this view uses only the repository map and never mixes maps. <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/architecture/federation-reconciliation.md" target="_blank" rel="noopener noreferrer">Federation reconciliation note</a>.</p></div></div></section>
       <div className="container institutional-support-slot"><TamvDonationCTA locale="en" variant="compact" label="Sustain open infrastructure" /></div>
