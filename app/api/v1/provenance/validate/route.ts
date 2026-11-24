@@ -19,7 +19,12 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
 
   if (!request.body) return { kind: "ok", text: "" };
 
-  const reader = request.body.getReader();
+  let reader: ReadableStreamDefaultReader<Uint8Array>;
+  try {
+    reader = request.body.getReader();
+  } catch {
+    return { kind: "read_error" };
+  }
   const chunks: Uint8Array[] = [];
   let totalBytes = 0;
 
