@@ -6,6 +6,7 @@ import { fetchPublicRepositoryMetadata } from "../lib/ecosystem/github-metadata.
 
 const ecosystemOpenApi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
 const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
+const metadataBoard = readFileSync("components/ecosystem-metadata-board.tsx", "utf8");
 
 test("both OpenAPI contracts describe the metadata endpoint and bounded result semantics", () => {
   for (const document of [ecosystemOpenApi, publicOpenApi]) {
@@ -41,6 +42,13 @@ function jsonResponse(value, status = 200, headers = {}) {
     headers: { "content-type": "application/json", ...headers },
   });
 }
+
+test("metadata board labels snapshot generation and discloses stale-cache behavior in both locales", () => {
+  assert.match(metadataBoard, /Snapshot generated/);
+  assert.match(metadataBoard, /Instantánea generada/);
+  assert.match(metadataBoard, /stale cached data may remain visible if the upstream refresh fails/i);
+  assert.match(metadataBoard, /los datos almacenados pueden seguir visibles si falla la actualización del proveedor/i);
+});
 
 test("metadata adapter calls only the fixed GitHub API and returns a minimal public projection", async () => {
   const system = ecosystemSystems[0];
