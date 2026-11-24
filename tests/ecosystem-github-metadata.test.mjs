@@ -185,6 +185,7 @@ test("metadata endpoint returns eight per-repository results and labels its limi
     assert.equal(body.systems.find((entry) => entry.systemId === "litle-atlas-suite").sourceMetadataStatus, "rate_limited");
     assert.equal(body.systems.filter((entry) => entry.sourceMetadataStatus === "metadata_available").length, 7);
     assert.match(body.scope, /does not assert deployed application health/i);
+    assert.match(body.scope, /stale cached metadata may remain available if a refresh fails/i);
   } finally {
     globalThis.fetch = originalFetch;
   }
