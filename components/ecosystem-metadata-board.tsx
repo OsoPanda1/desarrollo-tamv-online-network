@@ -228,9 +228,9 @@ export function EcosystemMetadataBoard({ locale = "es" }: { locale?: Locale }) {
             <strong>{english ? "What this status means" : "Qué significa este estado"}</strong>
             <p>{snapshot.scope}</p>
             <p>{english
-              ? "A successful GitHub metadata response is not an application health check, deployment check, integration test, security audit, or license grant."
-              : "Una respuesta correcta de metadatos de GitHub no es una prueba de salud de la aplicación, despliegue, integración, auditoría de seguridad ni concesión de licencia."}</p>
-            <span>{english ? "Last check" : "Última consulta"}: {formatDate(snapshot.checkedAt, english ? "en" : "es-MX")}</span>
+              ? "A successful GitHub metadata response is not an application health check, deployment check, integration test, security audit, or license grant. Source metadata may be cached for up to 15 minutes."
+              : "Una respuesta correcta de metadatos de GitHub no es una prueba de salud de la aplicación, despliegue, integración, auditoría de seguridad ni concesión de licencia. Los metadatos de origen pueden tener hasta 15 minutos de antigüedad."}</p>
+            <span>{english ? "Snapshot generated" : "Instantánea generada"}: {formatDate(snapshot.checkedAt, english ? "en" : "es-MX")}</span>
           </div>
         </>
       ) : null}
