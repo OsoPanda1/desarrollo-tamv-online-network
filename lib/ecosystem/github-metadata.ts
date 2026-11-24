@@ -182,6 +182,7 @@ export async function fetchPublicRepositoryMetadata(
         "User-Agent": "TAMV-Online-Network-Ecosystem/1.0",
       },
       redirect: "error",
+      cache: "force-cache",
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
   } catch (error) {
