@@ -211,6 +211,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FederatedResearchError"
+  /api/v1/ecosystem:
+    get:
+      operationId: getPublicEcosystemCatalog
+      summary: Retrieve the public ecosystem catalog
+      description: Returns catalog metadata only; it does not probe remote systems.
+      tags: [Ecosystem]
+      responses:
+        "200":
+          description: Ecosystem catalog returned successfully.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemCatalog"
+        "500":
+          description: Unexpected server error.
   /api/v1/ecosystem/metadata:
     get:
       operationId: getPublicEcosystemRepositoryMetadata
@@ -626,3 +648,66 @@ components:
         conditionsOfAccess: { type: string }
         note: { type: string }
       additionalProperties: true
+
+    EcosystemCatalog:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, system, generatedAt, statusSemantics, securityBoundary, systems]
+      properties:
+        schemaVersion:
+          type: string
+          const: 1.0.0
+        system:
+          type: string
+          const: TAMV Online Network
+        generatedAt:
+          type: string
+          format: date-time
+        statusSemantics:
+          type: object
+          required: [catalogued, contracted, adapter_implemented, contract_tested, verified]
+          properties:
+            catalogued: { type: string }
+            contracted: { type: string }
+            adapter_implemented: { type: string }
+            contract_tested: { type: string }
+            verified: { type: string }
+        securityBoundary:
+          type: string
+        systems:
+          type: array
+          items:
+            $ref: "#/components/schemas/EcosystemSystem"
+    EcosystemSystem:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - repository
+        - responsibility
+        - integrationState
+        - integrationMode
+        - canonicalData
+        - allowedInitialCapabilities
+        - prohibitedAssumptions
+      properties:
+        id: { type: string, pattern: "^[a-z0-9-]+$" }
+        name: { type: string, minLength: 1 }
+        repository: { type: string, format: uri }
+        responsibility: { type: string, minLength: 1 }
+        integrationState:
+          type: string
+          enum: [catalogued, contracted, adapter_implemented, contract_tested, verified]
+        integrationMode:
+          type: string
+          enum: [public_metadata, static_site, application, pipeline, trust_service, curriculum]
+        canonicalData:
+          type: array
+          items: { type: string }
+        allowedInitialCapabilities:
+          type: array
+          items: { type: string }
+        prohibitedAssumptions:
+          type: array
+          items: { type: string }
