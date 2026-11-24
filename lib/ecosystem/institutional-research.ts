@@ -118,16 +118,23 @@ export function getInstitutionalResearchSearchEndpoint(
 type LimitedJsonResult =
   | { kind: "ok"; value: unknown }
   | { kind: "too_large" }
-  | { kind: "invalid" };
+  | { kind: "invalid" }
+  | { kind: "timeout" };
 
-async function readLimitedJson(response: Response): Promise<LimitedJsonResult> {
+async function readLimitedJson(response: Response, signal: AbortSignal): Promise<LimitedJsonResult> {
   const declaredLength = response.headers.get("content-length");
-  if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > MAX_RESPONSE_BYTES) {
+  if (declaredLength && /^\\d+$/.test(declaredLength) && Number(declaredLength) > MAX_RESPONSE_BYTES) {
     return { kind: "too_large" };
   }
   if (!response.body) return { kind: "invalid" };
 
-  const reader = response.body.getReader();
+  let reader: ReadableStreamDefaultReader<Uint8Array>;
+  try {
+    reader = response.body.getReader();
+  } catch {
+    return { kind: "invalid" };
+  }
+
   const chunks: Uint8Array[] = [];
   let totalBytes = 0;
 
@@ -147,7 +154,7 @@ async function readLimitedJson(response: Response): Promise<LimitedJsonResult> {
       chunks.push(value);
     }
   } catch {
-    return { kind: "invalid" };
+    return signal.aborted ? { kind: "timeout" } : { kind: "invalid" };
   } finally {
     reader.releaseLock();
   }
@@ -189,6 +196,7 @@ export async function fetchInstitutionalResearch(
     return { ok: false, error: "provider_configuration_invalid", httpStatus: 503 };
   }
 
+  const timeoutSignal = AbortSignal.timeout(UPSTREAM_TIMEOUT_MS);
   let response: Response;
   try {
     response = await fetcher(endpoint, {
@@ -201,10 +209,10 @@ export async function fetchInstitutionalResearch(
       cache: "no-store",
       credentials: "omit",
       redirect: "error",
-      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      signal: timeoutSignal,
     });
   } catch (error) {
-    return isTimeoutError(error)
+    return (timeoutSignal.aborted || isTimeoutError(error))
       ? { ok: false, error: "provider_timeout", httpStatus: 504 }
       : { ok: false, error: "provider_unavailable", httpStatus: 502 };
   }
@@ -219,7 +227,10 @@ export async function fetchInstitutionalResearch(
     return { ok: false, error: "provider_unavailable", httpStatus: 502 };
   }
 
-  const body = await readLimitedJson(response);
+  const body = await readLimitedJson(response, timeoutSignal);
+  if (body.kind === "timeout") {
+    return { ok: false, error: "provider_timeout", httpStatus: 504 };
+  }
   if (body.kind === "too_large") {
     return { ok: false, error: "provider_response_too_large", httpStatus: 502 };
   }
