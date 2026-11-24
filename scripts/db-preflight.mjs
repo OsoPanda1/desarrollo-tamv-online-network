@@ -11,10 +11,10 @@ if (!databaseUrl) {
 
 const required = {
   user: ["id"],
-  research_proposals: ["id", "user_id", "topic_id", "createdAt", "status", "visibility", "share_consent"],
+  research_proposals: ["id", "user_id", "topic_id", "created_at", "status", "visibility", "share_consent"],
   proposal_events: ["id", "user_id", "proposal_id", "created_at"],
   proposal_evidence: ["id", "user_id", "proposal_id", "version"],
-  proposal_reviews: ["id", "user_id", "proposal_id", "createdAt"],
+  proposal_reviews: ["id", "user_id", "proposal_id", "created_at"],
   proposal_appeals: ["id", "user_id", "proposal_id", "status"],
   hcu_runs: ["id", "user_id", "created_at", "start_year", "end_year", "seed"],
   collaboration_interests: ["id", "user_id", "topic_id", "created_at"],

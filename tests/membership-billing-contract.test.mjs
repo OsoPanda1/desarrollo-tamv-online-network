@@ -104,7 +104,7 @@ test("course progression is server-gated to active or trialing membership and ow
   assert.match(progressApi, /auth\.api\.getSession/);
   assert.match(progressApi, /inArray\(membershipSubscriptions\.status, \["active", "trialing"\]\)/);
   assert.match(progressApi, /eq\(memberCourseProgress\.userId, session\.user\.id\)/);
-  assert.match(coursePage, /courseSlug: COURSE_SLUG/);
+  assert.match(coursePage, /eq\(memberCourseProgress\.courseSlug, COURSE_SLUG\)/);
   assert.match(coursePage, /activeMembership/);
 });
 
