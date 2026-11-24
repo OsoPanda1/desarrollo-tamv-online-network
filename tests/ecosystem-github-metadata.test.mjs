@@ -9,7 +9,7 @@ const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
 
 test("both OpenAPI contracts describe the metadata endpoint and bounded result semantics", () => {
   for (const document of [ecosystemOpenApi, publicOpenApi]) {
-    assert.match(document, /\/api\/v1\/ecosystem\/metadata/);
+    assert.match(document, /^  \/api\/v1\/ecosystem\/metadata:\n/m);
     assert.match(document, /EcosystemRepositoryMetadataResponse/);
     assert.match(document, /metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response/);
     assert.match(document, /does not assert deployed application health/i);
