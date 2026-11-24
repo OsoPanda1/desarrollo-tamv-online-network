@@ -30,6 +30,75 @@ paths:
                 $ref: "#/components/schemas/EcosystemCatalog"
         "500":
           description: Unexpected server error.
+  /api/v1/research/federated:
+    post:
+      operationId: federatedInstitutionalResearchSearch
+      tags: [Research]
+      summary: Search public research metadata through the institutional TAMV application
+      description: >-
+        Forwards a bounded search query to the server-configured public institutional research API.
+        The caller cannot choose the upstream URL. This does not share sessions, write data, or establish
+        authorship, peer review, accreditation, licensing or independent verification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FederatedResearchRequest"
+      responses:
+        "200":
+          description: Validated public metadata returned by the institutional application.
+          headers:
+            Cache-Control:
+              schema: { type: string, const: no-store }
+            X-Content-Type-Options:
+              schema: { type: string, const: nosniff }
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchResponse"
+        "400":
+          description: Malformed JSON, invalid UTF-8 or unreadable request body.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "413":
+          description: Request body exceeds 2048 bytes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "415":
+          description: Content-Type must be application/json.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "422":
+          description: Query does not satisfy the request schema.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "502":
+          description: Institutional upstream is unavailable or returned invalid metadata.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "503":
+          description: Institutional endpoint is not configured or is rate limited.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "504":
+          description: Institutional endpoint timed out.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
   /api/v1/ecosystem/metadata:
     get:
       operationId: getPublicEcosystemRepositoryMetadata
@@ -105,6 +174,85 @@ paths:
                         message: { type: string }
 components:
   schemas:
+    FederatedResearchRequest:
+      type: object
+      additionalProperties: false
+      required: [query]
+      properties:
+        query: { type: string, minLength: 3, maxLength: 180 }
+        type: { type: string, enum: [research, organizations], default: research }
+    FederatedResearchResponse:
+      type: object
+      additionalProperties: false
+      required: [ok, provider, query, type, retrievedAt, results, providers, methodology, semantics]
+      properties:
+        ok: { type: boolean, const: true }
+        provider: { type: string, const: "TAMV Online Network — Institutional Research Platform" }
+        query: { type: string, minLength: 3, maxLength: 180 }
+        type: { type: string, enum: [research, organizations] }
+        retrievedAt: { type: string, format: date-time }
+        results:
+          type: array
+          maxItems: 24
+          items: { $ref: "#/components/schemas/FederatedResearchMetadataRecord" }
+        providers:
+          type: array
+          maxItems: 12
+          items: { $ref: "#/components/schemas/FederatedResearchProviderState" }
+        methodology: { type: string, minLength: 1, maxLength: 3000 }
+        semantics: { type: string }
+    FederatedResearchMetadataRecord:
+      type: object
+      additionalProperties: false
+      required: [id, provider, title, url, doi, year, authors, venue, resourceType, citedByCount, license, openAccess, evidenceClass, retrievedAt]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 1200 }
+        provider: { type: string, minLength: 1, maxLength: 120 }
+        title: { type: string, minLength: 1, maxLength: 600 }
+        url: { type: string, maxLength: 2048, description: "HTTPS URL or empty string when the source has no safe external URL." }
+        doi: { type: [string, "null"], maxLength: 500 }
+        year: { type: [integer, "null"] }
+        authors:
+          type: array
+          maxItems: 12
+          items: { type: string, maxLength: 120 }
+        venue: { type: [string, "null"], maxLength: 240 }
+        resourceType: { type: [string, "null"], maxLength: 100 }
+        citedByCount: { type: [number, "null"] }
+        license: { type: [string, "null"], maxLength: 240 }
+        openAccess: { type: [boolean, "null"] }
+        evidenceClass: { type: string, minLength: 1, maxLength: 1200 }
+        retrievedAt: { type: string, format: date-time }
+    FederatedResearchProviderState:
+      type: object
+      additionalProperties: false
+      required: [id, name, status, count]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 120 }
+        name: { type: string, minLength: 1, maxLength: 180 }
+        status: { type: string, enum: [ok, empty, unavailable, not_configured, link_only] }
+        count: { type: integer, minimum: 0, maximum: 100000 }
+        note: { type: string, maxLength: 1200 }
+    FederatedResearchError:
+      type: object
+      required: [ok, error]
+      properties:
+        ok: { type: boolean, const: false }
+        error:
+          type: string
+          enum: [unsupported_media_type, payload_too_large, invalid_utf8, request_body_unreadable, invalid_json, invalid_query, provider_not_configured, provider_configuration_invalid, provider_timeout, provider_rate_limited, provider_unavailable, provider_response_too_large, provider_invalid_response]
+        expected: { type: string }
+        maxBytes: { type: integer }
+        issues:
+          type: array
+          items:
+            type: object
+            required: [path, code, message]
+            properties:
+              path: { type: string }
+              code: { type: string }
+              message: { type: string }
+      additionalProperties: false
     EcosystemRepositoryMetadataResponse:
       type: object
       additionalProperties: false
