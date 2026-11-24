@@ -7,6 +7,7 @@ const registry = readFileSync("lib/ecosystem/registry.ts", "utf8");
 const route = readFileSync("app/api/v1/ecosystem/route.ts", "utf8");
 const contract = readFileSync("docs/architecture/ecosystem-federation-v1.md", "utf8");
 const openapi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
+const publicOpenapi = readFileSync("public/openapi.yaml", "utf8");
 const provenanceSchema = JSON.parse(readFileSync("docs/architecture/provenance-record.schema.json", "utf8"));
 
 const requiredRepos = [
@@ -59,6 +60,12 @@ test("federation contract preserves security and licensing boundaries", () => {
   assert.match(contract, /No direct dual writes/i);
   assert.match(openapi, /openapi: 3\.1\.0/);
   assert.match(openapi, /\/api\/v1\/ecosystem/);
+  assert.match(openapi, /\/api\/v1\/provenance\/validate/);
+  assert.match(publicOpenapi, /openapi: 3\.1\.0/);
+  assert.match(publicOpenapi, /\/api\/v1\/ecosystem/);
+  assert.match(publicOpenapi, /\/api\/v1\/provenance\/validate/);
+  assert.match(openapi, /submittedValidationState/);
+  assert.match(publicOpenapi, /submittedValidationState/);
   assert.match(openapi, /\/api\/v1\/provenance\/validate/);
   assert.equal(provenanceSchema.required.includes("sourceUri"), true);
   assert.equal(provenanceSchema.required.includes("observedAt"), true);
