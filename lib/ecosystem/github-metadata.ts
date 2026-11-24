@@ -264,7 +264,7 @@ export async function getPublicEcosystemRepositoryMetadata(
   return {
     schemaVersion: "1.0.0",
     checkedAt: new Date().toISOString(),
-    scope: "Public GitHub repository metadata only. Upstream source responses are revalidated every 900 seconds; checkedAt is the snapshot assembly time, not the exact upstream refresh time. This does not assert deployed application health, authentication, authorization, data synchronization, source correctness, signature validity, peer review, or accreditation.",
+    scope: "Public GitHub repository metadata only. Upstream source responses are configured for revalidation every 900 seconds; stale cached metadata may remain available if a refresh fails. checkedAt is the snapshot assembly time, not the exact upstream refresh time. This does not assert deployed application health, authentication, authorization, data synchronization, source correctness, signature validity, peer review, or accreditation.",
     systems,
   };
 }
