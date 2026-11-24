@@ -1,7 +1,20 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { ecosystemSystems } from "../lib/ecosystem/registry.ts";
 import { fetchPublicRepositoryMetadata } from "../lib/ecosystem/github-metadata.ts";
+
+const ecosystemOpenApi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
+const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
+
+test("both OpenAPI contracts describe the metadata endpoint and bounded result semantics", () => {
+  for (const document of [ecosystemOpenApi, publicOpenApi]) {
+    assert.match(document, /\/api\/v1\/ecosystem\/metadata/);
+    assert.match(document, /EcosystemRepositoryMetadataResponse/);
+    assert.match(document, /metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response/);
+    assert.match(document, /does not assert deployed application health/i);
+  }
+});
 
 function payloadFor(system, overrides = {}) {
   const repository = new URL(system.repository);
