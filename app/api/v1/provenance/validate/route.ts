@@ -8,7 +8,8 @@ const MAX_BODY_BYTES = 64 * 1024;
 type ReadBodyResult =
   | { kind: "ok"; text: string }
   | { kind: "too_large" }
-  | { kind: "invalid_utf8" };
+  | { kind: "invalid_utf8" }
+  | { kind: "read_error" };
 
 async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
   const declaredLength = request.headers.get("content-length");
@@ -33,6 +34,8 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
       }
       chunks.push(value);
     }
+  } catch {
+    return { kind: "read_error" };
   } finally {
     reader.releaseLock();
   }
@@ -72,6 +75,9 @@ export async function POST(request: Request): Promise<Response> {
   }
   if (body.kind === "invalid_utf8") {
     return Response.json({ valid: false, error: "invalid_utf8" }, { status: 400, headers });
+  }
+  if (body.kind === "read_error") {
+    return Response.json({ valid: false, error: "request_body_unreadable" }, { status: 400, headers });
   }
 
   let input: unknown;
