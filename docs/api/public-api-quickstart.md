@@ -55,6 +55,7 @@ curl -fsS http://localhost:3000/api/v1/research/federated \
 ```
 
 Use `"type":"organizations"` for the institutional provider's ROR organization search. The bridge reads public metadata only, does not share sessions or write access, and does not independently verify authorship, peer review, quality, or reuse rights.
+Search terms are forwarded to the configured institutional service and may be processed by its external metadata providers. Do not send personal, confidential or sensitive data.
 
 ### 6. CSV export
 
