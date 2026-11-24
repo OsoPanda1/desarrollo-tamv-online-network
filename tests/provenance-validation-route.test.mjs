@@ -36,6 +36,25 @@ test("provenance API returns valid schema result without claiming source truth",
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
 });
 
+test("provenance API returns a bounded client error when the body stream fails", async () => {
+  const brokenBody = new ReadableStream({
+    start(controller) {
+      controller.error(new Error("simulated transport failure"));
+    },
+  });
+  const requestWithBrokenBody = new Request("https://tamv.online/api/v1/provenance/validate", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: brokenBody,
+    duplex: "half",
+  });
+  const response = await POST(requestWithBrokenBody);
+  const result = await response.json();
+  assert.equal(response.status, 400);
+  assert.equal(result.error, "request_body_unreadable");
+  assert.equal(JSON.stringify(result).includes("simulated transport failure"), false);
+});
+
 test("provenance API rejects malformed JSON and unsupported content types", async () => {
   assert.equal((await POST(request("{", "application/json"))).status, 400);
   assert.equal((await POST(request(JSON.stringify(validRecord), "text/plain"))).status, 415);
