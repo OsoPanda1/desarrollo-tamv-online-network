@@ -35,7 +35,9 @@ Responses use `Cache-Control: no-store` because search terms may be sensitive. U
 
 This bridge imports public metadata only. Search-result rank is not a quality score; a result does not establish author identity, ownership, peer review, scientific validity, accreditation, legal licensing rights or independent source verification. The two applications keep their own authentication, sessions, databases and authorization policies. The bridge never writes to either application.
 Search text is forwarded to the institutional endpoint and may then be sent to its configured external metadata providers. Do not submit personal, confidential or sensitive terms. The core route uses `Cache-Control: no-store`; it cannot dictate how external providers retain request logs.
+The route rejects a supplied browser `Origin` that differs from the request origin (HTTP 403). Requests without an `Origin` remain supported for command-line and server-to-server clients. This is a cross-origin abuse mitigation, not authentication or distributed rate limiting.
 
 ## Release gate
 
 Before production use, configure the exact institutional endpoint in the central Vercel project, run CI/type checks/build, and test successful research and organization queries plus upstream timeout, rate limit, malformed payload and provider partial failure on a preview. Save the exact commits, HTTP status, latency and provider status counts in the deployment verification record. No integration state should advance until those checks pass.
+Before public production, configure and verify a distributed edge/WAF rate limit for `POST /api/v1/research/federated`; the application deliberately does not rely on an in-memory counter that would be unreliable across serverless instances.
