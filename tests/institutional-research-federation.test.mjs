@@ -224,7 +224,7 @@ test("adapter rejects wrong query, invalid URLs, malformed JSON and oversized re
     );
     assert.deepEqual(invalidUrl, { ok: false, error: "provider_invalid_response", httpStatus: 502 });
 
-    for (const unsafeUrl of ["https://127.0.0.1/private", "https://localhost/private", "https://user@openalex.org/works/W1", "http://openalex.org/works/W1"]) {
+    for (const unsafeUrl of ["https://127.0.0.1/private", "https://localhost/private", "https://localhost./private", "https://user@openalex.org/works/W1", "http://openalex.org/works/W1"]) {
       const unsafe = await fetchInstitutionalResearch("memoria viva", "research", async () =>
         jsonResponse({
           ...validResearchResponse(),
