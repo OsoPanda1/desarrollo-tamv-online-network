@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
@@ -39,7 +40,7 @@ type GuideCard = {
   text: string
   href: string
   action: string
-  icon: typeof Compass
+  icon: LucideIcon
   note?: string
 }
 
