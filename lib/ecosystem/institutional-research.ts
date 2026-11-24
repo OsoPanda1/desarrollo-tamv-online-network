@@ -15,7 +15,7 @@ const validDateTime = z.string().refine(
 function isHttpsUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    const hostname = url.hostname.toLowerCase().replace(/\\.$/, "");
+    const hostname = url.hostname.toLowerCase().replace(/\.$/, "");
     return url.protocol === "https:"
       && !url.username
       && !url.password
