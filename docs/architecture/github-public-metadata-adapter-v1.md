@@ -9,7 +9,7 @@ The route `GET /api/v1/ecosystem/metadata` reads public repository metadata from
 - Source selection is derived exclusively from the reviewed, static ecosystem registry.
 - Every upstream request targets the fixed origin `https://api.github.com` and the GitHub repository metadata endpoint.
 - Redirects are rejected. Repository input supplied by a request caller is never accepted.
-- Next.js upstream fetch caching is explicitly enabled to reduce repeated anonymous GitHub API calls across requests; the response cache policy is separately limited to 300 seconds with a 600-second stale-while-revalidate window.
+- Next.js upstream fetch caching is explicitly enabled and revalidated every 900 seconds to reduce repeated anonymous GitHub API calls; the public response cache policy is separately limited to 300 seconds with a 600-second stale-while-revalidate window.
 - Requests are bounded by a 4.5-second timeout.
 - Upstream response bodies are limited to 64 KiB before JSON parsing.
 - Only a small allow-list of public metadata fields is projected into the API response.
@@ -35,7 +35,7 @@ A reachable GitHub API repository record does not prove that the application is 
 
 ## Caching and operational limits
 
-The response advertises a 300-second shared-cache lifetime and 600-second stale-while-revalidate window to reduce unauthenticated GitHub API usage. The upstream call timeout and response-size limit keep one slow or malformed source from consuming unbounded time or memory. Monitor actual Vercel behavior and GitHub rate-limit responses after deployment; source code alone is not deployment evidence.
+The response advertises a 300-second shared-cache lifetime and 600-second stale-while-revalidate window. The Next.js source-data cache is revalidated every 900 seconds, so source metadata may be up to 15 minutes old. `checkedAt` records when the response snapshot was assembled; it is not proof that GitHub was contacted at that exact time. The upstream call timeout and response-size limit keep one slow or malformed source from consuming unbounded time or memory. Monitor actual Vercel behavior and GitHub rate-limit responses after deployment; source code alone is not deployment evidence.
 
 ## Verification record
 
