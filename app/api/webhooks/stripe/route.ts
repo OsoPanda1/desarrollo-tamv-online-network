@@ -104,6 +104,7 @@ async function syncMembership(
   if (!membershipId) return
   const [current] = await transaction.select({
     id: membershipSubscriptions.id,
+    status: membershipSubscriptions.status,
     stripeEventCreated: membershipSubscriptions.stripeEventCreated,
   }).from(membershipSubscriptions)
     .where(eq(membershipSubscriptions.id, membershipId))

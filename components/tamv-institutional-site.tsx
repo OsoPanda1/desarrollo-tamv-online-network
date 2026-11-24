@@ -16,7 +16,20 @@ import { TamvProjectExplorer } from "./tamv-project-explorer"
 import { TamvResearchTopics } from "./tamv-research-topics"
 import { TamvSiteHeader } from "./tamv-site-header"
 import { TamvSiteGuide } from "./tamv-site-guide"
-import { governancePrinciples, roadmapSteps, researchInventory } from "./tamv-data"
+import {
+  enterpriseAxioms,
+  enterpriseCentralQuestion,
+  enterpriseManifesto,
+  founderProfile,
+  governancePrinciples,
+  legacyGuide,
+  legacyQuote,
+  phygitalCoins,
+  researchInventory,
+  roadmapSteps,
+  runtimeMatrix,
+  runtimeMatrixNote,
+} from "./tamv-data"
 import { getPublicProjects, getPublicResearchTopics } from "@/lib/research/queries"
 import type { Locale } from "@/lib/i18n"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"

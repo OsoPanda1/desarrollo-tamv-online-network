@@ -32,7 +32,18 @@ function isProductionDeployment() {
   return process.env.NODE_ENV === "production"
 }
 
-function validateBillingConfiguration() {
+type BillingConfiguration =
+  | { error: string }
+  | {
+      mode: "test" | "live"
+      secret: string
+      webhookSecret: string
+      appBaseUrl: string
+      automaticTax: boolean
+      taxBehavior: string | undefined
+    }
+
+function validateBillingConfiguration(): BillingConfiguration {
   const mode = process.env.TAMV_BILLING_MODE?.trim() || "disabled"
   const secret = getStripeSecret()
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim()
