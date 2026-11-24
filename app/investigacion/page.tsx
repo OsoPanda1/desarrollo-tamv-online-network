@@ -6,6 +6,7 @@ import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { getPublicResearchTopics } from "@/lib/research/queries"
 import { resolveLocale } from "@/lib/i18n"
+import { ResearchFederatedSearch } from "@/components/research-federated-search"
 
 export const dynamic = "force-dynamic"
 type SearchParams = Promise<{ lang?: string }>
@@ -35,6 +36,21 @@ export default async function ResearchIndexPage({ searchParams }: { searchParams
       </article>)}</div>
       <div className="api-callout"><div><p className="eyebrow">{english ? "OPEN METADATA" : "METADATOS ABIERTOS"}</p><h3>{english ? "Build with the same catalog." : "Construye sobre el mismo catálogo."}</h3><p>{english ? "Read the topics from the public API or export FAIR-oriented metadata." : "Consulta los temas por API pública o descarga metadatos orientados a FAIR."}</p></div><Link className="button button-outline-light" href="/desarrolladores">{english ? "API documentation" : "Documentación API"} <ArrowUpRight aria-hidden="true" /></Link></div>
     </div></section>
+    <section className="section federated-research-section" aria-labelledby="federated-research-title">
+      <div className="container">
+        <div className="federated-section-intro">
+          <p className="eyebrow">{english ? "PUBLIC METADATA / READ-ONLY BRIDGE" : "METADATOS PÚBLICOS / PUENTE DE SOLO LECTURA"}</p>
+          <h2 id="federated-research-title">{english ? "Search beyond a single catalog." : "Busca más allá de un solo catálogo."}</h2>
+          <p>{english
+            ? "Query public research metadata or look for organizations through the institutional application. The bridge reports provider availability and does not treat a bibliographic record as proof of quality."
+            : "Consulta metadatos públicos de investigación o busca organizaciones a través de la aplicación institucional. El puente informa qué proveedores respondieron y no convierte un registro bibliográfico en prueba de calidad."}</p>
+        </div>
+        <ResearchFederatedSearch locale={locale} />
+        <p className="federated-setup-note">{english
+          ? "If the bridge is not configured or the institutional service is unavailable, the interface reports that state without simulating results."
+          : "Si el puente no está configurado o el servicio institucional no está disponible, la interfaz informa ese estado sin simular resultados."} <Link href="/desarrolladores">{english ? "Read API and integration notes" : "Consultar la documentación de API e integración"} <ArrowUpRight aria-hidden="true" /></Link></p>
+      </div>
+    </section>
     <section className="section research-cta-section"><div className="container"><div className="research-cta"><div><p className="eyebrow eyebrow-light">{english ? "HAVE YOUR OWN QUESTION?" : "¿TIENES UNA PREGUNTA PROPIA?"}</p><h2>{english ? "Bring a proposal, thesis, dataset, or working prototype." : "Trae una propuesta, tesis, conjunto de datos o prototipo."}</h2><p>{english ? "New submissions remain private by default; authors choose whether an accepted abstract may become public." : "Los envíos nuevos son privados por defecto; la persona autora decide si un resumen aceptado puede hacerse público."}</p></div><Link className="button button-copper" href="/portal/propuestas/nueva">{english ? "Start a submission" : "Iniciar propuesta"} <ArrowUpRight aria-hidden="true" /></Link></div></div></section>
   </TamvAppShell>
 }
