@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { useState, type FormEvent } from "react"
 import { ArrowUpRight, Search } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 
