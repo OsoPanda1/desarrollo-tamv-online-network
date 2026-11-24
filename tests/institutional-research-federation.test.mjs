@@ -92,6 +92,11 @@ test("route rejects unsupported media types, malformed JSON and client-supplied 
     body: JSON.stringify({ query: "memoria viva", url: "https://attacker.example/" }),
   }));
   assert.equal(invalidQuery.status, 422);
+
+  const oversized = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ query: "x".repeat(2500) }),
+  }));
+  assert.equal(oversized.status, 413);
 });
 
 test("endpoint configuration accepts only HTTPS public search URL and blocks private targets", () => {
@@ -128,6 +133,23 @@ test("adapter posts only query/type and validates a minimal public metadata resp
       assert.equal(result.data.results.length, 1);
       assert.equal(result.data.results[0].title, "Public metadata example");
     }
+  } finally {
+    if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+    else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
+  }
+});
+
+test("adapter fails closed when the configured endpoint is invalid", async () => {
+  const previous = process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+  process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = "http://127.0.0.1/api/research/search";
+  try {
+    let called = false;
+    const result = await fetchInstitutionalResearch("memoria viva", "research", async () => {
+      called = true;
+      throw new Error("network must not be called");
+    });
+    assert.deepEqual(result, { ok: false, error: "provider_configuration_invalid", httpStatus: 503 });
+    assert.equal(called, false);
   } finally {
     if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
     else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
