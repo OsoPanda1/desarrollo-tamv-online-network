@@ -69,6 +69,10 @@ function isPublicRepositoryUrl(value: unknown): value is string {
   }
 }
 
+function isDateTime(value: unknown): value is string {
+  return typeof value === "string" && Number.isFinite(Date.parse(value))
+}
+
 function isMetadataEntry(value: unknown): value is MetadataEntry {
   if (!value || typeof value !== "object") return false
   const entry = value as Record<string, unknown>
@@ -77,18 +81,26 @@ function isMetadataEntry(value: unknown): value is MetadataEntry {
     || typeof entry.name !== "string"
     || !isPublicRepositoryUrl(entry.repository)
     || !isMetadataStatus(entry.sourceMetadataStatus)
-    || typeof entry.checkedAt !== "string"
+    || !isDateTime(entry.checkedAt)
   ) return false
-  if (entry.metadata === null) return true
-  if (!entry.metadata || typeof entry.metadata !== "object") return false
+
+  if (entry.metadata === null) return entry.sourceMetadataStatus !== "metadata_available"
+  if (!entry.metadata || typeof entry.metadata !== "object" || entry.sourceMetadataStatus !== "metadata_available") return false
+
   const metadata = entry.metadata as Record<string, unknown>
+  const repositorySegments = new URL(entry.repository).pathname.split("/").filter(Boolean)
+  const expectedFullName = repositorySegments.join("/")
   return typeof metadata.repositoryId === "number"
+    && Number.isInteger(metadata.repositoryId)
+    && metadata.repositoryId > 0
     && typeof metadata.fullName === "string"
+    && metadata.fullName.toLowerCase() === expectedFullName.toLowerCase()
+    && metadata.url === entry.repository
     && isPublicRepositoryUrl(metadata.url)
     && typeof metadata.defaultBranch === "string"
     && typeof metadata.archived === "boolean"
-    && typeof metadata.updatedAt === "string"
-    && (typeof metadata.pushedAt === "string" || metadata.pushedAt === null)
+    && isDateTime(metadata.updatedAt)
+    && (metadata.pushedAt === null || isDateTime(metadata.pushedAt))
     && (typeof metadata.primaryLanguage === "string" || metadata.primaryLanguage === null)
     && (typeof metadata.licenseSpdxId === "string" || metadata.licenseSpdxId === null)
 }
