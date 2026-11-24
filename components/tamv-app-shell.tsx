@@ -26,6 +26,7 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
             <Link href={localizedPath("/fuentes", locale)}>{english ? "Sources" : "Fuentes"}</Link>
             <Link href={localizedPath("/gobernanza", locale)}>{english ? "Governance" : "Gobernanza"}</Link>
             <Link href={localizedPath("/desarrolladores", locale)}>API <ArrowUpRight aria-hidden="true" /></Link>
+            <Link href={localizedPath("/ecosistema", locale)}>{english ? "Ecosystem metadata" : "Metadatos del ecosistema"}</Link>
           </nav>
         </div>
         <div className="container footer-bottom">
