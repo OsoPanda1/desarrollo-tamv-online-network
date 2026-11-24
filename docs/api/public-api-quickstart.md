@@ -61,6 +61,7 @@ Use the CSV for local exploration. Check the license declared for each record be
 | `GET /api/v1/researchers` | Public read; only opt-in public profiles are returned |
 | `GET /api/v1/hcu/graph` | Public read |
 | `GET /api/v1/exports/research` and `?format=csv` | Public read/export |
+| `POST /api/v1/research/federated` | Public read-only query proxy; returns 503 until its upstream URL is configured |
 | `POST /api/v1/research/proposals` | Authenticated session and same-origin request required; private by default |
 | `POST /api/v1/research/interests` | Authenticated session and same-origin request required |
 | `POST /api/v1/hcu/simulate` | Authenticated session and same-origin request required; rate and model-work limits apply |
