@@ -1,6 +1,66 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { fetchInstitutionalResearch, getInstitutionalResearchSearchEndpoint } from "../lib/ecosystem/institutional-research.ts";
+
+const canonicalOpenApi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
+const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
+
+test("both OpenAPI files document the institutional research bridge", () => {
+  for (const document of [canonicalOpenApi, publicOpenApi]) {
+    assert.match(document, /\/api\/v1\/research\/federated/);
+    assert.match(document, /FederatedResearchRequest/);
+    assert.match(document, /FederatedResearchResponse/);
+    assert.match(document, /provider_not_configured/);
+    assert.match(document, /does not share sessions/i);
+  }
+});
+
+test("route validates JSON and returns normalized bounded public results", async () => {
+  const previous = process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+  const originalFetch = globalThis.fetch;
+  process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = "https://research.tamv.online/api/research/search";
+  globalThis.fetch = async (_input, _init) => jsonResponse(validResearchResponse("memoria viva"));
+  try {
+    const { POST } = await import("../app/api/v1/research/federated/route.ts");
+    const response = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ query: "  memoria   viva  " }),
+    }));
+    const result = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+    assert.equal(result.query, "memoria viva");
+    assert.equal(result.type, "research");
+    assert.equal(result.results.length, 1);
+    assert.match(result.semantics, /does not establish authorship/i);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+    else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
+  }
+});
+
+test("route rejects unsupported media types, malformed JSON and client-supplied destinations", async () => {
+  const { POST } = await import("../app/api/v1/research/federated/route.ts");
+  const unsupported = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+    method: "POST", headers: { "content-type": "text/plain" }, body: "memoria viva",
+  }));
+  assert.equal(unsupported.status, 415);
+
+  const malformed = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+    method: "POST", headers: { "content-type": "application/json" }, body: "{",
+  }));
+  assert.equal(malformed.status, 400);
+
+  const invalidQuery = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ query: "memoria viva", url: "https://attacker.example/" }),
+  }));
+  assert.equal(invalidQuery.status, 422);
+});
 
 const validResearchResponse = (query = "memoria viva", type = "research") => ({
   ok: true,
