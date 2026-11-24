@@ -48,13 +48,54 @@ type ErrorResponse = {
   issues?: Array<{ path: string; message: string }>
 }
 
+function isResearchResult(value: unknown): value is ResearchResult {
+  if (!value || typeof value !== "object") return false
+  const item = value as Record<string, unknown>
+  const safeUrl = typeof item.url === "string" && (item.url === "" || (() => {
+    try {
+      const url = new URL(item.url)
+      return url.protocol === "https:" && !url.username && !url.password
+    } catch {
+      return false
+    }
+  })())
+  return typeof item.id === "string"
+    && typeof item.provider === "string"
+    && typeof item.title === "string"
+    && safeUrl
+    && (typeof item.doi === "string" || item.doi === null)
+    && (typeof item.year === "number" || item.year === null)
+    && Array.isArray(item.authors) && item.authors.every((author) => typeof author === "string")
+    && (typeof item.venue === "string" || item.venue === null)
+    && (typeof item.resourceType === "string" || item.resourceType === null)
+    && (typeof item.citedByCount === "number" || item.citedByCount === null)
+    && (typeof item.license === "string" || item.license === null)
+    && (typeof item.openAccess === "boolean" || item.openAccess === null)
+    && typeof item.evidenceClass === "string"
+    && typeof item.retrievedAt === "string"
+}
+
+function isProviderState(value: unknown): value is ProviderState {
+  if (!value || typeof value !== "object") return false
+  const item = value as Record<string, unknown>
+  return typeof item.id === "string"
+    && typeof item.name === "string"
+    && ["ok", "empty", "unavailable", "not_configured", "link_only"].includes(String(item.status))
+    && typeof item.count === "number"
+    && Number.isInteger(item.count)
+    && item.count >= 0
+    && (item.note === undefined || typeof item.note === "string")
+}
+
 function isSuccessResponse(value: unknown): value is SuccessResponse {
   if (!value || typeof value !== "object") return false
   const body = value as Record<string, unknown>
   return body.ok === true
     && typeof body.query === "string"
-    && Array.isArray(body.results)
-    && Array.isArray(body.providers)
+    && (body.type === "research" || body.type === "organizations")
+    && typeof body.retrievedAt === "string"
+    && Array.isArray(body.results) && body.results.every(isResearchResult)
+    && Array.isArray(body.providers) && body.providers.every(isProviderState)
     && typeof body.methodology === "string"
     && typeof body.semantics === "string"
 }
