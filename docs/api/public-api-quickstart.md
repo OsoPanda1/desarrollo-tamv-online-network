@@ -44,7 +44,19 @@ curl -fsS http://localhost:3000/api/v1/exports/research
 
 Returns a Schema.org-oriented `DataCatalog` containing public projects, topics and publications whose records are eligible for publication. It includes dataset items and licensing conditions.
 
-### 5. CSV export
+### 5. Federated institutional research query
+
+This endpoint forwards a bounded public search to the institutional application's existing research API. It is disabled until the server-only `TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL` is configured with the verified public HTTPS URL ending in `/api/research/search`. Without that configuration it returns HTTP 503; no URL can be supplied in the request.
+
+```sh
+curl -fsS http://localhost:3000/api/v1/research/federated \
+  -H 'content-type: application/json' \
+  -d '{"query":"memoria viva","type":"research"}'
+```
+
+Use `"type":"organizations"` for the institutional provider's ROR organization search. The bridge reads public metadata only, does not share sessions or write access, and does not independently verify authorship, peer review, quality, or reuse rights.
+
+### 6. CSV export
 
 ```sh
 curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' -o tamv-research-export.csv
