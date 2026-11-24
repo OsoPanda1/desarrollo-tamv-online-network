@@ -254,7 +254,7 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
           {results.results.length ? (
             <div className="federated-record-list">
               {results.results.map((item) => (
-                <article className="federated-record" key={item.id}>
+                <article className="federated-record" key={`${item.provider}:${item.id}`}>
                   <div className="federated-record-meta">
                     <span>{item.provider}</span>
                     {item.year ? <span>{item.year}</span> : null}
