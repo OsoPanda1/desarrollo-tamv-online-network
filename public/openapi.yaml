@@ -403,7 +403,7 @@ components:
       required: [schemaVersion, checkedAt, scope, systems]
       properties:
         schemaVersion: { type: string, const: "1.0.0" }
-        checkedAt: { type: string, format: date-time }
+        checkedAt: { type: string, format: date-time, description: "Snapshot assembly time; source metadata may be served from a cache revalidated every 900 seconds." }
         scope: { type: string }
         systems:
           type: array
@@ -420,7 +420,7 @@ components:
         sourceMetadataStatus:
           type: string
           enum: [metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response]
-        checkedAt: { type: string, format: date-time }
+        checkedAt: { type: string, format: date-time, description: "Snapshot assembly time; source metadata may be served from a cache revalidated every 900 seconds." }
         metadata:
           type: [object, "null"]
           additionalProperties: false
