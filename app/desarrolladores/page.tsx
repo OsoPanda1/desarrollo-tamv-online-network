@@ -85,8 +85,8 @@ const endpoints = [
     path: "/api/v1/research/federated",
     accessEs: "Público · requiere URL configurada",
     accessEn: "Public · configured URL required",
-    purposeEs: "Consulta de metadatos bibliográficos públicos por el puente institucional; devuelve 503 si no está configurado.",
-    purposeEn: "Queries public bibliographic metadata through the institutional bridge; returns 503 until configured.",
+    purposeEs: "Consulta metadatos públicos; devuelve 503 si no está configurado. Requiere Origin del mismo sitio en navegadores; falta un límite distribuido antes de producción.",
+    purposeEn: "Queries public metadata; returns 503 until configured. Browser Origin must match; distributed rate limiting is required before production.",
   },
   {
     method: "POST",
