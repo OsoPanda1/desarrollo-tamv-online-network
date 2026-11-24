@@ -1,4 +1,5 @@
 import { isIP } from "node:net";
+import { isIP } from "node:net";
 import { z } from "zod";
 
 const MAX_RESPONSE_BYTES = 256 * 1024;
@@ -14,7 +15,19 @@ const validDateTime = z.string().refine(
 function isHttpsUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    return url.protocol === "https:" && !url.username && !url.password;
+    const hostname = url.hostname.toLowerCase().replace(/\\.$/, "");
+    return url.protocol === "https:"
+      && !url.username
+      && !url.password
+      && !url.port
+      && isIP(hostname) === 0
+      && hostname.includes(".")
+      && hostname !== "localhost"
+      && !hostname.endsWith(".localhost")
+      && !hostname.endsWith(".local")
+      && !hostname.endsWith(".internal")
+      && !hostname.endsWith(".test")
+      && !hostname.endsWith(".invalid");
   } catch {
     return false;
   }
