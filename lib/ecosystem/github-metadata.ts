@@ -3,6 +3,7 @@ import { ecosystemSystems, type EcosystemSystem } from "./registry.ts";
 
 const MAX_UPSTREAM_BODY_BYTES = 64 * 1024;
 const REQUEST_TIMEOUT_MS = 4_500;
+const UPSTREAM_REVALIDATE_SECONDS = 900;
 
 const parseableDateTime = z.string().refine(
   (value) => Number.isFinite(Date.parse(value)) && value.includes("T"),
@@ -60,9 +61,13 @@ export type EcosystemRepositoryMetadataResponse = {
   systems: EcosystemRepositoryMetadataEntry[];
 };
 
+type GitHubFetchInit = RequestInit & {
+  next?: { revalidate?: number; tags?: string[] };
+};
+
 export type GitHubFetch = (
   input: URL | RequestInfo,
-  init?: RequestInit,
+  init?: GitHubFetchInit,
 ) => Promise<Response>;
 
 function getRepositoryCoordinates(repository: string): { owner: string; name: string } | null {
@@ -196,6 +201,7 @@ export async function fetchPublicRepositoryMetadata(
       },
       redirect: "error",
       cache: "force-cache",
+      next: { revalidate: UPSTREAM_REVALIDATE_SECONDS },
       signal: timeoutSignal,
     });
   } catch (error) {
@@ -258,7 +264,7 @@ export async function getPublicEcosystemRepositoryMetadata(
   return {
     schemaVersion: "1.0.0",
     checkedAt: new Date().toISOString(),
-    scope: "Public GitHub repository metadata only. This does not assert deployed application health, authentication, authorization, data synchronization, source correctness, signature validity, peer review, or accreditation.",
+    scope: "Public GitHub repository metadata only. Upstream source responses are revalidated every 900 seconds; checkedAt is the snapshot assembly time, not the exact upstream refresh time. This does not assert deployed application health, authentication, authorization, data synchronization, source correctness, signature validity, peer review, or accreditation.",
     systems,
   };
 }
