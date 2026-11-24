@@ -3,6 +3,38 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fetchInstitutionalResearch, getInstitutionalResearchSearchEndpoint } from "../lib/ecosystem/institutional-research.ts";
 
+const validResearchResponse = (query = "memoria viva", type = "research") => ({
+  ok: true,
+  query,
+  type,
+  retrievedAt: "2026-11-24T10:00:00.000Z",
+  results: [{
+    id: "https://openalex.org/W123",
+    provider: "OpenAlex",
+    title: "Public metadata example",
+    url: "https://openalex.org/W123",
+    doi: "10.1000/example",
+    year: 2025,
+    authors: ["Example Author"],
+    venue: null,
+    resourceType: "article",
+    citedByCount: 0,
+    license: null,
+    openAccess: null,
+    evidenceClass: "Public bibliographic metadata; no peer-review claim.",
+    retrievedAt: "2026-11-24T10:00:00.000Z",
+  }],
+  providers: [{ id: "openalex", name: "OpenAlex", status: "ok", count: 1, note: "Public API" }],
+  methodology: "Public metadata only.",
+});
+
+function jsonResponse(value, status = 200, headers = {}) {
+  return new Response(JSON.stringify(value), {
+    status,
+    headers: { "content-type": "application/json", ...headers },
+  });
+}
+
 const canonicalOpenApi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
 const publicOpenApi = readFileSync("public/openapi.yaml", "utf8");
 
@@ -61,38 +93,6 @@ test("route rejects unsupported media types, malformed JSON and client-supplied 
   }));
   assert.equal(invalidQuery.status, 422);
 });
-
-const validResearchResponse = (query = "memoria viva", type = "research") => ({
-  ok: true,
-  query,
-  type,
-  retrievedAt: "2026-11-24T10:00:00.000Z",
-  results: [{
-    id: "https://openalex.org/W123",
-    provider: "OpenAlex",
-    title: "Public metadata example",
-    url: "https://openalex.org/W123",
-    doi: "10.1000/example",
-    year: 2025,
-    authors: ["Example Author"],
-    venue: null,
-    resourceType: "article",
-    citedByCount: 0,
-    license: null,
-    openAccess: null,
-    evidenceClass: "Public bibliographic metadata; no peer-review claim.",
-    retrievedAt: "2026-11-24T10:00:00.000Z",
-  }],
-  providers: [{ id: "openalex", name: "OpenAlex", status: "ok", count: 1, note: "Public API" }],
-  methodology: "Public metadata only.",
-});
-
-function jsonResponse(value, status = 200, headers = {}) {
-  return new Response(JSON.stringify(value), {
-    status,
-    headers: { "content-type": "application/json", ...headers },
-  });
-}
 
 test("endpoint configuration accepts only HTTPS public search URL and blocks private targets", () => {
   assert.equal(getInstitutionalResearchSearchEndpoint("https://research.tamv.online/api/research/search")?.pathname, "/api/research/search");
