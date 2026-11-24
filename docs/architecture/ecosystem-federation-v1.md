@@ -23,12 +23,21 @@ Bring the eight repositories into one coherent ecosystem without forcing incompa
 
 - Typed catalog: `lib/ecosystem/registry.ts`.
 - Public discovery endpoint: `GET /api/v1/ecosystem`.
+- Bounded read-only GitHub public metadata adapter: `GET /api/v1/ecosystem/metadata`.
 - Stateless provenance validator: `POST /api/v1/provenance/validate` with a 64 KiB request-body limit, JSON-only input, and structured schema errors.
 - This contract and its explicit state semantics.
 - Catalog states are evidence-gated: `catalogued`, `contracted`, `adapter_implemented`, `verified`.
 - No secrets, private URLs, tokens, or privileged configuration are returned.
 
 The endpoint is intentionally a discovery document. It does not probe remote systems, does not claim that they are online, and does not establish identity or trust.
+
+## Phase 1 partial implementation: public GitHub repository metadata
+
+`GET /api/v1/ecosystem/metadata` makes bounded, credential-free read-only calls to GitHub's repository metadata API for the eight repositories in the static registry. It enforces a 4.5-second per-request timeout, a 64 KiB upstream response limit, redirect rejection, payload schema validation and repository identity matching. A failed source returns a per-repository status without erasing successful results from other sources.
+
+The `metadata_available` result confirms only that GitHub returned public metadata for the expected repository. It does not mean the application deploys, its runtime is reachable, builds pass, identity is federated, data is synchronized, or content is licensed for reuse. The adapter does not modify the registry's `integrationState`. The route uses shared-cache headers to limit anonymous GitHub API usage; its behavior and rate-limit profile still require preview verification.
+
+See [the adapter contract](github-public-metadata-adapter-v1.md) and [the adapter tests](../../tests/ecosystem-github-metadata.test.mjs). Phase 1 remains open until the contract is deployed and verified against a recorded commit and target environment.
 
 ## Identity and authorization
 
