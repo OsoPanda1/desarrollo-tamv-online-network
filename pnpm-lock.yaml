@@ -2065,7 +2065,7 @@ snapshots:
       '@ai-sdk/provider': 4.0.39
       '@ai-sdk/provider-utils': 5.0.83(zod@4.6.7)
       cross-spawn: 7.0.6
-      pkce-challenge: 5.0.1
+      pkce-challenge: 5.0.2
       zod: 4.6.7
 
   '@ai-sdk/provider-utils@5.0.83(zod@4.6.7)':
@@ -2073,7 +2073,7 @@ snapshots:
       '@ai-sdk/provider': 4.0.39
       '@standard-schema/spec': 1.1.0
       '@workflow/serde': 4.1.0
-      eventsource-parser: 3.1.0
+      eventsource-parser: 3.1.1
       zod: 4.6.7
 
   '@ai-sdk/provider@4.0.39':
