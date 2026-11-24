@@ -2964,3 +2964,44 @@ body {
   .tamv-guide-definition .tamv-guide-lead { font-size: 17px; }
   .tamv-guide-warning { grid-template-columns: 1fr; }
 }
+
+
+/* TAMV microtype contrast refinement */
+.hero-location { color: #3e4d58; font-size: 12px; }
+.hero-location > span:nth-child(2) { color: #4a5963; font-size: 10px; }
+.hero-image-topline, .hero-image-caption > span { font-size: 10px; }
+.hero-image-foot { color: #43525d; font-size: 9px; }
+.mission-grid article > span, .values-line > span { font-size: 10px; }
+.work-card-top { color: #554b43; font-size: 11px; }
+.project-index { font-size: 11px; }
+.project-category { font-size: 10px; color: #43515b; }
+.results-count { color: #354956; font-size: 11px; }
+.project-status { color: #354956; font-size: 11px; }
+.project-limits p { color: #3d4c57; font-size: 12px; }
+.hero-image-foot { color: #43525d; }
+.federated-search-boundary, .federated-methodology, .federated-setup-note { color: #45535d; }
+.federated-results-heading > span { color: #4b5963; font-size: 11px; }
+.federated-provider { color: #2f4351; font-size: 12px; }
+.federated-provider strong { color: #142a3b; font-size: 13px; }
+.federated-provider > span:nth-of-type(2) { color: #43535e; }
+.federated-provider small { color: #142a3b; font-size: 13px; }
+.federated-record-meta { color: #4a5862; font-size: 11px; }
+.federated-record > p { color: #3e4d58; font-size: 13px; }
+.federated-record .federated-record-doi { font-size: 12px; }
+.federated-record .federated-record-evidence { color: #4b5963; font-size: 12px; }
+.ecosystem-board-kicker, .ecosystem-card-topline > span:first-child { font-size: 11px; }
+.ecosystem-metadata-status { color: #40505b; font-size: 11px; }
+.ecosystem-repository-name { color: #43525d; font-size: 12px; }
+.ecosystem-metadata-facts dt { color: #4b5963; font-size: 10px; }
+.ecosystem-metadata-facts dd { color: #2b4151; font-size: 13px; }
+.ecosystem-metadata-unavailable { color: #45545e; font-size: 13px; }
+.ecosystem-scope-note { color: #3f4e58; font-size: 13px; }
+.ecosystem-scope-note span { color: #704426; font-size: 11px; }
+.guide-step-top { font-size: 11px; }
+.guide-benefits-grid article > span { font-size: 10px; }
+.guide-source-note { font-size: 11px; }
+@media (max-width: 620px) {
+  .hero-location { font-size: 12px; }
+  .hero-image-foot { font-size: 9px; }
+  .federated-record-meta { font-size: 11px; }
+}
