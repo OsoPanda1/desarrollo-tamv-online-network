@@ -123,7 +123,7 @@ type LimitedJsonResult =
 
 async function readLimitedJson(response: Response, signal: AbortSignal): Promise<LimitedJsonResult> {
   const declaredLength = response.headers.get("content-length");
-  if (declaredLength && /^\\d+$/.test(declaredLength) && Number(declaredLength) > MAX_RESPONSE_BYTES) {
+  if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > MAX_RESPONSE_BYTES) {
     return { kind: "too_large" };
   }
   if (!response.body) return { kind: "invalid" };
