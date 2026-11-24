@@ -105,14 +105,25 @@ function isTimeoutError(error: unknown): boolean {
   return error instanceof Error && (error.name === "TimeoutError" || error.name === "AbortError");
 }
 
-async function readLimitedJson(response: Response): Promise<{ ok: true; value: unknown } | { ok: false }> {
-  const declaredLength = response.headers.get("content-length");
-  if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > MAX_UPSTREAM_BODY_BYTES) {
-    return { ok: false };
-  }
-  if (!response.body) return { ok: false };
+type LimitedJsonResult =
+  | { kind: "ok"; value: unknown }
+  | { kind: "invalid" }
+  | { kind: "timeout" };
 
-  const reader = response.body.getReader();
+async function readLimitedJson(response: Response, signal: AbortSignal): Promise<LimitedJsonResult> {
+  const declaredLength = response.headers.get("content-length");
+  if (declaredLength && /^\\d+$/.test(declaredLength) && Number(declaredLength) > MAX_UPSTREAM_BODY_BYTES) {
+    return { kind: "invalid" };
+  }
+  if (!response.body) return { kind: "invalid" };
+
+  let reader: ReadableStreamDefaultReader<Uint8Array>;
+  try {
+    reader = response.body.getReader();
+  } catch {
+    return { kind: "invalid" };
+  }
+
   const chunks: Uint8Array[] = [];
   let totalBytes = 0;
 
@@ -127,12 +138,12 @@ async function readLimitedJson(response: Response): Promise<{ ok: true; value: u
         } catch {
           // Keep the invalid-response classification if the upstream refuses cancellation.
         }
-        return { ok: false };
+        return { kind: "invalid" };
       }
       chunks.push(value);
     }
   } catch {
-    return { ok: false };
+    return signal.aborted ? { kind: "timeout" } : { kind: "invalid" };
   } finally {
     reader.releaseLock();
   }
@@ -146,9 +157,9 @@ async function readLimitedJson(response: Response): Promise<{ ok: true; value: u
 
   try {
     const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-    return { ok: true, value: JSON.parse(text) as unknown };
+    return { kind: "ok", value: JSON.parse(text) as unknown };
   } catch {
-    return { ok: false };
+    return { kind: "invalid" };
   }
 }
 
@@ -172,6 +183,7 @@ export async function fetchPublicRepositoryMetadata(
     "https://api.github.com",
   );
 
+  const timeoutSignal = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
   let response: Response;
   try {
     response = await fetcher(apiUrl, {
@@ -183,10 +195,10 @@ export async function fetchPublicRepositoryMetadata(
       },
       redirect: "error",
       cache: "force-cache",
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      signal: timeoutSignal,
     });
   } catch (error) {
-    return result(system, isTimeoutError(error) ? "timeout" : "upstream_error");
+    return result(system, timeoutSignal.aborted || isTimeoutError(error) ? "timeout" : "upstream_error");
   }
 
   if (response.status === 404) return result(system, "not_found");
@@ -196,8 +208,9 @@ export async function fetchPublicRepositoryMetadata(
   ) return result(system, "rate_limited");
   if (!response.ok) return result(system, "upstream_error");
 
-  const body = await readLimitedJson(response);
-  if (!body.ok) return result(system, "invalid_response");
+  const body = await readLimitedJson(response, timeoutSignal);
+  if (body.kind === "timeout") return result(system, "timeout");
+  if (body.kind !== "ok") return result(system, "invalid_response");
 
   const parsed = githubRepositoryPayloadSchema.safeParse(body.value);
   if (!parsed.success) return result(system, "invalid_response");
