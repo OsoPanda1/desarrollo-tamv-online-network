@@ -3005,7 +3005,6 @@ body {
   .hero-image-foot { font-size: 9px; }
   .federated-record-meta { font-size: 11px; }
 }
-;
 /* TAMV intent-led discovery module */
 .intent-discovery{position:relative;overflow:hidden;background:#10283b;color:#f8f7f2}
 .intent-discovery::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.38;background:radial-gradient(ellipse at 82% 12%,rgba(69,121,148,.42),transparent 38%),radial-gradient(ellipse at 8% 92%,rgba(183,122,84,.2),transparent 35%)}
