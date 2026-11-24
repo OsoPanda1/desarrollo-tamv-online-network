@@ -26,7 +26,7 @@ const digestLengths = {
  */
 export const provenanceRecordSchema = z.object({
   schemaVersion: z.literal("1.0.0"),
-  sourceUri: z.string().url().refine((value) => ["http:", "https:"].includes(new URL(value).protocol), "Source URI must use HTTP or HTTPS"),
+  sourceUri: z.string().url().refine((value) => { try { return ["http:", "https:"].includes(new URL(value).protocol); } catch { return false; } }, "Source URI must use HTTP or HTTPS"),
   sourceSystem: z.string().trim().min(1).max(200),
   sourceRecordId: z.string().max(500).nullable().optional(),
   sourceVersion: z.string().max(300).nullable().optional(),
@@ -53,7 +53,7 @@ export const provenanceRecordSchema = z.object({
     "source_verified",
     "rejected",
   ]),
-  validationEvidenceUri: z.string().url().refine((value) => ["http:", "https:"].includes(new URL(value).protocol), "Evidence URI must use HTTP or HTTPS").nullable().optional(),
+  validationEvidenceUri: z.string().url().refine((value) => { try { return ["http:", "https:"].includes(new URL(value).protocol); } catch { return false; } }, "Evidence URI must use HTTP or HTTPS").nullable().optional(),
   notes: z.string().max(2000).nullable().optional(),
 }).strict();
 

@@ -7,6 +7,7 @@ const registry = readFileSync("lib/ecosystem/registry.ts", "utf8");
 const route = readFileSync("app/api/v1/ecosystem/route.ts", "utf8");
 const contract = readFileSync("docs/architecture/ecosystem-federation-v1.md", "utf8");
 const openapi = readFileSync("docs/api/openapi-v1-ecosystem.yaml", "utf8");
+const publicOpenapi = readFileSync("public/openapi.yaml", "utf8");
 const provenanceSchema = JSON.parse(readFileSync("docs/architecture/provenance-record.schema.json", "utf8"));
 
 const requiredRepos = [
@@ -26,6 +27,22 @@ test("ecosystem registry catalogs all eight systems", () => {
   }
 });
 
+test("ecosystem GET route returns the real catalog with explicit security semantics", async () => {
+  const { GET } = await import("../app/api/v1/ecosystem/route.ts");
+  const response = await GET();
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.match(response.headers.get("cache-control") ?? "", /max-age=60/);
+  assert.equal(body.system, "TAMV Online Network");
+  assert.equal(body.schemaVersion, "1.0.0");
+  assert.equal(body.systems.length, 8);
+  assert.equal(new Set(body.systems.map((system) => system.id)).size, 8);
+  assert.ok(body.systems.every((system) => system.integrationState === "catalogued"));
+  assert.match(body.securityBoundary, /does not grant authentication/i);
+});
+
 test("public route returns discovery metadata and no synthetic health claim", () => {
   assert.match(route, /getPublicEcosystemCatalog/);
   assert.match(route, /Cache-Control/);
@@ -42,7 +59,18 @@ test("federation contract preserves security and licensing boundaries", () => {
   assert.match(contract, /Public repositories are not automatically licensed/i);
   assert.match(contract, /No direct dual writes/i);
   assert.match(openapi, /openapi: 3\.1\.0/);
-  assert.match(openapi, /\/api\/v1\/ecosystem/);
+  assert.match(openapi, /^  \/api\/v1\/ecosystem:\n/m);
+  assert.match(openapi, /^  \/api\/v1\/ecosystem\/metadata:\n/m);
+  assert.match(openapi, /^  \/api\/v1\/provenance\/validate:\n/m);
+  assert.match(publicOpenapi, /openapi: 3\.1\.0/);
+  assert.match(publicOpenapi, /^  \/api\/v1\/ecosystem:\n/m);
+  assert.match(publicOpenapi, /^  \/api\/v1\/ecosystem\/metadata:\n/m);
+  assert.match(publicOpenapi, /^  \/api\/v1\/provenance\/validate:\n/m);
+  assert.match(publicOpenapi, /EcosystemCatalog/);
+  assert.match(publicOpenapi, /EcosystemSystem/);
+  assert.match(openapi, /submittedValidationState/);
+  assert.match(publicOpenapi, /submittedValidationState/);
+  assert.match(openapi, /\/api\/v1\/provenance\/validate/);
   assert.equal(provenanceSchema.required.includes("sourceUri"), true);
   assert.equal(provenanceSchema.required.includes("observedAt"), true);
   assert.equal(provenanceSchema.additionalProperties, false);

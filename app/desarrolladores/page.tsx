@@ -66,6 +66,38 @@ const endpoints = [
   },
   {
     method: "GET",
+    path: "/api/v1/ecosystem",
+    accessEs: "Público · catálogo",
+    accessEn: "Public · catalog",
+    purposeEs: "Catálogo versionado de los ocho sistemas. Catalogado no significa conectado ni verificado.",
+    purposeEn: "Versioned catalog of eight systems. Catalogued does not mean connected or verified.",
+  },
+  {
+    method: "GET",
+    path: "/api/v1/ecosystem/metadata",
+    accessEs: "Público · metadatos GitHub",
+    accessEn: "Public · GitHub metadata",
+    purposeEs: "Consulta de metadatos públicos del repositorio; no verifica salud ni despliegue de la aplicación.",
+    purposeEn: "Reads public repository metadata; does not verify application health or deployment.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/research/federated",
+    accessEs: "Público · requiere URL configurada",
+    accessEn: "Public · configured URL required",
+    purposeEs: "Consulta metadatos públicos; devuelve 503 si no está configurado. Requiere Origin del mismo sitio en navegadores; falta un límite distribuido antes de producción.",
+    purposeEn: "Queries public metadata; returns 503 until configured. Browser Origin must match; distributed rate limiting is required before production.",
+  },
+  {
+    method: "POST",
+    path: "/api/v1/provenance/validate",
+    accessEs: "Público · valida esquema",
+    accessEn: "Public · schema validation",
+    purposeEs: "Valida la estructura de una declaración de procedencia; no prueba autoría, firma ni veracidad de la fuente.",
+    purposeEn: "Validates the structure of a provenance record; does not prove authorship, signatures, or source truth.",
+  },
+  {
+    method: "GET",
     path: "/api/v1/hcu/graph",
     accessEs: "Público · grafo HCU",
     accessEn: "Public · HCU graph",
@@ -293,6 +325,7 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CITATION.cff" target="_blank" rel="noopener noreferrer">{english ? "How to cite TAMV" : "Cómo citar TAMV"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">{english ? "Community code of conduct" : "Código de conducta"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="/api/v1/exports/research?format=csv">{english ? "Download current public metadata" : "Descargar metadatos públicos actuales"} <ArrowUpRight aria-hidden="true" /></a>
+          <Link href={`/ecosistema?lang=${locale}`}>{english ? "Live ecosystem repository metadata" : "Metadatos del ecosistema en tiempo real"} <ArrowUpRight aria-hidden="true" /></Link>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">{english ? "Contribution guide" : "Guía de contribución"} <ArrowUpRight aria-hidden="true" /></a>
           <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/api/public-api-quickstart.md" target="_blank" rel="noopener noreferrer">{english ? "Public API guide" : "Guía de API pública"} <ArrowUpRight aria-hidden="true" /></a>
         </p>

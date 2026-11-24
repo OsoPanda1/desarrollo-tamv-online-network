@@ -65,6 +65,8 @@ See the [production and Stripe runbook](docs/production/membership-billing-runbo
 
 The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
 
+- [TAMV practical guide](/guia) — bilingual walkthrough of what TAMV is, how to explore its main sections, how to interpret catalog and implementation states, and how to make a responsible first contribution.
+
 - [Public API quickstart](docs/api/public-api-quickstart.md) — reproducible `curl` examples, response boundaries, and license/provenance notes.
 - [OpenAPI 3.1 contract](public/openapi.yaml) — machine-readable specification for current public read endpoints; session-protected write routes are intentionally not documented as anonymous integrations.
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
@@ -155,3 +157,11 @@ The ecosystem now has a canonical, public discovery catalog at `GET /api/v1/ecos
 - Code-level consolidation remains subject to repository license, asset, dependency and cryptographic implementation review.
 
 The endpoint and registry tests live in `tests/ecosystem-registry.test.mjs`. They must pass in CI and the endpoint must be smoke-tested on a deployed preview before the catalog is used as a production integration surface.
+
+A stateless `POST /api/v1/provenance/validate` endpoint validates provenance envelopes against the v1 Zod schema. It enforces JSON input and a 64 KiB body limit, returns structured schema errors, does not persist or fetch submitted sources, and does not establish source truth or authorship. See the [OpenAPI contract](public/openapi.yaml) and [federation architecture](docs/architecture/ecosystem-federation-v1.md). Its route tests are in `tests/provenance-validation-route.test.mjs`.
+
+A bounded read-only adapter at `GET /api/v1/ecosystem/metadata` retrieves public GitHub repository metadata for the same eight catalogued systems. It reports partial upstream failures without claiming that an application is deployed or healthy; it uses no GitHub credentials, does not fetch repository code, and does not change the catalog integration states. See [the adapter contract](docs/architecture/github-public-metadata-adapter-v1.md) and its tests in `tests/ecosystem-github-metadata.test.mjs`.
+
+The read-only route `POST /api/v1/research/federated` can forward a bounded research or organization query to the institutional app’s public research API. It remains disabled until the server-only `TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL` variable is set to the verified HTTPS `/api/research/search` endpoint; no target hostname is hardcoded or supplied by clients. See [the federation bridge contract](docs/architecture/institutional-research-federation-v1.md) and `tests/institutional-research-federation.test.mjs`.
+
+The metadata dashboard is available at `/ecosistema`, and the federated query form is embedded in `/investigacion`. Both interfaces distinguish source metadata from application health or scientific verification. Search terms are forwarded to the configured institutional service and may reach its metadata providers; do not submit personal or confidential data. Before public production, apply a distributed rate limit at the deployment edge; the core application does not claim that an in-memory counter would protect a serverless deployment.

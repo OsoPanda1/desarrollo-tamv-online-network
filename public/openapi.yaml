@@ -24,6 +24,10 @@ tags:
     description: Exploratory human-centric knowledge graph.
   - name: Exports
     description: Public metadata in JSON-LD or CSV format.
+  - name: Provenance
+    description: Stateless schema validation for provenance envelopes.
+  - name: Ecosystem
+    description: Public ecosystem repository discovery and metadata.
 paths:
   /api/v1/research/topics:
     get:
@@ -132,6 +136,179 @@ paths:
                 description: CSV metadata export; each record's license/provenance must be reviewed before redistribution.
         "503":
           $ref: "#/components/responses/CatalogUnavailable"
+  /api/v1/research/federated:
+    post:
+      operationId: federatedInstitutionalResearchSearch
+      tags: [Research]
+      summary: Search public research metadata through the institutional TAMV application
+      description: >-
+        Forwards a bounded search query to the server-configured public institutional research API.
+        The caller cannot choose the upstream URL. This does not share sessions, write data, or establish
+        authorship, peer review, accreditation, licensing or independent verification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FederatedResearchRequest"
+      responses:
+        "200":
+          description: Validated public metadata returned by the institutional application.
+          headers:
+            Cache-Control:
+              schema: { type: string, const: no-store }
+            X-Content-Type-Options:
+              schema: { type: string, const: nosniff }
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchResponse"
+        "400":
+          description: Malformed JSON, invalid UTF-8 or unreadable request body.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "403":
+          description: Browser request Origin differs from the API origin. Requests without Origin (such as server-to-server clients) are not origin-checked.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "413":
+          description: Request body exceeds 2048 bytes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "415":
+          description: Content-Type must be application/json.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "422":
+          description: Query does not satisfy the request schema.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "502":
+          description: Institutional upstream is unavailable or returned invalid metadata.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "503":
+          description: Institutional endpoint is not configured or is rate limited.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+        "504":
+          description: Institutional endpoint timed out.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FederatedResearchError"
+  /api/v1/ecosystem:
+    get:
+      operationId: getPublicEcosystemCatalog
+      summary: Retrieve the public ecosystem catalog
+      description: Returns catalog metadata only; it does not probe remote systems.
+      tags: [Ecosystem]
+      responses:
+        "200":
+          description: Ecosystem catalog returned successfully.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemCatalog"
+        "500":
+          description: Unexpected server error.
+  /api/v1/ecosystem/metadata:
+    get:
+      operationId: getPublicEcosystemRepositoryMetadata
+      tags: [Ecosystem]
+      summary: Retrieve bounded public GitHub repository metadata for the ecosystem catalog
+      description: >-
+        Reads metadata only from the fixed GitHub REST API origin for repository URLs already present in the static registry.
+        Per-repository failures are returned in the response. This does not assert deployed application health,
+        authentication, authorization, data synchronization, source correctness, or trust.
+      responses:
+        "200":
+          description: Per-repository public metadata results; individual upstream failures do not fail the overall response.
+          headers:
+            Cache-Control:
+              schema: { type: string }
+            X-Content-Type-Options:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemRepositoryMetadataResponse"
+        "500":
+          description: Unexpected failure while constructing the response.
+  /api/v1/provenance/validate:
+    post:
+      operationId: validateProvenanceRecord
+      tags: [Provenance]
+      summary: Validate a provenance envelope
+      description: >-
+        Stateless schema validation only. Does not fetch source URLs, persist
+        records, verify authorship, or establish signature, trusted timestamp,
+        peer review or accreditation. Request bodies are limited to 65536 bytes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProvenanceRecord"
+      responses:
+        "200":
+          description: Record satisfies the schema; this is not source verification.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, schemaVersion, submittedValidationState, semantics]
+                properties:
+                  valid: { type: boolean, const: true }
+                  schemaVersion: { type: string, const: "1.0.0" }
+                  submittedValidationState: { type: string, enum: [unreviewed, schema_valid, source_verified, rejected], description: Claimed input state; not independently verified by this endpoint. }
+                  semantics: { type: string }
+        "400":
+          description: Malformed JSON or invalid UTF-8.
+        "413":
+          description: Payload exceeds 65536 bytes.
+        "415":
+          description: Content-Type must be application/json.
+        "422":
+          description: JSON is valid but fails the provenance schema.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, error, issues]
+                properties:
+                  valid: { type: boolean, const: false }
+                  error: { type: string, const: schema_validation_failed }
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      required: [path, code, message]
+                      properties:
+                        path: { type: string }
+                        code: { type: string }
+                        message: { type: string }
 components:
   responses:
     CatalogUnavailable:
@@ -141,6 +318,150 @@ components:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
   schemas:
+    FederatedResearchRequest:
+      type: object
+      additionalProperties: false
+      required: [query]
+      properties:
+        query: { type: string, minLength: 3, maxLength: 180 }
+        type: { type: string, enum: [research, organizations], default: research }
+    FederatedResearchResponse:
+      type: object
+      additionalProperties: false
+      required: [ok, provider, query, type, retrievedAt, results, providers, methodology, semantics]
+      properties:
+        ok: { type: boolean, const: true }
+        provider: { type: string, const: "TAMV Online Network — Institutional Research Platform" }
+        query: { type: string, minLength: 3, maxLength: 180 }
+        type: { type: string, enum: [research, organizations] }
+        retrievedAt: { type: string, format: date-time }
+        results:
+          type: array
+          maxItems: 24
+          items: { $ref: "#/components/schemas/FederatedResearchMetadataRecord" }
+        providers:
+          type: array
+          maxItems: 12
+          items: { $ref: "#/components/schemas/FederatedResearchProviderState" }
+        methodology: { type: string, minLength: 1, maxLength: 3000 }
+        semantics: { type: string }
+    FederatedResearchMetadataRecord:
+      type: object
+      additionalProperties: false
+      required: [id, provider, title, url, doi, year, authors, venue, resourceType, citedByCount, license, openAccess, evidenceClass, retrievedAt]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 1200 }
+        provider: { type: string, minLength: 1, maxLength: 120 }
+        title: { type: string, minLength: 1, maxLength: 600 }
+        url: { type: string, maxLength: 2048, description: "HTTPS URL or empty string when the source has no safe external URL." }
+        doi: { type: [string, "null"], maxLength: 500 }
+        year: { type: [integer, "null"] }
+        authors:
+          type: array
+          maxItems: 12
+          items: { type: string, maxLength: 120 }
+        venue: { type: [string, "null"], maxLength: 240 }
+        resourceType: { type: [string, "null"], maxLength: 100 }
+        citedByCount: { type: [number, "null"] }
+        license: { type: [string, "null"], maxLength: 240 }
+        openAccess: { type: [boolean, "null"] }
+        evidenceClass: { type: string, minLength: 1, maxLength: 1200 }
+        retrievedAt: { type: string, format: date-time }
+    FederatedResearchProviderState:
+      type: object
+      additionalProperties: false
+      required: [id, name, status, count]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 120 }
+        name: { type: string, minLength: 1, maxLength: 180 }
+        status: { type: string, enum: [ok, empty, unavailable, not_configured, link_only] }
+        count: { type: integer, minimum: 0, maximum: 100000 }
+        note: { type: string, maxLength: 1200 }
+    FederatedResearchError:
+      type: object
+      required: [ok, error]
+      properties:
+        ok: { type: boolean, const: false }
+        error:
+          type: string
+          enum: [origin_not_allowed, unsupported_media_type, payload_too_large, invalid_utf8, request_body_unreadable, invalid_json, invalid_query, provider_not_configured, provider_configuration_invalid, provider_timeout, provider_rate_limited, provider_unavailable, provider_response_too_large, provider_invalid_response]
+        expected: { type: string }
+        maxBytes: { type: integer }
+        issues:
+          type: array
+          items:
+            type: object
+            required: [path, code, message]
+            properties:
+              path: { type: string }
+              code: { type: string }
+              message: { type: string }
+      additionalProperties: false
+    EcosystemRepositoryMetadataResponse:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, checkedAt, scope, systems]
+      properties:
+        schemaVersion: { type: string, const: "1.0.0" }
+        checkedAt: { type: string, format: date-time, description: "Snapshot assembly time; source data is configured for revalidation every 900 seconds, but stale cached metadata may remain available if an upstream refresh fails." }
+        scope: { type: string }
+        systems:
+          type: array
+          items:
+            $ref: "#/components/schemas/EcosystemRepositoryMetadataEntry"
+    EcosystemRepositoryMetadataEntry:
+      type: object
+      additionalProperties: false
+      required: [systemId, name, repository, sourceMetadataStatus, checkedAt, metadata]
+      properties:
+        systemId: { type: string, pattern: "^[a-z0-9-]+$" }
+        name: { type: string, minLength: 1 }
+        repository: { type: string, format: uri }
+        sourceMetadataStatus:
+          type: string
+          enum: [metadata_available, not_found, rate_limited, timeout, upstream_error, invalid_response]
+        checkedAt: { type: string, format: date-time, description: "Snapshot assembly time; source data is configured for revalidation every 900 seconds, but stale cached metadata may remain available if an upstream refresh fails." }
+        metadata:
+          type: [object, "null"]
+          additionalProperties: false
+          required: [repositoryId, fullName, url, defaultBranch, archived, updatedAt, pushedAt, primaryLanguage, licenseSpdxId]
+          properties:
+            repositoryId: { type: integer, minimum: 1 }
+            fullName: { type: string }
+            url: { type: string, format: uri }
+            defaultBranch: { type: string, minLength: 1 }
+            archived: { type: boolean }
+            updatedAt: { type: string, format: date-time }
+            pushedAt: { type: [string, "null"], format: date-time }
+            primaryLanguage: { type: [string, "null"] }
+            licenseSpdxId: { type: [string, "null"] }
+    ProvenanceRecord:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, sourceUri, sourceSystem, observedAt, validationState]
+      properties:
+        schemaVersion: { type: string, const: "1.0.0" }
+        sourceUri: { type: string, format: uri, minLength: 1, description: "Runtime accepts HTTP or HTTPS only." }
+        sourceSystem: { type: string, minLength: 1, maxLength: 200 }
+        sourceRecordId: { type: [string, "null"], maxLength: 500 }
+        sourceVersion: { type: [string, "null"], maxLength: 300 }
+        observedAt: { type: string, format: date-time, description: "Must include an explicit timezone and valid calendar date." }
+        license: { type: [string, "null"], maxLength: 200 }
+        contentDigest:
+          oneOf:
+            - type: "null"
+            - type: object
+              additionalProperties: false
+              required: [algorithm, value]
+              properties:
+                algorithm: { type: string, enum: [sha-256, sha-384, sha-512] }
+                value: { type: string, pattern: "^[a-fA-F0-9]+$" }
+              description: "Hex digest length must match the selected algorithm."
+        validationState:
+          type: string
+          enum: [unreviewed, schema_valid, source_verified, rejected]
+        validationEvidenceUri: { type: [string, "null"], format: uri, description: "Runtime accepts HTTP or HTTPS only." }
+        notes: { type: [string, "null"], maxLength: 2000 }
     ErrorResponse:
       type: object
       required: [error]
@@ -327,3 +648,66 @@ components:
         conditionsOfAccess: { type: string }
         note: { type: string }
       additionalProperties: true
+
+    EcosystemCatalog:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, system, generatedAt, statusSemantics, securityBoundary, systems]
+      properties:
+        schemaVersion:
+          type: string
+          const: 1.0.0
+        system:
+          type: string
+          const: TAMV Online Network
+        generatedAt:
+          type: string
+          format: date-time
+        statusSemantics:
+          type: object
+          required: [catalogued, contracted, adapter_implemented, contract_tested, verified]
+          properties:
+            catalogued: { type: string }
+            contracted: { type: string }
+            adapter_implemented: { type: string }
+            contract_tested: { type: string }
+            verified: { type: string }
+        securityBoundary:
+          type: string
+        systems:
+          type: array
+          items:
+            $ref: "#/components/schemas/EcosystemSystem"
+    EcosystemSystem:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - repository
+        - responsibility
+        - integrationState
+        - integrationMode
+        - canonicalData
+        - allowedInitialCapabilities
+        - prohibitedAssumptions
+      properties:
+        id: { type: string, pattern: "^[a-z0-9-]+$" }
+        name: { type: string, minLength: 1 }
+        repository: { type: string, format: uri }
+        responsibility: { type: string, minLength: 1 }
+        integrationState:
+          type: string
+          enum: [catalogued, contracted, adapter_implemented, contract_tested, verified]
+        integrationMode:
+          type: string
+          enum: [public_metadata, static_site, application, pipeline, trust_service, curriculum]
+        canonicalData:
+          type: array
+          items: { type: string }
+        allowedInitialCapabilities:
+          type: array
+          items: { type: string }
+        prohibitedAssumptions:
+          type: array
+          items: { type: string }

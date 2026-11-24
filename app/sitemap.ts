@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next"
 const origin = "https://tamv.online"
 const publicPaths = [
   "/",
+  "/guia",
   "/proyectos",
   "/investigacion",
   "/investigacion/publicaciones",
@@ -15,6 +16,7 @@ const publicPaths = [
   "/excelencia",
   "/auditoria-creator",
   "/desarrolladores",
+  "/ecosistema",
   "/membresias",
   "/institucionalizacion",
   "/membresias/condiciones",
@@ -36,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
       changeFrequency: path === "/" ? "weekly" : "monthly",
-      priority: path === "/" ? 1 : path === "/desarrolladores" || path === "/hcu" ? 0.85 : 0.7,
+      priority: path === "/" ? 1 : ["/guia", "/desarrolladores", "/hcu", "/ecosistema"].includes(path) ? 0.85 : 0.7,
     }
   })
 }
