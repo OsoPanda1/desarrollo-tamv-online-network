@@ -111,6 +111,7 @@ type LimitedJsonResult =
   | { kind: "timeout" };
 
 async function readLimitedJson(response: Response, signal: AbortSignal): Promise<LimitedJsonResult> {
+  if (signal.aborted) return { kind: "timeout" };
   const declaredLength = response.headers.get("content-length");
   if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > MAX_UPSTREAM_BODY_BYTES) {
     return { kind: "invalid" };
