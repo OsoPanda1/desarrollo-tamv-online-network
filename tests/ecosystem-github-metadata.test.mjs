@@ -106,6 +106,27 @@ test("metadata adapter rejects upstream identity mismatches, invalid JSON, and o
   assert.equal(oversized.sourceMetadataStatus, "invalid_response");
 });
 
+test("metadata adapter classifies a timed-out response body instead of a generic parse failure", async () => {
+  const system = ecosystemSystems[0];
+  const originalTimeout = AbortSignal.timeout;
+  AbortSignal.timeout = () => {
+    const controller = new AbortController();
+    controller.abort(new DOMException("request timed out", "TimeoutError"));
+    return controller.signal;
+  };
+  try {
+    const response = new Response(new ReadableStream({
+      start(controller) {
+        controller.error(new Error("socket closed while reading body"));
+      },
+    }));
+    const result = await fetchPublicRepositoryMetadata(system, async () => response);
+    assert.equal(result.sourceMetadataStatus, "timeout");
+  } finally {
+    AbortSignal.timeout = originalTimeout;
+  }
+});
+
 test("metadata adapter classifies a locked upstream body as invalid instead of throwing", async () => {
   const system = ecosystemSystems[0];
   const response = jsonResponse(payloadFor(system));
