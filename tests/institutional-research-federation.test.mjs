@@ -44,6 +44,7 @@ test("both OpenAPI files document the institutional research bridge", () => {
     assert.match(document, /FederatedResearchRequest/);
     assert.match(document, /FederatedResearchResponse/);
     assert.match(document, /provider_not_configured/);
+    assert.match(document, /origin_not_allowed/);
     assert.match(document, /does not share sessions/i);
   }
 });
@@ -57,7 +58,7 @@ test("route validates JSON and returns normalized bounded public results", async
     const { POST } = await import("../app/api/v1/research/federated/route.ts");
     const response = await POST(new Request("https://tamv.online/api/v1/research/federated", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", "origin": "https://tamv.online" },
       body: JSON.stringify({ query: "  memoria   viva  " }),
     }));
     const result = await response.json();
@@ -73,6 +74,18 @@ test("route validates JSON and returns normalized bounded public results", async
     if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
     else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
   }
+});
+
+test("route rejects cross-origin browser requests before invoking the provider", async () => {
+  const { POST } = await import("../app/api/v1/research/federated/route.ts");
+  const response = await POST(new Request("https://tamv.online/api/v1/research/federated", {
+    method: "POST",
+    headers: { "content-type": "application/json", "origin": "https://attacker.example" },
+    body: JSON.stringify({ query: "memoria viva", type: "research" }),
+  }));
+  assert.equal(response.status, 403);
+  assert.deepEqual(await response.json(), { ok: false, error: "origin_not_allowed" });
+  assert.equal(response.headers.get("cache-control"), "no-store");
 });
 
 test("route rejects unsupported media types, malformed JSON and client-supplied destinations", async () => {
