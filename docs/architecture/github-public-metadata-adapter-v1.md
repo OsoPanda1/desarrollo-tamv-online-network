@@ -9,6 +9,7 @@ The route `GET /api/v1/ecosystem/metadata` reads public repository metadata from
 - Source selection is derived exclusively from the reviewed, static ecosystem registry.
 - Every upstream request targets the fixed origin `https://api.github.com` and the GitHub repository metadata endpoint.
 - Redirects are rejected. Repository input supplied by a request caller is never accepted.
+- Next.js upstream fetch caching is explicitly enabled to reduce repeated anonymous GitHub API calls across requests; the response cache policy is separately limited to 300 seconds with a 600-second stale-while-revalidate window.
 - Requests are bounded by a 4.5-second timeout.
 - Upstream response bodies are limited to 64 KiB before JSON parsing.
 - Only a small allow-list of public metadata fields is projected into the API response.
