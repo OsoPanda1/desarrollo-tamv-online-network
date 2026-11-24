@@ -66,12 +66,25 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
   }
 }
 
+function sameOriginWhenProvided(request: Request): boolean {
+  const origin = request.headers.get("origin")
+  if (!origin) return true
+  try {
+    return new URL(origin).origin === new URL(request.url).origin
+  } catch {
+    return false
+  }
+}
+
 const responseHeaders = {
   "Cache-Control": "no-store",
   "X-Content-Type-Options": "nosniff",
 };
 
 export async function POST(request: Request): Promise<Response> {
+  if (!sameOriginWhenProvided(request)) {
+    return Response.json({ ok: false, error: "origin_not_allowed" }, { status: 403, headers: responseHeaders });
+  }
   const contentType = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
   if (contentType !== "application/json") {
     return Response.json(
