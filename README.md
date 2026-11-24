@@ -65,6 +65,8 @@ See the [production and Stripe runbook](docs/production/membership-billing-runbo
 
 The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
 
+- [TAMV practical guide](/guia) — bilingual walkthrough of what TAMV is, how to explore its main sections, how to interpret catalog and implementation states, and how to make a responsible first contribution.
+
 - [Public API quickstart](docs/api/public-api-quickstart.md) — reproducible `curl` examples, response boundaries, and license/provenance notes.
 - [OpenAPI 3.1 contract](public/openapi.yaml) — machine-readable specification for current public read endpoints; session-protected write routes are intentionally not documented as anonymous integrations.
 - [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
