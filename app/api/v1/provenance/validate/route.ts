@@ -29,7 +29,11 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
       if (done) break;
       totalBytes += value.byteLength;
       if (totalBytes > MAX_BODY_BYTES) {
-        await reader.cancel();
+        try {
+          await reader.cancel();
+        } catch {
+          // Preserve the size-limit result even if the upstream stream refuses cancellation.
+        }
         return { kind: "too_large" };
       }
       chunks.push(value);
