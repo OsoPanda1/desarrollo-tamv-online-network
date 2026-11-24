@@ -2662,3 +2662,305 @@ p, li { text-wrap: pretty; }
   .ecosystem-metadata-grid { grid-template-columns: 1fr; }
   .ecosystem-refresh { width: 100%; }
 }
+
+
+/* TAMV readability and light-button contrast pass */
+:root {
+  --ink: #142a3b;
+  --muted-ink: #3d4c58;
+  --muted-foreground: #43525e;
+  --rule: #c6cac7;
+  --border: #c6cac7;
+  --paper: #f5f3ed;
+  --background: #f5f3ed;
+  --foreground: #142a3b;
+  --primary: #f0e2d6;
+  --primary-foreground: #142a3b;
+}
+
+html { scroll-padding-top: 104px; }
+body {
+  color: #142a3b;
+  font-size: 16px;
+  line-height: 1.72;
+}
+.utility-inner { font-size: 10px; color: #e1e8ec; }
+.brand-type strong, .footer-brand strong { font-size: 20px; }
+.brand-type small, .footer-brand small { color: #42515d; font-size: 10px; }
+.primary-navigation { gap: clamp(10px, 1.15vw, 18px); }
+.primary-navigation a { color: #243b4d; font-size: 13px; }
+.primary-navigation a[aria-current="page"] { color: #102c40; }
+.primary-navigation .nav-contact, .primary-navigation .nav-portal { color: #142a3b; }
+.eyebrow { color: #704426; font-size: 11px; }
+.hero-description, .page-intro-description, .lead-copy, .body-copy,
+.section-heading-row > p, .institutional-copy > p, .section-heading-row .body-copy,
+.institutional-intro-grid .body-copy {
+  color: #354957;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.facts-grid article span { color: #394c5a; font-size: 11px; }
+.facts-caveat { color: #46545e; font-size: 10px; }
+.section-rail { color: #42515d; font-size: 10px; }
+.section-rail span:last-child { color: #515f69; }
+.mission-grid p, .work-card p, .project-description, .project-limits p,
+.guide-step > p, .guide-heading > p, .guide-benefits-grid p,
+.research-card h3, .roadmap-step p, .builders-card p,
+.governance-card p, .research-metadata, .research-setup-note {
+  color: #3d4b56;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.work-card p, .project-description, .project-limits p,
+.guide-step > p, .guide-benefits-grid p, .builders-card p,
+.governance-card p, .roadmap-step p { font-size: 13px; }
+.search-field { background: #fffefa; border-color: #aeb9be; color: #324755; }
+.search-field input { color: #142a3b; font-size: 13px; }
+.search-field input::placeholder { color: #596873; }
+.results-count { color: #43515d; font-size: 10px; }
+.project-category { color: #43515d; font-size: 9px; border-color: #bdc4c5; }
+.project-subtitle { color: #704b34; font-size: 11px; }
+.project-description { color: #3d4b56; }
+.project-status { color: #344855; font-size: 10px; }
+.project-limits summary { color: #304655; font-size: 11px; }
+.project-limits p { color: #45545e; font-size: 11px; }
+.page-intro .eyebrow { color: #704426; }
+.page-intro-description { color: #344958; font-size: 16px; line-height: 1.82; }
+.filter-button {
+  min-height: 38px;
+  border: 1px solid #b9c3c7;
+  background: #fffefa;
+  color: #1a3446;
+  font-size: 12px;
+}
+.filter-button:hover { border-color: #5a7280; background: #f4f7f7; color: #142a3b; }
+.filter-button.is-active { border-color: #91a5af; background: #e3ecef; color: #142a3b; }
+.text-button { color: #684124; font-size: 12px; }
+.empty-results p { color: #344958; font-size: 14px; }
+.footer-links a { color: #223b4d; font-size: 13px; }
+.footer-bottom { color: #3f4e59; font-size: 11px; }
+
+/* All branded button boxes stay light with dark text, including CTAs over dark sections. */
+.button {
+  min-height: 48px;
+  padding-inline: 18px;
+  border-color: #aebbc0;
+  background: #fffefa;
+  color: #142a3b;
+  font-size: 13px;
+}
+.button-copper, .button-copper:visited {
+  border-color: #b98b6c;
+  background: #f3e5da;
+  color: #142a3b;
+}
+.button-copper:hover {
+  border-color: #906344;
+  background: #e8d2c1;
+  color: #10283a;
+}
+.button-outline-light, .button-outline-dark {
+  border: 1px solid #9eafb6;
+  background: #fffefa;
+  color: #142a3b;
+}
+.button-outline-light:hover, .button-outline-dark:hover {
+  border-color: #536f7d;
+  background: #eaf0f2;
+  color: #10283a;
+}
+.button:disabled, .button[aria-disabled="true"] {
+  opacity: .68;
+  cursor: not-allowed;
+}
+.menu-toggle {
+  border-color: #a9b6bb;
+  background: #fffefa;
+  color: #142a3b;
+}
+.menu-toggle:hover { background: #e9eff1; color: #142a3b; }
+.tamv-support-link--compact {
+  border-color: #b4c0c4;
+  background: #fffefa;
+  color: #142a3b;
+  box-shadow: 0 3px 10px rgba(16,44,62,.045);
+}
+.tamv-support-link--compact:hover {
+  border-color: #8e9fa6;
+  background: #edf2f3;
+  color: #142a3b;
+}
+.tamv-support-link--inline {
+  border-color: #b8c4c8;
+  background: #fffefa;
+  color: #142a3b;
+  box-shadow: 0 12px 30px rgba(16,44,62,.06);
+}
+.tamv-support-link--inline .tamv-support-icon {
+  border-color: #c5d2d6;
+  background: #eaf0f2;
+  color: #1e4054;
+}
+.tamv-support-link--inline .tamv-support-copy strong { color: #142a3b; }
+.tamv-support-link--inline .tamv-support-copy small { color: #3f4e59; font-size: 11px; }
+.tamv-support-link--inline .tamv-support-arrow { color: #704426; }
+.tamv-support-link--inline:hover {
+  border-color: #8d9fa6;
+  background: #f1f5f5;
+  color: #142a3b;
+  box-shadow: 0 16px 34px rgba(12,34,52,.09);
+}
+.ecosystem-refresh {
+  border: 1px solid #aebbc0;
+  background: #fffefa;
+  color: #142a3b;
+  font-size: 13px;
+}
+.ecosystem-refresh:hover { background: #eaf0f2; border-color: #627b88; }
+.federated-submit { border: 1px solid #b98b6c; background: #f3e5da; color: #142a3b; }
+.federated-submit:hover:not(:disabled) { background: #e8d2c1; color: #10283a; }
+
+/* Practical TAMV tutorial */
+.tamv-guide-overview { background: #f8f7f2; }
+.tamv-guide-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .8fr);
+  gap: clamp(28px, 6vw, 76px);
+  align-items: start;
+}
+.tamv-guide-definition { max-width: 780px; }
+.tamv-guide-definition h2, .tamv-guide-section-heading h2, .tamv-guide-howto-grid h2,
+.tamv-guide-next-panel h2 {
+  margin: 0;
+  color: #142a3b;
+  font-size: clamp(32px, 4.1vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -.045em;
+  font-weight: 500;
+}
+.tamv-guide-definition h2 em, .tamv-guide-section-heading h2 em,
+.tamv-guide-howto-grid h2 em, .tamv-guide-next-panel h2 em {
+  color: #704426;
+  font-family: var(--serif);
+  font-weight: 400;
+}
+.tamv-guide-definition p:not(.eyebrow) {
+  max-width: 720px;
+  color: #354957;
+  font-size: 16px;
+  line-height: 1.85;
+}
+.tamv-guide-definition .tamv-guide-lead {
+  margin-top: 22px;
+  color: #223b4d;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.tamv-guide-concept {
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid #c7cdca;
+  background: #fffefa;
+  box-shadow: 10px 10px 0 #e6e2d7;
+}
+.tamv-guide-concept-kicker { color: #704426; font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.tamv-guide-concept h3 {
+  margin: 14px 0 18px;
+  color: #142a3b;
+  font: 500 clamp(25px, 3vw, 34px)/1.12 var(--serif);
+}
+.tamv-guide-concept-items { display: grid; gap: 0; }
+.tamv-guide-concept-items article { padding: 13px 0; border-top: 1px solid #d6dad6; }
+.tamv-guide-concept-items strong { color: #253f50; font-size: 14px; }
+.tamv-guide-concept-items p { margin: 5px 0 0; color: #3c4b56; font-size: 14px; line-height: 1.75; }
+
+.tamv-guide-steps-section { background: #eeece5; }
+.tamv-guide-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, .65fr);
+  gap: clamp(24px, 5vw, 68px);
+  align-items: end;
+  margin-bottom: 32px;
+}
+.tamv-guide-section-heading > p { margin: 0; color: #354957; font-size: 16px; line-height: 1.8; }
+.tamv-guide-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.tamv-guide-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 23px;
+  border: 1px solid #c9ceca;
+  background: #fffefa;
+  box-shadow: 0 7px 19px rgba(20,42,59,.035);
+}
+.tamv-guide-card-top { display: flex; justify-content: space-between; align-items: center; color: #704426; }
+.tamv-guide-card-top span { font: 700 12px/1.5 var(--mono); }
+.tamv-guide-card-top svg { width: 22px; height: 22px; color: #344f60; }
+.tamv-guide-card h3 { margin: 24px 0 9px; color: #142a3b; font-size: 20px; line-height: 1.28; }
+.tamv-guide-card > p { margin: 0 0 15px; color: #354957; font-size: 14px; line-height: 1.8; }
+.tamv-guide-card .tamv-guide-card-note { padding: 11px 12px; border-left: 3px solid #b98b6c; background: #f3eee7; color: #3a4851; font-size: 13px; }
+.tamv-guide-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 9px 12px;
+  border: 1px solid #aebbc0;
+  background: #fffefa;
+  color: #142a3b;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.tamv-guide-card-link:hover { border-color: #607987; background: #eaf0f2; color: #10283a; }
+.tamv-guide-card-link svg { width: 15px; height: 15px; }
+
+.tamv-guide-howto-section { background: #f8f7f2; }
+.tamv-guide-howto-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(28px, 7vw, 90px); align-items: start; }
+.tamv-guide-section-intro { color: #354957; font-size: 16px; line-height: 1.8; }
+.tamv-guide-howto-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tamv-guide-howto-list li { display: grid; grid-template-columns: 43px minmax(0,1fr); gap: 15px; padding: 18px 20px; border: 1px solid #cbd0cd; background: #fffefa; }
+.tamv-guide-howto-list li > span { color: #704426; font: 700 13px/1.6 var(--mono); }
+.tamv-guide-howto-list h3 { margin: 0 0 5px; color: #142a3b; font-size: 17px; line-height: 1.4; }
+.tamv-guide-howto-list p { margin: 0; color: #354957; font-size: 14px; line-height: 1.8; }
+
+.tamv-guide-trust-section { background: #eeece5; }
+.tamv-guide-boundaries { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.tamv-guide-boundaries article { padding: 22px; border: 1px solid #c8ceca; background: #fffefa; }
+.tamv-guide-boundaries svg { width: 23px; height: 23px; color: #304d60; }
+.tamv-guide-boundaries h3 { margin: 17px 0 8px; color: #142a3b; font-size: 18px; }
+.tamv-guide-boundaries p { margin: 0; color: #354957; font-size: 14px; line-height: 1.8; }
+.tamv-guide-warning { display: grid; grid-template-columns: 24px minmax(0,1fr); gap: 13px; margin-top: 18px; padding: 20px 22px; border: 1px solid #c8c3b9; background: #e4e0d7; color: #263d4c; }
+.tamv-guide-warning svg { width: 22px; height: 22px; color: #704426; }
+.tamv-guide-warning p { margin: 0; color: #263d4c; font-size: 15px; line-height: 1.8; }
+
+.tamv-guide-next-section { background: #f8f7f2; }
+.tamv-guide-next-panel { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(240px, .65fr); align-items: center; gap: 36px; padding: clamp(24px, 4vw, 45px); border: 1px solid #c6ccc8; background: #fffefa; }
+.tamv-guide-next-panel > div:first-child > p:last-child { max-width: 700px; margin: 18px 0 0; color: #354957; font-size: 16px; line-height: 1.8; }
+.tamv-guide-next-actions { display: grid; gap: 10px; }
+.tamv-guide-next-actions .button { width: 100%; justify-content: space-between; }
+
+@media (max-width: 980px) {
+  .tamv-guide-overview-grid, .tamv-guide-howto-grid, .tamv-guide-next-panel { grid-template-columns: 1fr; }
+  .tamv-guide-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tamv-guide-boundaries { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  .container { width: min(var(--container), calc(100% - 32px)); }
+  .utility-inner { font-size: 9px; gap: 8px; }
+  .brand-type strong, .footer-brand strong { font-size: 19px; }
+  .primary-navigation { gap: 9px; }
+  .primary-navigation a { font-size: 14px; }
+  .button { width: 100%; min-height: 48px; padding-inline: 14px; font-size: 13px; }
+  .tamv-guide-section-heading { grid-template-columns: 1fr; }
+  .tamv-guide-cards, .tamv-guide-boundaries { grid-template-columns: 1fr; }
+  .tamv-guide-card { padding: 20px; }
+  .tamv-guide-definition .tamv-guide-lead { font-size: 17px; }
+  .tamv-guide-warning { grid-template-columns: 1fr; }
+}
