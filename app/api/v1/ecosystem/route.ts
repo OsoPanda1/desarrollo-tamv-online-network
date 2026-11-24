@@ -1,4 +1,4 @@
-import { getPublicEcosystemCatalog } from "@/lib/ecosystem/registry";
+import { getPublicEcosystemCatalog } from "../../../../lib/ecosystem/registry.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
