@@ -60,6 +60,15 @@ test("provenance API returns validation issues without echoing submitted payload
   assert.equal(JSON.stringify(result).includes("must-not-be-echoed"), false);
 });
 
+test("provenance API handles malformed URI values as schema errors", async () => {
+  const invalid = { ...validRecord, sourceUri: "http://[" };
+  const response = await POST(request(JSON.stringify(invalid)));
+  const result = await response.json();
+  assert.equal(response.status, 422);
+  assert.equal(result.error, "schema_validation_failed");
+  assert.ok(result.issues.length > 0);
+});
+
 test("provenance API rejects mismatched digest length and timezone-free timestamps", async () => {
   const invalidDigest = { ...validRecord, contentDigest: { algorithm: "sha-256", value: "a".repeat(63) } };
   const invalidTimestamp = { ...validRecord, observedAt: "2026-11-23T12:00:00" };
