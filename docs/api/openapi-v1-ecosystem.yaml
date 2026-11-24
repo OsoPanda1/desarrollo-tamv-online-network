@@ -7,6 +7,11 @@ info:
     does not establish service health, identity federation, authorization, or trust.
 servers:
   - url: /
+tags:
+  - name: Ecosystem
+    description: Public ecosystem catalog and repository metadata.
+  - name: Research
+    description: Read-only public institutional research metadata federation.
 paths:
   /api/v1/ecosystem:
     get:
