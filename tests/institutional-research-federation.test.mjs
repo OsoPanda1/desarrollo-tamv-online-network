@@ -261,3 +261,30 @@ test("adapter rejects wrong query, invalid URLs, malformed JSON and oversized re
     else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
   }
 });
+
+
+test("adapter strips unexpected top-level fields from the institutional provider response", async () => {
+  const previous = process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+  process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = "https://research.tamv.online/api/research/search";
+  try {
+    const upstream = {
+      ...validResearchResponse("memoria viva", "research"),
+      internalDebugToken: "must-not-cross-the-federation-boundary",
+      unexpectedPrivateContext: { operatorNote: "must-not-be-forwarded" },
+    };
+    const result = await fetchInstitutionalResearch("memoria viva", "research", async () =>
+      jsonResponse(upstream),
+    );
+
+    assert.equal(result.ok, true);
+    if (result.ok) {
+      assert.equal("internalDebugToken" in result.data, false);
+      assert.equal("unexpectedPrivateContext" in result.data, false);
+      assert.equal(result.data.query, "memoria viva");
+      assert.equal(result.data.results.length, 1);
+    }
+  } finally {
+    if (previous === undefined) delete process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL;
+    else process.env.TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL = previous;
+  }
+});
