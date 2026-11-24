@@ -223,8 +223,8 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
 
       <p className="federated-search-boundary">
         {english
-          ? "Read-only public metadata. Result order is not a quality score; records do not prove authorship, peer review, accreditation, or permission to reuse linked content."
-          : "Metadatos públicos de solo lectura. El orden no es una puntuación de calidad; los registros no prueban autoría, revisión por pares, acreditación ni permiso para reutilizar contenido vinculado."}
+          ? "Read-only public metadata. Your query is forwarded to the configured institutional service and its providers; do not enter personal, confidential, or sensitive data. Result order is not a quality score."
+          : "Metadatos públicos de solo lectura. La consulta se envía al servicio institucional configurado y sus proveedores; no introduzcas datos personales, confidenciales o sensibles. El orden no es una puntuación de calidad."}
       </p>
 
       {error ? <div className="federated-search-state is-error" role="alert">{error}</div> : null}
