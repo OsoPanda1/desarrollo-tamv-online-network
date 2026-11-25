@@ -22,7 +22,8 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
           </Link>
           <p>{english ? <>Research · Technology · Living memory<br />Independent initiative, originating in Hidalgo, Mexico.</> : <>Investigación · Tecnología · Memoria viva<br />Iniciativa independiente, con origen en Hidalgo, México.</>}</p>
           <nav className="footer-links" aria-label={english ? "Institutional links" : "Enlaces institucionales"}>
-            <Link href={localizedPath("/quienes-somos", locale)}>{english ? "Who we are" : "Quiénes somos"}</Link>
+            <Link href={localizedPath("/origenes", locale)}>{english ? "Origins" : "Orígenes"}</Link>
+            <Link href={localizedPath("/quienes-somos", locale)}>{english ? "Institutional identity" : "Identidad institucional"}</Link>
             <Link href={localizedPath("/investigacion", locale)}>{english ? "Research" : "Investigación"}</Link>
             <Link href={localizedPath("/guia", locale)}>{english ? "Practical guide" : "Guía práctica"}</Link>
             <Link href={localizedPath("/proyectos", locale)}>{english ? "Projects" : "Proyectos"}</Link>
