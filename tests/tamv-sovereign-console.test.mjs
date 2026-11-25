@@ -7,6 +7,7 @@ const component = await readFile(new URL("../components/tamv-sovereign-console.t
 const stylesheet = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const verifier = await readFile(new URL("../components/tamv-evidence-verifier.tsx", import.meta.url), "utf8");
 const router = await readFile(new URL("../components/tamv-intent-router.tsx", import.meta.url), "utf8");
+const classifier = await import("../lib/tamv-intent-classifier.ts");
 const governance = await readFile(new URL("../components/tamv-governance-matrix.tsx", import.meta.url), "utf8");
 const territorial = await readFile(new URL("../components/tamv-territorial-twin-status.tsx", import.meta.url), "utf8");
 
@@ -68,7 +69,7 @@ test("browser verifier uses WebCrypto for SHA-512 and Ed25519 without server tra
 });
 
 test("intent router is bounded local routing, not an asserted live Isabella integration", () => {
-  assert.match(router, /function classifyIntent/);
+  assert.match(router, /classifyTamvIntent/);
   assert.match(router, /LOCAL ROUTING PREVIEW|VISTA PREVIA LOCAL/);
   assert.match(router, /does not call Isabella or CROWN|no invoca Isabella ni CROWN/i);
   assert.match(router, /No se ejecuta ninguna acción|no action is executed/i);
@@ -91,4 +92,27 @@ test("territorial twin panel discloses disconnected live data sources", () => {
   assert.match(territorial, /Vision-Guard/);
   assert.match(territorial, /Pulse-Sentinel/);
   assert.match(territorial, /BookPI/);
+});
+
+
+test("deterministic intent classifier routes Spanish and English phrases to safe public domains", () => {
+  const cases = [
+    ["Muéstrame el estado de gobernanza de la Federación Cognitiva", "governance"],
+    ["How does Isabella TINA and BookPI work?", "isabella"],
+    ["¿Qué sensores tiene el gemelo 4D de Real del Monte?", "territory"],
+    ["Find DOI and ORCID research sources", "research"],
+    ["How do I use the public API and repository?", "developers"],
+    ["Quiero colaborar con la comunidad", "community"],
+    ["tell me something random", "guide"],
+  ];
+  for (const [input, expected] of cases) {
+    assert.equal(classifier.classifyTamvIntent(input), expected, input);
+  }
+});
+
+test("public signals poll no more often than the intended thirty-second interval", () => {
+  assert.match(component, /window\.setInterval\(\(\) => void load\(\), 30_000\)/);
+  assert.match(component, /BOOKPI EVENT FEED/);
+  assert.match(component, /Sin conexión|Not connected/);
+  assert.match(component, /No public BookPI event feed is connected/);
 });
