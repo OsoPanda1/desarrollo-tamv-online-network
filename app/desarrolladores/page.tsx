@@ -403,10 +403,10 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
         <div>
           <ShieldCheck aria-hidden="true" />
           <div>
-            <strong>{english ? "Code license status: pending maintainer decision" : "Licencia del código: decisión del mantenedor pendiente"}</strong>
+            <strong>{english ? "Code license status: Apache-2.0 for original source and CC BY 4.0 for authored docs" : "Licencia del código: Apache-2.0 para código original y CC BY 4.0 para documentación propia"}</strong>
             <p>{english
-              ? "The repository audit did not find a root LICENSE file. Public access is not a reuse license; CITATION.cff supports attribution but grants no copying or redistribution rights. Check the licensing note before adopting code or assets."
-              : "La auditoría del repositorio no encontró un archivo LICENSE en la raíz. El acceso público no concede derechos de reutilización; CITATION.cff facilita la atribución, pero no autoriza copiar ni redistribuir. Consulta la nota de licencia antes de adoptar código o recursos."}</p>
+              ? "LICENSE and LICENSE-DOCS apply only to works whose rightsholders can grant the stated rights. Public access to third-party assets is not a reuse license; CITATION.cff supports attribution but does not clear external rights. Check the licensing note before adopting code or assets."
+              : "LICENSE y LICENSE-DOCS aplican solo a obras cuyos titulares pueden conceder los derechos declarados. El acceso público a recursos de terceros no es una licencia de reutilización; CITATION.cff facilita la atribución, pero no libera derechos externos. Consulta la nota de licencia antes de adoptar código o recursos."}</p>
             <div className="developer-license-links">
               <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/governance/licensing-status.md" target="_blank" rel="noopener noreferrer">{english ? "Licensing status" : "Estado de licencias"} <ArrowUpRight aria-hidden="true" /></a>
               <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/CITATION.cff" target="_blank" rel="noopener noreferrer">{english ? "Citation metadata" : "Metadatos de cita"} <ArrowUpRight aria-hidden="true" /></a>
