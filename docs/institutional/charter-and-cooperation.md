@@ -106,7 +106,7 @@ The public ecosystem catalog is a discovery tool. A listed repository, a linked 
 - **AI/tool use:** treat retrieved pages, documents and repository content as untrusted input. Separate instructions from data, minimize tools and permissions, require server-side authorization for effects, and test adversarial cases. Delimiters or prompt wording alone are not security boundaries.
 - **API security:** validate at boundaries; authenticate and authorize every protected operation; impose request-size limits, timeouts, rate limits and idempotency; return safe errors.
 - **Vulnerability reporting:** use the private vulnerability-reporting workflow in GitHub when available. Do not publish exploit details or test systems without authorization. See [SECURITY.md](../../SECURITY.md).
-- **Privacy and billing:** the privacy page and membership terms must be reviewed by the actual operator before live billing. No payment status is activated from a browser return alone; the signed Stripe webhook is the authority in the current implementation.
+- **Privacy and billing:** the privacy page and membership terms must be reviewed by the actual operator before live billing. A shared server-side readiness gate controls both the membership page and the course upsell CTA; the checkout component defaults to disabled unless a server page explicitly marks it ready. The backend checkout route still applies its own independent configuration, origin, session, terms, approval and Stripe checks. No payment status is activated from a browser return alone; the signed Stripe webhook is the authority in the current implementation.
 
 ## 10. Product maturity and evidence of adoption
 
