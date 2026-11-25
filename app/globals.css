@@ -3449,3 +3449,116 @@ body:has(.sovereign-hero) .intent-cta .button-outline-dark { background: #0B0D11
 body:has(.sovereign-hero) .intent-proof-row { border-color: rgba(199,206,212,.16); background: rgba(199,206,212,.16); }
 body:has(.sovereign-hero) .intent-proof-row article { background: #10151A; }
 body:has(.sovereign-hero) .intent-proof-row p { color: #A8B2BB; }
+
+
+/* Living Atlas submodules: intent router, governance evidence matrix, territorial twin readiness, browser verification. */
+.sovereign-intent-router,
+.sovereign-twin-panel,
+.sovereign-governance-matrix,
+.sovereign-verifier-section {
+  margin-top: 22px;
+  border: 1px solid rgba(199,206,212,.18);
+  background: #11151B;
+  color: #F0F2F3;
+}
+.sovereign-intent-router { padding: clamp(20px,3vw,30px); }
+.sovereign-intent-router h3 { margin: 23px 0 9px; color: #F1F3F4; font-size: clamp(21px,2.4vw,28px); line-height: 1.2; letter-spacing: -.025em; }
+.sovereign-intent-router > p { color: #A8B2BB; font-size: 12px; line-height: 1.8; }
+.sovereign-intent-form { margin-top: 20px; }
+.sovereign-intent-form > label { display: block; margin-bottom: 8px; color: #CDD5DA; font-size: 11px; }
+.sovereign-intent-entry { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
+.sovereign-intent-entry input { min-width: 0; min-height: 46px; padding: 10px 13px; border: 1px solid #414B54; border-radius: 0; background: #0B0D11; color: #F0F2F3; font-size: 12px; }
+.sovereign-intent-entry input::placeholder { color: #78848E; }
+.sovereign-intent-entry button { min-height: 46px; }
+.sovereign-intent-error { color: #E9AB99 !important; }
+.sovereign-intent-result { margin-top: 22px; padding: 20px; border: 1px solid rgba(56,183,166,.27); background: rgba(56,183,166,.045); }
+.sovereign-intent-result h4 { margin: 12px 0 8px; color: #F0F2F3; font: 400 26px/1.1 var(--serif); }
+.sovereign-intent-result > p { color: #B8C2CA; font-size: 12px; line-height: 1.8; }
+.sovereign-intent-result ol { display: grid; gap: 7px; margin: 14px 0 18px; padding-left: 23px; color: #C4CDD3; font: 10px/1.7 var(--tamv-mono); }
+.sovereign-intent-result .sovereign-action { width: fit-content; }
+.sovereign-router-boundary { display: flex; align-items: flex-start; gap: 8px; margin: 17px 0 0 !important; padding-top: 13px; border-top: 1px solid rgba(199,206,212,.13); color: #8F9AA3 !important; font-size: 10px !important; line-height: 1.8 !important; }
+.sovereign-router-boundary svg { width: 13px; height: 13px; flex: none; margin-top: 2px; color: var(--tamv-gold); }
+
+.sovereign-twin-panel { padding: clamp(20px,3vw,30px); }
+.sovereign-twin-heading { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 20px; align-items: center; margin-top: 25px; }
+.sovereign-twin-heading .sovereign-kicker { margin-bottom: 12px; }
+.sovereign-twin-heading h3 { max-width: 800px; margin: 0; color: #F1F3F4; font-size: clamp(23px,3vw,34px); line-height: 1.08; letter-spacing: -.035em; }
+.sovereign-twin-status { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid rgba(214,165,74,.4); color: #E2C47B; white-space: nowrap; font: 10px var(--tamv-mono); }
+.sovereign-twin-status svg { width: 15px; height: 15px; }
+.sovereign-twin-intro { max-width: 850px; margin: 17px 0 21px; color: #AAB5BE; font-size: 12px; line-height: 1.8; }
+.sovereign-twin-layers { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; border: 1px solid rgba(199,206,212,.15); background: rgba(199,206,212,.15); }
+.sovereign-twin-layers article { display: flex; flex-direction: column; min-width: 0; min-height: 250px; padding: 18px; background: #0C1015; }
+.sovereign-twin-layer-top { display: flex; justify-content: space-between; align-items: center; color: var(--tamv-gold); font: 10px var(--tamv-mono); }
+.sovereign-twin-layer-top svg { width: 16px; height: 16px; color: var(--tamv-turquoise); }
+.sovereign-twin-layers h4 { margin: 23px 0 8px; color: #E8ECEF; font-size: 13px; line-height: 1.35; }
+.sovereign-twin-layers article > p { margin: 0 0 16px; color: #9FAB B4; color: #A0ABB4; font-size: 10px; line-height: 1.75; }
+.sovereign-twin-source-state { display: flex; align-items: flex-start; gap: 7px; margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(199,206,212,.11); color: #B4A16F; font-size: 9px; line-height: 1.65; }
+.sovereign-twin-source-state i { width: 6px; height: 6px; flex: none; margin-top: 4px; border-radius: 50%; background: var(--tamv-gold); opacity: .8; }
+.sovereign-twin-footer { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 17px; }
+.sovereign-twin-footer a { display: inline-flex; gap: 6px; align-items: center; color: var(--tamv-turquoise); text-decoration: none; font-size: 11px; }
+.sovereign-twin-footer small { color: #828E98; font-size: 9px; line-height: 1.6; }
+
+.sovereign-governance-matrix { padding: clamp(20px,3vw,30px); }
+.sovereign-governance-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin: 24px 0 20px; }
+.sovereign-governance-heading h3 { margin: 0; color: #F1F3F4; font-size: clamp(23px,3vw,32px); line-height: 1.12; }
+.sovereign-governance-heading p { margin: 9px 0 0; color: #A8B2BB; font-size: 12px; }
+.sovereign-governance-count { display: grid; gap: 2px; justify-items: end; flex: none; }
+.sovereign-governance-count span { color: var(--tamv-gold); font: 400 36px/1 var(--serif); }
+.sovereign-governance-count small { color: #89949D; font: 8px var(--tamv-mono); letter-spacing: .08em; }
+.sovereign-governance-table-wrap { overflow-x: auto; border: 1px solid rgba(199,206,212,.15); }
+.sovereign-governance-table { width: 100%; border-collapse: collapse; min-width: 640px; background: #0D1116; text-align: left; }
+.sovereign-governance-table caption { padding: 12px 14px; border-bottom: 1px solid rgba(199,206,212,.13); color: #89959E; text-align: left; font-size: 10px; }
+.sovereign-governance-table th,
+.sovereign-governance-table td { padding: 12px 13px; border-bottom: 1px solid rgba(199,206,212,.1); vertical-align: middle; }
+.sovereign-governance-table thead th { background: #151A21; color: var(--tamv-gold); font: 9px var(--tamv-mono); letter-spacing: .07em; }
+.sovereign-governance-table tbody th { color: #DEE4E8; font-size: 11px; font-weight: 550; }
+.sovereign-governance-table tbody td { color: #909CA5; }
+.sovereign-evidence-unlinked { display: inline-flex; align-items: center; gap: 6px; color: #C3B17F; white-space: nowrap; font: 9px var(--tamv-mono); }
+.sovereign-evidence-unlinked i { width: 6px; height: 6px; border-radius: 50%; background: #B79C56; opacity: .8; }
+.sovereign-governance-caveat { display: flex; align-items: flex-start; gap: 9px; margin: 17px 0 0; color: #A6B0B8; font-size: 10px; line-height: 1.8; }
+.sovereign-governance-caveat svg { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--tamv-gold); }
+
+.sovereign-verifier-section { padding: 0 clamp(20px,3vw,30px) clamp(20px,3vw,30px); }
+.sovereign-verifier-section > .sovereign-ledger-heading { margin-inline: calc(-1 * clamp(20px,3vw,30px)); }
+.sovereign-verifier { padding-top: 22px; }
+.sovereign-verifier-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 17px; }
+.sovereign-verifier-field { display: grid; align-content: start; gap: 8px; min-width: 0; color: #D0D8DD; font-size: 10px; }
+.sovereign-verifier-payload { grid-column: 1 / -1; }
+.sovereign-verifier-field input,
+.sovereign-verifier-field textarea { width: 100%; min-width: 0; padding: 12px; border: 1px solid #414B54; border-radius: 0; background: #0A0D11; color: #F1F3F4; font: 10px/1.7 var(--tamv-mono); resize: vertical; }
+.sovereign-verifier-field textarea { overflow-wrap: anywhere; }
+.sovereign-verifier-field small { color: #89959E; font-size: 9px; line-height: 1.7; }
+.sovereign-verifier-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.sovereign-verifier-actions button { min-height: 42px; }
+.sovereign-verifier-actions button:disabled { cursor: wait; opacity: .65; }
+.sovereign-verifier-digest { display: grid; grid-template-columns: 1fr auto; gap: 8px 13px; margin-top: 18px; padding: 15px; border: 1px solid rgba(56,183,166,.28); background: rgba(56,183,166,.045); }
+.sovereign-verifier-digest > span { grid-column: 1 / -1; color: var(--tamv-turquoise); font: 9px var(--tamv-mono); letter-spacing: .08em; text-transform: uppercase; }
+.sovereign-verifier-digest code { color: #D7E4E3; font: 10px/1.8 var(--tamv-mono); overflow-wrap: anywhere; }
+.sovereign-verifier-digest button { display: inline-flex; align-items: center; align-self: start; gap: 6px; min-height: 30px; padding: 0 9px; border: 1px solid rgba(199,206,212,.2); background: #10151A; color: #DDE4E7; font-size: 10px; cursor: pointer; }
+.sovereign-verifier-digest button svg { width: 12px; height: 12px; color: var(--tamv-turquoise); }
+.sovereign-verifier-result { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0 0; padding: 12px; border: 1px solid rgba(199,206,212,.17); color: #CCD5DA; font-size: 11px; line-height: 1.7; }
+.sovereign-verifier-result svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+.sovereign-verifier-result.is-success { border-color: rgba(56,183,166,.46); color: #C6F0E7; background: rgba(56,183,166,.07); }
+.sovereign-verifier-result.is-success svg { color: var(--tamv-turquoise); }
+.sovereign-verifier-result.is-error { border-color: rgba(214,165,74,.45); color: #E5CB91; background: rgba(214,165,74,.06); }
+.sovereign-verifier-result.is-error svg { color: var(--tamv-gold); }
+.sovereign-verifier-result.is-info svg { color: #A4AFB7; }
+.sovereign-verifier-note { margin: 17px 0 0; color: #89949D; font-size: 10px; line-height: 1.8; }
+
+@media (max-width: 900px) {
+  .sovereign-twin-layers { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 620px) {
+  .sovereign-intent-entry { grid-template-columns: 1fr; }
+  .sovereign-intent-entry button { justify-content: center; }
+  .sovereign-twin-heading { grid-template-columns: 1fr; }
+  .sovereign-twin-status { justify-self: start; }
+  .sovereign-twin-layers,
+  .sovereign-verifier-grid { grid-template-columns: 1fr; }
+  .sovereign-verifier-payload { grid-column: 1; }
+  .sovereign-twin-layers article { min-height: 0; }
+  .sovereign-governance-heading { align-items: flex-start; }
+  .sovereign-governance-count span { font-size: 30px; }
+  .sovereign-verifier-digest { grid-template-columns: 1fr; }
+  .sovereign-verifier-digest > span { grid-column: 1; }
+}
