@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react"
+import { usePathname } from "next/navigation"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { ArrowDown, LoaderCircle, MessageCircle, Send, Sparkles, X } from "lucide-react"
@@ -36,11 +37,12 @@ const suggestions = {
 
 export function TamvAssistant({ locale = "es" }: { locale?: Locale }) {
   const english = locale === "en"
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState("")
   const dialogRef = useRef<HTMLDialogElement>(null)
   const { messages, sendMessage, status, error, stop } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/assistant" }),
+    transport: new DefaultChatTransport({ api: "/api/assistant", headers: { "x-tamv-current-route": pathname } }),
   })
   const isBusy = status === "submitted" || status === "streaming"
 
