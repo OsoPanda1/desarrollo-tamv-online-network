@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useMemo, useState } from "react"
-import { ArrowUpRight, CheckCircle2, ClipboardCheck, Compass, Lightbulb, ListChecks, Route, Sparkles } from "lucide-react"
+import { ArrowUpRight, CheckCircle2, ClipboardCheck, Compass, Lightbulb, Sparkles } from "lucide-react"
 import { TAMV_LEARNING_PATHS } from "@/lib/tamv-learning-curriculum"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
@@ -54,8 +54,8 @@ export function TamvLearningLab({ locale = "es" }: { locale?: Locale }) {
   const goal = english ? selected.goalEn : selected.goalEs
   const when = english ? selected.whenEn : selected.whenEs
   const measure = english ? selected.measureEn : selected.measureEs
-  const analogy = analogies[selected.id]?.[english ? "en" : "es"] ?? ""
-  const example = examples[selected.id]?.[english ? "en" : "es"] ?? ""
+  const analogy = analogies[selected.id]?.[english ? "en" : "es"] ?? (english ? "Treat this section like a well-marked service desk: identify your goal, follow the published route, and verify the confirmation before assuming the task is complete." : "Piensa en esta sección como una ventanilla bien señalizada: identifica tu objetivo, sigue la ruta publicada y comprueba la confirmación antes de asumir que el trámite terminó.")
+  const example = examples[selected.id]?.[english ? "en" : "es"] ?? (english ? "Before taking action, write down your goal, open the published route, inspect the requirements, perform only the supported step, and keep the confirmation or note what remains unavailable." : "Antes de actuar, anota tu objetivo, abre la ruta publicada, revisa los requisitos, realiza solo el paso que está soportado y conserva la confirmación o indica qué sigue sin estar disponible.")
   const methodLabels: Record<Method, { es: string; en: string }> = {
     steps: { es: "Paso a paso", en: "Step by step" },
     analogy: { es: "Analogía cotidiana", en: "Everyday analogy" },
