@@ -34,7 +34,7 @@ float softRing(float distanceToRing, float width) {
 
 void main() {
   float aspect = uResolution.x / max(uResolution.y, 1.0);
-  vec2 p = (vUv - vec2(0.5)) * vec2(aspect, 1.0);
+  vec2 p = (vUv - vec2(0.5, 1.0 - 285.0 / 550.0)) * vec2(aspect, 1.0);
   float radius = length(p);
   vec3 color = vec3(0.0);
   float alpha = 0.0;
@@ -68,7 +68,7 @@ void main() {
     alpha += max(glow, core * 0.18);
   }
 
-  float vignette = smoothstep(0.76, 0.24, length((vUv - 0.5) * vec2(aspect, 1.0)));
+  float vignette = 1.0 - smoothstep(0.24, 0.76, length(p));
   alpha *= vignette;
   outColor = vec4(color, clamp(alpha, 0.0, 0.62));
 }
