@@ -35,8 +35,9 @@ test("TAMV guide explains the initiative, gives a practical route, and preserves
 test("tutorial is reachable from the primary navigation, home, shared footer and sitemap", () => {
   assert.match(header, /href: "\/guia"/);
   assert.match(header, /href: "\/ecosistema"/);
-  assert.match(home, /href="\/guia"/);
-  assert.match(home, /href="\/guia\?lang=en"/);
+  assert.match(home, /localizedPath\("\/guia", locale\)/);
+  assert.match(home, /<TamvSiteHeader locale={locale} \/>/);
+  assert.match(home, /<TamvSovereignConsole locale={locale} \/>/);
   assert.match(shell, /localizedPath\("\/guia", locale\)/);
   assert.match(sitemap, /"\/guia"/);
 });
