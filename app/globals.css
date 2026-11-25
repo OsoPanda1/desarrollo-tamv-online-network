@@ -4085,3 +4085,83 @@ body:has(.tamv-charter-page) .isabella-close { border-color: rgba(199,206,212,.2
   .tamv-learning-facts { grid-template-columns: minmax(0, 1fr); }
   .tamv-learning-choice-row button, .tamv-learning-methods button { flex: 1 1 auto; }
 }
+
+/* ORÍGENES — editorial founding testimony */
+.tamv-origins-page { --orig-ink: #090d12; --orig-panel: #111820; --orig-paper: #e9edf0; --orig-muted: #aab6c0; --orig-line: rgba(202,216,224,.19); --orig-teal: #51d0bd; background: var(--orig-ink); color: var(--orig-paper); overflow: clip; }
+.tamv-origins-hero { position: relative; isolation: isolate; min-height: 570px; padding: clamp(2.2rem, 5vw, 4.6rem) 0 0; overflow: hidden; background: radial-gradient(ellipse at 78% 38%, rgba(31,113,126,.2), transparent 37%), radial-gradient(ellipse at 14% 0%, rgba(164,125,51,.13), transparent 35%), #090d12; border-bottom: 1px solid var(--orig-line); }
+.tamv-origins-hero-inner { position: relative; z-index: 1; }
+.tamv-origins-kicker { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 clamp(3rem, 7vw, 6rem); color: #aab8c0; font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.tamv-origins-kicker span:first-child { color: var(--orig-teal); }
+.tamv-origins-title-wrap { max-width: 1020px; }
+.tamv-origins-overline { margin: 0 0 1.1rem; color: var(--orig-teal); font-size: .75rem; font-weight: 800; letter-spacing: .18em; line-height: 1.6; text-transform: uppercase; }
+.tamv-origins-title-wrap h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: clamp(.8rem, 3vw, 2.1rem); margin: 0; color: #f5f6f7; font-size: clamp(4rem, 12vw, 9.6rem); font-weight: 850; letter-spacing: -.075em; line-height: .91; }
+.tamv-origins-title-wrap h1 span { color: transparent; -webkit-text-stroke: 1px rgba(81,208,189,.75); font-size: .48em; letter-spacing: .08em; }
+.tamv-origins-subtitle { max-width: 660px; margin: 1.7rem 0 0; color: #c2cbd1; font-size: clamp(1.1rem, 2.2vw, 1.42rem); line-height: 1.65; }
+.tamv-origins-hero-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 1.4rem 2rem; margin-top: clamp(3rem, 7vw, 5.5rem); padding: 1.5rem 0; border-top: 1px solid var(--orig-line); }
+.tamv-origins-signature { display: grid; gap: .35rem; margin-right: auto; }
+.tamv-origins-signature > span { color: #91a1ac; font-size: .68rem; font-weight: 800; letter-spacing: .13em; }
+.tamv-origins-signature strong { color: #f4f6f7; font-size: 1.02rem; }
+.tamv-origins-signature p { margin: 0; color: #b6c2c9; font-size: .9rem; }
+.tamv-origins-signature i { padding: 0 .4rem; color: var(--orig-teal); font-style: normal; }
+.tamv-origins-scroll { display: inline-flex; align-items: center; gap: .6rem; color: #dce5e9; font-size: .9rem; font-weight: 750; text-decoration: none; }
+.tamv-origins-scroll svg { color: var(--orig-teal); }
+.tamv-origins-orbit { position: absolute; z-index: -1; border: 1px solid rgba(81,208,189,.13); border-radius: 50%; pointer-events: none; }
+.tamv-origins-orbit-one { top: 100px; right: -210px; width: 620px; height: 620px; }
+.tamv-origins-orbit-two { top: 190px; right: -120px; width: 440px; height: 440px; border-color: rgba(202,167,98,.16); }
+.tamv-origins-welcome { padding: clamp(3rem, 7vw, 6.8rem) 0; background: linear-gradient(180deg, #0b1016, #0d1218); }
+.tamv-origins-reading-grid { display: grid; grid-template-columns: minmax(170px, .65fr) minmax(0, 1.7fr); gap: clamp(2rem, 7vw, 7rem); max-width: 1160px; }
+.tamv-origins-aside { position: sticky; top: 2rem; align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem; padding-top: .45rem; }
+.tamv-origins-index { color: var(--orig-teal); font-size: .75rem; font-weight: 850; letter-spacing: .16em; }
+.tamv-origins-aside > svg { width: 32px; height: 32px; color: #c9a45f; stroke-width: 1.3; }
+.tamv-origins-aside > p { max-width: 180px; margin: 0; color: #d4dde2; font-family: Georgia, "Times New Roman", serif; font-size: 1.4rem; line-height: 1.35; }
+.tamv-origins-aside-rule { width: 56px; height: 1px; background: var(--orig-teal); }
+.tamv-origins-aside-note { color: #7f909c; font-size: .63rem; font-weight: 800; letter-spacing: .12em; line-height: 1.8; }
+.tamv-origins-prose { min-width: 0; max-width: 780px; color: #d3dbe0; font-size: clamp(1.03rem, 1.4vw, 1.13rem); line-height: 1.95; }
+.tamv-origins-prose > p { margin: 0 0 1.55rem; }
+.tamv-origins-prose .tamv-origins-greeting { margin-bottom: 1.2rem; color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.7rem, 3.5vw, 2.5rem); line-height: 1.25; }
+.tamv-origins-emphasis { color: #f5f6f7; font-family: Georgia, "Times New Roman", serif; font-size: 1.55rem; font-style: italic; line-height: 1.4; }
+.tamv-origins-pullquote { display: flex; gap: 1rem; align-items: flex-start; margin: 2.6rem 0; padding: 1.4rem 1.5rem; border-left: 2px solid var(--orig-teal); background: #111a20; }
+.tamv-origins-pullquote svg { flex: 0 0 23px; margin-top: .2rem; color: var(--orig-teal); }
+.tamv-origins-pullquote p { margin: 0; color: #eff5f6; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.3rem, 2.4vw, 1.8rem); line-height: 1.45; }
+.tamv-origins-prose .tamv-origins-not-alone { margin: 2.5rem 0; color: #fff; font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 850; letter-spacing: -.055em; line-height: 1.05; }
+.tamv-origins-mother-note { margin-top: 3.3rem; padding: clamp(1.4rem, 4vw, 2.6rem); border: 1px solid rgba(201,164,95,.42); background: linear-gradient(145deg, rgba(201,164,95,.09), rgba(17,24,32,.6)); }
+.tamv-origins-mother-note > span { display: block; margin-bottom: 1.25rem; color: #d8b979; font-size: .7rem; font-weight: 850; letter-spacing: .17em; }
+.tamv-origins-mother-note p { margin: 0 0 1.15rem; color: #dce3e7; line-height: 1.8; }
+.tamv-origins-mother-note .tamv-origins-dedication { color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.2rem, 2.4vw, 1.7rem); line-height: 1.5; }
+.tamv-origins-mother-note .tamv-origins-final-line { margin-top: 1.8rem; color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; font-style: italic; }
+.tamv-origins-mother-note .tamv-origins-love { margin: 1.6rem 0 0; color: #e3c98f; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.2; }
+.tamv-origins-endmark { display: flex; align-items: center; gap: 1rem; margin-top: 3rem; color: #93a5ae; font-size: .72rem; font-weight: 850; letter-spacing: .25em; }
+.tamv-origins-endmark span { flex: 1; height: 1px; background: var(--orig-line); }
+.tamv-origins-endmark b { color: var(--orig-teal); }
+.tamv-origins-legacy { padding: clamp(3.5rem, 7vw, 6.5rem) 0; border-top: 1px solid var(--orig-line); background: #080c11; }
+.tamv-origins-legacy-inner { max-width: 1000px; }
+.tamv-origins-legacy h2 { margin: 1rem 0 1.2rem; color: #f3f5f6; font-size: clamp(2rem, 5vw, 4.3rem); letter-spacing: -.05em; line-height: 1.12; }
+.tamv-origins-legacy h2 em { color: var(--orig-teal); font-style: normal; }
+.tamv-origins-legacy-inner > p:not(.tamv-origins-overline) { max-width: 760px; color: #b9c5cc; font-size: 1.06rem; line-height: 1.8; }
+.tamv-origins-legacy-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.8rem; }
+.tamv-origins-legacy-actions a { display: inline-flex; align-items: center; gap: .6rem; min-height: 46px; padding: .7rem 1rem; border: 1px solid rgba(81,208,189,.42); border-radius: 8px; background: #111a20; color: #e9f3f4; font-weight: 750; text-decoration: none; }
+.tamv-origins-legacy-actions a:hover { border-color: var(--orig-teal); background: #15252a; }
+.tamv-origins-legacy-actions a:focus-visible, .tamv-origins-scroll:focus-visible { outline: 3px solid var(--orig-teal); outline-offset: 4px; }
+body:has(.tamv-origins-page) .isabella-launcher { border-color: rgba(81,208,189,.58); background: #111820; color: #f0f3f4; }
+body:has(.tamv-origins-page) .isabella-launcher > svg { color: #51d0bd; }
+@media (max-width: 760px) {
+  .tamv-origins-hero { min-height: auto; }
+  .tamv-origins-kicker { margin-bottom: 3.5rem; font-size: .62rem; letter-spacing: .1em; }
+  .tamv-origins-title-wrap h1 { font-size: clamp(3.6rem, 17vw, 6.5rem); }
+  .tamv-origins-title-wrap h1 span { font-size: .42em; }
+  .tamv-origins-hero-bottom { align-items: flex-start; }
+  .tamv-origins-reading-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .tamv-origins-aside { position: static; display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .75rem; }
+  .tamv-origins-aside > p { max-width: none; font-family: inherit; font-size: .95rem; }
+  .tamv-origins-aside-rule, .tamv-origins-aside-note { display: none; }
+}
+@media (max-width: 440px) {
+  .tamv-origins-kicker { flex-direction: column; gap: .4rem; }
+  .tamv-origins-title-wrap h1 { font-size: clamp(3.3rem, 17vw, 4.7rem); }
+  .tamv-origins-hero-bottom { gap: 1rem; }
+  .tamv-origins-scroll { width: 100%; }
+  .tamv-origins-mother-note { padding: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tamv-origins-page * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
