@@ -1,5 +1,6 @@
 import { pool } from "@/lib/db";
-import { noStoreHeaders, probeWithinBudget, readinessPayload } from "@/lib/health";
+import { probeDatabaseReadiness } from "@/lib/db/readiness";
+import { noStoreHeaders, readinessPayload } from "@/lib/health";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,15 +23,10 @@ export async function GET() {
   }
 
   try {
-    const probeQuery = {
-      text: "SELECT 1",
-      query_timeout: DATABASE_PROBE_TIMEOUT_MS,
-    };
-
-    const ready = await probeWithinBudget(
-      pool.query(probeQuery),
-      DATABASE_PROBE_TIMEOUT_MS,
-    );
+    const ready = await probeDatabaseReadiness(pool, {
+      timeoutMs: DATABASE_PROBE_TIMEOUT_MS,
+      connectionString: process.env.DATABASE_URL,
+    });
     if (!ready) {
       return Response.json(readinessPayload(false), {
         status: 503,

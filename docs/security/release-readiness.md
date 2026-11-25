@@ -33,6 +33,8 @@ A useful planning bound is:
 
 This is a capacity estimate, not a guarantee: provider-side poolers and other applications also consume connections. Do not raise the pool maximum to mask slow queries. Check query plans, connection saturation, and timeout metrics first.
 
+Readiness and observability probes now record the exact `pg_backend_pid()` before running `SELECT 1`. If the 1.5 s outer budget expires, a separate short-lived client calls `pg_cancel_backend(pid)` and the pooled client is always released. The response stays 503 with no driver text; liveness remains independent of the database. This is cancellation evidence at the application level, not a substitute for staging saturation tests or provider-side connection limits.
+
 ## Required evidence record
 
 For each release, record:

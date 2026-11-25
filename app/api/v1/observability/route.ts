@@ -1,5 +1,6 @@
 import { db, pool } from "@/lib/db"
 import { hcuAtoms, researchProposals, researchTopics, researcherProfiles } from "@/lib/db/schema"
+import { probeDatabaseReadiness } from "@/lib/db/readiness"
 import { apiJson } from "@/lib/http"
 import { and, count, eq } from "drizzle-orm"
 
@@ -14,13 +15,12 @@ type Probe = { ok: boolean; latencyMs: number | null }
 
 async function probeDatabase(): Promise<Probe> {
   const started = performance.now()
-  const probeQuery = {
-    text: "SELECT 1",
-    query_timeout: DATABASE_PROBE_TIMEOUT_MS,
-  }
   try {
-    await pool.query(probeQuery)
-    return { ok: true, latencyMs: Math.round((performance.now() - started) * 100) / 100 }
+    const ok = await probeDatabaseReadiness(pool, {
+      timeoutMs: DATABASE_PROBE_TIMEOUT_MS,
+      connectionString: process.env.DATABASE_URL,
+    })
+    return { ok, latencyMs: ok ? Math.round((performance.now() - started) * 100) / 100 : null }
   } catch {
     return { ok: false, latencyMs: null }
   }
