@@ -6,7 +6,7 @@ import { PageIntro } from "@/components/shared/page-intro"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { MembershipCheckout } from "@/components/membership-checkout"
 import { MembershipStatus } from "@/components/membership-status"
-import { MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
+import { isLiveMembershipCheckoutReady } from "@/lib/billing/checkout-readiness"
 import { resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string; checkout?: string }>
@@ -37,38 +37,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
   const params = await searchParams
   const locale = resolveLocale(params.lang)
   const english = locale === "en"
-  const billingMode = process.env.TAMV_BILLING_MODE?.trim() || "disabled"
-  const liveSecret = process.env.STRIPE_SECRET_KEY?.trim() || ""
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim() || ""
-  const approvalFlags = [
-    process.env.TAMV_MEMBERSHIP_TERMS_VERSION === MEMBERSHIP_TERMS_VERSION,
-    process.env.TAMV_MEMBERSHIP_PRIVACY_APPROVED === "true",
-    process.env.TAMV_MEMBERSHIP_LEGAL_APPROVED === "true",
-    process.env.TAMV_MEMBERSHIP_TAX_APPROVED === "true",
-    process.env.TAMV_MEMBERSHIP_REFUNDS_APPROVED === "true",
-  ]
-  const configuredOrigin = process.env.APP_URL?.trim()
-    || process.env.BETTER_AUTH_URL?.trim()
-    || ((process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim())
-      ? "https://" + (process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim())
-      : "")
-  let secureReturnOrigin = false
-  try {
-    const origin = new URL(configuredOrigin)
-    secureReturnOrigin = origin.protocol === "https:" && !origin.username && !origin.password && !origin.search && !origin.hash
-  } catch {
-    secureReturnOrigin = false
-  }
-  const taxConfigurationValid = process.env.STRIPE_AUTOMATIC_TAX_ENABLED !== "true"
-    || process.env.STRIPE_TAX_BEHAVIOR === "inclusive"
-    || process.env.STRIPE_TAX_BEHAVIOR === "exclusive"
-  const liveCheckoutReady = billingMode === "live"
-    && process.env.VERCEL_ENV === "production"
-    && /^sk_live_[A-Za-z0-9]+$/.test(liveSecret)
-    && Boolean(webhookSecret)
-    && secureReturnOrigin
-    && approvalFlags.every(Boolean)
-    && taxConfigurationValid
+  const liveCheckoutReady = isLiveMembershipCheckoutReady()
   const checkoutNotice = params.checkout === "success"
     ? (english ? "Payment submitted. Access activates only after Stripe confirms the subscription through the signed webhook." : "Pago enviado. El acceso se activa únicamente cuando Stripe confirma la suscripción mediante el webhook firmado.")
     : params.checkout === "cancelled"
