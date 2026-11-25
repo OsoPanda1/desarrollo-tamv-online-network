@@ -101,6 +101,23 @@ test("provenance API handles malformed URI values as schema errors", async () =>
   assert.ok(result.issues.length > 0);
 });
 
+test("provenance API rejects private, local and credentialed source URIs before any fetch", async () => {
+  const unsafeUris = [
+    "http://127.0.0.1/latest/meta-data/",
+    "http://169.254.169.254/latest/meta-data/",
+    "http://10.0.0.5/internal",
+    "http://localhost:3000/secret",
+    "https://user:pass@example.org/record",
+    "http://[::1]/record",
+  ];
+  for (const sourceUri of unsafeUris) {
+    const response = await POST(request(JSON.stringify({ ...validRecord, sourceUri })));
+    const result = await response.json();
+    assert.equal(response.status, 422, sourceUri);
+    assert.equal(result.error, "schema_validation_failed", sourceUri);
+  }
+});
+
 test("provenance API rejects mismatched digest length and timezone-free timestamps", async () => {
   const invalidDigest = { ...validRecord, contentDigest: { algorithm: "sha-256", value: "a".repeat(63) } };
   const invalidTimestamp = { ...validRecord, observedAt: "2026-11-23T12:00:00" };
