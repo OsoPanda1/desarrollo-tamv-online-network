@@ -18,8 +18,20 @@ import {
 import type { Locale } from "@/lib/i18n"
 
 const suggestions = {
-  es: ["¿Qué es TAMV?", "¿Cómo busco en el mapa HCU?", "¿Qué significa Nodo Cero?"],
-  en: ["What is TAMV?", "How do I search the HCU map?", "What does Nodo Cero mean?"],
+  es: [
+    "Guíame desde cero por TAMV, paso a paso.",
+    "Explícamelo con una analogía de la vida cotidiana.",
+    "Quiero el recorrido intermedio: flujo, errores y comprobaciones.",
+    "Dame el recorrido experto por módulos, datos y límites técnicos.",
+    "Enséñame cómo funciona un DOI con un ejemplo práctico.",
+  ],
+  en: [
+    "Guide me through TAMV from zero, step by step.",
+    "Explain it with an everyday analogy.",
+    "Give me the intermediate workflow, errors, and checks.",
+    "Give me the expert route through modules, data, and technical boundaries.",
+    "Teach me how a DOI works with a practical example.",
+  ],
 } as const
 
 export function TamvAssistant({ locale = "es" }: { locale?: Locale }) {
@@ -106,6 +118,7 @@ export function TamvAssistant({ locale = "es" }: { locale?: Locale }) {
                     <span className="isabella-welcome-mark"><MessageCircle aria-hidden="true" /></span>
                     <p>{english ? "Hello, I’m Isabella. I can help you find your way around TAMV and explain what the published materials say." : "Hola, soy Isabella. Puedo ayudarte a recorrer TAMV y explicar lo que indican sus materiales publicados."}</p>
                     <p className="isabella-welcome-note">{english ? "I’ll distinguish documented claims from independently verified facts." : "Distinguiré las afirmaciones documentadas de los hechos verificados de forma independiente."}</p>
+                    <p className="isabella-welcome-note">{english ? "Learn at beginner, intermediate, or expert level. If one explanation does not work, ask for an analogy, a worked example, a checklist, or guided practice." : "Aprende en nivel básico, intermedio o experto. Si una explicación no funciona, pide una analogía, un ejemplo resuelto, una lista de comprobación o práctica guiada."}</p>
                     <div className="isabella-suggestions">
                       {suggestions[locale].map((suggestion) => <button type="button" key={suggestion} onClick={() => submitMessage(suggestion)}>{suggestion}</button>)}
                     </div>
