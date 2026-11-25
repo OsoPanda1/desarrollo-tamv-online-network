@@ -428,6 +428,14 @@ export function TamvBuildFingerprint({ locale = "es" }: { locale?: Locale }) {
     <section className="sovereign-footer-integrity container" id="contacto" aria-label={english ? "Build manifest fingerprint and institutional contact" : "Huella de build y contacto institucional"}>
       <div className="sovereign-footer-seal"><Fingerprint aria-hidden="true" /><span>{english ? "BUILD INTEGRITY" : "INTEGRIDAD DEL BUILD"}</span></div>
       <div className="sovereign-footer-digest"><code>{evidence?.manifestSha512 ?? (english ? "SHA-512 · not published by this build" : "SHA-512 · esta compilación no la publica")}</code>{evidence?.manifestSha512 && <button type="button" onClick={() => void copyDigest()} aria-label={english ? "Copy full SHA-512 digest" : "Copiar huella SHA-512 completa"}><Copy aria-hidden="true" /> {copied ? (english ? "Copied" : "Copiada") : (english ? "Copy" : "Copiar")}</button>}</div>
+      <div className="sovereign-footer-build-meta">
+        <span>{english ? "BUILD RECORD" : "REGISTRO DE COMPILACIÓN"}</span>
+        <strong>{evidence ? (english ? "Manifest generated" : "Manifiesto generado") : (english ? "Not published" : "No publicado")}</strong>
+        {evidence?.commitSha && <code>COMMIT {evidence.commitSha.slice(0, 12)}</code>}
+        {evidence?.branch && <code>{english ? "REF " : "RAMA "}{evidence.branch}</code>}
+        {evidence?.environment && <code>{english ? "ENV " : "ENTORNO "}{evidence.environment}</code>}
+        {evidence?.generatedAt && <time dateTime={evidence.generatedAt}>{new Date(evidence.generatedAt).toLocaleString(english ? "en-US" : "es-MX")}</time>}
+      </div>
       <div className="sovereign-footer-origin"><span>{english ? "ORIGIN / CONTACT" : "ORIGEN / CONTACTO"}</span><strong>Mineral del Monte, Hidalgo, México</strong><a href="https://github.com/OsoPanda1?tab=repositories" target="_blank" rel="noopener noreferrer">{english ? "Public GitHub repositories" : "Repositorios públicos en GitHub"} <ArrowUpRight aria-hidden="true" /></a><a href="mailto:anubiscastillo@visitarealdelmonte.online">{english ? "Institutional contact" : "Contacto institucional"} <ArrowUpRight aria-hidden="true" /></a></div>
       <p>{english ? "Fingerprint covers selected Next.js build manifests; it is not a digital signature, full deployment digest, trusted timestamp, or CI pass." : "La huella cubre manifiestos seleccionados de Next.js; no es firma digital, digest integral del despliegue, sello de tiempo confiable ni prueba de CI exitoso."}</p>
     </section>
