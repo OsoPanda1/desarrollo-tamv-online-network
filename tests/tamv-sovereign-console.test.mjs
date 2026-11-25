@@ -124,6 +124,8 @@ test("public signals poll no more often than the intended thirty-second interval
 
 test("orbital atlas includes native WebGL2 GLSL with SVG fallback and reduced-motion handling", () => {
   assert.match(webgl, /getContext\("webgl2"/);
+  assert.match(webgl, /const canvas: HTMLCanvasElement = canvasRefValue as HTMLCanvasElement/);
+  assert.match(webgl, /const gl: WebGL2RenderingContext = context as WebGL2RenderingContext/);
   assert.match(webgl, /#version 300 es/);
   assert.match(webgl, /uActiveIndex/);
   assert.match(stylesheet, /prefers-reduced-motion: reduce/);
