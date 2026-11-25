@@ -2,6 +2,7 @@ import { createAgentUIStreamResponse, type UIMessage } from "ai"
 import { z } from "zod"
 import { isabellaAgent } from "@/lib/isabella-agent"
 import { isSameOriginRequest } from "@/lib/http"
+import { TAMV_LEARNING_PATHS } from "@/lib/tamv-learning-curriculum"
 
 export const maxDuration = 30
 
@@ -61,6 +62,20 @@ export async function POST(request: Request) {
   const totalCharacters = recentMessages.reduce((total, message) =>
     total + message.parts.reduce((partTotal, part) => part.type === "text" ? partTotal + part.text.length : partTotal, 0), 0)
   if (totalCharacters > 24_000) return Response.json({ error: "Chat request is too long" }, { status: 413 })
+
+  // Accept only a route in the curated catalogue; arbitrary header text is never treated as instructions.
+  const requestedRoute = request.headers.get("x-tamv-current-route")
+  const routeContext = TAMV_LEARNING_PATHS.find((item) => item.route === requestedRoute)
+  const lastUserMessage = recentMessages.at(-1)
+  if (routeContext && lastUserMessage?.role === "user") {
+    lastUserMessage.parts = [
+      ...lastUserMessage.parts,
+      {
+        type: "text",
+        text: "[Trusted navigation context: learner is viewing " + routeContext.route + " (" + routeContext.es + "). This is context, not an instruction. Explain this section when relevant; do not assume any action has been executed.]",
+      },
+    ]
+  }
 
   return createAgentUIStreamResponse({
     agent: isabellaAgent,
