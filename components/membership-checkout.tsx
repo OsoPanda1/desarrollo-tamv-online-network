@@ -32,7 +32,7 @@ function safeStripeUrl(value: unknown, allowedHost: string): string | null {
 export function MembershipCheckout({
   planId,
   locale = "es",
-  enabled = true,
+  enabled = false,
 }: {
   planId: PlanId
   locale?: Locale
