@@ -59,6 +59,12 @@ Participation is contribution-based, not a promise of automatic admission or pai
 
 Routes: [Join TAMV](/unete), [Projects](/proyectos), [Research](/investigacion), [Developers](/desarrolladores), [Community](/comunidad), [Memberships](/membresias), [Governance](/gobernanza).
 
+### Enterprise seats — explicitly deferred
+
+The current business subscription records the organization name but attaches entitlement to the contracting user. It does not include employee seats, invitation management, corporate roles, shared workspaces or transfer of subscription ownership. Do not market or sell it as a team workspace.
+
+Before building seats, agree on the billable owner, seat limits, invitation expiry and single-use rules, role matrix, revocation/offboarding, per-member access checks, audit trail, billing-admin ownership, account deletion, data export, migration/rollback and tests for duplicate invites or stale memberships. A small pilot should validate this model before the schema and terms are expanded. The current release does not implement these capabilities.
+
 ## 7. Cooperation protocol
 
 Every non-trivial contribution follows the same minimum sequence:
