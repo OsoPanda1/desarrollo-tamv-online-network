@@ -198,6 +198,8 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
   const [copiedCitation, setCopiedCitation] = useState("")
   const [copyError, setCopyError] = useState(false)
   const [manifestVisible, setManifestVisible] = useState(false)
+  const [signalsExpanded, setSignalsExpanded] = useState(false)
+  const [openPanel, setOpenPanel] = useState<"none" | "verify" | "sources" | "all">("none")
   const selected = federations.find((node) => node.id === selectedId) ?? federations[0]
   const selectedName = english ? selected.nameEn : selected.nameEs
   const selectedDomain = english ? selected.domainEn : selected.domainEs
@@ -243,16 +245,16 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
       <section className="sovereign-hero" id="inicio" aria-labelledby="sovereign-title" lang={locale}>
         <div className="sovereign-grid-overlay" aria-hidden="true" />
         <div className="container sovereign-hero-inner">
-          <div className="sovereign-telemetry" aria-label={english ? "Public operational signals" : "Señales operativas públicas"}>
+          <div className={"sovereign-telemetry" + (signalsExpanded ? " is-expanded" : "")} aria-label={english ? "Public operational signals" : "Señales operativas públicas"}>
             <div className="sovereign-telemetry-brand"><span className="sovereign-live-mark" aria-hidden="true" /><span>TAMV / OS</span><span className="sovereign-telemetry-divider" /><span>{english ? "PUBLIC CONSOLE" : "CONSOLA PÚBLICA"}</span></div>
-            <div className="sovereign-telemetry-items">
+            <div className="sovereign-telemetry-items" id="sovereign-signals-list">
               <span className="sovereign-telemetry-item"><i className={signals.runtime === "available" ? "signal-led signal-led-live" : "signal-led"} aria-hidden="true" /><span>{english ? "RUNTIME LIVENESS" : "RESPUESTA HTTP"}</span><strong>{signalLabel(signals.runtime, locale, english ? "Responding" : "Responde", english ? "Checking" : "Consultando")}</strong></span>
               <span className="sovereign-telemetry-item"><i className={signals.catalog === "available" ? "signal-led signal-led-live" : "signal-led"} aria-hidden="true" /><span>{english ? "PUBLIC CATALOG" : "CATÁLOGO PÚBLICO"}</span><strong>{signals.count === null ? signalLabel(signals.catalog, locale, english ? "Available" : "Disponible", english ? "Checking" : "Consultando") : (english ? String(signals.count) + " systems" : String(signals.count) + " sistemas")}</strong></span>
               <span className="sovereign-telemetry-item sovereign-build-item"><Fingerprint aria-hidden="true" /><span>{english ? "BUILD MANIFEST" : "MANIFIESTO DE BUILD"}</span><strong>{signals.evidence?.manifestSha512 ? signals.evidence.manifestSha512.slice(0, 18) + "…" : (english ? "Fingerprint not published" : "Huella no publicada")}</strong></span>
               <span className="sovereign-telemetry-item sovereign-build-item"><Fingerprint aria-hidden="true" /><span>BOOKPI EVENT FEED</span><strong>{english ? "Not connected" : "Sin conexión"}</strong></span>
               <span className="sovereign-telemetry-item sovereign-build-item sovereign-refresh-item"><RefreshCw aria-hidden="true" /><span>{english ? "LAST CHECK · 30S POLL" : "ÚLTIMA CONSULTA · 30S"}</span><strong title={signals.checkedAt ?? undefined}>{checkedTime}</strong></span>
             </div>
-            <div className="sovereign-quick-links"><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a><a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions" target="_blank" rel="noopener noreferrer">{english ? "CI evidence" : "Evidencia CI"} <ArrowUpRight aria-hidden="true" /></a><a href={english ? "/?lang=es" : "/?lang=en"}>{english ? "ES" : "EN"} <Globe2 aria-hidden="true" /></a></div>
+            <div className="sovereign-quick-links"><button type="button" className="sovereign-signals-toggle" aria-expanded={signalsExpanded} aria-controls="sovereign-signals-list" onClick={() => setSignalsExpanded((expanded) => !expanded)}>{signalsExpanded ? (english ? "Fewer signals" : "Menos señales") : (english ? "More signals" : "Más señales")} <ArrowRight aria-hidden="true" /></button><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a><a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions" target="_blank" rel="noopener noreferrer">{english ? "CI evidence" : "Evidencia CI"} <ArrowUpRight aria-hidden="true" /></a><a href={english ? "/?lang=es" : "/?lang=en"}>{english ? "ES" : "EN"} <Globe2 aria-hidden="true" /></a></div>
           </div>
 
           <div className="sovereign-hero-grid">
@@ -339,6 +341,29 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
             <p>{english ? "The console links to current site modules and public contracts. The visual model is not a health certificate, and the listed repositories remain independently governed." : "La consola conecta con módulos actuales y contratos públicos. El mapa visual no es un certificado de salud; los repositorios listados conservan su gobernanza independiente."}</p>
           </div>
 
+          <div className="sovereign-paths" role="group" aria-label={english ? "Guided entry paths" : "Rutas guiadas de entrada"}>
+            <a className="sovereign-path" href="#atlas" onClick={() => setOpenPanel("none")}>
+              <span className="sovereign-path-index">01</span><Layers aria-hidden="true" />
+              <strong>{english ? "Orient yourself" : "Oriéntate"}</strong>
+              <small>{english ? "Seven documented domains in one interactive atlas." : "Siete ámbitos documentados en un atlas interactivo."}</small>
+              <span className="sovereign-path-action">{english ? "Open atlas" : "Abrir atlas"} <ArrowRight aria-hidden="true" /></span>
+            </a>
+            <button className="sovereign-path" type="button" aria-expanded={openPanel === "verify" || openPanel === "all"} onClick={() => setOpenPanel("verify")}>
+              <span className="sovereign-path-index">02</span><ShieldCheck aria-hidden="true" />
+              <strong>{english ? "Inspect the evidence" : "Inspecciona la evidencia"}</strong>
+              <small>{english ? "Local, fail-closed checks. They do not sign or verify production keys." : "Comprobaciones locales fail-closed. No firman ni verifican claves de producción."}</small>
+              <span className="sovereign-path-action">{english ? "Open verification" : "Abrir verificación"} <ArrowRight aria-hidden="true" /></span>
+            </button>
+            <button className="sovereign-path" type="button" aria-expanded={openPanel === "sources" || openPanel === "all"} onClick={() => setOpenPanel("sources")}>
+              <span className="sovereign-path-index">03</span><BookOpen aria-hidden="true" />
+              <strong>{english ? "Follow the sources" : "Sigue las fuentes"}</strong>
+              <small>{english ? "Persistent identifiers and declared destinations, checked at the source." : "Identificadores persistentes y destinos declarados, verificables en la fuente."}</small>
+              <span className="sovereign-path-action">{english ? "Open sources" : "Abrir fuentes"} <ArrowRight aria-hidden="true" /></span>
+            </button>
+            <button className="sovereign-path-mode" type="button" aria-pressed={openPanel === "all"} onClick={() => setOpenPanel(openPanel === "all" ? "none" : "all")}>{openPanel === "all" ? (english ? "Show only my path" : "Ver solo mi ruta") : (english ? "Show everything" : "Ver todo")} <ArrowRight aria-hidden="true" /></button>
+          </div>
+          <p className="sovereign-paths-note">{english ? "Choose one path. The deeper inspection sections stay closed until you ask for them." : "Elige una ruta. Las secciones de inspección profunda permanecen cerradas hasta que las solicites."}</p>
+
           <div className="sovereign-module-grid">
             <article className="sovereign-module-card"><div className="sovereign-module-meta"><span>01 / ATLAS</span><Layers aria-hidden="true" /></div><h3>{english ? "Federation atlas" : "Atlas de federaciones"}</h3><p>{english ? "Select a domain, inspect its boundaries, and follow the public repository or source references." : "Selecciona un ámbito, revisa sus límites y sigue el repositorio público o las referencias de origen."}</p><a href="#atlas">{english ? "Open interactive atlas" : "Abrir atlas interactivo"} <ArrowUpRight aria-hidden="true" /></a></article>
             <article className="sovereign-module-card"><div className="sovereign-module-meta"><span>02 / C.R.O.W.N.</span><ShieldCheck aria-hidden="true" /></div><h3>{english ? "Isabella governance inspector" : "Inspector de gobernanza Isabella"}</h3><p>{english ? "A local illustrative fail-closed scenario. It does not call Isabella, sign payloads, or verify production keys." : "Escenario local ilustrativo fail-closed. No invoca Isabella, no firma mensajes ni verifica claves de producción."}</p><a href="#governance-inspector">{english ? "Inspect policy boundaries" : "Inspeccionar límites de política"} <ArrowUpRight aria-hidden="true" /></a></article>
@@ -349,7 +374,10 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
             <article className="sovereign-module-card"><div className="sovereign-module-meta"><span>07 / IDENTITY</span><BookOpen aria-hidden="true" /></div><h3>{english ? "Mission, legacy and cooperation" : "Misión, legado y cooperación"}</h3><p>{english ? "Inspect the founding charter, participation paths, licensing scope and protection commitments without treating declared principles as proof of deployment." : "Consulta el manifiesto fundacional, las vías de participación, el alcance de licencias y los compromisos de protección sin confundir principios con despliegue."}</p><a href={english ? "/quienes-somos?lang=en" : "/quienes-somos"}>{english ? "Read who we are" : "Conocer quiénes somos"} <ArrowUpRight aria-hidden="true" /></a></article>
           </div>
 
-          <div className="sovereign-deep-panels">
+          <details className="sovereign-disclosure sovereign-disclosure-verify" open={openPanel === "verify" || openPanel === "all"} onToggle={(event) => { if (!event.currentTarget.open) setOpenPanel((current) => (current === "verify" ? "none" : current === "all" ? "sources" : current)); }}>
+            <summary><span>{english ? "Verification lab" : "Laboratorio de verificación"}</span><small>{english ? "Local checks · signatures and digests are not production evidence" : "Pruebas locales · firmas y huellas no son evidencia de producción"}</small><ArrowRight aria-hidden="true" /></summary>
+            <div className="sovereign-disclosure-body">
+            <div className="sovereign-deep-panels">
             <section className="sovereign-inspector-panel" id="governance-inspector" aria-labelledby="governance-inspector-title">
               <div className="sovereign-panel-topline"><span><ShieldCheck aria-hidden="true" /> C.R.O.W.N. / FAIL-CLOSED</span><span className="sovereign-demo-label">{english ? "LOCAL DEMONSTRATION" : "DEMOSTRACIÓN LOCAL"}</span></div>
               <h3 id="governance-inspector-title">{english ? "Governance boundary inspector" : "Inspector de límites de gobernanza"}</h3>
@@ -387,7 +415,12 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
             </div>
             <TamvEvidenceVerifier locale={locale} />
           </section>
+            </div>
+          </details>
 
+          <details className="sovereign-disclosure sovereign-disclosure-sources" open={openPanel === "sources" || openPanel === "all"} onToggle={(event) => { if (!event.currentTarget.open) setOpenPanel((current) => (current === "sources" ? "none" : current === "all" ? "verify" : current)); }}>
+            <summary><span>{english ? "Sources and sustainability" : "Fuentes y sostenibilidad"}</span><small>{english ? "Persistent records and declared destinations only" : "Solo registros persistentes y destinos declarados"}</small><ArrowRight aria-hidden="true" /></summary>
+            <div className="sovereign-disclosure-body">
           <section className="sovereign-research-ledger" id="research-index" aria-labelledby="sovereign-research-title">
             <div className="sovereign-ledger-heading"><div><p className="sovereign-kicker"><span>03</span> {english ? "SOURCE REGISTRY" : "REGISTRO DE FUENTES"}</p><h3 id="sovereign-research-title">{english ? "Persistent records and citation tools" : "Registros persistentes y herramientas de citación"}</h3></div><p>{english ? "These links are declared reference identifiers. Resolve each one and verify its metadata before using a formal citation." : "Estos enlaces son identificadores de referencia declarados. Resuelve cada uno y verifica sus metadatos antes de emplear una cita formal."}</p></div>
             <div className="sovereign-citation-list">{citationRecords.map((record) => <article className="sovereign-citation-row" key={record.key}><div><strong>{record.label}</strong><code>{record.doi}</code></div><div className="sovereign-citation-actions"><a href={record.url} target="_blank" rel="noopener noreferrer">{english ? "Open record" : "Abrir registro"} <ArrowUpRight aria-hidden="true" /></a><button type="button" onClick={() => void copyCitation(record)}><Copy aria-hidden="true" /> {copiedCitation === record.key ? (english ? "Copied" : "Copiado") : (english ? "Copy BibTeX" : "Copiar BibTeX")}</button></div></article>)}</div>
@@ -398,6 +431,8 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
             <div className="sovereign-ledger-heading"><div><p className="sovereign-kicker"><span>04</span> {english ? "SUSTAINABILITY" : "SOSTENIBILIDAD"}</p><h3 id="sustainability-title">{english ? "Declared destination categories" : "Categorías de destino declaradas"}</h3></div><p>{english ? "No percentages or spending totals appear until the initiative publishes source-backed financial records." : "No se muestran porcentajes ni gastos hasta que la iniciativa publique registros financieros respaldados por fuentes."}</p></div>
             <div className="sovereign-destination-grid"><article><span>01</span><strong>{english ? "Infrastructure" : "Infraestructura"}</strong><small>{english ? "Proposed destination" : "Destino propuesto"}</small></article><article><span>02</span><strong>{english ? "Open knowledge" : "Conocimiento abierto"}</strong><small>{english ? "Proposed destination" : "Destino propuesto"}</small></article><article><span>03</span><strong>{english ? "Community" : "Comunidad"}</strong><small>{english ? "Proposed destination" : "Destino propuesto"}</small></article><article><span>04</span><strong>{english ? "Territory · Mineral del Monte" : "Territorio · Mineral del Monte"}</strong><small>{english ? "Proposed destination" : "Destino propuesto"}</small></article></div>
           </section>
+            </div>
+          </details>
         </div>
       </section>
     </>
