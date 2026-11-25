@@ -12,8 +12,8 @@ const header = await readFile(new URL("../components/tamv-site-header.tsx", impo
 const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 
 test("identity page provides bilingual mission, vision, founder and persistent identifiers", () => {
-  assert.match(page, /Misión|Mission/);
-  assert.match(page, /Visión|Vision/);
+  assert.match(page, /misión|mission/i);
+  assert.match(page, /visión|vision/i);
   assert.ok(page.includes("Edwin Oswaldo"));
   assert.ok(page.includes("Anubis Villaseñor"));
   assert.ok(page.includes("0009-0008-5050-1539"));
@@ -43,7 +43,8 @@ test("license scope separates original software, authored prose and third-party 
 test("the founding charter is discoverable from navigation, atlas and sitemap", () => {
   assert.ok(header.includes('href: "/quienes-somos"'));
   assert.doesNotMatch(header, /href: "\/quienes-somos".*href: "\/quienes-somos"/s);
-  assert.ok(homepage.includes('href="/quienes-somos"'));
+  assert.ok(homepage.includes('localizedPath("/quienes-somos", locale)'));
+  assert.ok(homepage.includes('href={english ? "/quienes-somos?lang=en" : "/quienes-somos"}'));
   assert.match(homepage, /Mission, legacy and cooperation|Misión, legado y cooperación/);
   assert.ok(sitemap.includes('"/quienes-somos"'));
 });
