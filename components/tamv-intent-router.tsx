@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react"
 import { ArrowRight, LockKeyhole, Route } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
+import { classifyTamvIntent } from "@/lib/tamv-intent-classifier"
 
 type RouteResult = {
   id: string
@@ -74,18 +75,9 @@ const routes: RouteResult[] = [
     chainEn: ["HC-1 · intent not classified by local rules", "HC-2 · default orientation route", "HC-6 · no action is executed"],
   },
 ]
-function classifyIntent(input: string): RouteResult {
-  const text = input.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()
-  const tests: [RegExp, string][] = [
-    [/\b(gobernanza|crown|c\.r\.o\.w\.n|riesgo|jurisdiccion|regulacion|compliance|control universal)\b/, "governance"],
-    [/\b(isabella|inteligencia artificial|agente|tina|terminus|bookpi)\b/, "isabella"],
-    [/\b(territorio|real del monte|mineral del monte|gemelo|4d|rdm digital|sensor|camara)\b/, "territory"],
-    [/\b(doi|orcid|figshare|zenodo|osf|investigacion|investigar|articulo|fuente|ciencia abierta)\b/, "research"],
-    [/\b(api|codigo|desarrollador|desarrollo|repositorio|integracion|openapi)\b/, "developers"],
-    [/\b(comunidad|colaborar|colaboracion|apoyar|participar|membresia|financiacion)\b/, "community"],
-  ]
-  const route = tests.find(([pattern]) => pattern.test(text))?.[1]
-  return routes.find((item) => item.id === route) ?? routes[routes.length - 1]
+function resolveRoute(input: string): RouteResult {
+  const domain = classifyTamvIntent(input)
+  return routes.find((item) => item.id === domain) ?? routes[routes.length - 1]
 }
 
 export function TamvIntentRouter({ locale = "es" }: { locale?: Locale }) {
@@ -100,7 +92,7 @@ export function TamvIntentRouter({ locale = "es" }: { locale?: Locale }) {
       setResult(null)
       return
     }
-    setResult(classifyIntent(intent))
+    setResult(resolveRoute(intent))
     setSubmitted(false)
   }
   return (
