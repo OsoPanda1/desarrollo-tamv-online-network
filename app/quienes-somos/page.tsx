@@ -79,7 +79,7 @@ export default async function WhoWeArePage({ searchParams }: { searchParams: Sea
           <div className="container tamv-charter-mission-grid">
             <div className="tamv-charter-section-intro">
               <p className="tamv-charter-eyebrow"><span>01</span> {english ? "WHY TAMV EXISTS" : "POR QUÉ EXISTE TAMV"}</p>
-              <h2>{english ? "The future is not declared.<br />It is <em>constructed.</em>" : "El futuro no se proclama.<br />Se <em>construye.</em>"}</h2>
+              <h2>{english ? <>The future is not declared.<br />It is <em>constructed.</em></> : <>El futuro no se proclama.<br />Se <em>construye.</em></>}</h2>
               <p>{english ? "Our mission is to turn knowledge, technology and territorial identity into tools that can be examined, maintained and used by the people they serve." : "Nuestra misión es convertir conocimiento, tecnología e identidad territorial en herramientas examinables, mantenibles y útiles para las personas a las que sirven."}</p>
             </div>
             <div className="tamv-charter-mission-cards">
@@ -161,7 +161,7 @@ export default async function WhoWeArePage({ searchParams }: { searchParams: Sea
         <section className="tamv-charter-closing">
           <div className="container">
             <p className="tamv-charter-eyebrow"><span>06</span> {english ? "THE COMMITMENT" : "EL COMPROMISO"}</p>
-            <h2>{english ? "The future is built from <em>where we stand.</em>" : "El futuro se construye desde <em>donde estamos.</em>"}</h2>
+            <h2>{english ? <>The future is built from <em>where we stand.</em></> : <>El futuro se construye desde <em>donde estamos.</em></>}</h2>
             <p>{english ? "A future worthy of the name is not a slogan. It is capability that people can use, evidence others can inspect, memory that communities can govern, and systems that can be corrected when they fail." : "Un futuro digno de ese nombre no es un eslogan. Es capacidad que las personas pueden usar, evidencia que otras pueden inspeccionar, memoria que las comunidades pueden gobernar y sistemas que pueden corregirse cuando fallan."}</p>
             <div className="tamv-charter-closing-actions"><Link href={localizedPath("/unete", locale)}>{english ? "Join the work" : "Únete al trabajo"} <span>↗</span></Link><Link href={localizedPath("/ecosistema", locale)}>{english ? "Inspect the ecosystem" : "Inspeccionar el ecosistema"} <span>↗</span></Link></div>
           </div>
