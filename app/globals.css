@@ -3565,3 +3565,13 @@ body:has(.sovereign-hero) .intent-proof-row p { color: #A8B2BB; }
   .sovereign-verifier-digest { grid-template-columns: 1fr; }
   .sovereign-verifier-digest > span { grid-column: 1; }
 }
+
+
+.sovereign-footer-build-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; padding-top: 5px; }
+.sovereign-footer-build-meta > span { color: #8D98A2; font: 8px var(--tamv-mono); letter-spacing: .1em; }
+.sovereign-footer-build-meta > strong { color: var(--tamv-turquoise); font: 9px var(--tamv-mono); font-weight: 500; }
+.sovereign-footer-build-meta > code,
+.sovereign-footer-build-meta > time { color: #9CA8B2; font: 8px/1.6 var(--tamv-mono); overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .sovereign-footer-build-meta { grid-column: 1 / -1; }
+}
