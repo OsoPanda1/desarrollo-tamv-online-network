@@ -111,7 +111,7 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const gl = canvas.getContext("webgl2", { alpha: true, antialias: true, depth: false, stencil: false, premultipliedAlpha: true })
+    const gl = canvas.getContext("webgl2", { alpha: true, antialias: true, depth: false, stencil: false, premultipliedAlpha: false })
     if (!gl) {
       canvas.dataset.webgl = "unavailable"
       return
@@ -207,24 +207,12 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
       event.preventDefault()
       window.cancelAnimationFrame(animationFrame)
       animationFrame = 0
-      canvas.dataset.webgl = "context-lost"
+      canvas.dataset.webgl = "unavailable"
     }
-    function onContextRestored() {
-      canvas.dataset.webgl = "restored"
-      startedAt = performance.now()
-      if (!reducedMotion.matches) {
-        window.cancelAnimationFrame(animationFrame)
-        animationFrame = window.requestAnimationFrame(animate)
-      } else {
-        draw(performance.now())
-      }
-    }
-
     const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => draw(performance.now())) : null
     if (resizeObserver) resizeObserver.observe(canvas)
     else window.addEventListener("resize", drawRef.current)
     canvas.addEventListener("webglcontextlost", onContextLost)
-    canvas.addEventListener("webglcontextrestored", onContextRestored)
     reducedMotion.addEventListener("change", onMotionChange)
     draw(performance.now())
     if (!reducedMotion.matches) animationFrame = window.requestAnimationFrame(animate)
@@ -235,7 +223,6 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
       resizeObserver?.disconnect()
       if (!resizeObserver) window.removeEventListener("resize", drawRef.current)
       canvas.removeEventListener("webglcontextlost", onContextLost)
-      canvas.removeEventListener("webglcontextrestored", onContextRestored)
       reducedMotion.removeEventListener("change", onMotionChange)
       drawRef.current = () => {}
       gl.bindVertexArray(null)
