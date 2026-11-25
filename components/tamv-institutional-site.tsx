@@ -34,6 +34,7 @@ import { getPublicProjects, getPublicResearchTopics } from "@/lib/research/queri
 import type { Locale } from "@/lib/i18n"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvIntentionDiscovery } from "./tamv-intention-discovery"
+import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
 import { HomeVisualBand } from "./visuals/home-visual-band"
 
 const workAreas = [
@@ -81,6 +82,7 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <TamvSiteHeader locale={locale} />
       <main id="contenido" lang={locale}>
+        <TamvSovereignConsole locale={locale} />
         <section className="hero-section" id="inicio">
           <div className="hero-grain" aria-hidden="true" />
           <div className="container hero-layout">
@@ -483,6 +485,7 @@ export async function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale
           </nav>
           <div className="footer-support"><TamvDonationCTA locale={locale} variant="compact" label="Apoyar TAMV" /></div>
         </div>
+        <TamvBuildFingerprint locale={locale} />
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} TAMV Online Network</span><span>Una iniciativa independiente; no implica acreditación ni respaldo de terceros.</span><a href="mailto:anubiscastillo@visitarealdelmonte.online">Contacto <ArrowUpRight aria-hidden="true" /></a></div>
       </footer>
     </>
@@ -502,6 +505,7 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
     <a className="skip-link" href="#contenido">Skip to content</a>
     <TamvSiteHeader locale="en" />
     <main id="contenido" lang="en">
+      <TamvSovereignConsole locale="en" />
       <section className="hero-section" id="inicio">
         <div className="hero-grain" aria-hidden="true" />
         <div className="container hero-layout">
@@ -703,6 +707,6 @@ function EnglishInstitutionalSite({ projects, topics }: { projects: Awaited<Retu
       <section className="section contact-section" id="contacto"><div className="container contact-panel"><div className="contact-emblem"><span className="brand-mark contact-brand-emblem" aria-hidden="true" /><span>HIDALGO<br />MEXICO</span></div><div className="contact-copy"><p className="eyebrow eyebrow-light">INSTITUTIONAL COLLABORATION</p><h2>Knowledge grows <em>when it is shared.</em></h2><p>For research, partnerships, press, or technical collaboration, start a conversation with the TAMV team.</p><a className="button button-copper" href="mailto:anubiscastillo@visitarealdelmonte.online?subject=TAMV%20Online%20Network%20collaboration">Institutional contact <ArrowUpRight aria-hidden="true" /></a><div className="contact-support-action"><TamvDonationCTA locale="en" variant="compact" label="Contribute to TAMV" /></div></div><div className="contact-side"><Fingerprint aria-hidden="true" /><span>INDEPENDENT<br />INITIATIVE</span></div></div></section>
       <HomeVisualBand locale="en" />
     </main>
-    <footer className="site-footer" lang="en"><div className="container footer-main"><a className="footer-brand" href="/?lang=en#inicio" aria-label="TAMV Online Network, back to top"><span className="brand-mark" aria-hidden="true" /><span><strong>TAMV</strong><small>ONLINE NETWORK</small></span></a><p>Research · Technology · Living memory<br />An independent initiative originating in Hidalgo, Mexico.</p><div className="ai-lounge-profile" aria-label="TAMV Online on AI Lounge"><span className="ai-lounge-label">AI COMMUNITY PRESENCE</span><a href="https://lounge.ai/@tamvonline" target="_blank" rel="noopener noreferrer" aria-label="Visit TAMV Online on AI Lounge"><img src="https://lounge.ai/api/badge/tamvonline" alt="Edwin Oswaldo Castillo Trejo on AI Lounge" height="28" loading="lazy" decoding="async" /></a></div><nav className="footer-links" aria-label="Institutional links"><a href="/proyectos?lang=en">Projects</a><a href="/guia?lang=en">Practical guide</a><a href="/investigacion?lang=en">Research</a><a href="/hcu?lang=en">HCU</a><a href="/fuentes?lang=en">Sources</a><a href="/gobernanza?lang=en">Governance</a><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a></nav><div className="footer-support"><TamvDonationCTA locale="en" variant="compact" label="Support TAMV" /></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} TAMV Online Network</span><span>An independent initiative; no accreditation or third-party endorsement is implied.</span><a href="mailto:anubiscastillo@visitarealdelmonte.online">Contact <ArrowUpRight aria-hidden="true" /></a></div></footer>
+    <footer className="site-footer" lang="en"><div className="container footer-main"><a className="footer-brand" href="/?lang=en#inicio" aria-label="TAMV Online Network, back to top"><span className="brand-mark" aria-hidden="true" /><span><strong>TAMV</strong><small>ONLINE NETWORK</small></span></a><p>Research · Technology · Living memory<br />An independent initiative originating in Hidalgo, Mexico.</p><div className="ai-lounge-profile" aria-label="TAMV Online on AI Lounge"><span className="ai-lounge-label">AI COMMUNITY PRESENCE</span><a href="https://lounge.ai/@tamvonline" target="_blank" rel="noopener noreferrer" aria-label="Visit TAMV Online on AI Lounge"><img src="https://lounge.ai/api/badge/tamvonline" alt="Edwin Oswaldo Castillo Trejo on AI Lounge" height="28" loading="lazy" decoding="async" /></a></div><nav className="footer-links" aria-label="Institutional links"><a href="/proyectos?lang=en">Projects</a><a href="/guia?lang=en">Practical guide</a><a href="/investigacion?lang=en">Research</a><a href="/hcu?lang=en">HCU</a><a href="/fuentes?lang=en">Sources</a><a href="/gobernanza?lang=en">Governance</a><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a></nav><div className="footer-support"><TamvDonationCTA locale="en" variant="compact" label="Support TAMV" /></div></div><TamvBuildFingerprint locale="en" /><div className="container footer-bottom"><span>© {new Date().getFullYear()} TAMV Online Network</span><span>An independent initiative; no accreditation or third-party endorsement is implied.</span><a href="mailto:anubiscastillo@visitarealdelmonte.online">Contact <ArrowUpRight aria-hidden="true" /></a></div></footer>
   </>
 }
