@@ -22,6 +22,10 @@ import {
   Workflow,
 } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
+import { TamvEvidenceVerifier } from "./tamv-evidence-verifier"
+import { TamvIntentRouter } from "./tamv-intent-router"
+import { TamvGovernanceMatrix } from "./tamv-governance-matrix"
+import { TamvTerritorialTwinStatus } from "./tamv-territorial-twin-status"
 
 type FederationLink = { label: string; href?: string; note?: string }
 type Federation = {
@@ -351,6 +355,20 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <div className="sovereign-algorithm-line"><span>CC BY 4.0*</span><span>Apache-2.0 / AGPL-3.0*</span><span>{english ? "Commercial terms proposed" : "Términos comerciales propuestos"}</span></div>
             </section>
           </div>
+
+          <TamvIntentRouter locale={locale} />
+
+          <TamvTerritorialTwinStatus locale={locale} />
+
+          <TamvGovernanceMatrix locale={locale} />
+
+          <section className="sovereign-verifier-section" id="terminal-verification" aria-labelledby="sovereign-verifier-title">
+            <div className="sovereign-ledger-heading">
+              <div><p className="sovereign-kicker"><span>06</span> {english ? "CLIENT-SIDE INSPECTION" : "INSPECCIÓN EN EL NAVEGADOR"}</p><h3 id="sovereign-verifier-title">{english ? "Verify the bytes, not the claim." : "Verifica los bytes, no la afirmación."}</h3></div>
+              <p>{english ? "Calculate a SHA-512 digest or verify an Ed25519 signature against a supplied public key. No evidence payload is fetched, transmitted, or stored." : "Calcula una huella SHA-512 o verifica una firma Ed25519 con una clave pública proporcionada. No se consulta, transmite ni almacena el contenido."}</p>
+            </div>
+            <TamvEvidenceVerifier locale={locale} />
+          </section>
 
           <section className="sovereign-research-ledger" id="research-index" aria-labelledby="sovereign-research-title">
             <div className="sovereign-ledger-heading"><div><p className="sovereign-kicker"><span>03</span> {english ? "SOURCE REGISTRY" : "REGISTRO DE FUENTES"}</p><h3 id="sovereign-research-title">{english ? "Persistent records and citation tools" : "Registros persistentes y herramientas de citación"}</h3></div><p>{english ? "These links are declared reference identifiers. Resolve each one and verify its metadata before using a formal citation." : "Estos enlaces son identificadores de referencia declarados. Resuelve cada uno y verifica sus metadatos antes de emplear una cita formal."}</p></div>
