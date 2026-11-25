@@ -5,6 +5,10 @@ import { fingerprintBuildArtifacts } from "../scripts/write-build-evidence.mjs";
 
 const component = await readFile(new URL("../components/tamv-sovereign-console.tsx", import.meta.url), "utf8");
 const stylesheet = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const verifier = await readFile(new URL("../components/tamv-evidence-verifier.tsx", import.meta.url), "utf8");
+const router = await readFile(new URL("../components/tamv-intent-router.tsx", import.meta.url), "utf8");
+const governance = await readFile(new URL("../components/tamv-governance-matrix.tsx", import.meta.url), "utf8");
+const territorial = await readFile(new URL("../components/tamv-territorial-twin-status.tsx", import.meta.url), "utf8");
 
 test("console defines seven distinct selectable federation nodes", () => {
   const ids = ["cognition", "identity", "vault", "governance", "persistence", "territory", "learning"];
@@ -52,4 +56,39 @@ test("build-manifest fingerprint is deterministic and order independent", () => 
   assert.match(first, /^[a-f0-9]{128}$/);
   assert.equal(first, second);
   assert.notEqual(first, changed);
+});
+
+
+test("browser verifier uses WebCrypto for SHA-512 and Ed25519 without server transmission", () => {
+  assert.match(verifier, /crypto\.subtle\.digest\("SHA-512"/);
+  assert.match(verifier, /crypto\.subtle\.importKey\("raw".*Ed25519/s);
+  assert.match(verifier, /crypto\.subtle\.verify\(\{ name: "Ed25519" \}/);
+  assert.match(verifier, /does not send data to a server|no envía datos al servidor/i);
+  assert.match(verifier, /does not prove signer identity|no demuestra por sí solo la identidad del firmante/i);
+});
+
+test("intent router is bounded local routing, not an asserted live Isabella integration", () => {
+  assert.match(router, /function classifyIntent/);
+  assert.match(router, /LOCAL ROUTING PREVIEW|VISTA PREVIA LOCAL/);
+  assert.match(router, /does not call Isabella or CROWN|no invoca Isabella ni CROWN/i);
+  assert.match(router, /No se ejecuta ninguna acción|no action is executed/i);
+  assert.doesNotMatch(router, /fetch\(/);
+});
+
+test("LATAMV matrix shows missing evidence rather than invented compliance statuses", () => {
+  assert.match(governance, /EU/);
+  assert.match(governance, /US/);
+  assert.match(governance, /CN/);
+  assert.match(governance, /LATAM/);
+  assert.match(governance, /Unlinked|Sin enlace/);
+  assert.match(governance, /not a legal compliance verdict|no es un dictamen de cumplimiento jurídico/i);
+  assert.doesNotMatch(governance, /aria-label="compliant"|status:\s*"verified"/i);
+});
+
+test("territorial twin panel discloses disconnected live data sources", () => {
+  assert.match(territorial, /Not yet live|Aún no está en vivo/);
+  assert.match(territorial, /No sensor, camera, or 4D twin telemetry is received|no es un tablero de sensores simulado/i);
+  assert.match(territorial, /Vision-Guard/);
+  assert.match(territorial, /Pulse-Sentinel/);
+  assert.match(territorial, /BookPI/);
 });
