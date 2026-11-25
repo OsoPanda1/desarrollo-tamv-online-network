@@ -144,6 +144,7 @@ function usePublicSignals() {
       inFlight = true
       const controller = new AbortController()
       activeController = controller
+      const timeout = window.setTimeout(() => controller.abort(), 8_000)
       try {
         const runtimeRequest = fetch("/api/health", { cache: "no-store", signal: controller.signal }).then((response) => {
           if (!response.ok) throw new Error("liveness unavailable")
@@ -158,7 +159,7 @@ function usePublicSignals() {
           return response.json()
         })
         const [runtime, catalog, evidence] = await Promise.allSettled([runtimeRequest, catalogRequest, evidenceRequest])
-        if (cancelled || controller.signal.aborted) return
+        if (cancelled) return
         setSignals({
           runtime: runtime.status === "fulfilled" ? "available" : "unavailable",
           catalog: catalog.status === "fulfilled" ? "available" : "unavailable",
@@ -167,6 +168,7 @@ function usePublicSignals() {
           checkedAt: new Date().toISOString(),
         })
       } finally {
+        window.clearTimeout(timeout)
         inFlight = false
       }
     }
@@ -260,7 +262,7 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <p className="sovereign-lead">{english ? "TAMV connects knowledge, technology, identity, governance, and territorial memory. Explore the architecture as a documented model, then inspect its source records and limits." : "TAMV conecta conocimiento, tecnología, identidad, gobernanza y memoria territorial. Explora la arquitectura como modelo documentado y consulta sus fuentes y límites."}</p>
               <div className="sovereign-hero-actions"><a className="sovereign-action sovereign-action-primary" href="#atlas">{english ? "Explore the seven federations" : "Explorar las siete federaciones"} <ArrowRight aria-hidden="true" /></a><a className="sovereign-action" href="#sovereign-modules">{english ? "Inspect the system" : "Inspeccionar el sistema"} <Terminal aria-hidden="true" /></a></div>
               <div className="sovereign-origin"><span>{english ? "TERRITORIAL ORIGIN" : "ORIGEN TERRITORIAL"}</span><strong>Mineral del Monte · Hidalgo · México</strong></div>
-              <p className="sovereign-evidence-caption">{english ? "Catalog entry ≠ live integration. HTTP liveness and catalog are polled every 30 seconds. No public BookPI event feed is connected. Build fingerprint ≠ digital signature or CI approval." : "Entrada de catálogo ≠ integración activa. La señal de runtime solo comprueba respuesta HTTP. Huella de build ≠ firma digital ni aprobación CI."}</p>
+              <p className="sovereign-evidence-caption">{english ? "Catalog entry ≠ live integration. HTTP liveness and catalog are polled every 30 seconds. No public BookPI event feed is connected. Build fingerprint ≠ digital signature or CI approval." : "Entrada de catálogo ≠ integración activa. La liveness HTTP y el catálogo se consultan cada 30 segundos. No hay un feed público de eventos BookPI conectado. Huella de build ≠ firma digital ni aprobación CI."}</p>
             </div>
 
             <div className="sovereign-atlas-wrap" id="atlas">
