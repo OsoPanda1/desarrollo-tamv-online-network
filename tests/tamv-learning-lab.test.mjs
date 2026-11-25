@@ -9,7 +9,7 @@ const lab = await readFile(new URL("../components/tamv-learning-lab.tsx", import
 const guide = await readFile(new URL("../app/guia/page.tsx", import.meta.url), "utf8");
 
 test("learning curriculum documents core modules with purpose, timing, steps, and success criteria", () => {
-  for (const route of ["/guia", "/proyectos", "/investigacion", "/hcu", "/fuentes", "/ecosistema", "/desarrolladores", "/gobernanza", "/comunidad", "/formacion", "/membresias", "/quienes-somos", "/portal", "/atlas", "/arquitectura", "/investigadores", "/isabella", "/institucionalizacion", "/privacidad", "/apoyar", "/cuenta", "/logros", "/utamv", "/excelencia"]) {
+  for (const route of ["/guia", "/proyectos", "/investigacion", "/hcu", "/fuentes", "/ecosistema", "/desarrolladores", "/gobernanza", "/comunidad", "/formacion", "/membresias", "/quienes-somos", "/portal", "/atlas", "/arquitectura", "/investigadores", "/isabella", "/institucionalizacion", "/privacidad", "/apoyar", "/cuenta", "/logros", "/utamv", "/excelencia", "/investigacion/publicaciones", "/membresias/condiciones", "/unete", "/auditoria-creator"]) {
     assert.ok(curriculum.includes('route: "' + route + '"'), "missing learning route: " + route);
   }
   assert.match(curriculum, /ADAPTIVE TUTORING CONTRACT/);
@@ -17,6 +17,7 @@ test("learning curriculum documents core modules with purpose, timing, steps, an
   assert.match(curriculum, /EXAMPLE — DOI/);
   assert.match(curriculum, /MEASURE/);
   assert.match(curriculum, /LIMITS/);
+  for (const id of ["training-profile", "training-portfolio", "training-validation", "training-business-model", "training-pitch"]) assert.ok(curriculum.includes(`id: "${id}"`), "missing course module: " + id);
 });
 
 test("Isabella is connected to the curriculum and supports adaptive re-explanation", () => {
