@@ -9,7 +9,7 @@ type LocaleCopy = {
   payload: string; payloadHint: string; hashInput: string; keyInput: string; signatureInput: string
   calculate: string; verify: string; hashLabel: string; hashNotCompared: string; hashMatch: string; hashMismatch: string
   signatureValid: string; signatureInvalid: string; required: string; secureContext: string; keyLength: string
-  sigLength: string; cryptoError: string; privacy: string; exactBytes: string; noClaims: string
+  sigLength: string; cryptoError: string; privacy: string; exactBytes: string; noClaims: string; loadVector: string; vectorNote: string
 }
 const copy: Record<Locale, LocaleCopy> = {
   es: {
@@ -26,7 +26,9 @@ const copy: Record<Locale, LocaleCopy> = {
     hashMismatch: "El hash calculado no coincide con el hash esperado.",
     signatureValid: "Firma válida para estos bytes exactos y esta clave pública.",
     signatureInvalid: "La firma no valida para estos bytes exactos y esta clave pública.",
-    required: "Introduce el mensaje y los materiales que quieres verificar.",
+    required: "Introduce la clave pública y la firma. El mensaje puede estar vacío.",
+    loadVector: "Cargar vector de prueba RFC 8032",
+    vectorNote: "El vector público de interoperabilidad sirve para probar el navegador; no es evidencia de TAMV ni un evento BookPI.",
     secureContext: "WebCrypto no está disponible. Usa un navegador compatible en un contexto seguro HTTPS o localhost.",
     keyLength: "La clave pública decodificada debe contener exactamente 32 bytes.",
     sigLength: "La firma decodificada debe contener exactamente 64 bytes.",
@@ -49,7 +51,9 @@ const copy: Record<Locale, LocaleCopy> = {
     hashMismatch: "The calculated digest does not match the expected digest.",
     signatureValid: "Signature is valid for these exact bytes and this public key.",
     signatureInvalid: "Signature is not valid for these exact bytes and this public key.",
-    required: "Enter the message and the material you want to verify.",
+    required: "Enter a public key and signature. The message may be empty.",
+    loadVector: "Load RFC 8032 test vector",
+    vectorNote: "This public interoperability vector tests the browser; it is not TAMV evidence or a BookPI event.",
     secureContext: "WebCrypto is unavailable. Use a compatible browser in a secure HTTPS or localhost context.",
     keyLength: "The decoded public key must contain exactly 32 bytes.",
     sigLength: "The decoded signature must contain exactly 64 bytes.",
@@ -86,10 +90,6 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
   async function calculateHash() {
     setSignatureResult(null)
     setDigestCopyState("idle")
-    if (!payload) {
-      setHashResult({ kind: "error", text: t.required })
-      return
-    }
     if (!globalThis.crypto?.subtle) {
       setHashResult({ kind: "error", text: t.secureContext })
       return
@@ -112,7 +112,7 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
   async function verifySignature() {
     setHashResult(null)
     setDigestCopyState("idle")
-    if (!payload || !publicKey.trim() || !signature.trim()) {
+    if (!publicKey.trim() || !signature.trim()) {
       setSignatureResult({ kind: "error", text: t.required })
       return
     }
@@ -143,7 +143,7 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
         <label className="sovereign-verifier-field sovereign-verifier-payload">
           <span>{t.payload}</span>
           <textarea value={payload} onChange={(event) => { setPayload(event.target.value); setDigest(""); setHashResult(null); setSignatureResult(null) }} rows={5} spellCheck={false} autoComplete="off" />
-          <small>{t.payloadHint}</small>
+          <small>{t.payloadHint} {t.vectorNote}</small>
         </label>
         <label className="sovereign-verifier-field">
           <span>{t.hashInput}</span>
@@ -159,6 +159,7 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
         </label>
       </div>
       <div className="sovereign-verifier-actions">
+        <button className="sovereign-action" type="button" onClick={() => { setPayload(""); setExpectedHash(""); setPublicKey("11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo="); setSignature("5VZDAMNgrHKQhuLMgG6CioSHfx645dl02HPgZSJJAVVfuIIVkKM7rMYeOXAc+bRr0lv18FlbviRlUUFDjnoQCw=="); setDigest(""); setHashResult(null); setSignatureResult(null); setDigestCopyState("idle") }} disabled={busy !== null}><CheckCircle2 aria-hidden="true" />{t.loadVector}</button>
         <button className="sovereign-action sovereign-action-primary" type="button" onClick={() => void calculateHash()} disabled={busy !== null}><Fingerprint aria-hidden="true" />{busy === "hash" ? (locale === "en" ? "Calculating…" : "Calculando…") : t.calculate}</button>
         <button className="sovereign-action" type="button" onClick={() => void verifySignature()} disabled={busy !== null}><ShieldAlert aria-hidden="true" />{busy === "signature" ? (locale === "en" ? "Verifying…" : "Verificando…") : t.verify}</button>
       </div>
