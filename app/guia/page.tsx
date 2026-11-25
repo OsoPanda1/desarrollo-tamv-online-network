@@ -13,6 +13,7 @@ import {
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvLearningLab } from "@/components/tamv-learning-lab"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { localizedPath, resolveLocale, type Locale } from "@/lib/i18n"
@@ -173,6 +174,8 @@ export default async function GuidePage({ searchParams }: { searchParams: Search
           </ol>
         </div>
       </section>
+
+      <TamvLearningLab locale={locale} />
 
       <section className="section tamv-guide-trust-section" aria-labelledby="tamv-guide-limits">
         <div className="container">
