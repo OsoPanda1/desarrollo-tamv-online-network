@@ -81,9 +81,11 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
   const [hashResult, setHashResult] = useState<Result | null>(null)
   const [signatureResult, setSignatureResult] = useState<Result | null>(null)
   const [busy, setBusy] = useState<"hash" | "signature" | null>(null)
+  const [digestCopyState, setDigestCopyState] = useState<"idle" | "copied" | "failed">("idle")
 
   async function calculateHash() {
     setSignatureResult(null)
+    setDigestCopyState("idle")
     if (!payload) {
       setHashResult({ kind: "error", text: t.required })
       return
@@ -109,6 +111,7 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
 
   async function verifySignature() {
     setHashResult(null)
+    setDigestCopyState("idle")
     if (!payload || !publicKey.trim() || !signature.trim()) {
       setSignatureResult({ kind: "error", text: t.required })
       return
@@ -159,7 +162,7 @@ export function TamvEvidenceVerifier({ locale = "es" }: { locale?: Locale }) {
         <button className="sovereign-action sovereign-action-primary" type="button" onClick={() => void calculateHash()} disabled={busy !== null}><Fingerprint aria-hidden="true" />{busy === "hash" ? (locale === "en" ? "Calculating…" : "Calculando…") : t.calculate}</button>
         <button className="sovereign-action" type="button" onClick={() => void verifySignature()} disabled={busy !== null}><ShieldAlert aria-hidden="true" />{busy === "signature" ? (locale === "en" ? "Verifying…" : "Verificando…") : t.verify}</button>
       </div>
-      {digest && <div className="sovereign-verifier-digest"><span>{t.hashLabel}</span><code>{digest}</code><button type="button" onClick={() => void navigator.clipboard?.writeText(digest)}><ClipboardCheck aria-hidden="true" />{locale === "en" ? "Copy" : "Copiar"}</button></div>}
+      {digest && <div className="sovereign-verifier-digest"><span>{t.hashLabel}</span><code>{digest}</code><button type="button" onClick={() => { void (async () => { try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(digest); setDigestCopyState("copied") } catch { setDigestCopyState("failed") } })() }}><ClipboardCheck aria-hidden="true" />{digestCopyState === "copied" ? (locale === "en" ? "Copied" : "Copiado") : (locale === "en" ? "Copy" : "Copiar")}</button>{digestCopyState === "failed" && <small role="status">{locale === "en" ? "Clipboard unavailable; select and copy the digest manually." : "Portapapeles no disponible; selecciona y copia la huella manualmente."}</small>}</div>}
       {hashResult && <p className={"sovereign-verifier-result is-" + hashResult.kind} role="status"><ResultIcon kind={hashResult.kind} />{hashResult.text}</p>}
       {signatureResult && <p className={"sovereign-verifier-result is-" + signatureResult.kind} role="status"><ResultIcon kind={signatureResult.kind} />{signatureResult.text}</p>}
       <p className="sovereign-verifier-note">{t.privacy} {t.exactBytes} {t.noClaims}</p>
