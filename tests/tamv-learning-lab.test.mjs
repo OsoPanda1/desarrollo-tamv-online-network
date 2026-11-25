@@ -29,8 +29,7 @@ test("Isabella is connected to the curriculum and supports adaptive re-explanati
 });
 
 test("interactive lab supports levels, alternative methods, verification and non-persistent progress disclosure", () => {
-  for (const term of ["basic", "intermediate", "expert", "analogy", "example", "checklist", "teachback", "measure", "is-session"]) {
-    if (term === "is-session") continue;
+  for (const term of ["basic", "intermediate", "expert", "analogy", "example", "checklist", "teachback", "measure"]) {
     assert.ok(lab.toLowerCase().includes(term.toLowerCase()), "missing lab feature: " + term);
   }
   assert.match(lab, /not saved to your account|no se guarda en tu cuenta/i);
