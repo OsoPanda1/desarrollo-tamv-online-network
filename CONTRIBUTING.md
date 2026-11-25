@@ -46,9 +46,9 @@ Some pages and APIs depend on PostgreSQL and a configured Better Auth secret. A 
 
 ## Licensing and permission to reuse
 
-A root `LICENSE` file was not found during the repository audit dated 2026-11-23. Until the copyright holder selects and publishes a license, do not assume the code is permissively licensed or that public access grants permission to redistribute, modify, sublicense or incorporate it into a product. Read [the licensing status note](docs/governance/licensing-status.md).
+This branch proposes Apache-2.0 for original software and CC BY 4.0 for authored narrative documentation. Review [the scope matrix](LICENSES.md) and [license status](docs/governance/licensing-status.md) before redistributing any component. The scope separation becomes the project's published policy only when accepted into the default branch and remains limited to work whose rightsholders can grant those rights.
 
-`CITATION.cff` helps attribute the repository but does not grant reuse rights. Project records and individual documents may declare a separate license; such a declaration must not be applied to the entire codebase or to images/models by implication. If a proposed contribution introduces third-party code or assets, document the source and compatible license. Maintainers should resolve code licensing before advertising broad external reuse or an unrestricted developer ecosystem.
+`CITATION.cff` attributes the repository but does not grant reuse rights. Do not apply a document license to source code, images, models, datasets or third-party material by implication. When introducing outside code or assets, record source URL, version, license and compatibility. Do not relicense material you do not own or have permission to redistribute.
 
 ## Research integrity and provenance
 
