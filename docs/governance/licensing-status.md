@@ -1,31 +1,29 @@
 # Estado de licencia del repositorio / Repository licensing status
 
-**Inspección del árbol:** 23 de noviembre de 2026.  
-**Estado:** no se encontró un archivo LICENSE en la raíz del repositorio durante esta revisión.
+**Estado de esta rama:** propuesta explícita de separación de licencias para revisión del mantenedor y de derechos.
 
-## Qué significa
+## Política de alcance
 
-La ausencia de una licencia raíz no autoriza automáticamente a terceros a copiar, modificar, redistribuir o incorporar el código en productos derivados. La disponibilidad pública de un repositorio no equivale a una licencia de software de código abierto.
+- **Software original:** Apache License 2.0 — [LICENSE](../../LICENSE).
+- **Documentación narrativa original:** Creative Commons Attribution 4.0 International — [LICENSE-DOCS](../../LICENSE-DOCS).
+- **Alcance y exclusiones:** [LICENSES.md](../../LICENSES.md).
 
-Los registros de proyectos, datos, documentos, imágenes, datasets y publicaciones pueden tener condiciones distintas. Una licencia declarada para un documento no se transfiere automáticamente al código, a las imágenes, a los modelos ni a otros materiales de este repositorio.
+La separación resuelve el vacío de política del proyecto en esta propuesta, pero no constituye una auditoría jurídica de cada archivo. Las licencias solo se aplican a obras cuyos titulares tengan facultad para conceder los derechos indicados. Los materiales de terceros, imágenes, modelos, datasets, publicaciones, fuentes, assets y archivos con avisos propios conservan sus licencias y términos. El material personal, confidencial o culturalmente gobernado no recibe permiso general de publicación por encontrarse en un repositorio público.
 
-## Decisión requerida del mantenedor
+## Antes de aceptar la separación en `main`
 
-Antes de promover la reutilización masiva, el mantenedor debe seleccionar y publicar una licencia de software compatible con sus objetivos, derechos y dependencias. Esta decisión puede ser, por ejemplo, una licencia permisiva, una licencia con obligaciones de copyleft u otra licencia adecuada, pero no debe inferirse de la intención del proyecto ni ser decidida por un cambio automático.
+1. Revisar autoría y contribuciones históricas con el titular de derechos.
+2. Auditar dependencias, código copiado, assets y material embebido por compatibilidad.
+3. Conservar avisos de terceros y añadir referencias de procedencia donde falten.
+4. Confirmar que la documentación narrativa que se marca CC BY 4.0 no contiene material cuya licencia prohíba esa redistribución.
+5. Revisar que los archivos de licencia y el README describan el mismo alcance.
 
-Antes de añadir el archivo de licencia, conviene:
-1. identificar a titulares y contribuyentes de los derechos;
-2. revisar dependencias, assets, documentación y datasets por separado;
-3. definir si el código, los documentos, las imágenes y los datasets necesitan licencias diferentes;
-4. verificar que las licencias de terceros permiten la redistribución propuesta;
-5. documentar atribución, avisos de terceros y proceso para aceptar contribuciones.
+## Reglas de uso
 
-## Reglas hasta resolverlo
+- La licencia de software no equivale a soporte, garantía, certificación, seguridad, cumplimiento normativo ni preparación para producción.
+- La licencia CC BY 4.0 requiere atribución y no sustituye consentimiento, una base jurídica o protocolos de la comunidad.
+- No inferir permiso sobre datos, registros privados, credenciales, materiales culturales restringidos o activos de terceros.
+- `CITATION.cff` sirve para citar el proyecto; no es una licencia.
+- Una contribución que se presente para incorporación debe declarar la autoría y la licencia de cualquier código o material de terceros que incluya.
 
-- No describir todo el código del repositorio como libremente reutilizable.
-- No añadir una licencia de software por inferencia.
-- No dar por abierta una licencia ausente de un registro.
-- No aceptar assets, datasets o código de terceros sin revisar procedencia y licencia.
-- Mantener visible el estado “licencia del código pendiente” hasta que el archivo y la política de reutilización estén aprobados por el titular.
-
-El archivo CITATION.cff proporciona metadatos de cita, no una licencia ni una concesión de derechos de reutilización.
+El objetivo de esta política es hacer explícitos los derechos de reutilización sin prometer que el repositorio sea dueño de material ajeno ni que toda la colección haya superado una revisión legal independiente.
