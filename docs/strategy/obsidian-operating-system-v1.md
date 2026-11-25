@@ -1,0 +1,56 @@
+# TAMV Online Network — Obsidian Operating Console v1
+
+## Objective
+
+Evolve the homepage from a conventional light institutional landing page into a dark, high-contrast discovery console while preserving the site's existing editorial documentation and evidence caveats.
+
+## Visual system
+
+- Obsidian surface: #0B0D11.
+- Metallic gold: #D6A54A, limited to institutional traceability, citations, and governance boundaries.
+- Sovereign turquoise: #38B7A6, limited to live HTTP responses, selected nodes, and active interface focus.
+- Serif is reserved for foundational statements; sans-serif supports navigation; monospace identifies endpoints, record IDs, and build-manifest hashes.
+- CSS transitions respect prefers-reduced-motion. Interactive nodes are keyboard reachable and expose selected state with ARIA attributes.
+
+## Delivered in this increment
+
+- Bilingual, keyboard-accessible SVG atlas with seven selectable domains, backed by a native WebGL2 / GLSL orbital glow layer that highlights the selected node. The SVG remains the accessible fallback.
+- Links to repository identities where public access has been confirmed; private repositories are identified as private and are not represented as public operational services.
+- Runtime liveness probe for GET /api/health, public catalog probe for GET /api/v1/ecosystem, and build evidence display.
+- Governance inspector that demonstrates fail-closed decisions when identity/evidence/signature material is absent.
+- Local intent router that maps a visitor's words to a public read-only route; it does not invoke Isabella, CROWN, BookPI, or an LLM.
+- LATAMV matrix for eight control areas across EU, US, CN and LATAM, with all cells explicitly marked unlinked until jurisdictional evidence is configured.
+- RDM Digital four-dimensional twin readiness view for spatial, temporal, observation, and evidence/policy layers; no sensor or incident stream is represented as connected.
+- Browser-only evidence laboratory that computes SHA-512 and verifies Ed25519 signatures over exact UTF-8 bytes using WebCrypto.
+- JSON-LD preview marked as a draft, with links to the actual public ecosystem and OpenAPI endpoints.
+- DOI/OSF/Figshare citation controls that produce minimal BibTeX without inventing titles, authorship, licensing, acceptance, or peer-review state.
+- Sustainability destination ledger without invented allocations or spending totals.
+- Post-build SHA-512 fingerprint over exact bytes of .next/BUILD_ID and selected Next.js build manifests.
+
+## Evidence boundaries
+
+- GET /api/health indicates process liveness only; it does not prove database readiness or that every feature is healthy.
+- The public ecosystem API is a catalog. An entry is not proof of a deployed service, service-to-service authentication, or data synchronization.
+- A manifest SHA-512 digest covers only the listed files, not the entire deployment. It is not encryption, a digital signature, a trusted timestamp, a certificate, or proof that CI passed.
+- The governance inspector is client-side illustrative UI. It does not call Isabella, authorize production actions, sign content, or verify production keys.
+- The local intent router is deterministic keyword classification, not semantic AI inference or a live Isabella/CROWN decision.
+- Every LATAMV jurisdiction cell remains unlinked. No legal compliance finding is made; future evidence needs primary-source URLs, versions, retrieval dates, scope, reviewers, and a traceable decision record.
+- The RDM Digital twin view is a connector-readiness panel, not a live 4D digital twin. Sensor feeds, Vision-Guard, Pulse-Sentinel, incident dispatch, and BookPI event streams remain unconnected in this homepage.
+- Browser Ed25519 verification proves only that the supplied signature validates for the supplied bytes under the supplied public key. It does not establish key ownership, signer identity, trusted time, ledger inclusion, or source truth.
+- The JSON-LD block is a preview, not a claim that a canonical JSON-LD or did.json endpoint is live.
+- Private repositories, including Aegis Vault and LITLE Verified Trust, remain explicitly marked as private. No private source is surfaced by this UI.
+- DOI/OSF/Figshare URLs are discovery links. Canonical title, authors, version, license, publication status, and formal citation must be checked at each provider. No Frontiers acceptance or peer review is inferred here.
+- Repository count is not hardcoded. The public registry reports its own catalog scope; it is not presented as a total count of all repositories or publications.
+- The hybrid license split is described as a proposed governance model. Repository-level license files and legal review govern actual reuse.
+
+## Deliberately deferred
+
+The orbital atlas uses a native WebGL2 / GLSL shader for a restrained GPU glow layer under a keyboard-accessible SVG topology. It is not a Three.js / React Three Fiber 3D scene, and it does not animate a fabricated BookPI heartbeat. The current lockfile does not include Three.js or React Three Fiber. Adding that engine should be a separate dependency change with a lockfile generated by the declared pnpm version and validated through frozen install, typecheck, test, production build, browser performance, and reduced-motion checks. Until a public BookPI event source is exposed and verified, the visual pulse remains disconnected by design.
+
+## Build evidence generation
+
+The build command runs Next.js build and then scripts/write-build-evidence.mjs. The script writes public/build-evidence.json only if the Next.js build ID and at least one build manifest exist. The UI labels missing evidence as unpublished; it never fabricates a fingerprint.
+
+## Validation state
+
+The source includes regression tests for the seven domains, accessibility hooks, reference IDs, design tokens, fail-closed caveats, and deterministic SHA-512 logic. Run pnpm install --frozen-lockfile, pnpm test, pnpm typecheck, and pnpm build before merging. GitHub Actions availability has previously been blocked by account billing status; an accepted workflow rerun must not be represented as a passing check.
