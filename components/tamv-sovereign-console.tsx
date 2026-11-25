@@ -24,6 +24,7 @@ import { TamvEvidenceVerifier } from "./tamv-evidence-verifier"
 import { TamvIntentRouter } from "./tamv-intent-router"
 import { TamvGovernanceMatrix } from "./tamv-governance-matrix"
 import { TamvTerritorialTwinStatus } from "./tamv-territorial-twin-status"
+import { TamvOrbitWebGL } from "./tamv-orbit-webgl"
 
 type FederationLink = { label: string; href?: string; note?: string }
 type Federation = {
@@ -265,6 +266,7 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
             <div className="sovereign-atlas-wrap" id="atlas">
               <div className="sovereign-atlas-topline"><span><Network aria-hidden="true" /> {english ? "HEPTAFEDERATED HEART" : "CORAZÓN HEPTAFEDERADO"}</span><span>7 / 7</span></div>
               <div className="sovereign-orbit-map">
+                <TamvOrbitWebGL activeNodeIndex={Math.max(0, federations.findIndex((node) => node.id === selectedId))} />
                 <svg viewBox="0 0 680 550" role="group" aria-label={english ? "Interactive map of seven documented TAMV domains" : "Mapa interactivo de siete ámbitos documentados de TAMV"}>
                   <defs>
                     <radialGradient id="sovereignCoreGlow"><stop offset="0%" stopColor="#38B7A6" stopOpacity=".28" /><stop offset="100%" stopColor="#38B7A6" stopOpacity="0" /></radialGradient>
