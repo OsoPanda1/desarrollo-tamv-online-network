@@ -106,14 +106,17 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
   activeNodeRef.current = activeNodeIndex
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvasRefValue = canvasRef.current
+    if (canvasRefValue === null) return
+    // Freeze the narrowed ref into an explicitly non-null alias for nested callbacks (TypeScript 7 strict null checks).
+    const canvas: HTMLCanvasElement = canvasRefValue as HTMLCanvasElement
 
-    const gl = canvas.getContext("webgl2", { alpha: true, antialias: true, depth: false, stencil: false, premultipliedAlpha: false })
-    if (!gl) {
+    const context = canvas.getContext("webgl2", { alpha: true, antialias: true, depth: false, stencil: false, premultipliedAlpha: false })
+    if (context === null) {
       canvas.dataset.webgl = "unavailable"
       return
     }
+    const gl: WebGL2RenderingContext = context as WebGL2RenderingContext
 
     const vertex = compileShader(gl, gl.VERTEX_SHADER, vertexShader)
     const fragment = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShader)
