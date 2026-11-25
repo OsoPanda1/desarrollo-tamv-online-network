@@ -23,6 +23,6 @@ export const isabellaAgent = new ToolLoopAgent({
   instructions,
   tools: isabellaTools,
   stopWhen: isStepCount(4),
-  maxOutputTokens: 650,
+  maxOutputTokens: 1400,
   toolCallConcurrency: 1,
 })
