@@ -32,9 +32,11 @@ function safeStripeUrl(value: unknown, allowedHost: string): string | null {
 export function MembershipCheckout({
   planId,
   locale = "es",
+  enabled = true,
 }: {
   planId: PlanId
   locale?: Locale
+  enabled?: boolean
 }) {
   const english = locale === "en"
   const [businessName, setBusinessName] = useState("")
@@ -43,7 +45,7 @@ export function MembershipCheckout({
   const [error, setError] = useState("")
 
   async function beginCheckout() {
-    if (busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)) return
+    if (!enabled || busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)) return
     setBusy(true)
     setError("")
     try {
@@ -110,14 +112,16 @@ export function MembershipCheckout({
         className="button membership-checkout-button"
         type="button"
         onClick={beginCheckout}
-        disabled={busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)}
+        disabled={!enabled || busy || !termsAccepted || (planId === "business" && businessName.trim().length < 2)}
       >
         {busy ? <LoaderCircle className="billing-spinner" aria-hidden="true" /> : <CreditCard aria-hidden="true" />}
-        {busy ? (english ? "Connecting to secure checkout…" : "Conectando con el checkout seguro…") : (english ? "Subscribe with Stripe" : "Contratar con Stripe")}
+        {!enabled ? (english ? "Live checkout unavailable" : "Cobro live no habilitado") : busy ? (english ? "Connecting to secure checkout…" : "Conectando con el checkout seguro…") : (english ? "Subscribe with Stripe" : "Contratar con Stripe")}
         {!busy && <ArrowUpRight aria-hidden="true" />}
       </button>
       <p className="billing-hint">
-        {english ? "Recurring monthly subscription. Access activates only after Stripe confirms the subscription through its signed webhook. You can manage eligible cancellations in the customer portal." : "Suscripción mensual recurrente. El acceso se activa solo cuando Stripe confirma la suscripción mediante su webhook firmado. Podrás gestionar las cancelaciones disponibles en el portal de clientes."}
+        {!enabled
+          ? (english ? "Live billing is closed on this deployment. No payment is initiated by this disabled control; configuration, policy approvals and server-side checks must pass before launch." : "La facturación live está cerrada en este despliegue. Este control deshabilitado no inicia ningún pago; la configuración, las aprobaciones y las validaciones del servidor deben cumplirse antes del lanzamiento.")
+          : (english ? "Recurring monthly subscription. Access activates only after Stripe confirms the subscription through its signed webhook. You can manage eligible cancellations in the customer portal." : "Suscripción mensual recurrente. El acceso se activa solo cuando Stripe confirma la suscripción mediante su webhook firmado. Podrás gestionar las cancelaciones disponibles en el portal de clientes.")}
       </p>
       {error && <p className="billing-error" role="alert">{error}</p>}
     </div>
