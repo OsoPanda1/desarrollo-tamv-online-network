@@ -10,6 +10,7 @@ import { localizedPath, type Locale } from "@/lib/i18n"
 import { TamvAssistant } from "@/components/tamv-assistant"
 
 const links = [
+  { href: "/quienes-somos", labelEs: "Identidad", labelEn: "Who we are" },
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
   { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
