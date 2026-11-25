@@ -13,12 +13,16 @@ Independent Mexican initiative connecting research, technology, digital communit
 
 ## Licensing, citation and reuse
 
-**Repository code license status: pending maintainer decision.** A root `LICENSE` file was not present in the repository tree during the 2026-11-23 audit. Public visibility is not a grant of rights to copy, modify, redistribute or use the code commercially. See [licensing status and required decision](docs/governance/licensing-status.md) before reusing the implementation.
+**License scope proposed in this branch:** original software under Apache-2.0 (`LICENSE`) and authored narrative documentation under CC BY 4.0 (`LICENSE-DOCS`). [`LICENSES.md`](LICENSES.md) defines the boundary and explicitly excludes uncleared third-party assets and community-sensitive material. The license files apply only to works whose rightsholders can grant the stated rights; a merge does not clear third-party rights automatically.
 
-- [CITATION.cff](CITATION.cff) provides citation metadata; it is not a license, peer-review claim, accreditation or evidence of production readiness.
-- [Code of Conduct](CODE_OF_CONDUCT.md) defines respectful participation and research-integrity expectations.
-- GitHub issue templates and [the pull-request template](.github/PULL_REQUEST_TEMPLATE.md) standardize reproducible bug reports, feature proposals, research contributions and review evidence.
-- The license of code, documents, data, images, and model materials may differ. Check each source and its rights before reuse.
+- [Licensing scope](LICENSES.md) distinguishes source code, prose documentation, third-party assets, and restricted/community-governed information.
+- [`CITATION.cff`](CITATION.cff) provides citation metadata; it is not a license, peer-review claim, accreditation or evidence of production readiness.
+- [Code of Conduct](CODE_OF_CONDUCT.md), [Security Policy](SECURITY.md) and [Contributing](CONTRIBUTING.md) define participation, responsible reporting and review expectations.
+- A hash, DOI, ORCID or public repository listing does not by itself prove authorship, source truth, legal status or production readiness.
+
+## Institutional charter and participation
+
+The bilingual [Who We Are / Quiénes somos] page at `/quienes-somos` presents TAMV's mission, vision, founder attribution, operating philosophy, cooperation paths and protection rules. The canonical [charter and cooperation playbook](docs/institutional/charter-and-cooperation.md) explains the intake-to-release protocol, community data limits and evidence boundaries. This charter states project commitments; it does not claim every system or external bridge is already operational.
 
 ## Current product areas
 

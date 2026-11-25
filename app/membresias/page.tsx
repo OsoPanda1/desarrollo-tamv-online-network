@@ -6,6 +6,7 @@ import { PageIntro } from "@/components/shared/page-intro"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { MembershipCheckout } from "@/components/membership-checkout"
 import { MembershipStatus } from "@/components/membership-status"
+import { isLiveMembershipCheckoutReady } from "@/lib/billing/checkout-readiness"
 import { resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string; checkout?: string }>
@@ -36,6 +37,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
   const params = await searchParams
   const locale = resolveLocale(params.lang)
   const english = locale === "en"
+  const liveCheckoutReady = isLiveMembershipCheckoutReady()
   const checkoutNotice = params.checkout === "success"
     ? (english ? "Payment submitted. Access activates only after Stripe confirms the subscription through the signed webhook." : "Pago enviado. El acceso se activa únicamente cuando Stripe confirma la suscripción mediante el webhook firmado.")
     : params.checkout === "cancelled"
@@ -56,6 +58,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
 
     <section className="section"><div className="container">
       {checkoutNotice && <p className="membership-status-notice" role="status"><ShieldCheck aria-hidden="true" />{checkoutNotice}</p>}
+      {!liveCheckoutReady && <p className="membership-live-gate-notice" role="status"><ShieldCheck aria-hidden="true" />{english ? "Live checkout is not enabled in this deployment configuration. The payment buttons remain closed until production has a verified live Stripe key, signed webhook, secure return origin, and explicit terms, privacy, legal, tax and refund approvals. A browser redirect never activates access." : "El checkout live no está habilitado en esta configuración de despliegue. Los botones de contratación permanecen cerrados hasta contar en producción con una clave live de Stripe verificada, webhook firmado, origen seguro de retorno y aprobaciones explícitas de condiciones, privacidad, operación legal, impuestos y reembolsos. Un regreso del navegador nunca activa el acceso."}</p>}
       <MembershipStatus locale={locale} />
       <div className="section-heading-row">
         <div><p className="eyebrow">{english ? "01 / PLANS" : "01 / PLANES"}</p><h2>{english ? "Choose your membership." : "Elige tu membresía."}</h2></div>
@@ -69,7 +72,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
           <p className="membership-price"><strong>$229</strong><span>MXN / {english ? "month" : "mes"}</span></p>
           <p>{english ? "For developers, researchers, students, and independent builders who want a clearer professional path." : "Para desarrolladores, investigadores, estudiantes y creadores independientes que buscan una ruta profesional más clara."}</p>
           <ul className="membership-benefits">{individualBenefits.map(({ es, en, Icon }) => <li key={es}><Icon aria-hidden="true" /><span>{english ? en : es}</span></li>)}</ul>
-          <MembershipCheckout planId="individual" locale={locale} />
+          <MembershipCheckout planId="individual" locale={locale} enabled={liveCheckoutReady} />
         </article>
 
         <article className="membership-card membership-card-business">
@@ -78,7 +81,8 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
           <p className="membership-price"><strong>$699</strong><span>MXN / {english ? "month per organization" : "mes por empresa"}</span></p>
           <p>{english ? "For companies and startup teams preparing a credible profile, a project narrative and a structured pitch." : "Para empresas y equipos startup que buscan organizar su proyecto y preparar una presentación estructurada. La suscripción se vincula a la cuenta titular; no crea asientos para empleados."}</p>
           <ul className="membership-benefits">{businessBenefits.map(({ es, en, Icon }) => <li key={es}><Icon aria-hidden="true" /><span>{english ? en : es}</span></li>)}</ul>
-          <MembershipCheckout planId="business" locale={locale} />
+          <p className="membership-scope-note" role="note">{english ? "Current scope: the subscription and course access belong to the contracting account. Employee seats, invitations, corporate roles, shared workspaces and subscription transfers are not included in this release." : "Alcance actual: la suscripción y el acceso al curso pertenecen a la cuenta contratante. Esta versión no incluye asientos para empleados, invitaciones, roles corporativos, espacios de trabajo compartidos ni transferencias de titularidad."}</p>
+          <MembershipCheckout planId="business" locale={locale} enabled={liveCheckoutReady} />
         </article>
       </div>
 

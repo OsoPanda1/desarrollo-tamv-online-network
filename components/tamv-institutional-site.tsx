@@ -33,6 +33,8 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
             </a>
           </div>
           <nav className="footer-links" aria-label={english ? "Institutional links" : "Enlaces institucionales"}>
+            <a href={localizedPath("/origenes", locale)}>{english ? "Origins" : "Orígenes"}</a>
+            <a href={localizedPath("/quienes-somos", locale)}>{english ? "Institutional identity" : "Identidad institucional"}</a>
             <a href={localizedPath("/proyectos", locale)}>{english ? "Projects" : "Proyectos"}</a>
             <a href={localizedPath("/guia", locale)}>{english ? "Practical guide" : "Guía práctica"}</a>
             <a href={localizedPath("/investigacion", locale)}>{english ? "Research" : "Investigación"}</a>

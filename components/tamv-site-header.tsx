@@ -15,7 +15,7 @@ const links = [
   { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
   { href: "/guia", labelEs: "Guía práctica", labelEn: "Practical guide" },
   { href: "/atlas", labelEs: "Atlas", labelEn: "Atlas" },
-  { href: "/logros", labelEs: "Logros", labelEn: "Badges" },
+  { href: "/origenes", labelEs: "ORÍGENES", labelEn: "ORIGINS" },
   { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
 ]

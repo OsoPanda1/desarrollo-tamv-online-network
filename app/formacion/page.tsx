@@ -11,6 +11,7 @@ import { db } from "@/lib/db"
 import { memberCourseProgress, membershipSubscriptions } from "@/lib/db/schema"
 import { and, eq, inArray } from "drizzle-orm"
 import { COURSE_MODULE_IDS, COURSE_SLUG } from "@/lib/billing/plans"
+import { isLiveMembershipCheckoutReady } from "@/lib/billing/checkout-readiness"
 import { resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string }>
@@ -139,6 +140,7 @@ const modules = [
 export default async function MemberFormationPage({ searchParams }: { searchParams: SearchParams }) {
   const locale = resolveLocale((await searchParams).lang)
   const english = locale === "en"
+  const liveCheckoutReady = isLiveMembershipCheckoutReady()
   const session = await auth.api.getSession({ headers: await headers() })
   let activeMembership = false
   let completed: string[] = []
@@ -194,7 +196,8 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
         <div className="membership-gate">
           <ShieldCheck aria-hidden="true" /><h2>{english ? "This course is included with a paid membership" : "Este curso está incluido en una membresía de pago"}</h2>
           <p>{english ? "Choose the individual plan for MXN $229/month or the business plan for MXN $699/month per organization." : "Elige el plan individual de $229 MXN al mes o el plan empresarial de $699 MXN al mes por organización."}</p>
-          <div className="membership-gate-actions"><Link className="button button-secondary" href="/membresias">{english ? "Compare plans" : "Comparar planes"} <ArrowUpRight aria-hidden="true" /></Link><MembershipCheckout planId="individual" locale={locale} /></div>
+          <div className="membership-gate-actions"><Link className="button button-secondary" href="/membresias">{english ? "Compare plans" : "Comparar planes"} <ArrowUpRight aria-hidden="true" /></Link><MembershipCheckout planId="individual" locale={locale} enabled={liveCheckoutReady} /></div>
+          {!liveCheckoutReady && <p className="membership-live-gate-notice" role="status"><ShieldCheck aria-hidden="true" />{english ? "Live checkout is closed in this deployment. No payment starts until the production configuration and all explicit approvals pass." : "El checkout live está cerrado en este despliegue. No se inicia ningún pago hasta que la configuración de producción y todas las aprobaciones explícitas sean válidas."}</p>}
         </div>
       ) : (
         <>
