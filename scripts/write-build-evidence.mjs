@@ -15,7 +15,7 @@ const candidateFiles = [
 ];
 
 export function fingerprintBuildArtifacts(entries) {
-  const ordered = [...entries].sort((left, right) => left.name.localeCompare(right.name));
+  const ordered = [...entries].sort((left, right) => left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
   if (ordered.length === 0) throw new Error("No build artifacts were supplied for the manifest fingerprint.");
   const hash = createHash("sha512");
   for (const entry of ordered) {
