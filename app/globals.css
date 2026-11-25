@@ -3985,3 +3985,48 @@ body:has(.tamv-charter-page) select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .tamv-charter-primary { transition: none; }
 }
+
+
+/* Keep Isabella Guía TAMV visually coherent with the Obsidian charter surface. */
+body:has(.tamv-charter-page) .isabella-launcher {
+  border-color: rgba(56,183,166,.58);
+  background: #11191D;
+  color: #F0F2F3;
+  box-shadow: 0 16px 46px rgba(0,0,0,.48);
+}
+body:has(.tamv-charter-page) .isabella-launcher > svg { color: #38B7A6; }
+body:has(.tamv-charter-page) .isabella-launcher-caption { color: #B5C1C6; border-left-color: rgba(199,206,212,.24); }
+body:has(.tamv-charter-page) .isabella-launcher:hover { background: #17242A; border-color: #38B7A6; }
+body:has(.tamv-charter-page) .isabella-dialog { color: #EFF2F3; }
+body:has(.tamv-charter-page) .isabella-panel {
+  border-color: rgba(199,206,212,.24);
+  background: #11161D;
+  color: #EFF2F3;
+  box-shadow: 0 24px 78px rgba(0,0,0,.55);
+}
+body:has(.tamv-charter-page) .isabella-header { background: #080B0F; border-bottom: 1px solid rgba(199,206,212,.16); }
+body:has(.tamv-charter-page) .isabella-transcript,
+body:has(.tamv-charter-page) .isabella-transcript-viewport { background: #0D1116; }
+body:has(.tamv-charter-page) .isabella-welcome-mark { border-color: rgba(56,183,166,.32); color: #38B7A6; }
+body:has(.tamv-charter-page) .isabella-welcome > p { color: #DDE4E7; }
+body:has(.tamv-charter-page) .isabella-welcome .isabella-welcome-note { color: #9AA7B0; }
+body:has(.tamv-charter-page) .isabella-suggestions button {
+  border-color: rgba(199,206,212,.24);
+  background: #141B22;
+  color: #E2E8EB;
+}
+body:has(.tamv-charter-page) .isabella-suggestions button:hover { border-color: #38B7A6; }
+body:has(.tamv-charter-page) .isabella-message-label { color: #A7B3BB; }
+body:has(.tamv-charter-page) .isabella-composer {
+  border-top-color: rgba(199,206,212,.18);
+  background: #11161D;
+}
+body:has(.tamv-charter-page) .isabella-composer textarea {
+  border-color: #424D56;
+  background: #0A0D11;
+  color: #EFF2F3;
+}
+body:has(.tamv-charter-page) .isabella-send { background: #38B7A6; color: #081816; }
+body:has(.tamv-charter-page) .isabella-send:disabled { background: #36474A; color: #A2B1B3; }
+body:has(.tamv-charter-page) .isabella-privacy-note { background: #11161D; color: #A6B1BA; }
+body:has(.tamv-charter-page) .isabella-close { border-color: rgba(199,206,212,.28); }
