@@ -9,7 +9,7 @@ const lab = await readFile(new URL("../components/tamv-learning-lab.tsx", import
 const guide = await readFile(new URL("../app/guia/page.tsx", import.meta.url), "utf8");
 
 test("learning curriculum documents core modules with purpose, timing, steps, and success criteria", () => {
-  for (const route of ["/guia", "/proyectos", "/investigacion", "/hcu", "/fuentes", "/ecosistema", "/desarrolladores", "/gobernanza", "/comunidad", "/formacion", "/membresias", "/quienes-somos", "/portal", "/atlas", "/arquitectura", "/investigadores", "/isabella", "/institucionalizacion", "/privacidad", "/apoyar", "/cuenta", "/logros", "/utamv", "/excelencia", "/investigacion/publicaciones", "/membresias/condiciones", "/unete", "/auditoria-creator"]) {
+  for (const route of ["/", "/guia", "/proyectos", "/investigacion", "/hcu", "/fuentes", "/ecosistema", "/desarrolladores", "/gobernanza", "/comunidad", "/formacion", "/membresias", "/quienes-somos", "/portal", "/atlas", "/arquitectura", "/investigadores", "/isabella", "/institucionalizacion", "/privacidad", "/apoyar", "/cuenta", "/logros", "/utamv", "/excelencia", "/investigacion/publicaciones", "/membresias/condiciones", "/unete", "/auditoria-creator"]) {
     assert.ok(curriculum.includes('route: "' + route + '"'), "missing learning route: " + route);
   }
   assert.match(curriculum, /ADAPTIVE TUTORING CONTRACT/);
@@ -27,6 +27,7 @@ test("Isabella is connected to the curriculum and supports adaptive re-explanati
   assert.match(widget, /analogía de la vida cotidiana/i);
   assert.match(widget, /recorrido experto/i);
   assert.match(widget, /si una explicación no funciona/i);
+  assert.match(assistant, /Practical guide and interactive learning lab: \/guia/);
 });
 
 test("interactive lab supports levels, alternative methods, verification and non-persistent progress disclosure", () => {
@@ -35,5 +36,6 @@ test("interactive lab supports levels, alternative methods, verification and non
   }
   assert.match(lab, /not saved to your account|no se guarda en tu cuenta/i);
   assert.match(lab, /aria-pressed/);
+  assert.match(lab, /route: \/\*?\//);
   assert.match(guide, /<TamvLearningLab locale={locale} \/>/);
 });
