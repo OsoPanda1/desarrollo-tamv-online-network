@@ -14,6 +14,7 @@ import {
   Layers,
   LockKeyhole,
   Network,
+  RefreshCw,
   ShieldCheck,
   Terminal,
   Workflow,
@@ -129,39 +130,51 @@ type BuildEvidence = {
   generatedAt?: string
   scope?: string
 }
-type Signals = { runtime: Probe; catalog: Probe; count: number | null; evidence: BuildEvidence | null }
+type Signals = { runtime: Probe; catalog: Probe; count: number | null; evidence: BuildEvidence | null; checkedAt: string | null }
 
 function usePublicSignals() {
-  const [signals, setSignals] = useState<Signals>({ runtime: "checking", catalog: "checking", count: null, evidence: null })
+  const [signals, setSignals] = useState<Signals>({ runtime: "checking", catalog: "checking", count: null, evidence: null, checkedAt: null })
   useEffect(() => {
     let cancelled = false
-    const controller = new AbortController()
+    let inFlight = false
+    let activeController: AbortController | null = null
     async function load() {
-      const runtimeRequest = fetch("/api/health", { cache: "no-store", signal: controller.signal }).then((response) => {
-        if (!response.ok) throw new Error("liveness unavailable")
-        return response.json()
-      })
-      const catalogRequest = fetch("/api/v1/ecosystem", { cache: "no-store", signal: controller.signal }).then((response) => {
-        if (!response.ok) throw new Error("catalog unavailable")
-        return response.json()
-      })
-      const evidenceRequest = fetch("/build-evidence.json", { cache: "no-store", signal: controller.signal }).then((response) => {
-        if (!response.ok) throw new Error("build evidence unavailable")
-        return response.json()
-      })
-      const [runtime, catalog, evidence] = await Promise.allSettled([runtimeRequest, catalogRequest, evidenceRequest])
-      if (cancelled) return
-      setSignals({
-        runtime: runtime.status === "fulfilled" ? "available" : "unavailable",
-        catalog: catalog.status === "fulfilled" ? "available" : "unavailable",
-        count: catalog.status === "fulfilled" && Array.isArray(catalog.value?.systems) ? catalog.value.systems.length : null,
-        evidence: evidence.status === "fulfilled" && evidence.value?.status === "generated" ? evidence.value as BuildEvidence : null,
-      })
+      if (inFlight || cancelled) return
+      inFlight = true
+      const controller = new AbortController()
+      activeController = controller
+      try {
+        const runtimeRequest = fetch("/api/health", { cache: "no-store", signal: controller.signal }).then((response) => {
+          if (!response.ok) throw new Error("liveness unavailable")
+          return response.json()
+        })
+        const catalogRequest = fetch("/api/v1/ecosystem", { cache: "no-store", signal: controller.signal }).then((response) => {
+          if (!response.ok) throw new Error("catalog unavailable")
+          return response.json()
+        })
+        const evidenceRequest = fetch("/build-evidence.json", { cache: "no-store", signal: controller.signal }).then((response) => {
+          if (!response.ok) throw new Error("build evidence unavailable")
+          return response.json()
+        })
+        const [runtime, catalog, evidence] = await Promise.allSettled([runtimeRequest, catalogRequest, evidenceRequest])
+        if (cancelled || controller.signal.aborted) return
+        setSignals({
+          runtime: runtime.status === "fulfilled" ? "available" : "unavailable",
+          catalog: catalog.status === "fulfilled" ? "available" : "unavailable",
+          count: catalog.status === "fulfilled" && Array.isArray(catalog.value?.systems) ? catalog.value.systems.length : null,
+          evidence: evidence.status === "fulfilled" && evidence.value?.status === "generated" ? evidence.value as BuildEvidence : null,
+          checkedAt: new Date().toISOString(),
+        })
+      } finally {
+        inFlight = false
+      }
     }
     void load()
+    const interval = window.setInterval(() => void load(), 30_000)
     return () => {
       cancelled = true
-      controller.abort()
+      activeController?.abort()
+      window.clearInterval(interval)
     }
   }, [])
   return signals
@@ -186,6 +199,7 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
   const selectedName = english ? selected.nameEn : selected.nameEs
   const selectedDomain = english ? selected.domainEn : selected.domainEs
   const selectedDescription = english ? selected.descriptionEn : selected.descriptionEs
+  const checkedTime = signals.checkedAt ? new Date(signals.checkedAt).toLocaleTimeString(english ? "en-US" : "es-MX", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }) : (english ? "Waiting for first check" : "Esperando primera consulta")
   const scenarios = english
     ? [
         { id: "identity", label: "No authenticated identity", result: "No identity proof is supplied. The requested privileged action is denied." },
@@ -232,6 +246,8 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <span className="sovereign-telemetry-item"><i className={signals.runtime === "available" ? "signal-led signal-led-live" : "signal-led"} aria-hidden="true" /><span>{english ? "RUNTIME LIVENESS" : "RESPUESTA HTTP"}</span><strong>{signalLabel(signals.runtime, locale, english ? "Responding" : "Responde", english ? "Checking" : "Consultando")}</strong></span>
               <span className="sovereign-telemetry-item"><i className={signals.catalog === "available" ? "signal-led signal-led-live" : "signal-led"} aria-hidden="true" /><span>{english ? "PUBLIC CATALOG" : "CATÁLOGO PÚBLICO"}</span><strong>{signals.count === null ? signalLabel(signals.catalog, locale, english ? "Available" : "Disponible", english ? "Checking" : "Consultando") : (english ? String(signals.count) + " systems" : String(signals.count) + " sistemas")}</strong></span>
               <span className="sovereign-telemetry-item sovereign-build-item"><Fingerprint aria-hidden="true" /><span>{english ? "BUILD MANIFEST" : "MANIFIESTO DE BUILD"}</span><strong>{signals.evidence?.manifestSha512 ? signals.evidence.manifestSha512.slice(0, 18) + "…" : (english ? "Fingerprint not published" : "Huella no publicada")}</strong></span>
+              <span className="sovereign-telemetry-item sovereign-build-item"><Fingerprint aria-hidden="true" /><span>BOOKPI EVENT FEED</span><strong>{english ? "Not connected" : "Sin conexión"}</strong></span>
+              <span className="sovereign-telemetry-item sovereign-build-item sovereign-refresh-item"><RefreshCw aria-hidden="true" /><span>{english ? "LAST CHECK · 30S POLL" : "ÚLTIMA CONSULTA · 30S"}</span><strong title={signals.checkedAt ?? undefined}>{checkedTime}</strong></span>
             </div>
             <div className="sovereign-quick-links"><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a><a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions" target="_blank" rel="noopener noreferrer">{english ? "CI evidence" : "Evidencia CI"} <ArrowUpRight aria-hidden="true" /></a><a href={english ? "/?lang=es" : "/?lang=en"}>{english ? "ES" : "EN"} <Globe2 aria-hidden="true" /></a></div>
           </div>
@@ -243,7 +259,7 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <p className="sovereign-lead">{english ? "TAMV connects knowledge, technology, identity, governance, and territorial memory. Explore the architecture as a documented model, then inspect its source records and limits." : "TAMV conecta conocimiento, tecnología, identidad, gobernanza y memoria territorial. Explora la arquitectura como modelo documentado y consulta sus fuentes y límites."}</p>
               <div className="sovereign-hero-actions"><a className="sovereign-action sovereign-action-primary" href="#atlas">{english ? "Explore the seven federations" : "Explorar las siete federaciones"} <ArrowRight aria-hidden="true" /></a><a className="sovereign-action" href="#sovereign-modules">{english ? "Inspect the system" : "Inspeccionar el sistema"} <Terminal aria-hidden="true" /></a></div>
               <div className="sovereign-origin"><span>{english ? "TERRITORIAL ORIGIN" : "ORIGEN TERRITORIAL"}</span><strong>Mineral del Monte · Hidalgo · México</strong></div>
-              <p className="sovereign-evidence-caption">{english ? "Catalog entry ≠ live integration. Runtime signal = HTTP liveness only. Build fingerprint ≠ digital signature or CI approval." : "Entrada de catálogo ≠ integración activa. La señal de runtime solo comprueba respuesta HTTP. Huella de build ≠ firma digital ni aprobación CI."}</p>
+              <p className="sovereign-evidence-caption">{english ? "Catalog entry ≠ live integration. HTTP liveness and catalog are polled every 30 seconds. No public BookPI event feed is connected. Build fingerprint ≠ digital signature or CI approval." : "Entrada de catálogo ≠ integración activa. La señal de runtime solo comprueba respuesta HTTP. Huella de build ≠ firma digital ni aprobación CI."}</p>
             </div>
 
             <div className="sovereign-atlas-wrap" id="atlas">
