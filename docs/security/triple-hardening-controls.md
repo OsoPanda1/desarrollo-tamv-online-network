@@ -47,13 +47,14 @@ Tres planos independientes cubren fallos distintos: A (criptografía/almacenamie
 | Runbooks de incidentes, vulnerabilidades, backup/restore, contingencia y compromiso de claves | Hay runbook de membresía y criterios de readiness; falta el conjunto completo. | — | **Pendiente**. |
 | Inventario de controles con dueño, estado, evidencia y fechas | Este documento fija estado, evidencia y fechas; el dueño formal queda por asignar. | `tests/triple-hardening-contract.test.mjs` | **Parcial**: inventario versionado, sin aprobación de dueño ni revisión externa. |
 | Correcciones editoriales y procedencia de afirmaciones públicas | `docs/audit/`, esquema de procedencia y validación de URIs; la UI separa catálogo de integración activa. | `tests/provenance-validation-route.test.mjs`, tests de consola | **Parcial**: la validación de procedencia es de esquema; no verifica autoría, firma, tiempo confiable, peer review ni acreditación. |
+| Gobernanza constitucional LATAMV 2.0 | Evaluador local `lib/governance/latamv-v2.ts` con vigencia, denegación por defecto, `strictest-wins` y conteo de aprobaciones; panel CDV en la consola. Especificación en [`docs/governance/latamv-v2-specification.md`](../governance/latamv-v2-specification.md). | `tests/latamv-v2-policy.test.mjs`, tests de consola | **Parcial**: solo lógica determinista sobre datos de ejemplo. No verifica firmas, no hay quórum criptográfico, pruebas ZK, auto-sanación real, pasaporte ni cumplimiento legal. |
 
 ## Compuertas obligatorias del estándar
 
 | Compuerta | Estado para este SHA local |
 |---|---|
 | Instalación limpia desde lockfile | **Parcial**: se usa `pnpm install --frozen-lockfile` en CI; la instalación limpia local se da por resuelta por el entorno de trabajo, sin evidencia nueva de CI. |
-| Typecheck, tests y build | **Implementado localmente**: 142/142 tests, `typecheck` OK, `build` OK; ver `design-local-validation-p1-readiness.txt`. Lint no tiene script dedicado. |
+| Typecheck, tests y build | **Implementado localmente**: 159/159 tests, `typecheck` OK, `build` OK; ver `latamv-v2-local-validation.txt`. Lint no tiene script dedicado. |
 | Migración y recuperación en base desechable | **Pendiente**: `0004_public_rate_limits.sql` no se ha aplicado ni probado con backup/restore. |
 | Pruebas de autorización anónimo/propietario/otro usuario/moderador/admin | **Pendiente**: sin base/sesiones de staging controladas. |
 | Secret scan, auditoría de dependencias y credenciales solo server-side | **Parcial**: `pnpm audit` sin vulnerabilidades altas; workflow de secret scan sin logs recuperables. |

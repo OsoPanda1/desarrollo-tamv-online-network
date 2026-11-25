@@ -3357,6 +3357,17 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #B1C0C3; }
 .sovereign-inspector-panel > p,
 .sovereign-manifest-panel > p { color: #A8B2BB; font-size: 12px; line-height: 1.8; }
 .sovereign-select-label { display: block; margin: 20px 0 7px; color: #D1D8DD; font-size: 11px; }
+.sovereign-constitution-controls { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px 12px; margin-top: 18px; }
+.sovereign-constitution-controls label { color: #D1D8DD; font-size: 10px; }
+.sovereign-constitution-controls select,
+.sovereign-constitution-controls input { width: 100%; min-height: 36px; padding: 0 9px; border: 1px solid rgba(199,206,212,.24); background: #0B0D11; color: #E9EDEF; font: 10px var(--tamv-mono); }
+.sovereign-constitution-result { margin-top: 18px; padding: 16px; border: 1px solid rgba(214,165,74,.42); background: rgba(214,165,74,.06); }
+.sovereign-constitution-result[data-allowed="true"] { border-color: rgba(56,183,166,.48); background: rgba(56,183,166,.06); }
+.sovereign-constitution-result > div { display: flex; align-items: center; gap: 8px; color: #E2C077; font: 10px/1.6 var(--tamv-mono); }
+.sovereign-constitution-result[data-allowed="true"] > div { color: #79D6C5; }
+.sovereign-constitution-result svg { width: 14px; height: 14px; flex: 0 0 auto; }
+.sovereign-constitution-result p { margin: 10px 0 0; color: #C6D0D7; font: 9px/1.8 var(--tamv-mono); overflow-wrap: anywhere; }
+.sovereign-constitution-result code { color: #E9EDEF; }
 .sovereign-inspector-panel select { width: 100%; min-height: 45px; padding: 0 12px; border: 1px solid #414B54; border-radius: 0; background: #0A0D11; color: #EDF0F1; font-size: 12px; }
 .sovereign-evaluate { margin-top: 12px; }
 .sovereign-denial-result { margin-top: 20px; padding: 17px; border: 1px solid rgba(214,165,74,.4); background: rgba(214,165,74,.06); }
@@ -3447,6 +3458,7 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #B1C0C3; }
   .sovereign-destination-grid { grid-template-columns: 1fr; }
   .sovereign-paths { grid-template-columns: 1fr; }
   .sovereign-path { min-height: 0; }
+  .sovereign-constitution-controls { grid-template-columns: 1fr; }
   .sovereign-disclosure > summary { grid-template-columns: 1fr auto; }
   .sovereign-disclosure > summary > small { grid-column: 1 / -1; }
   .sovereign-module-card { min-height: 0; padding: 20px; }

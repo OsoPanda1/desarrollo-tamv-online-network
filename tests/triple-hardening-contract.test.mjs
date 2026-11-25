@@ -93,7 +93,7 @@ test("provenance URIs and AI instructions treat external input as untrusted data
 });
 
 test("release matrix separates local green checks from external pending evidence", () => {
-  assert.match(controls, /142\/142 tests/);
+  assert.match(controls, /159\/159 tests/);
   assert.match(controls, /sin evidencia nueva de CI/);
   assert.match(controls, /sin logs recuperables/);
   assert.match(controls, /no se ha aplicado ni probado con backup\/restore/);

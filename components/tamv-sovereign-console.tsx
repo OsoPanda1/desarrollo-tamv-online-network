@@ -23,6 +23,7 @@ import type { Locale } from "@/lib/i18n"
 import { TamvEvidenceVerifier } from "./tamv-evidence-verifier"
 import { TamvIntentRouter } from "./tamv-intent-router"
 import { TamvGovernanceMatrix } from "./tamv-governance-matrix"
+import { TamvLatamvConstitution } from "./tamv-latamv-constitution"
 import { TamvTerritorialTwinStatus } from "./tamv-territorial-twin-status"
 import { TamvOrbitWebGL } from "./tamv-orbit-webgl"
 
@@ -389,6 +390,8 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <p className="sovereign-notice">{english ? "This is a user-interface illustration only. No server policy, signature, public key, or production decision was evaluated." : "Esta es solo una ilustración de interfaz. No se evaluó una política de servidor, firma, clave pública ni decisión de producción."}</p>
               <div className="sovereign-algorithm-line"><span>Ed25519</span><span>SHA-512</span><span>BookPI</span><span>TINA</span></div>
             </section>
+
+            <TamvLatamvConstitution locale={locale} />
 
             <section className="sovereign-manifest-panel" aria-labelledby="sovereign-manifest-title">
               <div className="sovereign-panel-topline"><span><FileCode2 aria-hidden="true" /> MACHINE MANIFEST</span><span className="sovereign-demo-label">{english ? "PREVIEW" : "VISTA PREVIA"}</span></div>
