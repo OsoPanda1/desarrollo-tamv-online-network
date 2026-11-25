@@ -42,6 +42,7 @@ test("license scope separates original software, authored prose and third-party 
 
 test("the founding charter is discoverable from navigation, atlas and sitemap", () => {
   assert.ok(header.includes('href: "/quienes-somos"'));
+  assert.doesNotMatch(header, /href: "\/quienes-somos".*href: "\/quienes-somos"/s);
   assert.ok(homepage.includes('href="/quienes-somos"'));
   assert.match(homepage, /Mission, legacy and cooperation|Misión, legado y cooperación/);
   assert.ok(sitemap.includes('"/quienes-somos"'));
