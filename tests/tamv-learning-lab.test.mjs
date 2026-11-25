@@ -7,6 +7,11 @@ const assistant = await readFile(new URL("../lib/isabella-agent.ts", import.meta
 const widget = await readFile(new URL("../components/tamv-assistant.tsx", import.meta.url), "utf8");
 const lab = await readFile(new URL("../components/tamv-learning-lab.tsx", import.meta.url), "utf8");
 const guide = await readFile(new URL("../app/guia/page.tsx", import.meta.url), "utf8");
+const originsPage = await readFile(new URL("../app/origenes/page.tsx", import.meta.url), "utf8");
+const header = await readFile(new URL("../components/tamv-site-header.tsx", import.meta.url), "utf8");
+const appShell = await readFile(new URL("../components/tamv-app-shell.tsx", import.meta.url), "utf8");
+const institutionalSite = await readFile(new URL("../components/tamv-institutional-site.tsx", import.meta.url), "utf8");
+const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 
 test("learning curriculum documents core modules with purpose, timing, steps, and success criteria", () => {
   for (const route of ["/", "/origenes", "/guia", "/proyectos", "/investigacion", "/hcu", "/fuentes", "/ecosistema", "/desarrolladores", "/gobernanza", "/comunidad", "/formacion", "/membresias", "/quienes-somos", "/portal", "/atlas", "/arquitectura", "/investigadores", "/isabella", "/institucionalizacion", "/privacidad", "/apoyar", "/cuenta", "/logros", "/utamv", "/excelencia", "/investigacion/publicaciones", "/membresias/condiciones", "/unete", "/auditoria-creator"]) {
@@ -37,4 +42,18 @@ test("interactive lab supports levels, alternative methods, verification and non
   assert.match(lab, /not saved to your account|no se guarda en tu cuenta/i);
   assert.match(lab, /aria-pressed/);
   assert.match(guide, /<TamvLearningLab locale={locale} \/>/);
+});
+
+test("ORÍGENES is a first-class bilingual section linked throughout TAMV", () => {
+  for (const phrase of ["Edwin Oswaldo Castillo Trejo", "Anubis Villaseñor", "The Alfa RedHat", "No estás solo.", "Tu oveja negra logró algo importante.", "Te amo, mamá.", "extorsión, el acoso y las amenazas digitales", "En 2019"]) {
+    assert.ok(originsPage.includes(phrase), "missing founding testimony phrase: " + phrase);
+  }
+  assert.match(originsPage, /title: "Orígenes \| TAMV Online Network"/);
+  assert.match(originsPage, /title: "Origins \| TAMV Online Network"/);
+  assert.match(header, /href: "\/origenes", labelEs: "ORÍGENES", labelEn: "ORIGINS"/);
+  assert.match(appShell, /localizedPath\("\/origenes", locale\)/);
+  assert.match(institutionalSite, /localizedPath\("\/origenes", locale\)/);
+  assert.match(sitemap, /"\/origenes"/);
+  assert.match(curriculum, /route: "\/origenes", es: "Orígenes TAMV"/);
+  assert.match(assistant, /Origins and founding testimony: \/origenes/);
 });
