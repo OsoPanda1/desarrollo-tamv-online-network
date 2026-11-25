@@ -25,7 +25,6 @@ in vec2 vUv;
 out vec4 outColor;
 uniform vec2 uResolution;
 uniform vec2 uNodes[7];
-uniform float uTime;
 uniform int uActiveIndex;
 
 float softRing(float distanceToRing, float width) {
@@ -55,8 +54,7 @@ void main() {
     vec2 nodeDelta = (vUv - uNodes[i]) * vec2(aspect, 1.0);
     float d = length(nodeDelta);
     float active = (i == uActiveIndex) ? 1.0 : 0.0;
-    float breath = 0.5 + 0.5 * sin(uTime * 0.75 + float(i) * 0.83);
-    float glow = exp(-d * 49.0) * (0.07 + active * 0.15 + breath * 0.035);
+    float glow = exp(-d * 49.0) * (0.07 + active * 0.15);
     float core = 1.0 - smoothstep(0.004, 0.012 + active * 0.004, d);
     float halo = 1.0 - smoothstep(0.008, 0.032 + active * 0.012, d);
 
@@ -146,10 +144,9 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
 
     const resolutionLocation = gl.getUniformLocation(program, "uResolution")
     const nodeLocation = gl.getUniformLocation(program, "uNodes[0]")
-    const timeLocation = gl.getUniformLocation(program, "uTime")
     const activeLocation = gl.getUniformLocation(program, "uActiveIndex")
     const vao = gl.createVertexArray()
-    if (!vao || !resolutionLocation || !nodeLocation || !timeLocation || !activeLocation) {
+    if (!vao || !resolutionLocation || !nodeLocation || !activeLocation) {
       if (vao) gl.deleteVertexArray(vao)
       gl.deleteProgram(program)
       canvas.dataset.webgl = "unavailable"
@@ -163,12 +160,9 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     canvas.dataset.webgl = "ready"
 
-    let animationFrame = 0
     let disposed = false
-    let startedAt = performance.now()
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
 
-    function draw(now: number) {
+    function draw() {
       if (disposed) return
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       const rect = canvas.getBoundingClientRect()
@@ -184,46 +178,26 @@ export function TamvOrbitWebGL({ activeNodeIndex }: Props) {
       gl.useProgram(program)
       gl.bindVertexArray(vao)
       gl.uniform2f(resolutionLocation, width, height)
-      gl.uniform1f(timeLocation, (now - startedAt) / 1000)
       gl.uniform1i(activeLocation, Math.max(0, Math.min(6, activeNodeRef.current)))
       gl.drawArrays(gl.TRIANGLES, 0, 3)
     }
 
-    drawRef.current = () => draw(performance.now())
-    function animate(now: number) {
-      draw(now)
-      if (!disposed && !reducedMotion.matches) animationFrame = window.requestAnimationFrame(animate)
-    }
-    function onMotionChange() {
-      if (reducedMotion.matches) {
-        window.cancelAnimationFrame(animationFrame)
-        animationFrame = 0
-        draw(performance.now())
-      } else if (!animationFrame && !disposed) {
-        animationFrame = window.requestAnimationFrame(animate)
-      }
-    }
+    drawRef.current = draw
     function onContextLost(event: Event) {
       event.preventDefault()
-      window.cancelAnimationFrame(animationFrame)
-      animationFrame = 0
       canvas.dataset.webgl = "unavailable"
     }
-    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => draw(performance.now())) : null
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(draw) : null
     if (resizeObserver) resizeObserver.observe(canvas)
-    else window.addEventListener("resize", drawRef.current)
+    else window.addEventListener("resize", draw)
     canvas.addEventListener("webglcontextlost", onContextLost)
-    reducedMotion.addEventListener("change", onMotionChange)
-    draw(performance.now())
-    if (!reducedMotion.matches) animationFrame = window.requestAnimationFrame(animate)
+    draw()
 
     return () => {
       disposed = true
-      window.cancelAnimationFrame(animationFrame)
       resizeObserver?.disconnect()
-      if (!resizeObserver) window.removeEventListener("resize", drawRef.current)
+      if (!resizeObserver) window.removeEventListener("resize", draw)
       canvas.removeEventListener("webglcontextlost", onContextLost)
-      reducedMotion.removeEventListener("change", onMotionChange)
       drawRef.current = () => {}
       gl.bindVertexArray(null)
       gl.deleteVertexArray(vao)
