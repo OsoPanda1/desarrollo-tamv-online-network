@@ -116,6 +116,8 @@ test("public signals poll no more often than the intended thirty-second interval
   assert.match(component, /BOOKPI EVENT FEED/);
   assert.match(component, /Sin conexión|Not connected/);
   assert.match(component, /No public BookPI event feed is connected/);
+  assert.match(component, /No hay un feed público de eventos BookPI conectado/);
+  assert.match(component, /window\.setTimeout\(\(\) => controller\.abort\(\), 8_000\)/);
 });
 
 
@@ -123,7 +125,8 @@ test("orbital atlas includes native WebGL2 GLSL with SVG fallback and reduced-mo
   assert.match(webgl, /getContext\("webgl2"/);
   assert.match(webgl, /#version 300 es/);
   assert.match(webgl, /uActiveIndex/);
-  assert.match(webgl, /prefers-reduced-motion: reduce/);
+  assert.match(stylesheet, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(webgl, /requestAnimationFrame|uTime/);
   assert.match(webgl, /canvas\.dataset\.webgl = "unavailable"/);
   assert.match(component, /TamvOrbitWebGL activeNodeIndex=/);
   assert.match(stylesheet, /\.sovereign-orbit-webgl/);
