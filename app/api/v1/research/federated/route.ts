@@ -135,6 +135,6 @@ export async function POST(request: Request): Promise<Response> {
     results: result.data.results,
     providers: result.data.providers,
     methodology: result.data.methodology,
-    semantics: "Imported public research metadata only. Result order is not a quality score; records do not establish authorship, peer review, accreditation, license permissions, or independent verification.",
+    semantics: "Imported public research metadata only. Result order is not a quality score; this result does not establish authorship, peer review, accreditation, license permissions, or independent verification.",
   }, { status: 200, headers: responseHeaders });
 }
