@@ -118,7 +118,7 @@ export function TamvIntentRouter({ locale = "es" }: { locale?: Locale }) {
         <h4>{english ? result.titleEn : result.titleEs}</h4>
         <p>{english ? result.explanationEn : result.explanationEs}</p>
         <ol>{(english ? result.chainEn : result.chainEs).map((item) => <li key={item}>{item}</li>)}</ol>
-        <a className="sovereign-action" href={result.destination}>{english ? result.destinationEn : result.destinationEs} <ArrowRight aria-hidden="true" /></a>
+        <a className="sovereign-action" href={english ? result.destination + (result.destination.includes("?") ? "&lang=en" : "?lang=en") : result.destination}>{english ? result.destinationEn : result.destinationEs} <ArrowRight aria-hidden="true" /></a>
       </div>}
       <p className="sovereign-router-boundary"><LockKeyhole aria-hidden="true" />{english ? "Local classification only. This preview does not call Isabella or CROWN, use an LLM, read BookPI, persist intent, or execute an action. Production semantic routing remains unconnected." : "Clasificación local únicamente. Esta vista no invoca Isabella ni CROWN, no usa un LLM, no consulta BookPI, no guarda la intención ni ejecuta acciones. El router semántico de producción sigue sin conexión."}</p>
     </section>
