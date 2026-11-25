@@ -57,7 +57,7 @@ Participation is contribution-based, not a promise of automatic admission or pai
 | Organizations and potential allies | Explain the problem, intended benefit, resources and requested contribution | Decision owner, scope, capacity, dependency assumptions and measurable pilot |
 | Membership | Review the published scope and terms before subscribing | Membership is not equity, employment, accreditation, guaranteed project acceptance, funding or a third-party paid entitlement |
 
-Routes: [Join TAMV](/unete), [Projects](/proyectos), [Research](/investigacion), [Developers](/desarrolladores), [Community](/comunidad), [Memberships](/membresias), [Governance](/gobernanza).
+Application routes (pathnames within the TAMV website): `/unete`, `/proyectos`, `/investigacion`, `/desarrolladores`, `/comunidad`, `/membresias`, `/gobernanza`.
 
 ### Enterprise seats — explicitly deferred
 
