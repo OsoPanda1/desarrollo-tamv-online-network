@@ -14,6 +14,8 @@ const links = [
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
   { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
   { href: "/guia", labelEs: "Guía práctica", labelEn: "Practical guide" },
+  { href: "/atlas", labelEs: "Atlas", labelEn: "Atlas" },
+  { href: "/logros", labelEs: "Logros", labelEn: "Badges" },
   { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
 ]

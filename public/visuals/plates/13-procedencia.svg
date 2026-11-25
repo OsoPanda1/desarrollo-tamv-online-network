@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Procedencia · Provenance</title>
+  <desc id="desc">Placa editorial generada para TAMV Online Network. Composición geométrica determinista, sin material de terceros.</desc>
+  <defs>
+    <linearGradient id="bg-13" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2234" />
+      <stop offset="1" stop-color="#09141f" />
+    </linearGradient>
+    <pattern id="grid-13" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#f7f6f2" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-13" cx="52%" cy="50%" r="60%">
+      <stop offset="0" stop-color="#b77a54" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#b77a54" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg-13)"/>
+  <rect width="1200" height="750" fill="url(#grid-13)"/>
+  <rect width="1200" height="750" fill="url(#glow-13)"/>
+  <g><line x1="118.61" y1="569.22" x2="1068.12" y2="220.97" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="118.61" cy="569.22" r="2.48" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="118.61" cy="569.22" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="1068.12" y1="220.97" x2="503.45" y2="362.38" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><line x1="1068.12" y1="220.97" x2="585.68" y2="595.62" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="1068.12" cy="220.97" r="3.75" fill="#f7f6f2" fill-opacity="0.85" /><circle cx="503.45" cy="362.38" r="3.65" fill="#f7f6f2" fill-opacity="0.85" /><line x1="885.92" y1="559.12" x2="188.47" y2="444.94" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="885.92" cy="559.12" r="3.79" fill="#f7f6f2" fill-opacity="0.85" /><line x1="188.47" y1="444.94" x2="549.69" y2="617.05" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="188.47" cy="444.94" r="4.95" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="188.47" cy="444.94" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="549.69" y1="617.05" x2="888.48" y2="530" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="549.69" cy="617.05" r="2.25" fill="#f7f6f2" fill-opacity="0.85" /><line x1="317.36" y1="222.43" x2="168.38" y2="271.46" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="317.36" cy="222.43" r="2.3" fill="#f7f6f2" fill-opacity="0.85" /><line x1="168.38" y1="271.46" x2="833.36" y2="652.62" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="168.38" cy="271.46" r="4.34" fill="#f7f6f2" fill-opacity="0.85" /><circle cx="833.36" cy="652.62" r="2.49" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="833.36" cy="652.62" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="997.9" y1="138.8" x2="888.48" y2="530" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><line x1="997.9" y1="138.8" x2="833.36" y2="652.62" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="997.9" cy="138.8" r="3.51" fill="#f7f6f2" fill-opacity="0.85" /><line x1="888.48" y1="530" x2="693.02" y2="354.95" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="888.48" cy="530" r="2.21" fill="#f7f6f2" fill-opacity="0.85" /><circle cx="693.02" cy="354.95" r="2.4" fill="#f7f6f2" fill-opacity="0.85" /><line x1="585.68" y1="595.62" x2="220.03" y2="383.79" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="585.68" cy="595.62" r="3.27" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="585.68" cy="595.62" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="220.03" y1="383.79" x2="632.51" y2="162.11" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><line x1="220.03" y1="383.79" x2="317.36" y2="222.43" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="220.03" cy="383.79" r="3.86" fill="#f7f6f2" fill-opacity="0.85" /><circle cx="632.51" cy="162.11" r="2.81" fill="#f7f6f2" fill-opacity="0.85" /><line x1="465.75" y1="214.84" x2="574.37" y2="472.41" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="465.75" cy="214.84" r="3.14" fill="#f7f6f2" fill-opacity="0.85" /><line x1="574.37" y1="472.41" x2="673.17" y2="212.1" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="574.37" cy="472.41" r="4.64" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="574.37" cy="472.41" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="673.17" y1="212.1" x2="188.47" y2="444.94" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="673.17" cy="212.1" r="3.48" fill="#f7f6f2" fill-opacity="0.85" /><line x1="283.51" y1="126.13" x2="190.77" y2="141.08" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="283.51" cy="126.13" r="3.5" fill="#f7f6f2" fill-opacity="0.85" /><line x1="190.77" y1="141.08" x2="666.61" y2="380.71" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><circle cx="190.77" cy="141.08" r="4.53" fill="#f7f6f2" fill-opacity="0.85" /><circle cx="666.61" cy="380.71" r="3.28" fill="#d8ab8b" fill-opacity="0.85" /><circle cx="666.61" cy="380.71" r="20" fill="#b77a54" fill-opacity="0.1" /><line x1="692.35" y1="260.41" x2="118.61" y2="569.22" stroke="#b77a54" stroke-opacity="0.22" stroke-width="1"/><line x1="692.35" y1="260.41" x2="503.45" y2="362.38" stroke="#5f7d92" stroke-opacity="0.16" stroke-width="1"/><circle cx="692.35" cy="260.41" r="4.37" fill="#f7f6f2" fill-opacity="0.85" /></g>
+  <rect x="26" y="26" width="1148" height="698" fill="none" stroke="#f7f6f2" stroke-opacity="0.12"/>
+  <g stroke="#b77a54" stroke-opacity="0.55" stroke-width="1.4">
+    <line x1="26" y1="26" x2="86" y2="26"/><line x1="26" y1="26" x2="26" y2="86"/>
+    <line x1="1174" y1="26" x2="1114" y2="26"/><line x1="1174" y1="26" x2="1174" y2="86"/>
+    <line x1="26" y1="724" x2="86" y2="724"/><line x1="26" y1="724" x2="26" y2="664"/>
+    <line x1="1174" y1="724" x2="1114" y2="724"/><line x1="1174" y1="724" x2="1174" y2="664"/>
+  </g>
+  <text x="70" y="86" fill="#d8ab8b" font-family="'DM Sans',Arial,sans-serif" font-size="13" letter-spacing="4">PLACA 13</text>
+  <text x="70" y="700" fill="#f7f6f2" font-family="'DM Sans',Arial,sans-serif" font-size="34" font-weight="600">Procedencia</text>
+  <text x="70" y="726" fill="#d8ab8b" font-family="'DM Sans',Arial,sans-serif" font-size="14" letter-spacing="2.6">PROVENANCE</text>
+  <text x="1130" y="86" fill="#f7f6f2" fill-opacity="0.45" font-family="'DM Sans',Arial,sans-serif" font-size="12" letter-spacing="3" text-anchor="end">TAMV · ATLAS VISUAL</text>
+  <text x="1130" y="726" fill="#f7f6f2" fill-opacity="0.4" font-family="'DM Sans',Arial,sans-serif" font-size="11" letter-spacing="2" text-anchor="end">COMPOSICIÓN GENERATIVA · SIN MATERIAL DE TERCEROS</text>
+</svg>

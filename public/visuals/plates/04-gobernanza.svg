@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Gobernanza · Governance</title>
+  <desc id="desc">Placa editorial generada para TAMV Online Network. Composición geométrica determinista, sin material de terceros.</desc>
+  <defs>
+    <linearGradient id="bg-04" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2234" />
+      <stop offset="1" stop-color="#09141f" />
+    </linearGradient>
+    <pattern id="grid-04" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#f7f6f2" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-04" cx="52%" cy="50%" r="60%">
+      <stop offset="0" stop-color="#b77a54" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#b77a54" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg-04)"/>
+  <rect width="1200" height="750" fill="url(#grid-04)"/>
+  <rect width="1200" height="750" fill="url(#glow-04)"/>
+  <g><rect x="427.58" y="200" width="300" height="44" fill="none" stroke="#5f7d92" stroke-opacity="0.2" stroke-width="1.2"/><rect x="504.13" y="262" width="274" height="44" fill="none" stroke="#b77a54" stroke-opacity="0.25" stroke-width="1.2"/><rect x="473.32" y="324" width="248" height="44" fill="none" stroke="#5f7d92" stroke-opacity="0.30000000000000004" stroke-width="1.2"/><rect x="533.07" y="386" width="222" height="44" fill="none" stroke="#b77a54" stroke-opacity="0.35000000000000003" stroke-width="1.2"/><rect x="496.83" y="448" width="196" height="44" fill="none" stroke="#5f7d92" stroke-opacity="0.4" stroke-width="1.2"/><rect x="543.86" y="510" width="170" height="44" fill="none" stroke="#b77a54" stroke-opacity="0.45" stroke-width="1.2"/><rect x="550.69" y="572" width="144" height="44" fill="none" stroke="#5f7d92" stroke-opacity="0.5" stroke-width="1.2"/><circle cx="488.23" cy="162.82" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="505.14" cy="509.38" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="593.85" cy="585.83" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="892.28" cy="597.96" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="462.66" cy="275.41" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="552.06" cy="440.21" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="398.01" cy="162.18" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="351.02" cy="553.39" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="452.11" cy="600.81" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="722.92" cy="570.82" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="915.12" cy="464.4" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="1012.88" cy="575.85" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="253.42" cy="601.78" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="619.56" cy="370.95" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="352.94" cy="546.81" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="552.57" cy="330.22" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="241.37" cy="274.25" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="819.33" cy="192.36" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="575.66" cy="395.73" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="487.92" cy="211.78" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="644.21" cy="413.41" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="939.32" cy="554.65" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="816.05" cy="349.26" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="650.42" cy="565.3" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="436.31" cy="378.93" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="957.27" cy="257.09" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="654.08" cy="205.55" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="931.52" cy="499.03" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="300.75" cy="310.54" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="643.53" cy="429.76" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="946.2" cy="172.89" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="750.71" cy="277.33" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="835.48" cy="363.08" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="719.11" cy="376.62" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="705.29" cy="383.9" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="499.13" cy="405.7" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="201.07" cy="181.33" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="861.9" cy="558.99" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="999" cy="476.81" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /><circle cx="447.12" cy="410.04" r="1.2" fill="#f7f6f2" fill-opacity="0.2" /></g>
+  <rect x="26" y="26" width="1148" height="698" fill="none" stroke="#f7f6f2" stroke-opacity="0.12"/>
+  <g stroke="#b77a54" stroke-opacity="0.55" stroke-width="1.4">
+    <line x1="26" y1="26" x2="86" y2="26"/><line x1="26" y1="26" x2="26" y2="86"/>
+    <line x1="1174" y1="26" x2="1114" y2="26"/><line x1="1174" y1="26" x2="1174" y2="86"/>
+    <line x1="26" y1="724" x2="86" y2="724"/><line x1="26" y1="724" x2="26" y2="664"/>
+    <line x1="1174" y1="724" x2="1114" y2="724"/><line x1="1174" y1="724" x2="1174" y2="664"/>
+  </g>
+  <text x="70" y="86" fill="#d8ab8b" font-family="'DM Sans',Arial,sans-serif" font-size="13" letter-spacing="4">PLACA 04</text>
+  <text x="70" y="700" fill="#f7f6f2" font-family="'DM Sans',Arial,sans-serif" font-size="34" font-weight="600">Gobernanza</text>
+  <text x="70" y="726" fill="#d8ab8b" font-family="'DM Sans',Arial,sans-serif" font-size="14" letter-spacing="2.6">GOVERNANCE</text>
+  <text x="1130" y="86" fill="#f7f6f2" fill-opacity="0.45" font-family="'DM Sans',Arial,sans-serif" font-size="12" letter-spacing="3" text-anchor="end">TAMV · ATLAS VISUAL</text>
+  <text x="1130" y="726" fill="#f7f6f2" fill-opacity="0.4" font-family="'DM Sans',Arial,sans-serif" font-size="11" letter-spacing="2" text-anchor="end">COMPOSICIÓN GENERATIVA · SIN MATERIAL DE TERCEROS</text>
+</svg>
