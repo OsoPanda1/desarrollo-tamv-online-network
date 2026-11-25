@@ -10,6 +10,7 @@ const router = await readFile(new URL("../components/tamv-intent-router.tsx", im
 const classifier = await import("../lib/tamv-intent-classifier.ts");
 const governance = await readFile(new URL("../components/tamv-governance-matrix.tsx", import.meta.url), "utf8");
 const territorial = await readFile(new URL("../components/tamv-territorial-twin-status.tsx", import.meta.url), "utf8");
+const webgl = await readFile(new URL("../components/tamv-orbit-webgl.tsx", import.meta.url), "utf8");
 
 test("console defines seven distinct selectable federation nodes", () => {
   const ids = ["cognition", "identity", "vault", "governance", "persistence", "territory", "learning"];
@@ -115,4 +116,15 @@ test("public signals poll no more often than the intended thirty-second interval
   assert.match(component, /BOOKPI EVENT FEED/);
   assert.match(component, /Sin conexión|Not connected/);
   assert.match(component, /No public BookPI event feed is connected/);
+});
+
+
+test("orbital atlas includes native WebGL2 GLSL with SVG fallback and reduced-motion handling", () => {
+  assert.match(webgl, /getContext\("webgl2"/);
+  assert.match(webgl, /#version 300 es/);
+  assert.match(webgl, /uActiveIndex/);
+  assert.match(webgl, /prefers-reduced-motion: reduce/);
+  assert.match(webgl, /canvas\.dataset\.webgl = "unavailable"/);
+  assert.match(component, /TamvOrbitWebGL activeNodeIndex=/);
+  assert.match(stylesheet, /\.sovereign-orbit-webgl/);
 });
