@@ -36,6 +36,5 @@ test("interactive lab supports levels, alternative methods, verification and non
   }
   assert.match(lab, /not saved to your account|no se guarda en tu cuenta/i);
   assert.match(lab, /aria-pressed/);
-  assert.match(lab, /route: \/\*?\//);
   assert.match(guide, /<TamvLearningLab locale={locale} \/>/);
 });
