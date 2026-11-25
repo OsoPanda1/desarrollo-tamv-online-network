@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next"
 const origin = "https://tamv.online"
 const publicPaths = [
   "/",
+  "/quienes-somos",
   "/atlas",
   "/logros",
   "/guia",
