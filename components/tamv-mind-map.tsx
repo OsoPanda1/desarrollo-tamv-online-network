@@ -274,8 +274,7 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
                         {open ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
                       </span>
                     </button>
-                    {open && (
-                      <div className={styles.subtopics} id={`mind-map-${mapId}-branch-${branch.id}`}>
+                    <div className={styles.subtopics} id={`mind-map-${mapId}-branch-${branch.id}`} hidden={!open}>
                         {branch.items.map((item) => (
                           <div className={styles.subtopic} key={item.titleEs}>
                             <span className={styles.subtopicDot} aria-hidden="true" />
@@ -292,8 +291,7 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
                             </div>
                           </div>
                         ))}
-                      </div>
-                    )}
+                    </div>
                   </article>
                 )
               })}
