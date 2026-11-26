@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, FileSearch, GitBranch } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
+import { TamvResearchCitations } from "@/components/tamv-research-citations"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { getPublicProjects } from "@/lib/research/queries"
@@ -81,5 +83,7 @@ export default async function SourcesPage({ searchParams }: { searchParams: Sear
       <div className="source-records"><div><p className="eyebrow">{english ? "PINNED PROJECT RECORDS" : "FICHAS DE PROYECTO ANCLADAS"}</p><h2>{english ? "Commits and licenses, per record." : "Commits y licencias, por registro."}</h2></div>{linkedProjects.map((project) => <article className="source-record" key={project.id}><div><strong>{english ? project.titleEn : project.titleEs}</strong><span>{project.verificationStatus.replaceAll("_", " ")}</span></div><p>{project.sourceCommit ? `Commit ${project.sourceCommit}` : (english ? "Commit not recorded" : "Commit no registrado")} · {project.license ?? (english ? "License undeclared" : "Licencia no declarada")}</p><a href={project.sourceUrl!} target="_blank" rel="noopener noreferrer">{english ? "Open source snapshot" : "Abrir snapshot de fuente"} <ArrowUpRight aria-hidden="true" /></a></article>)}</div>
       <p className="editorial-caveat">{english ? "Repositories remain under their own licenses. Only public links are listed; private repositories are not exposed. A missing license means reuse is not authorized by this register. Records without pinned commits refer to the repository's current default branch, not a reproducible snapshot." : "Cada repositorio conserva su licencia. Solo se listan enlaces públicos; los repositorios privados no se exponen. La falta de licencia significa que este registro no autoriza la reutilización. Las fichas sin commit fijado remiten a la rama predeterminada actual, no a un snapshot reproducible."}</p>
     </div></section>
-  </TamvAppShell>
+  <TamvResearchCitations locale={locale} />
+      <TamvSectionMedia area="sources" locale={locale} />
+      </TamvAppShell>
 }
