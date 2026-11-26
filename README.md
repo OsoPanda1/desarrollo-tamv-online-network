@@ -23,9 +23,9 @@ Iniciativa mexicana independiente de investigación, tecnología, memoria territ
 
 ### Validación del HEAD actual
 
-- Los workflows CI, CodeQL y secret scan del commit `0cef1eeec8ff0b25322102c25a6e94416ad4f2d0` concluyeron `failure` antes de ejecutar pasos. Los jobs disponibles muestran `runner_id: 0` y `steps: []`; no hay logs de pasos con causa verificable. Esto **no demuestra** que falle el código ni que se hayan encontrado secretos.
+- Los workflows CI, CodeQL y secret scan del último commit de código revisado (`45fe78493dac4f81f78d8feff1d78898cc56f25a`) concluyeron `failure` antes de ejecutar pasos: [CI](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870454997), [CodeQL](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455359), [Secret scan](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455017). Los jobs muestran `runner_id: 0` y `steps: []`; no hay logs con causa verificable. Esto **no demuestra** que falle el código ni que se hayan encontrado secretos.
 - La prueba nueva `tests/home-media-visibility.test.mjs` aún no se ha ejecutado. No hay resultado confirmado de typecheck, instalación congelada, suite completa ni build de producción para ese SHA.
-- La revisión del estado de commit mostró Vercel `pending`; una Preview lista para navegador no está comprobada. Un comentario previo del proveedor informó que se había alcanzado el límite diario de despliegues.
+- La revisión del estado de commit del SHA citado mostró Vercel `pending` ([deployment](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/B2eQSkAKjwWj74dJYS8pPXSZAhjo)); una Preview lista para navegador no está comprobada. El proveedor había reportado el límite diario `api-deployments-free-per-day`.
 - El build local previo mostró advertencias de Better Auth relativas a `BETTER_AUTH_URL`/base URL y secreto por defecto. La configuración productiva sigue siendo un gate pendiente; la presencia de variables en `.env.example` no demuestra que estén definidas en el gestor de secretos.
 - `public/build-evidence.json` se había regenerado durante una validación local anterior y se revirtió antes del commit; no se debe sustituir evidencia del repositorio por un artefacto local sin identificar el commit y el entorno.
 - No se declara un deploy de producción ni métricas reales. Analytics/Speed Insights necesitan un despliegue y tráfico efectivos.
@@ -217,6 +217,7 @@ Bloqueos que permanecen explícitos:
 - Vercel reportó `Deployment rate limited — retry in 24 hours`; no se desplegó este árbol.
 - Actions/CodeQL/secret scanning sin logs recuperables; marcar como bloqueado, no pasado.
 - Sin staging controlado para preflight de migración, backup/restore ni pruebas IDOR con sesiones reales.
+- El limitador compartido ahora usa HMAC-SHA-256 con `TAMV_RATE_LIMIT_SALT` de al menos 32 caracteres y sólo usa `x-real-ip` como identidad canónica; configurar una sal secreta por ambiente y comprobar que el ingress sobrescribe esa cabecera. Si falta la sal, las rutas limitadas fallan cerrado con 503.
 - TPVA fases 2–7 y verificación externa real siguen pendientes.
 - No se afirma “100 % producción”, no-repudio, cumplimiento normativo, PQC efectivo ni certificación no emitida.
 
