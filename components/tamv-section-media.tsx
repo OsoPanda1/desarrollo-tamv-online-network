@@ -8,6 +8,7 @@ export type TamvMediaArea =
   | "atlas"
   | "who-we-are"
   | "architecture"
+  | "hcu"
   | "audit"
   | "research"
   | "community"
@@ -41,6 +42,7 @@ const areaLabels: Record<TamvMediaArea, { es: string; en: string }> = {
   atlas: { es: "Atlas visual y territorio", en: "Visual atlas and territory" },
   "who-we-are": { es: "Identidad, propósito y memoria viva", en: "Identity, purpose and living memory" },
   architecture: { es: "Arquitectura y madurez", en: "Architecture and maturity" },
+  hcu: { es: "Observatorio HCU", en: "HCU Observatory" },
   audit: { es: "Evidencia y auditoría", en: "Evidence and audit" },
   research: { es: "Investigación abierta", en: "Open research" },
   community: { es: "Comunidad creadora", en: "Creator community" },
