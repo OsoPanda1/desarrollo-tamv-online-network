@@ -2,6 +2,7 @@
 
 import styles from "./tamv-media-atlas.module.css"
 import type { Locale } from "@/lib/i18n"
+import { TamvResearchCitations } from "./tamv-research-citations"
 
 type MediaSlot = { id: string; titleEs: string; titleEn: string; purposeEs: string; purposeEn: string; ratio: string }
 
@@ -52,6 +53,7 @@ export function TamvMediaAtlas({ locale = "es" }: { locale?: Locale }) {
         <h2 id="media-atlas-title">{en ? <>A more visual atlas, <em>with evidence.</em></> : <>Un atlas más visual, <em>con evidencia.</em></>}</h2>
         <p>{en ? "Twenty image placements and twelve video placements are reserved by subject. These are editorial placeholders—not published media, external endorsements or proof of functionality. Add licensed assets, credits, descriptions and transcripts before publication." : "Se reservan veinte espacios de imagen y doce de video por tema. Son espacios editoriales, no medios publicados, avales externos ni pruebas de funcionalidad. Antes de publicar, incorpora activos licenciados, créditos, descripciones y transcripciones."}</p>
       </div>
+      <TamvResearchCitations locale={locale} />
       <div className={styles.sectionHead}><div><span className={styles.count}>20</span><h3>{en ? "Image collection" : "Colección de imágenes"}</h3></div><p>{en ? "Every image needs an appropriate alt text, caption, source, license and date." : "Cada imagen requiere texto alternativo adecuado, pie, fuente, licencia y fecha."}</p></div>
       <div className={styles.imageGrid}>
         {images.map((item, index) => <figure className={styles.imageCard} key={item.id}>
