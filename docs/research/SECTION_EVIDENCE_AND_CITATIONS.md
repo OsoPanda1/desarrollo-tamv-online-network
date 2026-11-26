@@ -4,7 +4,7 @@
 **Repositorio:** [desarrollo-tamv-online-network](https://github.com/OsoPanda1/desarrollo-tamv-online-network)  
 **Rama de trabajo:** `feat/research-evidence-media-atlas-v1`
 
-> **Alcance y honestidad editorial.** Este documento organiza estándares primarios, documentación técnica oficial y literatura académica ya localizada para fundamentar las secciones públicas del sitio. No equivale a una revisión sistemática concluida ni a una certificación de TAMV. Las búsquedas académicas de Undermind se encuentran en ejecución; los resultados se incorporarán con DOI y metadatos comprobados cuando terminen. No deben publicarse como hechos probados las aspiraciones, las relaciones conceptuales del atlas ni las funciones aún no desplegadas.
+> **Alcance y honestidad editorial.** Este documento organiza estándares primarios, documentación técnica oficial y literatura académica localizada para fundamentar las secciones públicas del sitio. Las búsquedas temáticas de Undermind y las revisiones ampliadas aquí referenciadas han completado su etapa de búsqueda, pero esto no equivale a una revisión sistemática concluida, lectura exhaustiva de todos los textos completos ni certificación de TAMV. Siguen pendientes la lectura a texto completo de los estudios seleccionados, la validación final de DOI/metadatos y la revisión editorial. No deben publicarse como hechos probados las aspiraciones, las relaciones conceptuales del atlas ni las funciones aún no desplegadas.
 
 ## 1. Modelo de evidencia editorial
 
@@ -63,7 +63,7 @@ Fuentes: [R12], [R14], [R15], [R16], [R17].
 
 ### 2.5 Federación, API y ecosistema
 
-**Secciones:** `/ecosistema`, `/ecosistema/metadata`, `/desarrolladores` y documentación de contratos.
+**Secciones:** `/ecosistema` (metadatos públicos), `/desarrolladores`, el endpoint `/api/v1/ecosystem/metadata` y documentación de contratos.
 
 **Base documental:** los contratos versionados reducen ambigüedad entre productores y consumidores; W3C PROV aporta un vocabulario para describir origen y transformación; las credenciales verificables definen roles de emisor, titular y verificador. OWASP advierte que las API deben controlar acceso a objetos, autenticación, propiedades, recursos y solicitudes salientes.
 
@@ -167,6 +167,6 @@ Las referencias siguientes son documentos técnicos primarios o páginas oficial
 
 - **Localizado:** estándares oficiales W3C, SLSA, OWASP, OpenSSF, NIST, FAIR/TRUST/CARE y documentación de identificadores persistentes.
 - **Disponible en Undermind:** cinco revisiones temáticas existentes sobre gobernanza comunitaria, infraestructura científica abierta, federación, IA confiable y arquitecturas soberanas.
-- **En curso:** revisión ampliada por secciones del sitio, accesibilidad multimedia y procedencia de software.
+- **Búsquedas completadas:** cinco revisiones temáticas base y búsquedas ampliadas sobre evidencia editorial, accesibilidad multimedia y procedencia verificable, documentadas en Undermind.
 - **Pendiente de validación:** lectura a texto completo de estudios seleccionados, verificación final de DOI/metadatos, pruebas de cada URL y revisión editorial por especialista.
 - **No afirmado:** certificación de terceros, cumplimiento integral, impacto social demostrado o disponibilidad de funciones que no tengan evidencia operativa.
