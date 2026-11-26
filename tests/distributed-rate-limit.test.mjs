@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
 import { decideRateLimit, hashRateLimitKey, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { createPublicRateLimitEnforcer } from "../lib/rate-limit/server.ts";
 
 class FakeSharedStore {
   constructor() {
@@ -83,35 +84,59 @@ test("rate-limit identity keys use a secret salt and never persist raw IP addres
   assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42", "short"), /at least 32 characters/);
 });
 
-test("shared rate limiter fails closed when salt configuration is absent or weak", async () => {
-  const { enforcePublicRateLimit } = await import("../lib/rate-limit/server.ts");
-  const priorEnabled = process.env.TAMV_RATE_LIMIT_ENABLED;
-  const priorSalt = process.env.TAMV_RATE_LIMIT_SALT;
+test("missing or weak rate-limit salt is rejected before the shared store is reached", async () => {
+  let storeCalls = 0;
+  const fakeStore = {
+    consume: async () => {
+      storeCalls += 1;
+      throw new Error("store must not be reached for invalid configuration");
+    },
+  };
+  const policy = { scope: "test", limit: 5, windowMs: 60_000 };
+  const request = new Request("https://tamv.example/api/test");
 
-  process.env.TAMV_RATE_LIMIT_ENABLED = "true";
-  delete process.env.TAMV_RATE_LIMIT_SALT;
-
-  try {
-    const missingSalt = await enforcePublicRateLimit(new Request("https://tamv.example/api/test"), {
-      scope: "test",
-      limit: 5,
-      windowMs: 60_000,
+  for (const salt of [undefined, "too-short"]) {
+    const enforce = createPublicRateLimitEnforcer({
+      store: fakeStore,
+      getSalt: () => salt,
+      isEnabled: () => true,
     });
-    assert.equal(missingSalt?.status, 503);
+    const response = await enforce(request, policy);
 
-    process.env.TAMV_RATE_LIMIT_SALT = "too-short";
-    const weakSalt = await enforcePublicRateLimit(new Request("https://tamv.example/api/test"), {
-      scope: "test",
-      limit: 5,
-      windowMs: 60_000,
+    assert.equal(response?.status, 503);
+    assert.deepEqual(await response?.json(), {
+      error: "rate_limit_configuration_invalid",
+      retryAfterSeconds: 30,
     });
-    assert.equal(weakSalt?.status, 503);
-  } finally {
-    if (priorEnabled === undefined) delete process.env.TAMV_RATE_LIMIT_ENABLED;
-    else process.env.TAMV_RATE_LIMIT_ENABLED = priorEnabled;
-    if (priorSalt === undefined) delete process.env.TAMV_RATE_LIMIT_SALT;
-    else process.env.TAMV_RATE_LIMIT_SALT = priorSalt;
+    assert.equal(storeCalls, 0, "configuration validation must happen before DB/store access");
   }
+});
+
+test("a valid rate-limit salt with an unavailable store reports a different failure", async () => {
+  let storeCalls = 0;
+  const enforce = createPublicRateLimitEnforcer({
+    store: {
+      consume: async () => {
+        storeCalls += 1;
+        throw new Error("store unavailable for test");
+      },
+    },
+    getSalt: () => "test-rate-limit-salt-with-32-randomish-characters-01",
+    isEnabled: () => true,
+  });
+
+  const response = await enforce(new Request("https://tamv.example/api/test"), {
+    scope: "test",
+    limit: 5,
+    windowMs: 60_000,
+  });
+
+  assert.equal(response?.status, 503);
+  assert.deepEqual(await response?.json(), {
+    error: "rate_limit_unavailable",
+    retryAfterSeconds: 30,
+  });
+  assert.equal(storeCalls, 1);
 });
 
 test("public rate-limit migration stores atomic shared counters without raw identities", () => {
