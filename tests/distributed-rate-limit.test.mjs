@@ -59,12 +59,17 @@ test("shared rate limiter fails closed when its store throws", async () => {
   await assert.rejects(decideRateLimit(store, "key", { limit: 5, windowMs: 60_000 }), /shared store unavailable/);
 });
 
-test("rate limit keys do not persist raw IP addresses", () => {
-  const key = hashRateLimitKey("federated", "ip:203.0.113.42", "test-salt");
+test("rate-limit identity keys use a secret salt and never persist raw IP addresses", () => {
+  const salt = "test-rate-limit-salt-with-32-randomish-characters-01";
+  const otherSalt = "other-rate-limit-salt-with-32-randomish-characters";
+  const key = hashRateLimitKey("federated", "ip:203.0.113.42", salt);
+
   assert.match(key, /^[a-f0-9]{64}$/);
   assert.equal(key.includes("203.0.113.42"), false);
-  assert.notEqual(key, hashRateLimitKey("federated", "ip:203.0.113.42", "other-salt"));
-  assert.notEqual(key, hashRateLimitKey("other", "ip:203.0.113.42", "test-salt"));
+  assert.notEqual(key, hashRateLimitKey("federated", "ip:203.0.113.42", otherSalt));
+  assert.notEqual(key, hashRateLimitKey("other", "ip:203.0.113.42", salt));
+  assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42"), /at least 32 characters/);
+  assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42", "short"), /at least 32 characters/);
 });
 
 test("public rate-limit migration stores atomic shared counters without raw identities", () => {
