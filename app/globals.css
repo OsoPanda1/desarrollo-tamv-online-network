@@ -4366,7 +4366,7 @@ body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-core,
 body:has(.sovereign-hero) .sovereign-node:focus-visible .sovereign-node-core { fill: #176d66 !important; stroke: #fffefa !important; }
 body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-code,
 body:has(.sovereign-hero) .sovereign-node:focus-visible .sovereign-node-code { fill: #fffefa !important; }
-body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-label { fill: #17324a !important; font-weight: 700; }
+body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-label { fill: #fffefa !important; font-weight: 700; }
 body:has(.sovereign-hero) .sovereign-node-inspector {
   border-top-color: #e2ded6 !important;
   background: #fffefa !important;
