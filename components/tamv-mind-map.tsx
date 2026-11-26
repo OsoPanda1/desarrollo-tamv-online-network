@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronLeft, ChevronRight, ExternalLink, Network } from "lucide-react"
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, ExternalLink, Network } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 import styles from "./tamv-mind-map.module.css"
 
 type MindMapId = "governance" | "research" | "isabella" | "federation"
-type Source = { label: string; href: string; internal?: boolean }
+type Source = { label: string; labelEn?: string; href: string; internal?: boolean }
 type MapItem = { titleEs: string; titleEn: string; detailEs: string; detailEn: string; sources: Source[] }
 type MapBranch = { id: string; titleEs: string; titleEn: string; detailEs: string; detailEn: string; items: MapItem[] }
 type MindMapDefinition = { number: string; titleEs: string; titleEn: string; introEs: string; introEn: string; rootEs: string; rootEn: string; rootDetailEs: string; rootDetailEn: string; noteEs: string; noteEn: string; reviewedEs: string; reviewedEn: string; branches: MapBranch[] }
@@ -31,32 +31,32 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         id: "eu", titleEs: "Reglamento de la Unión Europea", titleEn: "European Union AI Act",
         detailEs: "Regulación vinculante con obligaciones según tipo de sistema, uso y calendario aplicable.", detailEn: "Binding regulation with obligations depending on system type, use and applicable timeline.",
         items: [
-          { titleEs: "Reglamento (UE) 2024/1689", titleEn: "Regulation (EU) 2024/1689", detailEs: "Texto jurídico y modificaciones vigentes: consultar la versión consolidada oficial.", detailEn: "Legal text and current amendments: consult the official consolidated version.", sources: [{ label: "EUR-Lex · Reglamento", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27/eng" }] },
-          { titleEs: "Aplicación escalonada", titleEn: "Phased application", detailEs: "La mayoría de las reglas comienzan a aplicarse desde el 2 de agosto de 2026; ciertos deberes de alto riesgo tienen plazos posteriores.", detailEn: "Most rules begin applying on 2 August 2026; some high-risk obligations have later dates.", sources: [{ label: "Comisión Europea · calendario", href: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act" }] },
+          { titleEs: "Reglamento (UE) 2024/1689", titleEn: "Regulation (EU) 2024/1689", detailEs: "Texto jurídico y modificaciones vigentes: consultar la versión consolidada oficial.", detailEn: "Legal text and current amendments: consult the official consolidated version.", sources: [{ label: "EUR-Lex · Reglamento", labelEn: "EUR-Lex · Regulation", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27/eng" }] },
+          { titleEs: "Aplicación escalonada", titleEn: "Phased application", detailEs: "La mayoría de las reglas comienzan a aplicarse desde el 2 de agosto de 2026; ciertos deberes de alto riesgo tienen plazos posteriores.", detailEn: "Most rules begin applying on 2 August 2026; some high-risk obligations have later dates.", sources: [{ label: "Comisión Europea · calendario", labelEn: "European Commission · timeline", href: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act" }] },
         ],
       },
       {
         id: "spain", titleEs: "Modelo español y la AESIA", titleEn: "Spanish model and AESIA",
         detailEs: "Supervisión, asesoramiento, sensibilización y funciones de inspección dentro de sus competencias legales.", detailEn: "Supervision, advice, awareness and inspection functions within its legal remit.",
         items: [
-          { titleEs: "Funciones institucionales", titleEn: "Institutional responsibilities", detailEs: "La AESIA describe sus funciones en relación con la normativa nacional y europea; la atribución concreta debe leerse en su base jurídica.", detailEn: "AESIA describes its role in relation to national and European rules; specific powers must be read in their legal basis.", sources: [{ label: "AESIA · información institucional", href: "https://aesia.digital.gob.es/storage/media/informacion-institucional.pdf" }] },
-          { titleEs: "Supervisión no equivale a certificación universal", titleEn: "Supervision is not universal certification", detailEs: "La autoridad, el alcance del control y el régimen aplicable dependen del supuesto; no asumir una aprobación automática.", detailEn: "Authority, scope of control and applicable regime depend on the case; do not assume automatic approval.", sources: [{ label: "Comisión Europea · cumplimiento", href: "https://digital-strategy.ec.europa.eu/en/policies/enforcement-ai-act" }] },
+          { titleEs: "Funciones institucionales", titleEn: "Institutional responsibilities", detailEs: "La AESIA describe sus funciones en relación con la normativa nacional y europea; la atribución concreta debe leerse en su base jurídica.", detailEn: "AESIA describes its role in relation to national and European rules; specific powers must be read in their legal basis.", sources: [{ label: "AESIA · información institucional", labelEn: "AESIA · institutional information", href: "https://aesia.digital.gob.es/storage/media/informacion-institucional.pdf" }] },
+          { titleEs: "Supervisión no equivale a certificación universal", titleEn: "Supervision is not universal certification", detailEs: "La autoridad, el alcance del control y el régimen aplicable dependen del supuesto; no asumir una aprobación automática.", detailEn: "Authority, scope of control and applicable regime depend on the case; do not assume automatic approval.", sources: [{ label: "Comisión Europea · cumplimiento", labelEn: "European Commission · enforcement", href: "https://digital-strategy.ec.europa.eu/en/policies/enforcement-ai-act" }] },
         ],
       },
       {
         id: "latam", titleEs: "Marco normativo en América Latina", titleEn: "Latin American regulatory landscape",
         detailEs: "Las respuestas nacionales son distintas y evolucionan; comparar país por país y separar ley vigente, propuesta y política pública.", detailEn: "National approaches differ and evolve; compare country by country and distinguish enacted law, bill and public policy.",
         items: [
-          { titleEs: "México: ficha de contexto", titleEn: "Mexico: country context", detailEs: "La ficha UNESCO recoge evaluación y recomendaciones; no sustituye la revisión de legislación mexicana vigente.", detailEn: "The UNESCO profile presents an assessment and recommendations; it does not replace review of current Mexican law.", sources: [{ label: "UNESCO · México", href: "https://www.unesco.org/ethics-ai/es/mexico" }] },
-          { titleEs: "Comparación regional", titleEn: "Regional comparison", detailEs: "Registrar jurisdicción, fecha de consulta, tipo de instrumento y autoridad responsable en cada afirmación.", detailEn: "Record jurisdiction, review date, instrument type and responsible authority for each claim.", sources: [{ label: "UNESCO · Observatorio global", href: "https://www.unesco.org/ethics-ai/en" }] },
+          { titleEs: "México: ficha de contexto", titleEn: "Mexico: country context", detailEs: "La ficha UNESCO recoge evaluación y recomendaciones; no sustituye la revisión de legislación mexicana vigente.", detailEn: "The UNESCO profile presents an assessment and recommendations; it does not replace review of current Mexican law.", sources: [{ label: "UNESCO · México", labelEn: "UNESCO · Mexico", href: "https://www.unesco.org/ethics-ai/es/mexico" }] },
+          { titleEs: "Comparación regional", titleEn: "Regional comparison", detailEs: "Registrar jurisdicción, fecha de consulta, tipo de instrumento y autoridad responsable en cada afirmación.", detailEn: "Record jurisdiction, review date, instrument type and responsible authority for each claim.", sources: [{ label: "UNESCO · Observatorio global", labelEn: "UNESCO · Global Observatory", href: "https://www.unesco.org/ethics-ai/en" }] },
         ],
       },
       {
         id: "standards", titleEs: "Estándares y marcos internacionales", titleEn: "International standards and frameworks",
         detailEs: "Principios, guías y metodologías que orientan gobernanza; no todos son normas jurídicas obligatorias.", detailEn: "Principles, guidance and methods that inform governance; not all are binding law.",
         items: [
-          { titleEs: "Ética de IA de UNESCO", titleEn: "UNESCO AI ethics", detailEs: "Derechos humanos, participación, supervisión, evaluación de impacto y rendición de cuentas.", detailEn: "Human rights, participation, oversight, impact assessment and accountability.", sources: [{ label: "UNESCO · Recomendación", href: "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence" }] },
-          { titleEs: "OCDE y NIST", titleEn: "OECD and NIST", detailEs: "Usar principios y gestión del riesgo como estructuras de trabajo; documentar alcance y límites de cada marco.", detailEn: "Use principles and risk management as working structures; document the scope and limits of each framework.", sources: [{ label: "OCDE · Principios de IA", href: "https://oecd.ai/en/ai-principles" }, { label: "NIST · AI RMF", href: "https://www.nist.gov/itl/ai-risk-management-framework" }] },
+          { titleEs: "Ética de IA de UNESCO", titleEn: "UNESCO AI ethics", detailEs: "Derechos humanos, participación, supervisión, evaluación de impacto y rendición de cuentas.", detailEn: "Human rights, participation, oversight, impact assessment and accountability.", sources: [{ label: "UNESCO · Recomendación", labelEn: "UNESCO · Recommendation", href: "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence" }] },
+          { titleEs: "OCDE y NIST", titleEn: "OECD and NIST", detailEs: "Usar principios y gestión del riesgo como estructuras de trabajo; documentar alcance y límites de cada marco.", detailEn: "Use principles and risk management as working structures; document the scope and limits of each framework.", sources: [{ label: "OCDE · Principios de IA", labelEn: "OECD · AI Principles", href: "https://oecd.ai/en/ai-principles" }, { label: "NIST · AI RMF", href: "https://www.nist.gov/itl/ai-risk-management-framework" }] },
         ],
       },
     ],
@@ -80,7 +80,7 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         id: "fair", titleEs: "Datos FAIR", titleEn: "FAIR data",
         detailEs: "Localizables, accesibles bajo condiciones explícitas, interoperables y reutilizables.", detailEn: "Findable, accessible under explicit conditions, interoperable and reusable.",
         items: [
-          { titleEs: "Metadatos descriptivos", titleEn: "Descriptive metadata", detailEs: "Definir identificadores, formatos, idiomas, licencias y condiciones de acceso.", detailEn: "Define identifiers, formats, languages, licences and access conditions.", sources: [{ label: "Principios FAIR · DOI", href: "https://doi.org/10.1038/sdata.2016.18" }] },
+          { titleEs: "Metadatos descriptivos", titleEn: "Descriptive metadata", detailEs: "Definir identificadores, formatos, idiomas, licencias y condiciones de acceso.", detailEn: "Define identifiers, formats, languages, licences and access conditions.", sources: [{ label: "Principios FAIR · DOI", labelEn: "FAIR Principles · DOI", href: "https://doi.org/10.1038/sdata.2016.18" }] },
           { titleEs: "Custodia y gobernanza", titleEn: "Stewardship and governance", detailEs: "Aplicar principios TRUST para repositorios y CARE cuando importen derechos colectivos y soberanía de datos.", detailEn: "Apply TRUST for repositories and CARE where collective rights and data sovereignty matter.", sources: [{ label: "TRUST · DOI", href: "https://doi.org/10.1038/s41597-020-0486-7" }, { label: "CARE · DOI", href: "https://doi.org/10.5334/dsj-2020-043" }] },
         ],
       },
@@ -178,7 +178,7 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         id: "contracts", titleEs: "Contratos y versiones de API", titleEn: "API contracts and versions",
         detailEs: "Publicar interfaces explícitas y probar compatibilidad entre productor y consumidor.", detailEn: "Publish explicit interfaces and test compatibility between producers and consumers.",
         items: [
-          { titleEs: "Especificación OpenAPI", titleEn: "OpenAPI specification", detailEs: "Documentar rutas, esquemas, errores, autenticación y versiones compatibles.", detailEn: "Document routes, schemas, errors, authentication and compatible versions.", sources: [{ label: "OpenAPI Specification", href: "https://spec.openapis.org/oas/latest.html" }, { label: "TAMV · Arquitectura", href: "/arquitectura", internal: true }] },
+          { titleEs: "Especificación OpenAPI", titleEn: "OpenAPI specification", detailEs: "Documentar rutas, esquemas, errores, autenticación y versiones compatibles.", detailEn: "Document routes, schemas, errors, authentication and compatible versions.", sources: [{ label: "OpenAPI Specification", href: "https://spec.openapis.org/oas/latest.html" }, { label: "TAMV · Arquitectura", labelEn: "TAMV · Architecture", href: "/arquitectura", internal: true }] },
           { titleEs: "Pruebas de contrato", titleEn: "Contract tests", detailEs: "Validar respuestas, cambios y consumidores antes del despliegue coordinado.", detailEn: "Validate responses, changes and consumers before coordinated deployment.", sources: [{ label: "OWASP API Security", href: "https://owasp.org/API-Security/" }] },
         ],
       },
@@ -195,17 +195,17 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         detailEs: "Definir propiedad de datos, evolución de esquemas, idempotencia y registro auditable.", detailEn: "Define data ownership, schema evolution, idempotency and auditable records.",
         items: [
           { titleEs: "Procesamiento robusto", titleEn: "Robust processing", detailEs: "Diseñar para reintentos y entregas repetidas; declarar explícitamente las garantías de consistencia.", detailEn: "Design for retries and repeated delivery; state consistency guarantees explicitly.", sources: [{ label: "W3C · PROV", href: "https://www.w3.org/TR/prov-overview/" }] },
-          { titleEs: "Registro común de evidencia", titleEn: "Shared evidence record", detailEs: "Vincular artefacto, origen, versión, método y resultado sin confundir integridad con validez.", detailEn: "Link artifact, source, version, method and result without confusing integrity with validity.", sources: [{ label: "RO-Crate", href: "https://www.researchobject.org/ro-crate/" }, { label: "TAMV · Atlas HCU", href: "/hcu", internal: true }] },
+          { titleEs: "Registro común de evidencia", titleEn: "Shared evidence record", detailEs: "Vincular artefacto, origen, versión, método y resultado sin confundir integridad con validez.", detailEn: "Link artifact, source, version, method and result without confusing integrity with validity.", sources: [{ label: "RO-Crate", href: "https://www.researchobject.org/ro-crate/" }, { label: "TAMV · Atlas HCU", labelEn: "TAMV · HCU Atlas", href: "/hcu", internal: true }] },
         ],
       },
       {
         id: "supply", titleEs: "Repositorios Atlas/LITLE y procedencia de software", titleEn: "Atlas/LITLE repositories and software provenance",
         detailEs: "Relacionar repositorios, catálogo público y artefactos construidos sin confundir un enlace con integración operativa.", detailEn: "Connect repositories, the public catalog and built artifacts without confusing a link with operational integration.",
         items: [
-          { titleEs: "Repositorios públicos vinculados", titleEn: "Linked public repositories", detailEs: "Fuentes públicas para inspección de código y documentación. Revisar versión, rama, licencia e historial antes de sincronizar; el enlace por sí solo no demuestra integración.", detailEn: "Public sources for code and documentation inspection. Check version, branch, licence and history before synchronization; a link alone does not prove integration.", sources: [{ label: "TAMV Core Atlas · GitHub", href: "https://github.com/OsoPanda1/tamv-core-atlas" }, { label: "Método 4L · GitHub", href: "https://github.com/OsoPanda1/metodo4l" }, { label: "Web institucional · GitHub", href: "https://github.com/OsoPanda1/WEBINSTITUCIONAL-TAMVONLINE" }] },
-          { titleEs: "Catálogo dinámico de metadatos", titleEn: "Dynamic metadata catalog", detailEs: "El panel del ecosistema consulta el endpoint versionado de metadatos de repositorios públicos. Ese resultado describe metadatos de origen; no comprueba salud de despliegue ni funcionamiento.", detailEn: "The ecosystem board queries the versioned endpoint for public repository metadata. This describes source metadata; it does not check deployment health or functionality.", sources: [{ label: "API de metadatos · TAMV", href: "/api/v1/ecosystem/metadata", internal: true }, { label: "Panel del ecosistema", href: "/ecosistema", internal: true }] },
-          { titleEs: "Componentes LITLE con acceso restringido", titleEn: "LITLE components with restricted access", detailEs: "Algunos repositorios del entorno LITLE requieren permisos autenticados y no se presentan como verificados públicamente. La integración exige contratos, autorización y pruebas con acceso autorizado.", detailEn: "Some LITLE repositories require authenticated permissions and are not presented as publicly verified. Integration requires contracts, authorization and tests with authorized access.", sources: [{ label: "Matriz pública de metadatos", href: "/ecosistema", internal: true }, { label: "Arquitectura TAMV", href: "/arquitectura", internal: true }] },
-          { titleEs: "Procedencia de build y SBOM", titleEn: "Build provenance and SBOM", detailEs: "Conservar evidencia de fuente, proceso de build, artefacto y dependencias; verificarla con políticas del consumidor. Ninguna medida aislada garantiza software sin vulnerabilidades.", detailEn: "Preserve evidence of source, build process, artifact and dependencies; verify it against consumer policy. No isolated measure guarantees vulnerability-free software.", sources: [{ label: "SLSA · especificación", href: "https://slsa.dev/spec/" }, { label: "OpenSSF", href: "https://openssf.org/" }] },
+          { titleEs: "Repositorios públicos vinculados", titleEn: "Linked public repositories", detailEs: "Fuentes públicas para inspección de código y documentación. Revisar versión, rama, licencia e historial antes de sincronizar; el enlace por sí solo no demuestra integración.", detailEn: "Public sources for code and documentation inspection. Check version, branch, licence and history before synchronization; a link alone does not prove integration.", sources: [{ label: "TAMV Core Atlas · GitHub", href: "https://github.com/OsoPanda1/tamv-core-atlas" }, { label: "Método 4L · GitHub", labelEn: "4L Method · GitHub", href: "https://github.com/OsoPanda1/metodo4l" }, { label: "Web institucional · GitHub", labelEn: "Institutional website · GitHub", href: "https://github.com/OsoPanda1/WEBINSTITUCIONAL-TAMVONLINE" }] },
+          { titleEs: "Catálogo dinámico de metadatos", titleEn: "Dynamic metadata catalog", detailEs: "El panel del ecosistema consulta el endpoint versionado de metadatos de repositorios públicos. Ese resultado describe metadatos de origen; no comprueba salud de despliegue ni funcionamiento.", detailEn: "The ecosystem board queries the versioned endpoint for public repository metadata. This describes source metadata; it does not check deployment health or functionality.", sources: [{ label: "API de metadatos · TAMV", labelEn: "TAMV · metadata API", href: "/api/v1/ecosystem/metadata", internal: true }, { label: "Panel del ecosistema", labelEn: "Ecosystem dashboard", href: "/ecosistema", internal: true }] },
+          { titleEs: "Componentes LITLE con acceso restringido", titleEn: "LITLE components with restricted access", detailEs: "Algunos repositorios del entorno LITLE requieren permisos autenticados y no se presentan como verificados públicamente. La integración exige contratos, autorización y pruebas con acceso autorizado.", detailEn: "Some LITLE repositories require authenticated permissions and are not presented as publicly verified. Integration requires contracts, authorization and tests with authorized access.", sources: [{ label: "Matriz pública de metadatos", labelEn: "Public metadata matrix", href: "/ecosistema", internal: true }, { label: "Arquitectura TAMV", labelEn: "TAMV Architecture", href: "/arquitectura", internal: true }] },
+          { titleEs: "Procedencia de build y SBOM", titleEn: "Build provenance and SBOM", detailEs: "Conservar evidencia de fuente, proceso de build, artefacto y dependencias; verificarla con políticas del consumidor. Ninguna medida aislada garantiza software sin vulnerabilidades.", detailEn: "Preserve evidence of source, build process, artifact and dependencies; verify it against consumer policy. No isolated measure guarantees vulnerability-free software.", sources: [{ label: "SLSA · especificación", labelEn: "SLSA · Specification", href: "https://slsa.dev/spec/" }, { label: "OpenSSF", href: "https://openssf.org/" }] },
         ],
       }
     ],
@@ -249,7 +249,9 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
                 aria-label={allExpanded ? (english ? "Collapse all branches" : "Contraer todas las ramas") : (english ? "Expand all branches" : "Expandir todas las ramas")}
                 title={allExpanded ? (english ? "Collapse all" : "Contraer todo") : (english ? "Expand all" : "Expandir todo")}
               >
-                <ChevronLeft size={20} aria-hidden="true" />
+                {allExpanded
+                  ? <ChevronUp size={20} aria-hidden="true" />
+                  : <ChevronDown size={20} aria-hidden="true" />}
               </button>
               <p className={styles.rootHelper}>{english ? "Select a branch to explore its subtopics." : "Selecciona una rama para explorar sus subtemas."}</p>
             </div>
@@ -284,13 +286,19 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
                               <h3>{english ? item.titleEn : item.titleEs}</h3>
                               <p>{english ? item.detailEn : item.detailEs}</p>
                               <div className={styles.sources}>
-                                {item.sources.map((source) => source.internal ? (
-                                  <a key={source.href} href={source.href}>{source.label}</a>
-                                ) : (
-                                  <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">
-                                    {source.label}<ExternalLink size={12} aria-hidden="true" />
-                                  </a>
-                                ))}
+                                {item.sources.map((source) => {
+                                  const sourceLabel = english ? (source.labelEn ?? source.label) : source.label
+                                  const sourceHref = source.internal && !source.href.startsWith("/api/")
+                                    ? `${source.href}?lang=${locale}`
+                                    : source.href
+                                  return source.internal ? (
+                                    <a key={source.href} href={sourceHref}>{sourceLabel}</a>
+                                  ) : (
+                                    <a key={source.href} href={sourceHref} target="_blank" rel="noopener noreferrer">
+                                      {sourceLabel}<ExternalLink size={12} aria-hidden="true" />
+                                    </a>
+                                  )
+                                })}
                               </div>
                             </div>
                           </div>
