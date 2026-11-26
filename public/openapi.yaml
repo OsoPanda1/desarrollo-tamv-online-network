@@ -26,6 +26,8 @@ tags:
     description: Public metadata in JSON-LD or CSV format.
   - name: Provenance
     description: Stateless schema validation for provenance envelopes.
+  - name: Evidence
+    description: Public evidence metadata and stateless receipt verification.
   - name: Ecosystem
     description: Public ecosystem repository discovery and metadata.
 paths:
@@ -346,6 +348,78 @@ paths:
                         path: { type: string }
                         code: { type: string }
                         message: { type: string }
+  /api/v1/evidence/receipts/verify:
+    post:
+      operationId: verifyEvidenceReceipt
+      tags: [Evidence]
+      summary: Verify shape and integrity of a TAMV evidence receipt
+      description: >-
+        Stateless verification of a portable evidence receipt
+        (tamv.evidence_receipt.v1). The endpoint recomputes the canonical
+        SHA-256 digest and compares it with the declared hash. It does not
+        receive evidence files, fetch declared URLs, persist the receipt,
+        verify authorship, establish trusted time, or grant payment. Request
+        bodies are limited to 65536 bytes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: A complete stamped receipt, including its hash object.
+      responses:
+        "200":
+          description: Shape and integrity hold; higher verification levels were not checked.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, levels, digest, semantics, note]
+                properties:
+                  valid: { type: boolean, const: true }
+                  levels:
+                    type: object
+                    required: [shape, integrity]
+                    properties:
+                      shape: { type: boolean, const: true }
+                      integrity: { type: boolean, const: true }
+                  digest: { type: string, pattern: "^[a-f0-9]{64}$" }
+                  semantics: { type: string }
+                  note: { type: string }
+        "400":
+          description: Malformed JSON, invalid UTF-8, or unreadable request body.
+        "413":
+          description: Payload exceeds 65536 bytes.
+        "415":
+          description: Content-Type must be application/json.
+        "422":
+          description: The receipt fails the strict schema or its hash does not match.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, error, levels, semantics]
+                properties:
+                  valid: { type: boolean, const: false }
+                  error: { type: string, enum: [schema_validation_failed, integrity_mismatch] }
+                  levels:
+                    type: object
+                    properties:
+                      shape: { type: boolean }
+                      integrity: { type: boolean }
+                  expected: { type: string }
+                  actual: { type: string }
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      required: [path, code, message]
+                      properties:
+                        path: { type: string }
+                        code: { type: string }
+                        message: { type: string }
+                  semantics: { type: string }
 components:
   responses:
     CatalogUnavailable:

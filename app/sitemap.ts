@@ -23,6 +23,7 @@ const publicPaths = [
   "/excelencia",
   "/auditoria-creator",
   "/desarrolladores",
+  "/desarrolladores/independiente",
   "/ecosistema",
   "/membresias",
   "/institucionalizacion",

@@ -509,6 +509,10 @@ export const sectionVisuals: Record<string, SectionVisuals> = {
   "/membresias": { plate: byId(plates, "09-membresias"), graphs: [byId(graphs, "g08-membresias")] },
   "/formacion": { plate: byId(plates, "08-formacion"), graphs: [byId(graphs, "g07-formacion")] },
   "/desarrolladores": { plate: byId(plates, "11-desarrolladores") },
+  "/desarrolladores/independiente": {
+    plate: byId(plates, "11-desarrolladores"),
+    graphs: [byId(graphs, "g12-procedencia")],
+  },
   "/excelencia": { plate: byId(plates, "12-trazabilidad"), graphs: [byId(graphs, "g12-procedencia")], mindMap: byId(mindMaps, "m07-excelencia") },
   "/fuentes": { plate: byId(plates, "13-procedencia") },
   "/investigadores": { plate: byId(plates, "16-federacion"), graphs: [byId(graphs, "g11-federacion")] },

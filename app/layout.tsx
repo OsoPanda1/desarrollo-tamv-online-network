@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import './memberships.css'
 import './visuals.css'
+import './evidence.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamv.online'),

@@ -97,6 +97,14 @@ const endpoints = [
     purposeEn: "Validates the structure of a provenance record; does not prove authorship, signatures, or source truth.",
   },
   {
+    method: "POST",
+    path: "/api/v1/evidence/receipts/verify",
+    accessEs: "Público · sin estado",
+    accessEn: "Public · stateless",
+    purposeEs: "Verifica forma e integridad de un comprobante de evidencia; no recibe archivos ni prueba autoría o veracidad.",
+    purposeEn: "Verifies evidence-receipt shape and integrity; it receives no files and does not prove authorship or truth.",
+  },
+  {
     method: "GET",
     path: "/api/v1/hcu/graph",
     accessEs: "Público · grafo HCU",
@@ -238,6 +246,9 @@ export default async function DevelopersPage({ searchParams }: { searchParams: S
           </a>
           <Link className="developer-subtle-link" href={`/auditoria-creator?lang=${locale}`}>
             {english ? "Creator Intelligence audit record" : "Ficha de auditoría Creator Intelligence"} <ArrowUpRight aria-hidden="true" />
+          </Link>
+          <Link className="developer-subtle-link" href={`/desarrolladores/independiente?lang=${locale}`}>
+            {english ? "Independent developer module — evidence receipts" : "Módulo de desarrollador independiente — comprobantes de evidencia"} <ArrowUpRight aria-hidden="true" />
           </Link>
           <Link className="developer-subtle-link" href={`/isabella?lang=${locale}`}>
             {english ? "Isabella AI / TINA — FGAIS architecture, Policy Gate, and decision ledger" : "Isabella AI / TINA — arquitectura FGAIS, Policy Gate y ledger de decisiones"} <ArrowUpRight aria-hidden="true" />

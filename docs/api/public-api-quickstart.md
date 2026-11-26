@@ -74,6 +74,16 @@ curl -fsS http://localhost:3000/api/v1/huggingface
 
 Returns a committed snapshot generated locally by the `hf` CLI from public Hub list commands. The route reads the local file only: no runtime Hub request, no token, no model weights, no inference output and no endorsement of the listed repositories. See [the evidence bridge notes](../evidence/README.md) and `pnpm hf:snapshot` to regenerate the snapshot.
 
+### 8. Evidence receipt verification
+
+```sh
+curl -fsS -X POST http://localhost:3000/api/v1/evidence/receipts/verify \
+  -H 'content-type: application/json' \
+  --data-binary @tamv-cev-receipt.json
+```
+
+The endpoint is stateless. It validates the strict `tamv.evidence_receipt.v1` shape and recomputes the canonical SHA-256 digest. It does not receive evidence files, fetch declared URLs, persist the receipt, or establish authorship, ownership, truth, trusted time, review, accreditation, or payment eligibility. A `200` response means shape and payload integrity hold; file binding, registered origin, and human review are separate levels. Bodies are limited to 65536 bytes.
+
 ## Authentication boundary
 
 | Route family | Access |
@@ -85,6 +95,7 @@ Returns a committed snapshot generated locally by the `hf` CLI from public Hub l
 | `GET /api/v1/exports/research` and `?format=csv` | Public read/export |
 | `GET /api/v1/huggingface` | Public read of a committed public-metadata snapshot; no runtime Hub call |
 | `POST /api/v1/research/federated` | Public read-only query proxy; returns 503 until its upstream URL is configured |
+| `POST /api/v1/evidence/receipts/verify` | Public stateless shape and integrity check; no file upload and no persistence |
 | `POST /api/v1/research/proposals` | Authenticated session and same-origin request required; private by default |
 | `POST /api/v1/research/interests` | Authenticated session and same-origin request required |
 | `POST /api/v1/hcu/simulate` | Authenticated session and same-origin request required; rate and model-work limits apply |

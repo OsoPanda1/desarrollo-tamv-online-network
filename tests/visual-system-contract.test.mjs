@@ -141,6 +141,7 @@ test("every section with visuals resolves through the route map", () => {
     "/membresias",
     "/formacion",
     "/desarrolladores",
+    "/desarrolladores/independiente",
     "/excelencia",
     "/fuentes",
     "/investigadores",
