@@ -30,7 +30,9 @@
 - Federation branches describe expected integration controls. A shared catalog or linked repository does not establish interoperability by itself.
 - SLSA, signatures, hashes and SBOMs are evidence inputs, not proof that software is harmless or vulnerability-free.
 
-## Primary source links used in the maps
+## Selected primary source links referenced by the maps
+
+This is a selected bibliography, not an exhaustive list of every link rendered in every map. Additional links are maintained directly in `components/tamv-mind-map.tsx`.
 
 ### AI governance
 - European Commission AI Act implementation timeline: https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act
