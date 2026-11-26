@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHmac } from "node:crypto";
 
 /**
  * Storage contract for a counter that is shared by every serverless instance.
@@ -24,11 +24,14 @@ export interface RateLimitPolicy {
   now?: number;
 }
 
-const DEFAULT_SALT = "tamv-shared-rate-limit-v1";
+export function hashRateLimitKey(scope: string, identity: string, salt?: string): string {
+  const secretSalt = salt?.trim();
+  if (!secretSalt || secretSalt.length < 32) {
+    throw new Error("TAMV_RATE_LIMIT_SALT must contain at least 32 characters");
+  }
 
-export function hashRateLimitKey(scope: string, identity: string, salt = DEFAULT_SALT): string {
-  return createHash("sha256")
-    .update(`${scope}\u0000${salt}\u0000${identity}`)
+  return createHmac("sha256", secretSalt)
+    .update(`${scope}\u0000${identity}`)
     .digest("hex");
 }
 
