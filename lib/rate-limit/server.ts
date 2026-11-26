@@ -82,41 +82,72 @@ function sharedHeaders(decision: RateLimitDecision, limit: number) {
 }
 
 /**
- * Returns a ready-to-send response when the request must be blocked, or null when
- * it may continue. The shared counter is fail-closed: if the store is unavailable,
- * the public endpoint does not silently become unlimited.
+ * Runtime dependencies for the public rate limiter. Keeping these injectable
+ * makes configuration failures testable without depending on PostgreSQL uptime.
  */
-export async function enforcePublicRateLimit(
-  request: Request | undefined,
-  policy: PublicRateLimitPolicy,
-): Promise<Response | null> {
-  if (!isSharedRateLimitEnabled()) return null;
-
-  let decision: RateLimitDecision;
-  try {
-    const key = hashRateLimitKey(
-      policy.scope,
-      requestIdentityFromHeaders(request?.headers),
-      process.env.TAMV_RATE_LIMIT_SALT,
-    );
-    decision = await decideRateLimit(sharedStore, key, {
-      limit: policy.limit,
-      windowMs: policy.windowMs,
-    });
-  } catch {
-    return Response.json(
-      { error: "rate_limit_unavailable", retryAfterSeconds: 30 },
-      { status: 503, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Retry-After": "30" } },
-    );
-  }
-
-  if (decision.allowed) return null;
-  return Response.json(
-    {
-      error: "rate_limit_exceeded",
-      scope: policy.scope,
-      retryAfterSeconds: decision.retryAfterSeconds,
-    },
-    { status: 429, headers: sharedHeaders(decision, policy.limit) },
-  );
+export interface PublicRateLimitRuntime {
+  store: RateLimitStore;
+  getSalt: () => string | undefined;
+  isEnabled: () => boolean;
 }
+
+/**
+ * Creates a fail-closed rate limiter. A bad salt is reported separately from
+ * an unavailable counter store, so operators and regression tests can identify
+ * a configuration fault without exposing secret material.
+ */
+export function createPublicRateLimitEnforcer(runtime: PublicRateLimitRuntime) {
+  return async function enforceWithRuntime(
+    request: Request | undefined,
+    policy: PublicRateLimitPolicy,
+  ): Promise<Response | null> {
+    if (!runtime.isEnabled()) return null;
+
+    let decision: RateLimitDecision;
+    try {
+      const key = hashRateLimitKey(
+        policy.scope,
+        requestIdentityFromHeaders(request?.headers),
+        runtime.getSalt(),
+      );
+      decision = await decideRateLimit(runtime.store, key, {
+        limit: policy.limit,
+        windowMs: policy.windowMs,
+      });
+    } catch (error) {
+      const invalidConfiguration =
+        error instanceof Error &&
+        error.message === "TAMV_RATE_LIMIT_SALT must contain at least 32 characters";
+      return Response.json(
+        {
+          error: invalidConfiguration ? "rate_limit_configuration_invalid" : "rate_limit_unavailable",
+          retryAfterSeconds: 30,
+        },
+        {
+          status: 503,
+          headers: {
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Retry-After": "30",
+          },
+        },
+      );
+    }
+
+    if (decision.allowed) return null;
+    return Response.json(
+      {
+        error: "rate_limit_exceeded",
+        scope: policy.scope,
+        retryAfterSeconds: decision.retryAfterSeconds,
+      },
+      { status: 429, headers: sharedHeaders(decision, policy.limit) },
+    );
+  };
+}
+
+export const enforcePublicRateLimit = createPublicRateLimitEnforcer({
+  store: sharedStore,
+  getSalt: () => process.env.TAMV_RATE_LIMIT_SALT,
+  isEnabled: isSharedRateLimitEnabled,
+});
