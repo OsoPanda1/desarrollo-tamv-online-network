@@ -3,6 +3,7 @@ import { TamvSiteHeader } from "./tamv-site-header"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
 import { TamvMediaAtlas } from "./tamv-media-atlas"
+import { TamvMindMap } from "./tamv-mind-map"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
 export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
@@ -13,6 +14,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
       <TamvSiteHeader locale={locale} />
       <main id="contenido" lang={locale}>
         <TamvSovereignConsole locale={locale} />
+        <TamvMindMap mapId="governance" locale={locale} />
         <TamvMediaAtlas locale={locale} />
       </main>
       <footer className="site-footer" lang={locale}>
