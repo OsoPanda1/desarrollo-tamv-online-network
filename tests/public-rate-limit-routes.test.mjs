@@ -10,6 +10,7 @@ test("all abusable public endpoints use the shared distributed limiter", () => {
     { path: "app/api/v1/research/federated/route.ts", scope: "research-federated", limit: 20 },
     { path: "app/api/v1/provenance/validate/route.ts", scope: "provenance-validate", limit: 60 },
     { path: "app/api/v1/ecosystem/metadata/route.ts", scope: "ecosystem-metadata", limit: 120 },
+    { path: "app/api/v1/huggingface/route.ts", scope: "huggingface-snapshot", limit: 120 },
     { path: "app/api/assistant/route.ts", scope: "assistant", limit: 30 },
   ];
 

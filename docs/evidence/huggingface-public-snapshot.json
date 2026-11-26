@@ -1,0 +1,276 @@
+{
+  "schema": "tamv-hf-public-metadata/v1",
+  "generated_at": "2026-11-26T01:53:16.697Z",
+  "hf_cli_version": "2.4.0",
+  "source": "Hugging Face Hub public list commands via hf CLI",
+  "search_terms": [
+    "spanish",
+    "latin america"
+  ],
+  "limits": {
+    "scope": "Public repository metadata only",
+    "excluded": [
+      "tokens",
+      "private or gated repositories",
+      "model weights",
+      "inference output",
+      "descriptions",
+      "external verification claims"
+    ],
+    "per_query_limit": 5,
+    "max_entries_per_kind": 20
+  },
+  "results": {
+    "models": [
+      {
+        "id": "Aleksandar1932/gpt2-spanish-classics",
+        "author": "Aleksandar1932",
+        "url": "https://huggingface.co/Aleksandar1932/gpt2-spanish-classics",
+        "created_at": "2022-03-02T23:29:04.000Z",
+        "last_modified": "2022-03-02T23:29:04.000Z",
+        "downloads": 432,
+        "likes": 2,
+        "tags": [],
+        "pipeline_tag": "text-generation"
+      },
+      {
+        "id": "CarlosPR/mt5-spanish-memmories-analysis",
+        "author": "CarlosPR",
+        "url": "https://huggingface.co/CarlosPR/mt5-spanish-memmories-analysis",
+        "created_at": "2022-03-02T23:29:04.000Z",
+        "last_modified": "2022-03-02T23:29:04.000Z",
+        "downloads": 22,
+        "likes": 0,
+        "tags": []
+      },
+      {
+        "id": "Darkame/Naruto-Latin-American",
+        "author": "Darkame",
+        "url": "https://huggingface.co/Darkame/Naruto-Latin-American",
+        "created_at": "2023-07-06T17:39:17.000Z",
+        "last_modified": "2023-07-06T17:39:17.000Z",
+        "downloads": 0,
+        "likes": 0,
+        "tags": [
+          "license:mit"
+        ]
+      },
+      {
+        "id": "FacebookAI/xlm-roberta-large-finetuned-conll02-spanish",
+        "author": "FacebookAI",
+        "url": "https://huggingface.co/FacebookAI/xlm-roberta-large-finetuned-conll02-spanish",
+        "created_at": "2022-03-02T23:29:04.000Z",
+        "last_modified": "2022-03-02T23:29:04.000Z",
+        "downloads": 361,
+        "likes": 9,
+        "tags": [],
+        "pipeline_tag": "fill-mask"
+      },
+      {
+        "id": "Sam845/Vox_Latin_American_Spanish_Dub",
+        "author": "Sam845",
+        "url": "https://huggingface.co/Sam845/Vox_Latin_American_Spanish_Dub",
+        "created_at": "2024-02-07T01:08:15.000Z",
+        "last_modified": "2024-02-07T01:08:15.000Z",
+        "downloads": 0,
+        "likes": 0,
+        "tags": []
+      },
+      {
+        "id": "SkippyLean/Peter_Griffin_Latin_American_Spanish",
+        "author": "SkippyLean",
+        "url": "https://huggingface.co/SkippyLean/Peter_Griffin_Latin_American_Spanish",
+        "created_at": "2023-08-03T11:11:05.000Z",
+        "last_modified": "2023-08-03T11:11:05.000Z",
+        "downloads": 0,
+        "likes": 0,
+        "tags": [
+          "license:unknown"
+        ]
+      },
+      {
+        "id": "dccuchile/albert-base-spanish-finetuned-mldoc",
+        "author": "dccuchile",
+        "url": "https://huggingface.co/dccuchile/albert-base-spanish-finetuned-mldoc",
+        "created_at": "2022-03-02T23:29:04.000Z",
+        "last_modified": "2022-03-02T23:29:04.000Z",
+        "downloads": 20,
+        "likes": 0,
+        "tags": [],
+        "pipeline_tag": "text-classification"
+      },
+      {
+        "id": "dccuchile/albert-base-spanish-finetuned-ner",
+        "author": "dccuchile",
+        "url": "https://huggingface.co/dccuchile/albert-base-spanish-finetuned-ner",
+        "created_at": "2022-03-02T23:29:04.000Z",
+        "last_modified": "2022-03-02T23:29:04.000Z",
+        "downloads": 23,
+        "likes": 0,
+        "tags": [],
+        "pipeline_tag": "token-classification"
+      },
+      {
+        "id": "reggans/Llama-3.2-3B-Instruct-bnb-4bit-DPO-Latin-American",
+        "author": "reggans",
+        "url": "https://huggingface.co/reggans/Llama-3.2-3B-Instruct-bnb-4bit-DPO-Latin-American",
+        "created_at": "2024-11-27T03:43:20.000Z",
+        "last_modified": "2024-11-27T03:43:20.000Z",
+        "downloads": 0,
+        "likes": 0,
+        "tags": [
+          "license:apache-2.0"
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "id": "FulcoPin/latin-american-baroque-18k-multimodal",
+        "author": "FulcoPin",
+        "url": "https://huggingface.co/datasets/FulcoPin/latin-american-baroque-18k-multimodal",
+        "created_at": "2026-02-21T20:33:24.000Z",
+        "last_modified": "2026-02-21T22:21:01.000Z",
+        "downloads": 8,
+        "likes": 0,
+        "tags": [
+          "license:cc-by-4.0",
+          "format:parquet"
+        ],
+        "sha": "cd1aeedee66ee75eb2601fa44b4bb1282c0aff36"
+      },
+      {
+        "id": "PleIAs/Spanish-PD-Newspapers",
+        "author": "PleIAs",
+        "url": "https://huggingface.co/datasets/PleIAs/Spanish-PD-Newspapers",
+        "created_at": "2024-03-09T23:41:15.000Z",
+        "last_modified": "2024-03-21T15:20:59.000Z",
+        "downloads": 1013,
+        "likes": 5,
+        "tags": [
+          "format:parquet"
+        ],
+        "sha": "17509f22d33a5f82def051e853899b8b65d7a9e2"
+      },
+      {
+        "id": "Ramitha/spanish-legal-data-2",
+        "author": "Ramitha",
+        "url": "https://huggingface.co/datasets/Ramitha/spanish-legal-data-2",
+        "created_at": "2023-11-03T21:46:04.000Z",
+        "last_modified": "2023-11-03T21:53:20.000Z",
+        "downloads": 164,
+        "likes": 2,
+        "tags": [
+          "license:mit",
+          "format:parquet"
+        ],
+        "sha": "100605dd113086d00cabae5f239edc2e1343257e"
+      },
+      {
+        "id": "bertin-project/alpaca-spanish",
+        "author": "bertin-project",
+        "url": "https://huggingface.co/datasets/bertin-project/alpaca-spanish",
+        "created_at": "2023-03-20T11:51:06.000Z",
+        "last_modified": "2023-03-24T11:38:19.000Z",
+        "downloads": 1195,
+        "likes": 38,
+        "tags": [
+          "task_categories:text-generation",
+          "language:es",
+          "license:cc-by-4.0",
+          "format:parquet"
+        ],
+        "sha": "47078cb55738e8041dae8d87dae6e11d97574468"
+      },
+      {
+        "id": "emailmarketingdataset/latin-america-consumer-dataset",
+        "author": "emailmarketingdataset",
+        "url": "https://huggingface.co/datasets/emailmarketingdataset/latin-america-consumer-dataset",
+        "created_at": "2026-03-16T15:39:53.000Z",
+        "last_modified": "2026-06-02T13:06:06.000Z",
+        "downloads": 16,
+        "likes": 0,
+        "tags": [
+          "task_categories:tabular-classification",
+          "task_categories:tabular-regression",
+          "language:en",
+          "license:cc-by-4.0"
+        ],
+        "sha": "fbe5961946ac52e255b2f4f12fe22b5e7c4863f2"
+      },
+      {
+        "id": "jorge-henao/disco_poetry_spanish",
+        "author": "jorge-henao",
+        "url": "https://huggingface.co/datasets/jorge-henao/disco_poetry_spanish",
+        "created_at": "2022-03-16T03:42:59.000Z",
+        "last_modified": "2022-03-17T03:19:06.000Z",
+        "downloads": 196,
+        "likes": 4,
+        "tags": [
+          "format:csv"
+        ],
+        "sha": "689f949a36ec83a2a6f14e1fc4a52cf22a704d56"
+      },
+      {
+        "id": "juanmoisesdelas/cyberaddiction-in-latin-america-database-by-age-gr",
+        "author": "juanmoisesdelas",
+        "url": "https://huggingface.co/datasets/juanmoisesdelas/cyberaddiction-in-latin-america-database-by-age-gr",
+        "created_at": "2026-03-20T12:59:30.000Z",
+        "last_modified": "2026-03-20T12:59:31.000Z",
+        "downloads": 8,
+        "likes": 0,
+        "tags": [
+          "task_categories:tabular-classification",
+          "task_categories:tabular-regression",
+          "language:en",
+          "license:cc0-1.0"
+        ],
+        "sha": "3cdec46616c371fbe05219df0827904dfc734dab"
+      },
+      {
+        "id": "juanmoisesdelas/mental-health-disorders-in-latin-american-universi",
+        "author": "juanmoisesdelas",
+        "url": "https://huggingface.co/datasets/juanmoisesdelas/mental-health-disorders-in-latin-american-universi",
+        "created_at": "2026-03-20T12:59:23.000Z",
+        "last_modified": "2026-03-20T12:59:25.000Z",
+        "downloads": 26,
+        "likes": 0,
+        "tags": [
+          "task_categories:tabular-classification",
+          "task_categories:tabular-regression",
+          "language:en",
+          "license:cc0-1.0"
+        ],
+        "sha": "0675fb1218066ab055c9970adc550cb82a264001"
+      },
+      {
+        "id": "juanmoisesdelas/technology-adoption-in-latin-america-2000-2025-lon",
+        "author": "juanmoisesdelas",
+        "url": "https://huggingface.co/datasets/juanmoisesdelas/technology-adoption-in-latin-america-2000-2025-lon",
+        "created_at": "2026-03-20T12:59:04.000Z",
+        "last_modified": "2026-03-20T12:59:06.000Z",
+        "downloads": 8,
+        "likes": 0,
+        "tags": [
+          "task_categories:tabular-classification",
+          "task_categories:tabular-regression",
+          "language:en",
+          "license:cc0-1.0"
+        ],
+        "sha": "66ebd4be9dd016fc31f4f99fcf33bbb98edf754f"
+      },
+      {
+        "id": "wesamhaddad14/spanishNLP",
+        "author": "wesamhaddad14",
+        "url": "https://huggingface.co/datasets/wesamhaddad14/spanishNLP",
+        "created_at": "2022-03-24T16:36:16.000Z",
+        "last_modified": "2022-03-24T16:46:39.000Z",
+        "downloads": 49,
+        "likes": 4,
+        "tags": [
+          "format:csv"
+        ],
+        "sha": "5a3e6f4f6abdc2088363b7d4ececec81b3c8a053"
+      }
+    ]
+  }
+}

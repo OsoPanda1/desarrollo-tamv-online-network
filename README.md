@@ -2,170 +2,267 @@
 
 **Tecnología Avanzada Mexicana Versátil · Territorio Autónomo de Memoria Viva**
 
-Independent Mexican initiative connecting research, technology, digital communities and living territorial memory through a Latin American perspective.
+**Proyecto impulsado con colaboración de tecnología latinoamericana TAMV ONLINE NETWORK Orgullosamente Realmontenses.**
 
-- Application: Next.js App Router, React and TypeScript.
-- Data layer: PostgreSQL via Drizzle ORM.
-- Authentication dependency: Better Auth; verify runtime configuration before production.
-- Validation: Zod.
-- Companion institutional repository: https://github.com/OsoPanda1/tamvonline-weboficial.com
-- Deployment URL reported by GitHub metadata: https://desarrollo-tamv-online-network.vercel.app
+Producto: **PLAY & GO**. Este nombre se conserva en las superficies institucionales y de auditoría; no se sustituye por una marca de terceros.
 
-## Licensing, citation and reuse
+Iniciativa mexicana independiente de investigación, tecnología, memoria territorial y sistemas de evidencia. El repositorio principal es `OsoPanda1/desarrollo-tamv-online-network`; la rama de trabajo validada se integra en `main` de forma aditiva, sin rebase ni reescritura de historial publicado.
 
-**License scope proposed in this branch:** original software under Apache-2.0 (`LICENSE`) and authored narrative documentation under CC BY 4.0 (`LICENSE-DOCS`). [`LICENSES.md`](LICENSES.md) defines the boundary and explicitly excludes uncleared third-party assets and community-sensitive material. The license files apply only to works whose rightsholders can grant the stated rights; a merge does not clear third-party rights automatically.
+---
 
-- [Licensing scope](LICENSES.md) distinguishes source code, prose documentation, third-party assets, and restricted/community-governed information.
-- [`CITATION.cff`](CITATION.cff) provides citation metadata; it is not a license, peer-review claim, accreditation or evidence of production readiness.
-- [Code of Conduct](CODE_OF_CONDUCT.md), [Security Policy](SECURITY.md) and [Contributing](CONTRIBUTING.md) define participation, responsible reporting and review expectations.
-- A hash, DOI, ORCID or public repository listing does not by itself prove authorship, source truth, legal status or production readiness.
+## Estado actual de la validación
 
-## Institutional charter and participation
+Validación local ejecutada sobre el árbol integrado:
 
-The bilingual [Who We Are / Quiénes somos] page at `/quienes-somos` presents TAMV's mission, vision, founder attribution, operating philosophy, cooperation paths and protection rules. The canonical [charter and cooperation playbook](docs/institutional/charter-and-cooperation.md) explains the intake-to-release protocol, community data limits and evidence boundaries. This charter states project commitments; it does not claim every system or external bridge is already operational.
+| Comando | Resultado |
+|---|---|
+| `pnpm test` (`node:test`) | **174/174 pruebas** |
+| `pnpm typecheck` | OK |
+| `pnpm build` (Next.js 16.4.6) | OK |
+| `pnpm audit --prod --audit-level high` | Sin vulnerabilidades conocidas |
 
-## Current product areas
+Notas honestas sobre esa tabla:
 
-Institutional pages, researchers/developers, projects, research topics and proposals, moderation/appeals, HCU transformation map and simulation, research exports, and a curated community-discovery hub.
+- El build local mostró advertencias de Better Auth por `BETTER_AUTH_URL`/base URL y secreto por defecto. No se imprimieron ni committed valores secretos; la configuración productiva sigue siendo un gate pendiente.
+- `public/build-evidence.json` se regeneró durante el build y se revirtió antes del commit; el evidence publicado no se sustituye por un artefacto local.
+- No se ejecutó deploy en esta sesión. La integración de Speed Insights no crea por sí sola métricas: éstas aparecen sólo después de un despliegue real y visitas reales.
+- Los runs de GitHub Actions/CodeQL revisados aparecieron sin `steps` recuperables y sin logs por API; no se afirma que pasaron.
 
-The companion repository separately contains Auth0/OIDC, Supabase-backed TAMV ID/member registry, ORCID linking, federated metadata search, DOI audit and VETRA workflows. These are separate applications, not automatically one runtime. Identity, data, APIs, authorization and deployment must be federated explicitly; copying screens or linking domains is not secure integration. See [the federation contract](docs/architecture/federation-contract.md).
+---
 
-## HCU observatory and institutional interface
+## Stack y superficies
 
-The active `/hcu` route defaults to an interactive perspective-projected 3D field. It uses the public graph returned by the PostgreSQL application layer and supports orbit rotation, zoom, domain focus, layer controls, selection, and descriptive analytics. The former 2D scheme and record list remain as alternate reading modes.
+- **Aplicación**: Next.js 16.4.6, App Router, React 19.3.1, TypeScript.
+- **Datos**: PostgreSQL con Drizzle ORM; pool configurado por `PG_POOL_MAX`.
+- **Autenticación**: Better Auth; exige HTTPS, cookies endurecidas y configuración productiva antes de habilitarse.
+- **Validación**: Zod en contratos de API y envelopes de procedencia.
+- **Observabilidad**: `@vercel/analytics/next` y `@vercel/speed-insights/next` se renderizan en el layout raíz **sólo en producción**.
+- **Repositorio institucional companions**: `OsoPanda1/tamvonline-weboficial.com`.
+- **Repositorio canónico Creator OS**: `AnubisVillasenor1/tamv-creator-intelligence`, con CI 3/3 OK y deployment `dpl_EYkn7wcJWfWr4nurAzc66kKKSXMG` en estado READY según la metadata consultada. Ese estado pertenece a ese repositorio; no se traslada automáticamente a esta app.
 
-The institutional Living Universe under `WEBINSTITUCIONAL-TAMVONLINE/web/mapa.html` has its own browser-rendered canvas and the corpus `WEBINSTITUCIONAL-TAMVONLINE/web/assets/mapa/graph.js`. That static documentary corpus is not automatically synchronized with the application's PostgreSQL graph. The 3D layout and metrics are descriptive encodings, not causal predictions or evidence of independent validation. See [HCU observatory v2 architecture](docs/architecture/hcu-observatory-v2.md).
+Las superficies activas incluyen:
 
-## Support and donation checkout
+- `/` — consola Living Atlas con revelado progresivo y navegación bilingüe.
+- `/quienes-somos`, `/origenes`, `/guia`, `/institucionalizacion` — identidad, carta, guía práctica y hoja de ruta institucional.
+- `/investigacion`, `/proyectos`, `/investigadores`, `/fuentes` — investigación editorial y registros públicos.
+- `/hcu`, `/atlas`, `/portal/hcu` — observatorio HCU con campo 3D interactivo, modos analíticos y visualización territorial.
+- `/formacion`, `/membresias`, `/apoyar` — formación, membresías y apoyo institucional transparente.
+- `/ecosistema`, `/ecosistema/metadata`, `/desarrolladores` — descubrimiento federado y contrato público.
+- `/auditoria-creator` — dossier de Creator OS con límites explícitos de firma y verificación.
 
-The shared navigation, institutional landing sections, application footer, and research-theme invitation link to `/apoyar`. The route is deliberately transparent when no payment provider is configured: it does not collect payment details or claim that a transaction took place.
+### HCU observatory and institutional interface
 
-- `TAMV_DONATION_URL` is an optional server-side hosted-checkout URL; leave it empty until the recipient, terms, fees, and reporting process are ready.
-- Redirects require HTTPS and a pre-approved host. GitHub links are accepted only in the `/sponsors/<account>` form; new providers require an explicit reviewed allowlist update in `app/apoyar/page.tsx`.
-- The default support route offers institutional contact and governance information instead of inventing bank details or simulating a payment.
-- Never expose checkout session secrets, private donation records, donor identities, or payment-provider credentials in a public repository or client-side bundle.
+`/hcu` usa el grafo público de PostgreSQL con campo 3D interactivo, modos analíticos y lectura alternativa en 2D. El corpus `graph.js` del sitio institucional estático es documental y **no se sincroniza automáticamente** con el grafo de la aplicación. Las métricas y el layout son codificaciones descriptivas, no predicciones causales ni evidencia de validación independiente. Ver [`docs/architecture/hcu-observatory-v2.md`](docs/architecture/hcu-observatory-v2.md).
 
-## Paid memberships, course access and external startup resources
+---
 
-**Implementation state:** the core membership/course implementation was merged through [PR #27](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/27). A follow-up branch adds an exact React lockfile pin, regression checks, Vercel Connect/Chat SDK guidance and the future institutionalization/ROR roadmap; that follow-up is not yet merged or deployed. Billing remains deliberately disabled by default.
+## Auditoría W1–W8 y blueprint TPVA
 
-- `/membresias` — individual plan **MXN $229/month per user** and business plan **MXN $699/month per organization**. The application fixes the price server-side; the browser cannot supply or change it.
-- `/formacion` — five practical modules: verifiable developer profile, auditable portfolio, startup problem validation, business model/roadmap, and evidence-based investor pitch. Access is checked on the server for an active/trialing membership; module completion is stored against the authenticated user.
-- `POST /api/billing/checkout` — creates a Stripe recurring Checkout Session with current terms acceptance and a bounded session expiry.
-- `POST /api/webhooks/stripe` — verifies the raw-body Stripe signature, uses idempotent event receipt storage, and synchronizes subscription status. A browser success redirect alone does not activate access.
-- `POST /api/billing/portal` and `GET /api/billing/me` — authenticated subscription management and the current user's own billing status.
-- `/api/memberships/course-progress` — checks membership entitlement server-side and persists the authenticated user's own progress.
-- `/membresias/condiciones` and `/privacidad` — scope, recurring billing and data-treatment disclosures. Their production/legal fields require operator review; the live checkout stays blocked until explicit approval flags are configured.
+La revisión W1–W8 cerró con:
 
-**Important scope boundaries:** the business membership is currently attached to the contracting user account and organization name. Team seats, invitations, workspace administration and transferring membership to employee accounts are not implemented. TAMV offers a route to apply for collaboration, not guaranteed project acceptance, paid work or funding.
+- Digest de auditoría: `sha256:b233fb962557debc22e5e5d4356241b458ed1d8a1176007ad59750da2cf9a1cd`.
+- KeyId de referencia: `sha256:6b8a20278fbe7610b0df1489ade107cd8d943f3977cbe985d9c1cfa10958f229`.
+- Blueprint maestro: [`docs/security-review/TPVA_MASTER_BLUEPRINT.md`](docs/security-review/TPVA_MASTER_BLUEPRINT.md), SHA-256 `04F9728B88E36F016374D47B2DF1BF4AA06E20F7B55D426BF9C4D235DD000951`.
 
-AI Lounge is an independent third-party platform. This branch provides public links and a profile/program discovery guide; it does not provide a paid pass, referral entitlement or a verified commercial partnership. External program eligibility and access remain subject to AI Lounge's current terms.
+**TPVA (TAMV Proof & Verification Atlas)** convierte la infraestructura existente en procedencia, integridad, revisión y evidencia pública. La fuente de verdad del recibo es TPVA: Atlas indexa sin reescribir payloads; LITLE se usa sólo como adaptador auditado, nunca como primitiva criptográfica.
 
-A future institutionalization goal is documented at [Institutionalization and ROR roadmap](/institucionalizacion) and [in the governance plan](docs/strategy/institutional-legalization-and-ror-roadmap.md). Future net membership revenue could contribute to legal and administrative costs only after a documented governance decision and transparent accounting. There is no fixed allocation or guarantee today. ROR IDs are free; a ROR ID is not legal incorporation and registry inclusion is curated.
+Distinción no negociable:
 
-See the [production and Stripe runbook](docs/production/membership-billing-runbook.md) and the [production/deployment audit](docs/audit/2026-11-23-production-deployment-memberships-audit.md) before configuring secrets, applying the migration or requesting a production release.
+- TPVA puede automatizar comprobaciones, generar recibos propios y preparar paquetes de revisión.
+- Una insignia externa existe **sólo si un tercero la emite**. Una autoevaluación, un score automatizado o un recibo firmado por TAMV no es certificación externa.
+- `VERIFIED`, `WITH NOTES`, `FAILED`, `UNVERIFIED` y `REVOKED` son estados de evidencia TPVA, no sellos de terceros.
+- No se afirma no-repudio, cumplimiento normativo, PQC efectivo, SLSA runtime ni seguridad absoluta.
 
-## Developer onboarding and adoption
+### Fase 1 implementada
 
-The public developer entry point is [the developer guide](/desarrolladores). It documents the public research topics/projects endpoints, HCU graph and JSON-LD/CSV exports, and distinguishes public reads from authenticated write routes.
+La Fase 1 del blueprint quedó implementada y probada:
 
-- [TAMV practical guide](/guia) — bilingual walkthrough of what TAMV is, how to explore its main sections, how to interpret catalog and implementation states, and how to make a responsible first contribution.
+- [`docs/specs/tpva-receipt-v1.md`](docs/specs/tpva-receipt-v1.md) — contrato y límites.
+- [`docs/specs/tpva-receipt-v1.schema.json`](docs/specs/tpva-receipt-v1.schema.json) — esquema `tpva-receipt/v1`.
+- [`lib/proofs/canonical.ts`](lib/proofs/canonical.ts) — canonicalización determinista.
+- [`lib/proofs/hash.ts`](lib/proofs/hash.ts) — SHA-256 del payload canónico.
+- [`lib/proofs/validate.ts`](lib/proofs/validate.ts) — validación estricta y rutas seguras.
+- [`lib/proofs/verify.ts`](lib/proofs/verify.ts) — verificador offline fail-closed.
+- [`docs/specs/tpva-test-vectors/`](docs/specs/tpva-test-vectors/) — 15 vectores positivos y negativos.
+- [`tests/tpva-receipt-v1.test.mjs`](tests/tpva-receipt-v1.test.mjs) — 9 pruebas con Ed25519 real generado en memoria.
 
-- [Public API quickstart](docs/api/public-api-quickstart.md) — reproducible `curl` examples, response boundaries, and license/provenance notes.
-- [OpenAPI 3.1 contract](public/openapi.yaml) — machine-readable specification for current public read endpoints; session-protected write routes are intentionally not documented as anonymous integrations.
-- [CONTRIBUTING](CONTRIBUTING.md) — setup, review expectations, security handling, accessibility, and evidence requirements.
-- [Developer adoption strategy](docs/strategy/developer-adoption-latam.md) — proposed LATAM/international onboarding, contributor pathways, experiments, and privacy-respecting measurements.
-- [Platform excellence roadmap](docs/strategy/tamv-platform-excellence-roadmap.md) — prioritized product, academic, security, operations, and adoption acceptance criteria.
-- [Evidence-to-production research plan](docs/strategy/evidence-driven-research-to-production.md) — selected scholarly evidence translated into prioritized engineering controls, release gates, and explicit limitations.
-- [HTML hub audit, 2026-11-23](docs/audit/2026-11-23-tamv-html-hub-audit.md) — measured findings from the standalone HTML snapshot, including its embedded-asset cost and local-only interactions.
+El hash canónico excluye `receipt_hash` y `signature`, ordena claves y arrays y normaliza fechas UTC. La firma cubre exactamente esos bytes. `review.external: true` o `review.type: "independent"` **nunca** producen una insignia externa: offline se degradan a `WITH NOTES`. Ninguna clave privada se guarda en disco; el material PQC de LITLE se trata como stand-in no probado.
 
-The adoption plan is a strategy, not evidence that a campaign or partnership has run. Views, clones, contributions, retention, and conversion must remain “not measured” until instrumentation or a reproducible manual process provides the numbers.
+Las fases 2–7 del blueprint (Evidence Pack Builder, firma KMS/HSM, persistencia append-only, API `/api/v1/proofs`, UI pública y federación Atlas/LITLE) siguen pendientes y no se presentan como implementadas.
 
-## Vercel Connect, Chat SDK and provider credentials
+---
 
-The project maintains design documentation for secure optional connectors. These guides do **not** mean the Connect SDK or a chat bot has been installed or connected; the repository's Vercel project and provider connectors must be verified and configured before activating the integration.
+## LATAMV 2.0
 
-- [Vercel Connect SDK and security model](docs/integrations/vercel-connect-sdk.md) — OIDC identity, temporary provider credentials, user/app subjects, least privilege and experimental MCP event limits.
-- [Vercel Connect cost optimization](docs/operations/vercel-connect-cost-optimization.md) — token cache, refresh policy, trigger destinations, retries and observability.
-- [Chat SDK with Vercel Connect](docs/integrations/chat-sdk-with-vercel-connect.md) — adapter examples, OIDC webhook trust boundaries, idempotency and rollout plan.
-- [Lockfile incident report](docs/production/pnpm-lockfile-repair.md) — React 19.2.4 missing-dependency incident, current pin and required frozen-install verification.
-- [Institutionalization and ROR roadmap](docs/strategy/institutional-legalization-and-ror-roadmap.md) — future legal and accounting pathway, evidence gates and ROR criteria.
+LATAMV 2.0 está integrado como **spec / evaluador local determinista**:
 
-## Local development
+- [`lib/governance/latamv-v2.ts`](lib/governance/latamv-v2.ts) — selección de reglas por jurisdicción, ventana de validez y decisión fail-closed.
+- [`docs/governance/latamv-v2-specification.md`](docs/governance/latamv-v2-specification.md) — especificación y límites.
+- [`tests/latamv-v2-policy.test.mjs`](tests/latamv-v2-policy.test.mjs) — 9 pruebas de política.
+- El panel público `/gobernanza` es un evaluador local y nunca afirma autorización productiva.
 
-Use a supported Node.js LTS and pnpm compatible with the lockfile.
+`requiredApprovals()` devuelve aritmética `[1,1,2,2,3]`; no verifica identidades. `signatureMetadata` es una etiqueta no verificada. `verifyRuntimeProvenance()` sigue `{ verified: false, status: "not-integrated" }`.
 
-    pnpm install --frozen-lockfile
-    cp .env.example .env.local
-    pnpm test
-    pnpm typecheck
-    pnpm build
-    pnpm dev
+**No implementados:** ZK, quórum criptográfico real, auto-sanación, pasaporte soberano, negociación jurisdiccional ejecutable y cumplimiento legal. No se presentan como functionalities terminadas.
 
-## Operational health endpoints
+---
 
-- `GET /api/health` — application liveness. This is intentionally independent of PostgreSQL so a database outage does not cause a healthy application process to be treated as dead.
-- `GET /api/health/ready` — readiness probe. Executes `SELECT 1` against PostgreSQL with a 1.5-second response budget and a driver-level query timeout; returns HTTP 200 only when `DATABASE_URL` is configured and the database responds within budget, otherwise HTTP 503. A timed-out query may finish or be cancelled later at the driver/pool layer; the HTTP response itself is bounded.
-- Both endpoints send `Cache-Control: no-store`. Readiness failures return a generic dependency state and never include connection strings, database hosts, exception text or credentials.
-- These endpoints are operational signals, not a full synthetic transaction, authentication check, schema migration validation or proof that every feature is healthy.
+## Puente Hugging Face (metadatos públicos)
 
-## Database operations
+Se reparó el shim local de `hf` y se usa `huggingface_hub`/CLI 2.4.0 con `hf auth whoami` = `AnubisVilla`. El puente es deliberadamente local y acotado:
 
-- `PG_POOL_MAX` configures the maximum PostgreSQL connections per Node.js process. The default is 3; valid values are integers from 1 through 20. Choose the value against the provider connection limit, serverless instance concurrency and whether the database URL uses a connection pooler.
-- `pnpm db:preflight` — read-only schema and integrity diagnostics; set `DATABASE_URL` explicitly to a disposable/test database first.
-- `pnpm db:preflight -- --strict` — exits unsuccessfully if schema checks or integrity diagnostics find issues.
-- `pnpm db:migrate` — applies checksummed migrations only after the strict preflight passes. Do not run this against production until a backup restore has been rehearsed and the exact target database is confirmed.
+- [`scripts/hf-evidence-snapshot.mjs`](scripts/hf-evidence-snapshot.mjs) — generador con comandos de sólo lectura permitidos.
+- [`pnpm hf:snapshot`](package.json) — regenera el snapshot.
+- [`docs/evidence/huggingface-public-snapshot.json`](docs/evidence/huggingface-public-snapshot.json) — snapshot fechado `2026-11-26T01:53:16.697Z` con 9 modelos y 10 datasets públicos.
+- [`docs/evidence/README.md`](docs/evidence/README.md) — alcance y límites.
+- [`lib/huggingface/public-snapshot.ts`](lib/huggingface/public-snapshot.ts) — validación Zod del archivo comiteado.
+- `GET /api/v1/huggingface` — expone el snapshot local con rate limit; **no llama a Hugging Face en runtime**.
 
-Do not commit .env.local, credentials, private keys, database dumps or real user data. Review [database migration guidance](docs/database/migrations.md) before applying migrations; migrations assume the existing schema is present and do not bootstrap a blank database. A successful build does not prove authorization, database workflows or production integrations work.
+El generador sólo ejecuta `hf models list`, `hf datasets list` y `hf version` con términos y límites fijos. No guarda tokens, repositorios privados o gated, descripciones, pesos, embeddings ni salidas de inferencia. Un listado de Hub no implica evaluación, adopción, licencia claro ni revisión externa.
 
-## Security and release gates
+---
 
-The project maintains separate controls for application identity, data integrity, supply chain, privacy and operational recovery. See:
+## Observabilidad de Vercel
 
-- [Triple hardening standard](docs/security/triple-hardening.md)
-- [Evidence-based release readiness gates](docs/security/release-readiness.md)
-- [Baseline technical audit](docs/audit/2026-11-baseline.md)
+`@vercel/speed-insights@2.1.0` se añadió con `pnpm` y se integró en [`app/layout.tsx`](app/layout.tsx) junto a Analytics existente. Ambos componentes se montan bajo `process.env.NODE_ENV === 'production'`.
 
-A release is not production-ready merely because workflows or checklists exist. Record passing CI, dependency audit, CodeQL, secret scan, authorization tests, database recovery evidence and a smoke test for the exact deployed commit. If the runner provides no executable logs or the deployment version cannot be confirmed, mark validation as blocked rather than passed.
+- [`tests/observability-contract.test.mjs`](tests/observability-contract.test.mjs) bloquea la dependencia, el import y el gate de producción.
+- No hay script `deploy` en `package.json`.
+- Core Web Vitals requieren deploy y visitas; hasta entonces el estado es “no medido”.
 
-## Triple hardening
+---
 
-1. Cryptographic/data plane: TLS, managed encryption at rest, authenticated encryption where justified, key rotation, integrity digests and backup recovery.
-2. Application/identity plane: deny-by-default authorization, server-side validation, session protection, rate limits, safe redirects, audit events and supply-chain checks.
-3. Governance/operations plane: consent, privacy/retention, moderation/appeals, release approvals, incident response and evidence-backed claims.
+## API pública y federación
 
-A hash is not encryption, a digital signature, a trusted timestamp, or proof that a claim is true.
+El contrato machine-readable está en [`public/openapi.yaml`](public/openapi.yaml) y la guía reproducible en [`docs/api/public-api-quickstart.md`](docs/api/public-api-quickstart.md).
 
-## Evidence policy
+Rutas públicas relevantes:
 
-Keep facts, self-reported declarations, model outputs, simulations, proposals and independently verified evidence distinct. External records should retain provider, canonical URL, retrieval time, identifier, license/terms where applicable and validation status. Do not infer peer review, legal ownership, patentability, organizational eligibility or impact from the mere existence of a URL, DOI or repository.
+| Ruta | Función | Límite |
+|---|---|---|
+| `GET /api/v1/research/topics` | Catálogo editorial de temas | Público |
+| `GET /api/v1/research/projects` | Registros públicos de proyectos | Público |
+| `GET /api/v1/researchers` | Perfiles opt-in | Público |
+| `GET /api/v1/hcu/graph` | Grafo declarativo HCU | Público; no es modelo causal validado |
+| `GET /api/v1/exports/research` | JSON-LD/CSV exportable | Público |
+| `GET /api/v1/ecosystem` | Catálogo de ocho sistemas | Público |
+| `GET /api/v1/ecosystem/metadata` | Metadata pública de GitHub | Público; dominio fijo |
+| `GET /api/v1/huggingface` | Snapshot local de metadatos públicos HF | Público; sin llamada remota |
+| `POST /api/v1/provenance/validate` | Validación de envelope, 64 KiB | Público; no prueba autoría |
+| `POST /api/v1/research/federated` | Puente de búsqueda institucional | Deshabilitado sin URL HTTPS configurada |
 
-Do not publish invented member counts, traffic, conversions or ecosystem maturity percentages. Until telemetry is instrumented and validated, state “not yet measured”.
+Todas las rutas abusables usan el limitador distribuido PostgreSQL con hashing de identidad y fail-closed HTTP 503. Las rutas de escritura requieren sesión y mismo origen; no son APIs anónimas.
 
-## Community discovery
+El catálogo ecosistémico separa `catalogued`, `contracted`, `adapter_implemented` y `verified`. Estar listado no prueba conexión viva, salud de deployment ni verificación. Las fuentes canónicas y contratos están en:
 
-External links are discovery resources only. No affiliation, endorsement, data sharing or permission to reproduce third-party content is implied. Prefer official APIs/feeds and honor terms, licenses and access controls.
+- [`docs/architecture/ecosystem-federation-v1.md`](docs/architecture/ecosystem-federation-v1.md)
+- [`docs/architecture/github-public-metadata-adapter-v1.md`](docs/architecture/github-public-metadata-adapter-v1.md)
+- [`docs/architecture/institutional-research-federation-v1.md`](docs/architecture/institutional-research-federation-v1.md)
+- [`docs/architecture/federation-contract.md`](docs/architecture/federation-contract.md)
 
-## Institutional attribution
+---
 
-TAMV materials identify Edwin Oswaldo Castillo Trejo, also known by the creative signature Anubis Villaseñor. Public claims must remain bounded by their available evidence.
+## Membresías, formación y apoyo
 
+### Support and donation checkout
 
-## TAMV ecosystem federation
+El CTA de apoyo aparece en la navegación compartida, el landing institucional, el footer de la app y la invitación de temas de investigación, y enlaza a `/apoyar`. Esa ruta es transparente cuando no hay proveedor de pago configurado: **no solicita ni procesa pagos** y no afirma que ocurrió una transacción. `TAMV_DONATION_URL` siembra un hosted-checkout HTTPS con hosts aprobados; sin él se ofrece contacto institucional en lugar de inventar datos bancarios.
 
-The ecosystem now has a canonical, public discovery catalog at `GET /api/v1/ecosystem`, backed by [the typed system registry](lib/ecosystem/registry.ts). It lists the core app, institutional Next.js app, static institutional site, Core Atlas, Heptafederate/Core Kodex, Método 4L, LITLE Atlas Suite and LITLE Verified Trust with explicit responsibilities and data boundaries.
+**Billing permanece deshabilitado por defecto.** Live checkout requiere aprobaciones explícitas y configuración productiva.
 
-- [Ecosystem federation contract v1.0.0](docs/architecture/ecosystem-federation-v1.md) defines identity boundaries, canonical data ownership, provenance, phased adapter rollout, licensing review and release gates.
-- Catalog states distinguish `catalogued`, `contracted`, `adapter_implemented` and `verified`. A repository being listed is not proof of a live connection.
-- The first increment is intentionally read-only discovery. It does not merge databases, share authentication sessions, synchronize records, or assert remote service health.
-- Code-level consolidation remains subject to repository license, asset, dependency and cryptographic implementation review.
+- `/membresias`: plan individual **MXN $229/mes por usuario** y plan business **MXN $699/mes por organización**. Precios fijados en servidor.
+- `/formacion`: cinco módulos prácticos con progreso guardado para el usuario autenticado.
+- `POST /api/billing/checkout`, `POST /api/webhooks/stripe`, `POST /api/billing/portal`, `GET /api/billing/me`: sesión, firma raw-body de Stripe e idempotencia; el redirect del navegador no activa acceso.
+- `/apoyar`: no solicita datos bancarios ni simula pagos. `TAMV_DONATION_URL` permite redirecciones HTTPS a hosts aprobados.
+- El plan business está ligado al usuario contratante y nombre de organización; no hay seats, invitaciones ni transferencia a empleados implementados.
+- AI Lounge es una plataforma tercera; los enlaces son descubrimiento, no pase, afiliación ni patrocinio verificado.
+- La hoja de ruta ROR es un objetivo institucional futuro; un ROR ID no es incorporación legal ni verificación criptográfica.
 
-The endpoint and registry tests live in `tests/ecosystem-registry.test.mjs`. They must pass in CI and the endpoint must be smoke-tested on a deployed preview before the catalog is used as a production integration surface.
+Antes de producción: [`docs/production/membership-billing-runbook.md`](docs/production/membership-billing-runbook.md) y [`docs/audit/2026-11-23-production-deployment-memberships-audit.md`](docs/audit/2026-11-23-production-deployment-memberships-audit.md).
 
-A stateless `POST /api/v1/provenance/validate` endpoint validates provenance envelopes against the v1 Zod schema. It enforces JSON input and a 64 KiB body limit, returns structured schema errors, does not persist or fetch submitted sources, and does not establish source truth or authorship. See the [OpenAPI contract](public/openapi.yaml) and [federation architecture](docs/architecture/ecosystem-federation-v1.md). Its route tests are in `tests/provenance-validation-route.test.mjs`.
+---
 
-A bounded read-only adapter at `GET /api/v1/ecosystem/metadata` retrieves public GitHub repository metadata for the same eight catalogued systems. It reports partial upstream failures without claiming that an application is deployed or healthy; it uses no GitHub credentials, does not fetch repository code, and does not change the catalog integration states. See [the adapter contract](docs/architecture/github-public-metadata-adapter-v1.md) and its tests in `tests/ecosystem-github-metadata.test.mjs`.
+## Operaciones, base de datos y health
 
-The read-only route `POST /api/v1/research/federated` can forward a bounded research or organization query to the institutional app’s public research API. It remains disabled until the server-only `TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL` variable is set to the verified HTTPS `/api/research/search` endpoint; no target hostname is hardcoded or supplied by clients. See [the federation bridge contract](docs/architecture/institutional-research-federation-v1.md) and `tests/institutional-research-federation.test.mjs`.
+- `GET /api/health` — liveness independiente de PostgreSQL.
+- `GET /api/health/ready` — `SELECT 1` con presupuesto de 1.5 s; HTTP 503 si falla o expira, sin exponer cadenas de conexión ni errores internos.
+- `PG_POOL_MAX` — entero 1–20, default 3.
+- `pnpm db:preflight` y `pnpm db:preflight -- --strict` — diagnóstico sólo lectura; usar primero contra base desechable.
+- `pnpm db:migrate` — migraciones checksummed sólo tras preflight estricto y backup/restore ensayado.
+- **`migrations/0004_public_rate_limits.sql` sigue pendiente de aplicar** en la base correcta. Sin la tabla, el limitador responde 503 en producción; nunca se abre sin límite.
+- La carpeta `supabase/migrations/`, `drizzle/` y los datos privados de Isabella/Horizon no se tocaron en este trabajo.
 
-The metadata dashboard is available at `/ecosistema`, and the federated query form is embedded in `/investigacion`. Both interfaces distinguish source metadata from application health or scientific verification. Search terms are forwarded to the configured institutional service and may reach its metadata providers; do not submit personal or confidential data. Before public production, apply `migrations/0004_public_rate_limits.sql` for the shared PostgreSQL counter used by `/api/v1/research/federated`, `/api/v1/provenance/validate`, `/api/v1/ecosystem/metadata` and `/api/assistant`; the limiter is enabled by default on Vercel production and returns HTTP 429 with `Retry-After`. The core application does not claim that an in-memory counter would protect a serverless deployment, and the shared store fails closed with HTTP 503 if unavailable. An additional edge/WAF limit is still recommended.
+---
+
+## Seguridad y puertas de release
+
+Los modelos de control están en:
+
+- [`docs/security/triple-hardening.md`](docs/security/triple-hardening.md)
+- [`docs/security/triple-hardening-controls.md`](docs/security/triple-hardening-controls.md)
+- [`docs/security/release-readiness.md`](docs/security/release-readiness.md)
+- [`docs/audit/2026-11-baseline.md`](docs/audit/2026-11-baseline.md)
+
+Tres planos:
+
+1. **Criptográfico/datos**: TLS, cifrado gestionado, digests, rotación de claves y recuperación de backups.
+2. **Aplicación/identidad**: autorización deny-by-default, validación server-side, sesiones, rate limits, safe redirects y supply chain.
+3. **Gobernanza/operación**: consentimiento, retención, moderación, apelaciones, aprobaciones e incidencias.
+
+Bloqueos que permanecen explícitos:
+
+- Vercel reportó `Deployment rate limited — retry in 24 hours`; no se desplegó este árbol.
+- Actions/CodeQL/secret scanning sin logs recuperables; marcar como bloqueado, no pasado.
+- Sin staging controlado para preflight de migración, backup/restore ni pruebas IDOR con sesiones reales.
+- TPVA fases 2–7 y verificación externa real siguen pendientes.
+- No se afirma “100 % producción”, no-repudio, cumplimiento normativo, PQC efectivo ni certificación no emitida.
+
+---
+
+## Desarrollo local
+
+Usa Node 26.x y pnpm 12.3.4. En este entorno:
+
+```powershell
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' install --frozen-lockfile
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' test
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' typecheck
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' build
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' audit --prod --audit-level high
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' hf:snapshot
+node 'C:\Users\tamvo\AppData\Roaming\npm\node_modules\pnpm\bin\pnpm.mjs' dev
+```
+
+Tras `build`, revertir `public/build-evidence.json` si el script local lo regeneró. Nunca commitear `.env.local`, credenciales, claves privadas, dumps ni datos reales de usuarios.
+
+---
+
+## Evidencia, licencias y citación
+
+- [`LICENSES.md`](LICENSES.md) separa **original software under Apache-2.0**, prosa CC BY 4.0, materiales terceros y material comunitario restringido. Un merge no limpia derechos de terceros.
+- [`CITATION.cff`](CITATION.cff) es metadata de citación; no es licencia, revisión por pares, acreditación ni prueba de readiness.
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`SECURITY.md`](SECURITY.md) y [`CONTRIBUTING.md`](CONTRIBUTING.md) definen participación, reporte responsable y revisión.
+- Una URL, DOI, ORCID, hash o listado público no prueba autoría, verdad de fuente, estado legal ni producción.
+- Métricas de adopción, tráfico, conversiones y madurez permanecen **no medidas** hasta instrumentación y validación reproducibles.
+
+La carta bilingüe y el playbook operativo están en [`docs/institutional/charter-and-cooperation.md`](docs/institutional/charter-and-cooperation.md). La identidad pública se presenta en `/quienes-somos` con Edwin Oswaldo Castillo Trejo, también conocido como Anubis Villaseñor; las afirmaciones públicas se limitan a la evidencia disponible.
+
+---
+
+## Mapa de documentos
+
+| Tema | Documento |
+|---|---|
+| Blueprint maestro TPVA | `docs/security-review/TPVA_MASTER_BLUEPRINT.md` |
+| Spec TPVA + vectores | `docs/specs/tpva-receipt-v1.md`, `docs/specs/tpva-test-vectors/` |
+| LATAMV 2.0 | `docs/governance/latamv-v2-specification.md` |
+| Triple hardening | `docs/security/triple-hardening-controls.md` |
+| Puente HF | `docs/evidence/README.md` |
+| API pública | `docs/api/public-api-quickstart.md`, `public/openapi.yaml` |
+| Federación | `docs/architecture/ecosystem-federation-v1.md` |
+| Adopción | `docs/strategy/developer-adoption-latam.md`, `docs/strategy/tamv-platform-excellence-roadmap.md` |
+| Investigación a producción | `docs/strategy/evidence-driven-research-to-production.md` |
+| Gobernanza ROR | `docs/strategy/institutional-legalization-and-ror-roadmap.md` |
+| Billing | `docs/production/membership-billing-runbook.md` |
+
+**Proyecto impulsado con colaboración de tecnología latinoamericana TAMV ONLINE NETWORK Orgullosamente Realmontenses.**

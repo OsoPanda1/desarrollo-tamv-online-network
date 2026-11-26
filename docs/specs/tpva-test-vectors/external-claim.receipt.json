@@ -1,0 +1,42 @@
+{
+  "schema": "tpva-receipt/v1",
+  "receipt_id": "rcpt_22222222222222222222222222222222",
+  "repository": "https://github.com/OsoPanda1/desarrollo-tamv-online-network",
+  "commit_sha": "7d74b88472a185d3f539adffc42a2a5122ba10e0",
+  "artifact_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "evidence": [
+    {
+      "path": "TEST_SUMMARY.json",
+      "media_type": "application/json",
+      "size_bytes": 128,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "checks": [
+    {
+      "name": "unit-tests",
+      "tool": "node:test",
+      "tool_version": "v26.13.1",
+      "status": "pass",
+      "evidence_ref": "TEST_SUMMARY.json",
+      "mandatory": true
+    }
+  ],
+  "review": {
+    "type": "independent",
+    "scope": "Vector con reclamo de revision externa",
+    "limitations": "",
+    "external": true,
+    "provider": "OpenSSF Scorecard",
+    "provider_url": "https://scorecard.dev/viewer/?uri=github.com/OsoPanda1/desarrollo-tamv-online-network"
+  },
+  "issued_at": "2026-11-25T12:00:00.000Z",
+  "previous_receipt_hash": null,
+  "receipt_hash": "sha256:2650c1d068f4d7ff2257a8fcee96a233056fe7bc25701aac3ac0290c69a34ba0",
+  "signature": {
+    "algorithm": "Ed25519",
+    "kid": "tpva-test-key-01",
+    "public_key_ref": "test-keys/tpva-test-key-01.pub.pem",
+    "value": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

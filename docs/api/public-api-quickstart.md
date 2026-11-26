@@ -66,6 +66,14 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' -o tamv-res
 
 Use the CSV for local exploration. Check the license declared for each record before redistributing the metadata or linked material.
 
+### 7. Hugging Face public-metadata snapshot
+
+```sh
+curl -fsS http://localhost:3000/api/v1/huggingface
+```
+
+Returns a committed snapshot generated locally by the `hf` CLI from public Hub list commands. The route reads the local file only: no runtime Hub request, no token, no model weights, no inference output and no endorsement of the listed repositories. See [the evidence bridge notes](../evidence/README.md) and `pnpm hf:snapshot` to regenerate the snapshot.
+
 ## Authentication boundary
 
 | Route family | Access |
@@ -75,6 +83,7 @@ Use the CSV for local exploration. Check the license declared for each record be
 | `GET /api/v1/researchers` | Public read; only opt-in public profiles are returned |
 | `GET /api/v1/hcu/graph` | Public read |
 | `GET /api/v1/exports/research` and `?format=csv` | Public read/export |
+| `GET /api/v1/huggingface` | Public read of a committed public-metadata snapshot; no runtime Hub call |
 | `POST /api/v1/research/federated` | Public read-only query proxy; returns 503 until its upstream URL is configured |
 | `POST /api/v1/research/proposals` | Authenticated session and same-origin request required; private by default |
 | `POST /api/v1/research/interests` | Authenticated session and same-origin request required |

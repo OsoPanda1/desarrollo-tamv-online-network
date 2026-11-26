@@ -13,6 +13,7 @@ test("published OpenAPI contract documents implemented public GET endpoints", ()
     "/api/v1/researchers:",
     "/api/v1/hcu/graph:",
     "/api/v1/exports/research:",
+    "/api/v1/huggingface:",
   ]) {
     assert.ok(spec.includes(path), "missing OpenAPI path " + path);
   }
