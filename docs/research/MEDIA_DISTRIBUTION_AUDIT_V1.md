@@ -69,7 +69,7 @@ Se revisaron las páginas públicas de investigación, arquitectura, origen, HCU
 
 ## Verificación pendiente
 
-Los archivos fuente pueden comprobarse en la rama, pero la vista visual final requiere TypeScript, pruebas, build de producción y un preview accesible. La conexión actual de Vercel no expone un proyecto o deployment consultable para esta rama; no se afirma que la redistribución ya esté publicada en el sitio vivo.
+Los archivos fuente pueden comprobarse en la rama, pero la vista visual final requiere TypeScript, pruebas, build de producción y un preview accesible. El bot de Vercel reportó el 26 de noviembre de 2026 que los despliegues superaron el límite gratuito diario (`api-deployments-free-per-day`, más de 100), por lo que los nuevos despliegues quedan limitados durante aproximadamente 24 horas. La conexión de Vercel disponible no tiene acceso al alcance del proyecto indicado por ese bot y requiere autorización de equipo; el build log no ha sido inspeccionado. No se afirma que la redistribución ya esté publicada en el sitio vivo.
 
 
 ## Revisión de las 45 rutas de la aplicación
