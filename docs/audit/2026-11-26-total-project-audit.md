@@ -4,14 +4,14 @@
 **Repositorio:** `OsoPanda1/desarrollo-tamv-online-network`  
 **Rama inspeccionada:** `feat/research-evidence-media-atlas-v1`  
 **PR de integración:** [#45 — distribución contextual de medios](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/45)  
-**Commit de referencia para la inspección de código y las últimas correcciones:** `45fe78493dac4f81f78d8feff1d78898cc56f25a`  
+**Commit de referencia para la inspección de código y las últimas correcciones:** `9fcea0e26daa3e4c2a0929627ea43232c3faf42c`  
 **Dictamen:** **implementación en revisión; no declarar producción lista**.
 
 ## 1. Alcance, método y límites de esta auditoría
 
-Se consultaron los metadatos del PR, la lista recursiva de Git (500 entradas de tipo archivo; árbol no truncado), los tres workflows de calidad/seguridad, las rutas de API, los scripts de migración, los contratos de membresía, los documentos de operación, las pruebas y los componentes implicados en el cambio visual.
+Se consultaron los metadatos del PR, la lista recursiva de Git (502 entradas de tipo archivo; árbol no truncado), los tres workflows de calidad/seguridad, las rutas de API, los scripts de migración, los contratos de membresía, los documentos de operación, las pruebas y los componentes implicados en el cambio visual.
 
-Esta es una **auditoría documental y de código fuente dirigida**. No es una prueba de penetración, revisión exhaustiva línea por línea de los 500 archivos, prueba de carga ni aceptación de producción. No se dispuso de un checkout ejecutable en este entorno. Por ello, no se afirma que se hayan ejecutado `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm typecheck`, `pnpm build`, pruebas de navegador, migraciones reales o transacciones de Stripe sobre el commit revisado.
+Esta es una **auditoría documental y de código fuente dirigida**. No es una prueba de penetración, revisión exhaustiva línea por línea de los 502 archivos, prueba de carga ni aceptación de producción. No se dispuso de un checkout ejecutable en este entorno. Por ello, no se afirma que se hayan ejecutado `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm typecheck`, `pnpm build`, pruebas de navegador, migraciones reales o transacciones de Stripe sobre el commit revisado.
 
 ## 2. Estado verificable del árbol
 
@@ -20,7 +20,7 @@ Esta es una **auditoría documental y de código fuente dirigida**. No es una pr
 | Aplicación web | App Router de Next.js; páginas institucionales, investigación, HCU, formación, membresías y portal | Existe implementación fuente; disponibilidad runtime no demostrada por esta revisión |
 | API | 36 archivos de ruta bajo `app/api` en el inventario consultado | Rutas declaradas; cada integración requiere pruebas de ejecución y permisos |
 | Base de datos | Cuatro migraciones SQL bajo `migrations/` | Migraciones versionadas presentes; no se ejecutaron aquí contra una base |
-| Pruebas automatizadas | 33 archivos `tests/*.test.mjs` en el inventario consultado, incluido el nuevo test de visibilidad multimedia | Suite localizada; la suite del commit actual no pudo ejecutarse |
+| Pruebas automatizadas | 34 archivos `tests/*.test.mjs` en el inventario consultado, incluido el contrato de visibilidad y distribución multimedia | Suite localizada; la suite del commit actual no pudo ejecutarse |
 | Seguridad de CI | Workflows `.github/workflows/ci.yml`, `codeql.yml` y `secret-scan.yml` | Configuración presente; ejecuciones recientes fallidas antes de iniciar pasos |
 | Evidencia TPVA | Contrato y verificador de recibo v1, vectores de prueba y documentación | Fase 1 descrita como implementada; fases posteriores siguen pendientes |
 | Medios por temática | 20 identificadores de imagen y 12 de video distribuidos en 20 áreas | Espacios editoriales y sus etiquetas; no equivalen a 32 archivos audiovisuales publicados |
@@ -70,16 +70,22 @@ La implementación previa usaba el primer valor de `X-Forwarded-For` cuando `x-r
 - Integración del helper en el servidor: `18ad36926fa10cd627c803b135ab698fbb472419`.
 - Prueba del rechazo de `X-Forwarded-For` no canónico: `45fe78493dac4f81f78d8feff1d78898cc56f25a`.
 
-**Estado:** corrección y prueba fuente añadidas. Antes de producción se debe confirmar que el ingress entrega un `x-real-ip` canónico y sobrescribe el valor entrante; la suite real y la comprobación en Preview siguen pendientes.
+**Estado:** corrección y prueba fuente añadidas. La documentación de Vercel indica que el ingress estándar sobrescribe `X-Forwarded-For` y define `x-real-ip` como equivalente; si existe un proxy adicional delante de Vercel, confirmar que no introduzca un valor no confiable. La suite real y la comprobación en Preview siguen pendientes.
+
+### 3.5 Contrato de distribución multimedia de extremo a extremo de fuente
+
+Se añadió `tests/media-distribution-contract.test.mjs` con tres pruebas de contrato: conserva los 20 IDs de imagen y 12 de video (secuenciales, únicos), contrasta las 20 áreas con el inventario y exige exactamente un montaje `TamvSectionMedia` por ruta asignada, y comprueba que la portada sólo contiene `IMG-04`/`VID-01`. La inspección estática del árbol confirmó 32 IDs únicos, 20 áreas exactas y los 20 montajes esperados.
+
+**Estado:** los contratos están en la rama; no se han ejecutado por la indisponibilidad de runners. No equivalen a la revisión del render final en navegador ni convierten los espacios editoriales en activos audiovisuales publicados.
 
 ## 4. Bloqueos de liberación prioritarios
 
 | ID | Prioridad | Hallazgo confirmado | Riesgo / efecto | Acción de cierre |
 |---|---|---|---|---|
-| REL-01 | **P0** | En el commit `0cef1ee...`, CI, CodeQL y secret scan concluyeron `failure` en 3–4 segundos; las respuestas de los jobs muestran `runner_id: 0` y `steps: []`. | No hay evidencia de que se haya ejecutado el checkout, la instalación, la auditoría, TypeScript, las pruebas, el análisis de código o el escaneo de secretos. Esto **no demuestra** un error de compilación ni que se hayan encontrado secretos. | Recuperar la causa en la configuración/estado de GitHub Actions del propietario; ejecutar de nuevo y exigir pasos/logs reales. No etiquetar estos checks como aprobados ni inferir una causa que no aparece en los logs. |
+| REL-01 | **P0** | En el commit `9fcea0e26daa3e4c2a0929627ea43232c3faf42c`, CI, CodeQL y secret scan concluyeron `failure` en 2–3 segundos; las respuestas de los jobs muestran `runner_id: 0` y `steps: []`. | No hay evidencia de que se haya ejecutado el checkout, la instalación, la auditoría, TypeScript, las pruebas, el análisis de código o el escaneo de secretos. Esto **no demuestra** un error de compilación ni que se hayan encontrado secretos. | Recuperar la causa en la configuración/estado de GitHub Actions del propietario; ejecutar de nuevo y exigir pasos/logs reales. No etiquetar estos checks como aprobados ni inferir una causa que no aparece en los logs. |
 | REL-02 | **P0** | El estado combinado del commit de referencia mostró Vercel `pending`; el bot de Vercel ya había reportado el límite gratuito `api-deployments-free-per-day` (más de 100 deploys en el día). | No se pudo confirmar una Preview READY ni abrir los logs de build del proyecto mediante el acceso actual. | Verificar el equipo/proyecto correcto en Vercel, abrir logs de un deployment existente cuando el límite y permisos lo permitan y validar una Preview del SHA exacto. No lanzar intentos repetidos mientras siga el límite. |
-| DB-01 | **P0/P1** | `migrations/0004_public_rate_limits.sql` crea `public.tamv_rate_limit_counters`; README indica que la migración sigue pendiente de aplicar en la base correcta. | Con el limitador compartido habilitado y la tabla ausente, las rutas públicas protegidas por ese limitador pueden responder HTTP 503 deliberadamente. No abrir el sistema sin límite para ocultar el problema. | Preparar backup verificable, usar una base de staging identificada, ejecutar `pnpm db:preflight`, `pnpm db:migrate` y de nuevo `pnpm db:preflight`; comprobar las rutas limitadas. Producción sólo después de revisión y autorización. |
-| RATE-01 | **P1** | La implementación anterior caía en una sal fija y predecible para derivar claves de identidad. | La sal ahora es secreta, mínima (32 caracteres) y aplicada mediante HMAC-SHA-256; falta la configuración real por ambiente y la ejecución de pruebas. | Crear una sal aleatoria y distinta para cada ambiente, confirmar que la migración 0004 esté aplicada y verificar con tests que faltante/sal débil produce 503 controlado. |
+| DB-01 | **P0/P1** | `migrations/0004_public_rate_limits.sql` crea `public.tamv_rate_limit_counters`; README indica que la migración sigue pendiente de aplicar en la base correcta. | Con el limitador compartido habilitado y la tabla ausente, las rutas públicas protegidas por ese limitador pueden responder HTTP 503 deliberadamente. No abrir el sistema sin límite para ocultar el problema. | Preparar backup verificable, usar una base de staging identificada, ejecutar `pnpm db:preflight`, `pnpm db:migrate` y de nuevo `pnpm db:preflight` mediante `scripts/db-migrate.mjs`; comprobar las rutas limitadas. Aplicar y verificar la migración antes de desplegar a Vercel Production, sólo después de revisión y autorización. |
+| RATE-01 | **P1** | La implementación anterior caía en una sal fija y predecible para derivar claves de identidad. | La sal ahora es secreta, mínima (32 caracteres) y aplicada mediante HMAC-SHA-256; falta la configuración real por ambiente y la ejecución de pruebas. | Crear una sal aleatoria y distinta para cada ambiente; verificar mediante test que faltante/sal débil produce `rate_limit_configuration_invalid` antes de contactar la base y que un fallo de almacén con sal válida produce `rate_limit_unavailable`. Confirmar la migración 0004 por el runner antes del deploy. |
 | RATE-02 | **P1** | La identidad anterior caía en el primer valor de `X-Forwarded-For` cuando faltaba `x-real-ip`, y el primer valor puede estar controlado por el cliente si el proxy no lo normaliza. | El código ahora acepta sólo `x-real-ip` y usa `anonymous` si falta; falta verificar la cabecera canónica de la infraestructura. | Confirmar que el ingress sobrescriba `x-real-ip`; comprobar en Preview que dos IPs reales reciben buckets distintos y que el valor `X-Forwarded-For` enviado por el cliente no altera la identidad. |
 | AUTH-01 | **P0** | La configuración de autenticación depende de `APP_URL`, `BETTER_AUTH_URL` y `BETTER_AUTH_SECRET` del entorno. El README registra advertencias previas de URL/base y secreto por defecto durante build. | El código por sí solo no prueba que el secreto/URL adecuados existan en cada ambiente. Un build verde no garantiza que login, cookies y orígenes confiables estén correctamente configurados en runtime. | Configurar secreto criptográficamente aleatorio (al menos 32 caracteres), origen HTTPS canónico y orígenes confiables explícitos en el gestor de secretos; probar registro, login, cierre de sesión, sesión expirada y rechazo cross-origin en Preview. Nunca copiar secretos al repo. |
 | PAY-01 | **P0 para cobro live** | Checkout y portal de Stripe existen en el árbol; `TAMV_BILLING_MODE` está deshabilitado por defecto y el checkout live depende de claves, webhook y flags explícitos. | No hay evidencia de una transacción de prueba, webhook real, Customer Portal probado, política fiscal/resolución legal aprobada ni ciclo de renovación comprobado. | Completar el runbook `docs/production/membership-billing-runbook.md`: Stripe test, firma inválida, idempotencia, eventos duplicados/desordenados, renovación fallida, cancelación, acceso y reembolsos; conservar cobro live deshabilitado hasta aprobación expresa del responsable. |
@@ -119,12 +125,14 @@ La implementación previa usaba el primer valor de `X-Forwarded-For` cuando `x-r
 
 ## 7. Evidencia de los bloqueos actuales
 
-- CI del commit `45fe78493dac4f81f78d8feff1d78898cc56f25a`: [run 45870454997](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870454997).
-- CodeQL del mismo commit: [run 45870455359](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455359).
-- Secret scan del mismo commit: [run 45870455017](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455017).
-- El estado combinado del commit mostró Vercel `pending`: [deployment status](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/B2eQSkAKjwWj74dJYS8pPXSZAhjo).
+El código y las pruebas de regresión se encuentran en el commit `9fcea0e26daa3e4c2a0929627ea43232c3faf42c`:
 
-Los tres workflows concluyeron `failure` en aproximadamente dos segundos; la API de jobs muestra `runner_id: 0`, `runner_name: ""` y `steps: []`. Por tanto, no se puede afirmar que los comandos de CI se hayan iniciado. Tampoco se puede inferir que el código compile mal o que se haya encontrado un secreto: la causa concreta sigue sin registros accesibles. No hay Preview verificada ni build exitoso del SHA referido en esta auditoría.
+- CI y build/typecheck: [run 45871854605](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854605).
+- CodeQL: [run 45871854553](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854553).
+- Secret scan: [run 45871854473](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854473).
+- Estado Vercel para ese SHA: `pending` ([deployment](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/D6vgRd912QC6QMqdJHr5MQpZEwoS)).
+
+Los tres workflows concluyeron `failure` en aproximadamente dos segundos; la API de jobs muestra `runner_id: 0`, `runner_name: ""` y `steps: []`. No se puede afirmar que los comandos de CI se hayan iniciado. Tampoco se puede inferir que el código compile mal o que se haya encontrado un secreto: la causa concreta sigue sin registros accesibles. Un comentario de Vercel del 26 de noviembre reportó explícitamente el límite gratuito `api-deployments-free-per-day` (más de 100 despliegues/día); no hay Preview verificada ni build exitoso del SHA referido.
 
 ## 8. Conclusión de auditoría
 
