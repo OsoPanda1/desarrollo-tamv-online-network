@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { resolveLocale } from "@/lib/i18n"
@@ -80,5 +81,6 @@ export default async function GovernancePage({ searchParams }: { searchParams: S
         <div className="policy-cta"><div><h3>{english ? "Need a correction or appeal?" : "¿Necesitas corregir o apelar?"}</h3><p>{english ? "Use the private submission portal to follow your record and present an appeal." : "Usa el portal privado para seguir tu registro y presentar una apelación."}</p></div><Link className="text-link" href="/portal">{english ? "Open the portal" : "Abrir el portal"} <ArrowUpRight aria-hidden="true" /></Link></div>
       </div>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="governance" locale={locale} />
+      </TamvAppShell>
 }
