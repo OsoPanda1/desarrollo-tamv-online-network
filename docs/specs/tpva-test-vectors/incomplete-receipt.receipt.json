@@ -1,0 +1,36 @@
+{
+  "schema": "tpva-receipt/v1",
+  "receipt_id": "rcpt_0123456789abcdef0123456789abcdef",
+  "repository": "https://github.com/OsoPanda1/desarrollo-tamv-online-network",
+  "commit_sha": "7d74b88472a185d3f539adffc42a2a5122ba10e0",
+  "artifact_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "evidence": [
+    {
+      "path": "TEST_SUMMARY.json",
+      "media_type": "application/json",
+      "size_bytes": 128,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "SBOM.spdx.json",
+      "media_type": "application/json",
+      "size_bytes": 512,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ],
+  "review": {
+    "type": "automated",
+    "scope": "Validacion estructural, canonicalizacion, hash y firma Ed25519 de prueba",
+    "limitations": "",
+    "external": false
+  },
+  "issued_at": "2026-11-25T12:00:00.000Z",
+  "previous_receipt_hash": null,
+  "receipt_hash": "sha256:533a4a448440e54c8354a1120fa4841d8b000eae68a1eacbc6b09877cf56b145",
+  "signature": {
+    "algorithm": "Ed25519",
+    "kid": "tpva-test-key-01",
+    "public_key_ref": "test-keys/tpva-test-key-01.pub.pem",
+    "value": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

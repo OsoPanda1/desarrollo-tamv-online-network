@@ -3,6 +3,7 @@ import { z } from "zod"
 import { isabellaAgent } from "@/lib/isabella-agent"
 import { isSameOriginRequest } from "@/lib/http"
 import { TAMV_LEARNING_PATHS } from "@/lib/tamv-learning-curriculum"
+import { enforcePublicRateLimit } from "../../../lib/rate-limit/server.ts"
 
 export const maxDuration = 30
 
@@ -29,6 +30,13 @@ function extractTextParts(parts: unknown[]) {
 }
 
 export async function POST(request: Request) {
+  const rateLimited = await enforcePublicRateLimit(request, {
+    scope: "assistant",
+    limit: 30,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rateLimited) return rateLimited;
+
   if (!isSameOriginRequest(request)) {
     return Response.json({ error: "Forbidden" }, { status: 403, headers: { "Cache-Control": "no-store" } })
   }

@@ -1,4 +1,10 @@
 import { z } from "zod";
+import { isSafeReferenceUrl } from "../validation.ts";
+
+const publicHttpUrl = z.string().trim().url().max(2048).refine(
+  isSafeReferenceUrl,
+  "URI must use a public HTTP/HTTPS URL without credentials, private addresses or local hostnames",
+);
 
 const isoDateTimeWithZone = z.string().refine(
   (value) => {
@@ -26,7 +32,7 @@ const digestLengths = {
  */
 export const provenanceRecordSchema = z.object({
   schemaVersion: z.literal("1.0.0"),
-  sourceUri: z.string().url().refine((value) => { try { return ["http:", "https:"].includes(new URL(value).protocol); } catch { return false; } }, "Source URI must use HTTP or HTTPS"),
+  sourceUri: publicHttpUrl,
   sourceSystem: z.string().trim().min(1).max(200),
   sourceRecordId: z.string().max(500).nullable().optional(),
   sourceVersion: z.string().max(300).nullable().optional(),
@@ -53,7 +59,7 @@ export const provenanceRecordSchema = z.object({
     "source_verified",
     "rejected",
   ]),
-  validationEvidenceUri: z.string().url().refine((value) => { try { return ["http:", "https:"].includes(new URL(value).protocol); } catch { return false; } }, "Evidence URI must use HTTP or HTTPS").nullable().optional(),
+  validationEvidenceUri: publicHttpUrl.nullable().optional(),
   notes: z.string().max(2000).nullable().optional(),
 }).strict();
 

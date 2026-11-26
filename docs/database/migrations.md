@@ -20,6 +20,14 @@ Run `pnpm db:preflight` against the intended database before any migration. It v
 
 `0002_public_query_indexes.sql` adds indexes for public research-topic/project/publication listings, researcher directory reads, HCU graph queries, and topic-scoped proposal/interest lookups. It is additive and does not add constraints or rewrite rows. Apply it through the same strict-preflight migration runner only after a backup/restore rehearsal and query-plan review on a disposable database.
 
+## Third migration
+
+`0003_memberships_billing.sql` adds membership subscriptions, signed-webhook event ledger, and member course progress tables with plan/status/currency/terms checks. It is additive and does not enable live billing by itself.
+
+## Fourth migration
+
+`0004_public_rate_limits.sql` adds `tamv_rate_limit_counters` with a `(bucket, window_start_ms)` primary key so the shared limiter increments atomically across instances. The bucket is a SHA-256 hash of scope, salt and client identity; raw IP addresses are not stored. Apply it before setting `TAMV_RATE_LIMIT_ENABLED=true` or deploying to Vercel production, where the limiter is enabled by default. The runner's checksum prevents later edits to an applied file.
+
 ## Important limitation
 
 The repository did not contain a verified migration history at the time of this audit. Before running the migration against any shared database:

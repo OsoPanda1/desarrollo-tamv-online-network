@@ -51,6 +51,19 @@ test("readiness probe returns unavailable when the operation exceeds its budget"
   assert.equal(await probeWithinBudget(operation, 5), false);
 });
 
+test("readiness probe invokes the cancellation hook exactly when the budget expires", async () => {
+  const { probeWithinBudget } = await import("../lib/health.ts");
+  let cancellations = 0;
+  const slow = new Promise((resolve) => setTimeout(resolve, 100));
+
+  assert.equal(await probeWithinBudget(slow, 5, () => { cancellations += 1; }), false);
+  assert.equal(cancellations, 1);
+
+  cancellations = 0;
+  assert.equal(await probeWithinBudget(Promise.resolve(), 50, () => { cancellations += 1; }), true);
+  assert.equal(cancellations, 0);
+});
+
 test("readiness probe rejects invalid timeout budgets", async () => {
   const { probeWithinBudget } = await import("../lib/health.ts");
   await assert.rejects(() => probeWithinBudget(Promise.resolve(), 0), RangeError);

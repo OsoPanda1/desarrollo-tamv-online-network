@@ -7,7 +7,7 @@ TAMV is evolving. A public project record does not imply production readiness, p
 ## Where to start / Por dónde empezar
 
 1. Read the [README](README.md), [developer API guide](docs/api/public-api-quickstart.md), [architecture boundaries](docs/architecture/federation-contract.md), and [Code of Conduct](CODE_OF_CONDUCT.md).
-2. Review [licensing status](docs/governance/licensing-status.md). The repository currently has no root `LICENSE` file, so do not infer rights to reuse or redistribute code.
+2. Review [licensing status](docs/governance/licensing-status.md) and [license scope](LICENSES.md). The repository includes root `LICENSE` and `LICENSE-DOCS` files for works that their rightsholders can license; do not infer rights over third-party, private or community-governed material.
 3. Choose a small, verifiable issue: documentation, Spanish/English parity, accessibility, test coverage, source provenance, safe error handling, or a narrowly scoped feature.
 4. Open or review an [issue in GitHub](https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues) before large refactors so the intended result and acceptance criteria are clear.
 5. Reproduce the problem and record environment, steps, actual result, expected result and relevant logs. Remove tokens, personal data and production identifiers.

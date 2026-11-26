@@ -1,0 +1,63 @@
+{
+  "schema": "tpva-receipt/v1",
+  "receipt_id": "rcpt_0123456789abcdef0123456789abcdef",
+  "repository": "https://github.com/OsoPanda1/desarrollo-tamv-online-network",
+  "commit_sha": "7d74b88472a185d3f539adffc42a2a5122ba10e0",
+  "artifact_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "evidence": [
+    {
+      "path": "TEST_SUMMARY.json",
+      "media_type": "application/json",
+      "size_bytes": 128,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "SBOM.spdx.json",
+      "media_type": "application/json",
+      "size_bytes": 512,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ],
+  "checks": [
+    {
+      "name": "unit-tests",
+      "tool": "node:test",
+      "tool_version": "v26.13.1",
+      "status": "pass",
+      "evidence_ref": "TEST_SUMMARY.json",
+      "mandatory": true
+    },
+    {
+      "name": "typecheck",
+      "tool": "tsc",
+      "tool_version": "7.0.2",
+      "status": "pass",
+      "evidence_ref": "TEST_SUMMARY.json",
+      "mandatory": true
+    },
+    {
+      "name": "dependency-audit",
+      "tool": "pnpm audit",
+      "tool_version": "12.3.4",
+      "status": "pass",
+      "evidence_ref": "SBOM.spdx.json",
+      "mandatory": false
+    }
+  ],
+  "review": {
+    "type": "automated",
+    "scope": "Validacion estructural, canonicalizacion, hash y firma Ed25519 de prueba",
+    "limitations": "",
+    "external": false
+  },
+  "issued_at": "2026-11-25T12:00:00.000Z",
+  "previous_receipt_hash": null,
+  "receipt_hash": "sha256:7838dddbad5143ea5f4aa9161b0c1f9efab4094aa495730fc2ddd60c4bc6fed4",
+  "signature": {
+    "algorithm": "Ed25519",
+    "kid": "tpva-test-key-01",
+    "public_key_ref": "test-keys/tpva-test-key-01.pub.pem",
+    "value": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "badge": "VERIFIED"
+}

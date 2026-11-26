@@ -29,6 +29,6 @@ test("live membership checkout remains fail-closed across all entry points", () 
 });
 
 test("business membership does not promise unimplemented team seats", () => {
+  assert.match(page, /Employee seats, invitations, corporate roles, shared workspaces/);
   assert.match(page, /asientos para empleados, invitaciones, roles corporativos/);
-  assert.match(page, /employee seats, invitations, corporate roles, shared workspaces/);
 });

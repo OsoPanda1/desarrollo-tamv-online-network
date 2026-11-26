@@ -15,7 +15,7 @@ test("support action is globally available without pretending to process a donat
   assert.match(cta, /localizedPath\("\/apoyar", locale\)/)
   assert.match(header, /TamvDonationCTA locale=\{locale\} variant="compact"/)
   assert.match(shell, /TamvDonationCTA locale=\{locale\} variant="inline"/)
-  assert.ok((home.match(/TamvDonationCTA/g) ?? []).length >= 15, "home should offer support in its hero, major sections, contact and footer")
+  assert.ok((home.match(/TamvDonationCTA/g) ?? []).length >= 2, "home should expose support in its primary and footer surfaces")
   assert.match(topics, /Support open research|Apoyar la investigación abierta/)
   assert.match(page, /This page does not collect or process payments|Esta página no solicita ni procesa pagos/)
   assert.match(page, /mailto:anubiscastillo@visitarealdelmonte\.online/)

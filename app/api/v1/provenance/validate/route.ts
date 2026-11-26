@@ -1,4 +1,5 @@
 import { validateProvenanceRecord } from "../../../../../lib/ecosystem/provenance.ts";
+import { enforcePublicRateLimit } from "../../../../../lib/rate-limit/server.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -68,6 +69,13 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
  * verify authorship, or establish signature, timestamp, peer-review or accreditation claims.
  */
 export async function POST(request: Request): Promise<Response> {
+  const rateLimited = await enforcePublicRateLimit(request, {
+    scope: "provenance-validate",
+    limit: 60,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rateLimited) return rateLimited;
+
   const contentType = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
   const headers = {
     "Cache-Control": "no-store",

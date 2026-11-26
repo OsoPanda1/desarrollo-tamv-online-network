@@ -47,14 +47,12 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
   },
-  ...(isDevelopment
-    ? {
-        advanced: {
-          defaultCookieAttributes: {
-            sameSite: "none" as const,
-            secure: true,
-          },
-        },
-      }
-    : {}),
+  advanced: {
+    defaultCookieAttributes: {
+      httpOnly: true,
+      secure: true,
+      sameSite: isDevelopment ? ("none" as const) : ("lax" as const),
+      path: "/",
+    },
+  },
 })

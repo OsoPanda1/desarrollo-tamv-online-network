@@ -1,6 +1,6 @@
 # Estado de licencia del repositorio / Repository licensing status
 
-**Estado de esta rama:** propuesta explícita de separación de licencias para revisión del mantenedor y de derechos.
+**Estado actual:** el repositorio incluye `LICENSE` (Apache-2.0) y `LICENSE-DOCS` (CC BY 4.0) para las obras que sus titulares pueden licenciar; la separación no constituye revisión legal de cada archivo ni autoriza material de terceros.
 
 ## Política de alcance
 

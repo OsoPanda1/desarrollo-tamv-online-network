@@ -122,6 +122,27 @@ test("public signals poll no more often than the intended thirty-second interval
 });
 
 
+test("homepage uses guided progressive disclosure instead of showing every deep section at once", () => {
+  assert.match(component, /className="sovereign-paths"/);
+  assert.match(component, /Guided entry paths|Rutas guiadas de entrada/);
+  assert.equal((component.match(/className="sovereign-path"/g) ?? []).length, 3);
+  assert.match(component, /className="sovereign-path-mode"/);
+  assert.match(component, /aria-pressed=\{openPanel === "all"\}/);
+  assert.match(component, /className="sovereign-signals-toggle"/);
+  assert.match(component, /aria-expanded=\{signalsExpanded\}/);
+  assert.match(component, /className="sovereign-telemetry-items" id="sovereign-signals-list"/);
+  assert.equal((component.match(/<details className="sovereign-disclosure/g) ?? []).length, 2);
+  assert.match(component, /open=\{openPanel === "verify" \|\| openPanel === "all"\}/);
+  assert.match(component, /open=\{openPanel === "sources" \|\| openPanel === "all"\}/);
+  assert.match(component, /Choose one path\. The deeper inspection sections stay closed/);
+  assert.match(stylesheet, /\.sovereign-paths \{/);
+  assert.match(stylesheet, /\.sovereign-disclosure > summary \{/);
+  assert.match(stylesheet, /\.sovereign-telemetry-item\.sovereign-build-item \{ display: none; \}/);
+  assert.match(stylesheet, /\.sovereign-telemetry\.is-expanded \.sovereign-build-item \{ display: grid; \}/);
+  assert.ok(component.indexOf("sovereign-disclosure-verify") < component.indexOf('id="governance-inspector"'));
+  assert.ok(component.indexOf("sovereign-disclosure-sources") < component.indexOf('id="research-index"'));
+});
+
 test("orbital atlas includes native WebGL2 GLSL with SVG fallback and reduced-motion handling", () => {
   assert.match(webgl, /getContext\("webgl2"/);
   assert.match(webgl, /const canvas: HTMLCanvasElement = canvasRefValue as HTMLCanvasElement/);

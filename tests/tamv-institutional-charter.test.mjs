@@ -9,6 +9,7 @@ const license = await readFile(new URL("../LICENSE", import.meta.url), "utf8");
 const docsLicense = await readFile(new URL("../LICENSE-DOCS", import.meta.url), "utf8");
 const homepage = await readFile(new URL("../components/tamv-sovereign-console.tsx", import.meta.url), "utf8");
 const header = await readFile(new URL("../components/tamv-site-header.tsx", import.meta.url), "utf8");
+const shell = await readFile(new URL("../components/tamv-app-shell.tsx", import.meta.url), "utf8");
 const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 
 test("identity page provides bilingual mission, vision, founder and persistent identifiers", () => {
@@ -41,9 +42,9 @@ test("license scope separates original software, authored prose and third-party 
 });
 
 test("the founding charter is discoverable from navigation, atlas and sitemap", () => {
-  assert.ok(header.includes('href: "/quienes-somos"'));
-  assert.doesNotMatch(header, /href: "\/quienes-somos".*href: "\/quienes-somos"/s);
-  assert.ok(homepage.includes('localizedPath("/quienes-somos", locale)'));
+  assert.ok(header.includes('href: "/origenes"'));
+  assert.doesNotMatch(header, /href: "\/origenes".*href: "\/origenes"/s);
+  assert.ok(shell.includes('localizedPath("/quienes-somos", locale)'));
   assert.ok(homepage.includes('href={english ? "/quienes-somos?lang=en" : "/quienes-somos"}'));
   assert.match(homepage, /Mission, legacy and cooperation|Misión, legado y cooperación/);
   assert.ok(sitemap.includes('"/quienes-somos"'));
@@ -51,6 +52,6 @@ test("the founding charter is discoverable from navigation, atlas and sitemap", 
 
 test("institutional page does not present declared principles as proof of deployed capabilities", () => {
   assert.match(page, /not a claim that every future capability is already active|no afirman que todas las capacidades futuras ya estén activas/i);
-  assert.ok(charter.includes("A listed repository, a linked domain or a shared brand"));
+  assert.ok(charter.includes("A listed repository, a linked domain, a shared brand"));
   assert.ok(charter.includes("does not prove authenticated data exchange"));
 });

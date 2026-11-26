@@ -38,10 +38,10 @@ test("repository reuse, attribution, and contributor templates remain explicit",
   const bugTemplate = read(".github/ISSUE_TEMPLATE/bug_report.yml");
   const featureTemplate = read(".github/ISSUE_TEMPLATE/feature_request.yml");
   const researchTemplate = read(".github/ISSUE_TEMPLATE/research_contribution.yml");
-  assert.match(page, /Code license status: pending maintainer decision|Licencia del código: decisión del mantenedor pendiente/);
-  assert.match(readme, /repository code license status: pending|licencia del código.*pendiente/i);
-  assert.match(contributing, /root `LICENSE` file was not found|archivo `LICENSE` en la raíz/i);
-  assert.match(license, /Public visibility is not a grant of rights|disponibilidad pública.*no equivale a una licencia/i);
+  assert.match(page, /Code license status: Apache-2\.0 for original source and CC BY 4\.0 for authored docs|Licencia del código: Apache-2\.0 para código original y CC BY 4\.0 para documentación propia/);
+  assert.match(readme, /original software under Apache-2\.0|licencia del código.*Apache-2\.0/i);
+  assert.match(contributing, /includes root `LICENSE` and `LICENSE-DOCS` files|incluye `LICENSE` y `LICENSE-DOCS`/i);
+  assert.match(license, /Estado actual:\*\* el repositorio incluye `LICENSE` \(Apache-2\.0\) y `LICENSE-DOCS` \(CC BY 4\.0\)/i);
   assert.match(citation, /cff-version: 1\.2\.0/);
   assert.match(citation, /orcid\.org\/0009-0008-5050-1539/);
   assert.match(conduct, /Research integrity|Integridad de investigación/);

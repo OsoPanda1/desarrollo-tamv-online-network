@@ -32,6 +32,7 @@ export const noStoreHeaders = {
 export async function probeWithinBudget(
   operation: Promise<unknown>,
   timeoutMs: number,
+  onTimeout?: () => void,
 ): Promise<boolean> {
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
     throw new RangeError("timeoutMs must be a positive finite number");
@@ -45,7 +46,14 @@ export async function probeWithinBudget(
         () => false,
       ),
       new Promise<boolean>((resolve) => {
-        timer = setTimeout(() => resolve(false), timeoutMs);
+        timer = setTimeout(() => {
+          try {
+            onTimeout?.();
+          } catch {
+            // The probe already reports failure; a cleanup error must not change that result.
+          }
+          resolve(false);
+        }, timeoutMs);
       }),
     ]);
   } finally {

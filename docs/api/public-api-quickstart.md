@@ -56,7 +56,7 @@ curl -fsS http://localhost:3000/api/v1/research/federated \
 
 Use `"type":"organizations"` for the institutional provider's ROR organization search. The bridge reads public metadata only, does not share sessions or write access, and does not independently verify authorship, peer review, quality, or reuse rights.
 Search terms are forwarded to the configured institutional service and may be processed by its external metadata providers. Do not send personal, confidential or sensitive data.
-Browser requests with a supplied `Origin` must be same-origin. This application does not provide a distributed rate limiter; configure an edge/WAF rate limit for this public fan-out route before production exposure.
+Browser requests with a supplied `Origin` must be same-origin. In production this route uses the shared PostgreSQL fixed-window limiter (`20 requests / 10 minutes` per client identity) and returns HTTP 429 with `Retry-After` and `X-RateLimit-*` headers when the quota is exhausted. Apply `migrations/0004_public_rate_limits.sql` before enabling it; if the shared store is unavailable the route returns 503 instead of becoming unlimited. An edge/WAF limit is still recommended in front of the application, and client identity depends on trusted proxy headers being normalized by the deployment.
 
 ### 6. CSV export
 
@@ -65,6 +65,14 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' -o tamv-res
 ```
 
 Use the CSV for local exploration. Check the license declared for each record before redistributing the metadata or linked material.
+
+### 7. Hugging Face public-metadata snapshot
+
+```sh
+curl -fsS http://localhost:3000/api/v1/huggingface
+```
+
+Returns a committed snapshot generated locally by the `hf` CLI from public Hub list commands. The route reads the local file only: no runtime Hub request, no token, no model weights, no inference output and no endorsement of the listed repositories. See [the evidence bridge notes](../evidence/README.md) and `pnpm hf:snapshot` to regenerate the snapshot.
 
 ## Authentication boundary
 
@@ -75,6 +83,7 @@ Use the CSV for local exploration. Check the license declared for each record be
 | `GET /api/v1/researchers` | Public read; only opt-in public profiles are returned |
 | `GET /api/v1/hcu/graph` | Public read |
 | `GET /api/v1/exports/research` and `?format=csv` | Public read/export |
+| `GET /api/v1/huggingface` | Public read of a committed public-metadata snapshot; no runtime Hub call |
 | `POST /api/v1/research/federated` | Public read-only query proxy; returns 503 until its upstream URL is configured |
 | `POST /api/v1/research/proposals` | Authenticated session and same-origin request required; private by default |
 | `POST /api/v1/research/interests` | Authenticated session and same-origin request required |

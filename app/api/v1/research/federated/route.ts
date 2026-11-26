@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fetchInstitutionalResearch } from "../../../../../lib/ecosystem/institutional-research.ts";
+import { enforcePublicRateLimit } from "../../../../../lib/rate-limit/server.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -82,6 +83,13 @@ const responseHeaders = {
 };
 
 export async function POST(request: Request): Promise<Response> {
+  const rateLimited = await enforcePublicRateLimit(request, {
+    scope: "research-federated",
+    limit: 20,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rateLimited) return rateLimited;
+
   if (!sameOriginWhenProvided(request)) {
     return Response.json({ ok: false, error: "origin_not_allowed" }, { status: 403, headers: responseHeaders });
   }
