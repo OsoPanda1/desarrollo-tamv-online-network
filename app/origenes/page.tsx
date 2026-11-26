@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowDown, ArrowUpRight, BookOpen, Heart, Sparkles } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { localizedPath, resolveLocale, type Locale } from "@/lib/i18n"
 
@@ -131,6 +132,7 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
           </div>
         </section>
       </article>
-    </TamvAppShell>
+    <TamvSectionMedia area="origins" locale={locale} />
+      </TamvAppShell>
   )
 }
