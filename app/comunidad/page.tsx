@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import communityDirectory from "@/data/community-sources.json"
 
 type CommunitySource = { name: string; url: string; type: string }
@@ -79,6 +80,7 @@ export default function CommunityPage() {
         </div>
       </section>
       <p className="mt-8 text-xs leading-5 text-muted-foreground">Este directorio ofrece enlaces y descripciones editoriales originales. Las marcas y contenidos pertenecen a sus respectivos titulares. La presencia en el directorio no constituye una recomendación comercial ni autorización para copiar contenido.</p>
-    </main>
+    <TamvSectionMedia area="community" locale="es" />
+      </main>
   )
 }
