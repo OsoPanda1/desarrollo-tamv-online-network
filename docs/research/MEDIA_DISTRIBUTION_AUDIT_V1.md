@@ -8,7 +8,7 @@
 
 La portada cargaba `TamvMediaAtlas`, que iteraba las 20 imágenes y 12 videos en dos cuadrículas; además, dentro de esa misma sección aparecía `TamvResearchCitations`. Esto concentraba los medios en un punto y obligaba a las personas a salir de la página del tema para encontrarlos.
 
-La corrección introduce `TamvSectionMedia`: un componente compartido que recibe un área temática y renderiza solamente los espacios asignados a esa área. Los medios siguen siendo marcadores editoriales; no se crean imágenes ficticias ni reproductores que aparenten reproducir archivos inexistentes.
+La corrección introduce `TamvSectionMedia`: un componente compartido que recibe un área temática y renderiza solamente los espacios asignados a esa área. Los medios siguen siendo marcadores editoriales; no se crean imágenes ficticias ni reproductores que aparenten reproducir archivos inexistentes. La galería central fue retirada de la portada y las diez tarjetas de citas bibliográficas se trasladaron a `/fuentes`, donde guardan relación directa con el registro de procedencia.
 
 ## Inventario de asignaciones
 
@@ -20,14 +20,14 @@ La corrección introduce `TamvSectionMedia`: un componente compartido que recibe
 | IMG-04 | TAMV Living Atlas | `/` | Imagen |
 | IMG-05 | Arquitectura federada | `/arquitectura` | Imagen |
 | IMG-06 | Atlas HCU | `/hcu` | Imagen |
-| IMG-07 | Procedencia de evidencia | `/auditoria-creator` | Imagen |
+| IMG-07 | Procedencia de evidencia | `/fuentes` | Imagen |
 | IMG-08 | Investigación abierta | `/investigacion` | Imagen |
 | IMG-09 | Comunidad creadora | `/comunidad` | Imagen |
 | IMG-10 | Isabella AI | `/isabella` | Imagen |
 | IMG-11 | RDM Digital | `/proyectos` | Imagen |
 | IMG-12 | Método 4L | `/excelencia` | Imagen |
 | IMG-13 | Gobernanza y transparencia | `/gobernanza` | Imagen |
-| IMG-14 | Verificación TPVA | `/fuentes` | Imagen |
+| IMG-14 | Verificación TPVA | `/auditoria-creator` | Imagen |
 | IMG-15 | Identificadores persistentes | `/investigadores` | Imagen |
 | IMG-16 | Formación digital | `/formacion` | Imagen |
 | IMG-17 | Experiencia accesible | `/guia` | Imagen |
@@ -39,7 +39,7 @@ La corrección introduce `TamvSectionMedia`: un componente compartido que recibe
 | VID-03 | Recorrido por Living Atlas | `/atlas` | Video |
 | VID-04 | Cómo navegar TAMV | `/guia` | Video |
 | VID-05 | Investigación y fuentes | `/investigacion` | Video |
-| VID-06 | Cómo leer un recibo TPVA | `/fuentes` | Video |
+| VID-06 | Cómo leer un recibo TPVA | `/auditoria-creator` | Video |
 | VID-07 | Observatorio HCU | `/hcu` | Video |
 | VID-08 | Isabella AI: guía de uso | `/isabella` | Video |
 | VID-09 | Gobernanza comunitaria | `/gobernanza` | Video |
@@ -50,7 +50,7 @@ La corrección introduce `TamvSectionMedia`: un componente compartido que recibe
 ## Cobertura por sección
 
 - **Portada:** una imagen y un video; no vuelve a mostrar el inventario completo.
-- **Orígenes, Atlas, HCU, Investigación, Fuentes, Isabella, Proyectos, Gobernanza, Guía, Únete e Institucionalización:** una imagen y un video contextual por sección.
+- **Orígenes, Atlas, HCU, Investigación, Auditoría del creador, Isabella, Proyectos, Gobernanza, Guía, Únete e Institucionalización:** una imagen y un video contextual por sección.
 - **Quiénes somos, Arquitectura, Auditoría del creador, Comunidad, Excelencia, Investigadores, Formación y Desarrolladores:** una imagen contextual.
 - Las secciones transaccionales o con información de cuenta/privacidad (inicio de sesión, registro, cuenta, portal privado y condiciones de membresía) no reciben marcadores decorativos por defecto. Esas páginas priorizan tareas, privacidad y claridad funcional.
 
