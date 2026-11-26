@@ -12,8 +12,18 @@ test("homepage progressive-reveal allowlist preserves the contextual media secti
 
   assert.match(
     css,
-    /main#contenido\s*>\s*:not\(\.sovereign-hero\):not\(\.sovereign-workspace\):not\(\[data-media-area="home"\]\)\s*\{\s*display:\s*none\s*!important;\s*\}/,
-    "the homepage visibility allowlist must explicitly exclude its media section from the hide selector",
+    /main#contenido\s*>\s*:not\(\.sovereign-hero\):not\(\.sovereign-workspace\):not\(\[data-tamv-mind-map="governance"\]\):not\(\[data-media-area="home"\]\)\s*\{\s*display:\s*none\s*!important;\s*\}/,
+    "the homepage visibility selector must preserve the governance map and the contextual media section",
+  )
+  assert.match(
+    site,
+    /<TamvMindMap\s+mapId="governance"\s+locale=\{locale\}\s*\/>/,
+    "the institutional homepage must mount the governance map",
+  )
+  assert.match(
+    map,
+    /data-tamv-mind-map=\{mapId\}/,
+    "each mind map must expose its stable map ID to the homepage visibility policy",
   )
   assert.match(
     site,
@@ -36,6 +46,7 @@ test("homepage keeps one assigned image slot and one assigned video slot", () =>
   assert.ok(homeSlots.some((slot) => /id: "IMG-04"/.test(slot)), "the institutional homepage image slot must remain assigned")
   assert.ok(homeSlots.some((slot) => /id: "VID-01"/.test(slot)), "the institutional homepage video slot must remain assigned")
 })
+
 test("homepage media remains explicitly editorial until real assets are supplied", () => {
   const media = read("components/tamv-section-media.tsx")
   assert.match(media, /no son imágenes publicadas ni videos reproducibles/)
