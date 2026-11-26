@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react"
 import { TamvSiteHeader } from "./tamv-site-header"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
-import { TamvMediaAtlas } from "./tamv-media-atlas"
+import { TamvSectionMedia } from "./tamv-section-media"
 import { TamvMindMap } from "./tamv-mind-map"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
@@ -15,7 +15,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
       <main id="contenido" lang={locale}>
         <TamvSovereignConsole locale={locale} />
         <TamvMindMap mapId="governance" locale={locale} />
-        <TamvMediaAtlas locale={locale} />
+        <TamvSectionMedia area="home" locale={locale} />
       </main>
       <footer className="site-footer" lang={locale}>
         <div className="container footer-main">
