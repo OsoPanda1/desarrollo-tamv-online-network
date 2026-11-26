@@ -244,6 +244,7 @@
   border-left: 1px solid rgba(143, 151, 255, .68);
   animation: reveal .2s ease-out both;
 }
+.subtopics[hidden] { display: none; }
 .subtopic {
   position: relative;
   display: grid;
