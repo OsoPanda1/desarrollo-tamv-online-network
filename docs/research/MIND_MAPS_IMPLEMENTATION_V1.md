@@ -65,3 +65,14 @@
 ## Validation still required
 
 The connector can commit source files, but it does not substitute for a local or CI build. Required next checks are TypeScript typecheck, production build, automated tests, browser preview, keyboard/screen-reader review, and confirmation that links remain current. Do not merge while required checks are failing.
+
+
+## Related Undermind literature reviews
+
+These completed reviews informed the branch topics and the caveats above. Their summaries are based on available abstracts/metadata as well as the linked standards; they do not independently verify TAMV-specific implementation claims.
+
+- [TAMV web research evidence and source citations](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2Finvestigacion-abierta%2FTAMV%20web%20research%20evidence%20and%20source%20citations)
+- [Accessible multimedia web experience and visual storytelling](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2Finvestigacion-abierta%2FAccessible%20multimedia%20web%20experience%20and%20visual%20storytelling)
+- [Open-source security assessment and verifiable software provenance](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2Ffederacion%2FOpen-source%20security%20assessment%20and%20verifiable%20software%20provenance)
+
+The literature review specifically recommends human review of alt text, captions and transcripts for all video media; privacy-conscious video activation; keyboard and assistive-technology testing; and treating automated security scores, signatures, provenance, external audits and certification as distinct claim types.
