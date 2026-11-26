@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, Mail, ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { resolveLocale } from "@/lib/i18n"
@@ -152,5 +153,6 @@ export default async function JoinPage({ searchParams }: { searchParams: SearchP
       <div className="policy-cta"><div><h3>{english ? "Canonical channel · official contact" : "Canal canónico · contacto oficial de la red"}</h3><p>{english ? "The only formal channel of the network. Forum topics, Free and Premium account requests, new projects, submissions, TRI-E applications, and TRI verification all pass through it — so every request has a sender, a date, and a folio." : "Único canal formal de la red. Por él pasan las propuestas de temas del Foro, las solicitudes de cuenta Free y Premium, las propuestas de proyecto, los envíos para publicar, las postulaciones TRI-E y la verificación de identidades TRI — para que cada gestión tenga remitente, fecha y folio."}</p></div><a className="text-link" href="mailto:anubiscastillo@visitarealdelmonte.online"><Mail aria-hidden="true" /> anubiscastillo@visitarealdelmonte.online <ArrowUpRight aria-hidden="true" /></a></div>
       <p style={{ marginTop: 18 }}><Link className="text-link" href="/cuenta">{english ? "Create my account first" : "Crear mi cuenta primero"} <ArrowUpRight aria-hidden="true" /></Link></p>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="join" locale={locale} />
+      </TamvAppShell>
 }
