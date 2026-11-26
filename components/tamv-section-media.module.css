@@ -118,7 +118,7 @@
   top: .8rem;
   right: .8rem;
   max-width: 62%;
-  color: #60727f;
+  color: #536673;
   font: 700 .6rem/1.4 Arial, sans-serif;
   letter-spacing: .07em;
   text-align: right;
@@ -140,7 +140,7 @@
   border-color: rgba(23, 109, 102, .3);
 }
 .placeholderTitle { max-width: 100%; color: #263f52; font-size: .9rem; font-weight: 720; line-height: 1.4; }
-.placeholderHint { max-width: 95%; color: #667884; font-size: .72rem; line-height: 1.5; }
+.placeholderHint { max-width: 95%; color: #536673; font-size: .72rem; line-height: 1.5; }
 .caption { padding: 1rem 1.05rem .95rem; }
 .captionHeading { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: .7rem; align-items: start; }
 .index {
@@ -160,7 +160,7 @@
   margin: .9rem 0 0;
   padding-top: .65rem;
   border-top: 1px solid #ebe7de;
-  color: #687984;
+  color: #536673;
   font-size: .68rem;
   font-weight: 650;
   line-height: 1.5;
