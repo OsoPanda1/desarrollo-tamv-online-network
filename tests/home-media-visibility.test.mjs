@@ -9,6 +9,7 @@ test("homepage progressive-reveal allowlist preserves the contextual media secti
   const css = read("app/globals.css")
   const site = read("components/tamv-institutional-site.tsx")
   const media = read("components/tamv-section-media.tsx")
+  const map = read("components/tamv-mind-map.tsx")
 
   assert.match(
     css,
