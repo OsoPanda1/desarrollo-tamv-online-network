@@ -26,7 +26,9 @@ Run `pnpm db:preflight` against the intended database before any migration. It v
 
 ## Fourth migration
 
-`0004_public_rate_limits.sql` adds `tamv_rate_limit_counters` with a `(bucket, window_start_ms)` primary key so the shared limiter increments atomically across instances. The bucket is a SHA-256 hash of scope, salt and client identity; raw IP addresses are not stored. Apply it before setting `TAMV_RATE_LIMIT_ENABLED=true` or deploying to Vercel production, where the limiter is enabled by default. The runner's checksum prevents later edits to an applied file.
+`0004_public_rate_limits.sql` adds `public.tamv_rate_limit_counters` with a `(bucket, window_start_ms)` primary key so the shared limiter increments atomically across instances. Bucket identifiers use **HMAC-SHA-256** with the secret `TAMV_RATE_LIMIT_SALT`; the salt must be unique per environment, secret, high-entropy and at least 32 characters. There is no default/fallback salt. Raw IP addresses are not persisted.
+
+**Deployment ordering is mandatory:** before deploying a build to Vercel production (where the shared limiter is enabled automatically unless deliberately disabled) or setting `TAMV_RATE_LIMIT_ENABLED=true` elsewhere, verify the intended database and then run `pnpm db:preflight`, `pnpm db:migrate`, and `pnpm db:preflight` again from the trusted operator environment. Take and verify a recoverable backup first. The migration must be applied only through `scripts/db-migrate.mjs`, which enforces the repository's preflight, advisory lock, transaction, and SHA-256 checksum safeguards. Do not apply the SQL manually. A missing migration or missing/weak salt causes the limiter to fail closed and protected routes can return HTTP 503; that is an operational block, not a reason to silently bypass the limiter.
 
 ## Important limitation
 
