@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
-import { decideRateLimit, hashRateLimitKey, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { decideRateLimit, hashRateLimitKey, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
 
 class FakeSharedStore {
   constructor() {
@@ -57,6 +57,17 @@ test("shared rate limiter keeps separate buckets for different hashed keys", asy
 test("shared rate limiter fails closed when its store throws", async () => {
   const store = { consume: async () => { throw new Error("shared store unavailable"); } };
   await assert.rejects(decideRateLimit(store, "key", { limit: 5, windowMs: 60_000 }), /shared store unavailable/);
+});
+
+test("rate-limit identity trusts the canonical ingress address and ignores X-Forwarded-For", () => {
+  const forwardedOnly = new Headers({ "x-forwarded-for": "203.0.113.42, 198.51.100.7" });
+  assert.equal(requestIdentityFromHeaders(forwardedOnly), "anonymous");
+
+  const canonical = new Headers({
+    "x-real-ip": "198.51.100.8",
+    "x-forwarded-for": "203.0.113.42",
+  });
+  assert.equal(requestIdentityFromHeaders(canonical), "ip:198.51.100.8");
 });
 
 test("rate-limit identity keys use a secret salt and never persist raw IP addresses", () => {
