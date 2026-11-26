@@ -31,17 +31,17 @@ const groups = (communityDirectory.categories as CommunityCategory[]).map((categ
 export default function CommunityPage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-8">
-      <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 text-white sm:p-12">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-300">TAMV Online Network · Conocimiento compartido</p>
+      <section className="relative overflow-hidden rounded-3xl border border-[#ddd9d0] bg-gradient-to-br from-[#fffefa] via-[#f7f6f2] to-[#eaf0f2] p-8 text-[#162a3c] shadow-sm sm:p-12">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#875638]">TAMV Online Network · Conocimiento compartido</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">Una red para descubrir, aprender y construir.</h1>
-        <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">Un directorio editorial de comunidades y publicaciones independientes para conectar conversaciones tecnológicas con investigación, desarrollo y creación latinoamericana.</p>
+        <p className="mt-5 max-w-2xl text-base leading-7 text-[#4e606e]">Un directorio editorial de comunidades y publicaciones independientes para conectar conversaciones tecnológicas con investigación, desarrollo y creación latinoamericana.</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/investigacion" className="rounded-full bg-sky-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-200">Explorar investigación</Link>
-          <Link href="/desarrolladores" className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Área de desarrolladores</Link>
+          <Link href="/investigacion" className="rounded-full bg-[#17324a] px-5 py-3 text-sm font-semibold text-[#fffefa] transition hover:bg-[#284b63]">Explorar investigación</Link>
+          <Link href="/desarrolladores" className="rounded-full border border-[#c8c5bc] px-5 py-3 text-sm font-semibold text-[#17324a] transition hover:bg-[#eeece6]">Área de desarrolladores</Link>
         </div>
       </section>
       <section className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div><p className="text-sm font-medium text-sky-700 dark:text-sky-300">Directorio curado</p><h2 className="mt-1 text-2xl font-semibold tracking-tight">Comunidades por especialidad</h2></div>
+        <div><p className="text-sm font-medium text-[#875638]">Directorio curado</p><h2 className="mt-1 text-2xl font-semibold tracking-tight">Comunidades por especialidad</h2></div>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">Los sitios enlazados son proyectos independientes. TAMV no declara afiliación ni avala automáticamente sus publicaciones o servicios.</p>
       </section>
       <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -52,8 +52,8 @@ export default function CommunityPage() {
             <ul className="mt-5 divide-y divide-border">
               {group.items.map((item) => (
                 <li key={item.name} className="py-3 first:pt-0 last:pb-0">
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
-                    <span><span className="block font-medium group-hover:text-sky-600">{item.name}</span><span className="mt-1 block text-xs text-muted-foreground">{item.kind}</span></span>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#875638]">
+                    <span><span className="block font-medium group-hover:text-[#176d66]">{item.name}</span><span className="mt-1 block text-xs text-muted-foreground">{item.kind}</span></span>
                     <span aria-hidden="true" className="text-muted-foreground">↗</span>
                   </a>
                 </li>
