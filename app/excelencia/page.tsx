@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, BookOpenCheck, Repeat, Scale, SearchCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { FairRecordGenerator } from "@/components/excellence/fair-record-generator"
@@ -119,5 +120,6 @@ export default async function ExcellencePage({ searchParams }: { searchParams: S
       <div className="doc-note"><strong>{english ? "Identifiers:" : "Identificadores:"}</strong><span> {english ? "DOI Zenodo 10.5281/zenodo.19411506; Figshare 10.6084/M9.FIGSHARE.32098846; Frontier ID 3117809." : "DOI Zenodo 10.5281/zenodo.19411506; Figshare 10.6084/M9.FIGSHARE.32098846; Frontier ID 3117809."}</span></div>
       <div className="doc-note"><strong>{english ? "Explicit warning:" : "Advertencia explícita:"}</strong><span> {english ? "The document claims full validity as legal support and that unlicensed use violates OMPI/WIPO treaties. Those are statements of the document, not facts: it cites no law, specific treaty, trademark or patent registration number, or lawyer, and gives no licence terms. They are not carried here as facts." : "El documento afirma plena validez como soporte legal y que el uso sin licencia viola tratados OMPI/WIPO. Son declaraciones del documento, no hechos: no cita ley, tratado específico, número de registro de marca o patente, ni abogado, y no detalla términos de licencia. No se portan aquí como hechos."}</span></div>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="excellence" locale={locale} />
+      </TamvAppShell>
 }
