@@ -1,6 +1,7 @@
 import {
   decideRateLimit,
   hashRateLimitKey,
+  requestIdentityFromHeaders,
   windowBounds,
   type RateLimitDecision,
   type RateLimitStore,
@@ -69,15 +70,6 @@ export function isSharedRateLimitEnabled(): boolean {
   return process.env.TAMV_RATE_LIMIT_ENABLED === "true" || process.env.VERCEL_ENV === "production";
 }
 
-function requestIdentity(request?: Request): string {
-  if (!request) return "anonymous";
-  const realIp = request.headers.get("x-real-ip")?.trim();
-  if (realIp) return `ip:${realIp}`;
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  if (forwarded) return `ip:${forwarded}`;
-  return "anonymous";
-}
-
 function sharedHeaders(decision: RateLimitDecision, limit: number) {
   return {
     "Cache-Control": "no-store",
@@ -104,7 +96,7 @@ export async function enforcePublicRateLimit(
   try {
     const key = hashRateLimitKey(
       policy.scope,
-      requestIdentity(request),
+      requestIdentityFromHeaders(request?.headers),
       process.env.TAMV_RATE_LIMIT_SALT,
     );
     decision = await decideRateLimit(sharedStore, key, {
