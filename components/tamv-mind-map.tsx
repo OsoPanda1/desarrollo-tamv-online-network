@@ -6,7 +6,7 @@ import type { Locale } from "@/lib/i18n"
 import styles from "./tamv-mind-map.module.css"
 
 type MindMapId = "governance" | "research" | "isabella" | "federation"
-type Source = { label: string; href: string }
+type Source = { label: string; href: string; internal?: boolean }
 type MapItem = { titleEs: string; titleEn: string; detailEs: string; detailEn: string; sources: Source[] }
 type MapBranch = { id: string; titleEs: string; titleEn: string; detailEs: string; detailEn: string; items: MapItem[] }
 type MindMapDefinition = { number: string; titleEs: string; titleEn: string; introEs: string; introEn: string; rootEs: string; rootEn: string; rootDetailEs: string; rootDetailEn: string; noteEs: string; noteEn: string; reviewedEs: string; reviewedEn: string; branches: MapBranch[] }
@@ -178,7 +178,7 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         id: "contracts", titleEs: "Contratos y versiones de API", titleEn: "API contracts and versions",
         detailEs: "Publicar interfaces explícitas y probar compatibilidad entre productor y consumidor.", detailEn: "Publish explicit interfaces and test compatibility between producers and consumers.",
         items: [
-          { titleEs: "Especificación OpenAPI", titleEn: "OpenAPI specification", detailEs: "Documentar rutas, esquemas, errores, autenticación y versiones compatibles.", detailEn: "Document routes, schemas, errors, authentication and compatible versions.", sources: [{ label: "OpenAPI Specification", href: "https://spec.openapis.org/oas/latest.html" }] },
+          { titleEs: "Especificación OpenAPI", titleEn: "OpenAPI specification", detailEs: "Documentar rutas, esquemas, errores, autenticación y versiones compatibles.", detailEn: "Document routes, schemas, errors, authentication and compatible versions.", sources: [{ label: "OpenAPI Specification", href: "https://spec.openapis.org/oas/latest.html" }, { label: "TAMV · Arquitectura", href: "/arquitectura", internal: true }] },
           { titleEs: "Pruebas de contrato", titleEn: "Contract tests", detailEs: "Validar respuestas, cambios y consumidores antes del despliegue coordinado.", detailEn: "Validate responses, changes and consumers before coordinated deployment.", sources: [{ label: "OWASP API Security", href: "https://owasp.org/API-Security/" }] },
         ],
       },
@@ -195,17 +195,19 @@ const maps: Record<MindMapId, MindMapDefinition> = {
         detailEs: "Definir propiedad de datos, evolución de esquemas, idempotencia y registro auditable.", detailEn: "Define data ownership, schema evolution, idempotency and auditable records.",
         items: [
           { titleEs: "Procesamiento robusto", titleEn: "Robust processing", detailEs: "Diseñar para reintentos y entregas repetidas; declarar explícitamente las garantías de consistencia.", detailEn: "Design for retries and repeated delivery; state consistency guarantees explicitly.", sources: [{ label: "W3C · PROV", href: "https://www.w3.org/TR/prov-overview/" }] },
-          { titleEs: "Registro común de evidencia", titleEn: "Shared evidence record", detailEs: "Vincular artefacto, origen, versión, método y resultado sin confundir integridad con validez.", detailEn: "Link artifact, source, version, method and result without confusing integrity with validity.", sources: [{ label: "RO-Crate", href: "https://www.researchobject.org/ro-crate/" }] },
+          { titleEs: "Registro común de evidencia", titleEn: "Shared evidence record", detailEs: "Vincular artefacto, origen, versión, método y resultado sin confundir integridad con validez.", detailEn: "Link artifact, source, version, method and result without confusing integrity with validity.", sources: [{ label: "RO-Crate", href: "https://www.researchobject.org/ro-crate/" }, { label: "TAMV · Atlas HCU", href: "/hcu", internal: true }] },
         ],
       },
       {
-        id: "supply", titleEs: "Artefactos y cadena de suministro", titleEn: "Artifacts and software supply chain",
-        detailEs: "Relacionar el código fuente con el artefacto construido y documentar sus dependencias.", detailEn: "Connect source code to the built artifact and document its dependencies.",
+        id: "supply", titleEs: "Repositorios Atlas/LITLE y procedencia de software", titleEn: "Atlas/LITLE repositories and software provenance",
+        detailEs: "Relacionar repositorios, catálogo público y artefactos construidos sin confundir un enlace con integración operativa.", detailEn: "Connect repositories, the public catalog and built artifacts without confusing a link with operational integration.",
         items: [
-          { titleEs: "Procedencia de compilación", titleEn: "Build provenance", detailEs: "Conservar evidencia de fuente, proceso de build y salida; verificarla con políticas del consumidor.", detailEn: "Keep evidence of source, build process and output; verify it against consumer policy.", sources: [{ label: "SLSA · especificación", href: "https://slsa.dev/spec/" }] },
-          { titleEs: "SBOM y firmas", titleEn: "SBOM and signatures", detailEs: "Inventariar componentes y verificar integridad; ninguna medida aislada garantiza ausencia de vulnerabilidades.", detailEn: "Inventory components and verify integrity; no isolated measure guarantees absence of vulnerabilities.", sources: [{ label: "OpenSSF", href: "https://openssf.org/" }] },
+          { titleEs: "Repositorios públicos vinculados", titleEn: "Linked public repositories", detailEs: "Fuentes públicas para inspección de código y documentación. Revisar versión, rama, licencia e historial antes de sincronizar; el enlace por sí solo no demuestra integración.", detailEn: "Public sources for code and documentation inspection. Check version, branch, licence and history before synchronization; a link alone does not prove integration.", sources: [{ label: "TAMV Core Atlas · GitHub", href: "https://github.com/OsoPanda1/tamv-core-atlas" }, { label: "Método 4L · GitHub", href: "https://github.com/OsoPanda1/metodo4l" }, { label: "Web institucional · GitHub", href: "https://github.com/OsoPanda1/WEBINSTITUCIONAL-TAMVONLINE" }] },
+          { titleEs: "Catálogo dinámico de metadatos", titleEn: "Dynamic metadata catalog", detailEs: "El panel del ecosistema consulta el endpoint versionado de metadatos de repositorios públicos. Ese resultado describe metadatos de origen; no comprueba salud de despliegue ni funcionamiento.", detailEn: "The ecosystem board queries the versioned endpoint for public repository metadata. This describes source metadata; it does not check deployment health or functionality.", sources: [{ label: "API de metadatos · TAMV", href: "/api/v1/ecosystem/metadata", internal: true }, { label: "Panel del ecosistema", href: "/ecosistema", internal: true }] },
+          { titleEs: "Componentes LITLE con acceso restringido", titleEn: "LITLE components with restricted access", detailEs: "Algunos repositorios del entorno LITLE requieren permisos autenticados y no se presentan como verificados públicamente. La integración exige contratos, autorización y pruebas con acceso autorizado.", detailEn: "Some LITLE repositories require authenticated permissions and are not presented as publicly verified. Integration requires contracts, authorization and tests with authorized access.", sources: [{ label: "Matriz pública de metadatos", href: "/ecosistema", internal: true }, { label: "Arquitectura TAMV", href: "/arquitectura", internal: true }] },
+          { titleEs: "Procedencia de build y SBOM", titleEn: "Build provenance and SBOM", detailEs: "Conservar evidencia de fuente, proceso de build, artefacto y dependencias; verificarla con políticas del consumidor. Ninguna medida aislada garantiza software sin vulnerabilidades.", detailEn: "Preserve evidence of source, build process, artifact and dependencies; verify it against consumer policy. No isolated measure guarantees vulnerability-free software.", sources: [{ label: "SLSA · especificación", href: "https://slsa.dev/spec/" }, { label: "OpenSSF", href: "https://openssf.org/" }] },
         ],
-      },
+      }
     ],
   },
 }
@@ -282,7 +284,9 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
                               <h3>{english ? item.titleEn : item.titleEs}</h3>
                               <p>{english ? item.detailEn : item.detailEs}</p>
                               <div className={styles.sources}>
-                                {item.sources.map((source) => (
+                                {item.sources.map((source) => source.internal ? (
+                                  <a key={source.href} href={source.href}>{source.label}</a>
+                                ) : (
                                   <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">
                                     {source.label}<ExternalLink size={12} aria-hidden="true" />
                                   </a>
