@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, BookOpen, Users } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { getPublicResearchTopics } from "@/lib/research/queries"
@@ -54,5 +55,6 @@ export default async function ResearchIndexPage({ searchParams }: { searchParams
       </div>
     </section>
     <section className="section research-cta-section"><div className="container"><div className="research-cta"><div><p className="eyebrow eyebrow-light">{english ? "HAVE YOUR OWN QUESTION?" : "¿TIENES UNA PREGUNTA PROPIA?"}</p><h2>{english ? "Bring a proposal, thesis, dataset, or working prototype." : "Trae una propuesta, tesis, conjunto de datos o prototipo."}</h2><p>{english ? "New submissions remain private by default; authors choose whether an accepted abstract may become public." : "Los envíos nuevos son privados por defecto; la persona autora decide si un resumen aceptado puede hacerse público."}</p></div><Link className="button button-copper" href="/portal/propuestas/nueva">{english ? "Start a submission" : "Iniciar propuesta"} <ArrowUpRight aria-hidden="true" /></Link></div></div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="research" locale={locale} />
+      </TamvAppShell>
 }
