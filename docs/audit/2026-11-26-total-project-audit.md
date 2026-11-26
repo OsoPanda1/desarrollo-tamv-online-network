@@ -28,17 +28,31 @@ Esta es una **auditoría documental y de código fuente dirigida**. No es una pr
 
 ## 3. Correcciones aplicadas durante esta revisión
 
-### 3.1 La regla de revelado progresivo ocultaba el medio de portada
+### 3.1 La regla de revelado progresivo ocultaba el mapa de portada y el medio contextual
 
-El CSS de la portada ocultaba todos los hijos directos de `main#contenido` salvo `.sovereign-hero` y `.sovereign-workspace`. Sin excepción para `data-media-area="home"`, esa regla también ocultaba `TamvSectionMedia area="home"`. La presencia del componente en JSX no garantizaba que fuera visible.
+El CSS de la portada ocultaba todos los hijos directos de `main#contenido` salvo `.sovereign-hero` y `.sovereign-workspace`. La regla ocultaba tanto `TamvMindMap mapId="governance"` como `TamvSectionMedia area="home"`, aunque ambos estuvieran montados en JSX.
 
-**Corrección realizada:** se excluyó `[data-media-area="home"]` del selector de ocultamiento en `app/globals.css`.  
-**Commit:** `ed21f6f71b378aa606d5cfcc3f8eedd07f1e3661`.
+**Correcciones realizadas:** el selector ya exceptúa el mapa con `data-tamv-mind-map="governance"` y la sección multimedia `[data-media-area="home"]`. `TamvMindMap` publica el identificador estable `data-tamv-mind-map={mapId}`.
 
-**Prueba de regresión añadida:** `tests/home-media-visibility.test.mjs` verifica el selector, el montaje en portada, el atributo de área y que las tarjetas sigan marcadas como no publicadas hasta añadir activos reales.  
-**Commit de la prueba:** `0cef1eeec8ff0b25322102c25a6e94416ad4f2d0`.
+- Primer ajuste de medios: `ed21f6f71b378aa606d5cfcc3f8eedd07f1e3661`.
+- Regla final de visibilidad: `989a851c03c0d13e41506fb17ea34a679477ae9c`.
+- Identificador estable del mapa: `8befe8ae62c8e683b8b2d8a68674f605ced4319a`.
 
-**Estado:** cambio escrito en la rama; la prueba aún no se ha ejecutado porque Actions no llega a los pasos del workflow.
+**Prueba de regresión:** `tests/home-media-visibility.test.mjs` verifica que el selector preserve ambos hijos, que el mapa de gobernanza se monte y que el inventario conserve exactamente los slots de portada `IMG-04` y `VID-01`, además de mantener sus etiquetas editoriales hasta publicar activos reales. Los últimos ajustes del test incluyen `d14ada09dd7dd8f70d1d49b90a2d37c40459526e` y `854179b29ec49379b40a180efb375601d280b54b`.
+
+**Estado:** cambios escritos; la suite todavía no se ha ejecutado porque Actions no llega a los pasos del workflow.
+
+### 3.3 El limitador no debe usar una sal predecible
+
+La implementación previa usaba una cadena fija de fallback (`tamv-shared-rate-limit-v1`) junto con SHA-256. Ese valor era público y no ofrecía una clave secreta frente a enumeración fuera de línea de identidades de baja entropía.
+
+**Corrección realizada:** `hashRateLimitKey` usa HMAC-SHA-256 y exige `TAMV_RATE_LIMIT_SALT` no vacía de al menos 32 caracteres. La generación de la clave quedó dentro del bloque de fallo controlado: si falta la sal o es demasiado corta, el limitador responde HTTP 503 en lugar de escapar como error no controlado. Se actualizaron `.env.example`, la nota de la migración y las pruebas que cubren sal distinta, sal ausente y sal débil.
+
+- Cambio del algoritmo/contrato: `ba54a27c30d97d56970c7f7bab5be23629a6ed00`.
+- Respuesta fail-closed y prueba asociada: `d416f88bd4fe21319225bcfd69bb88d28074ad29`, `7336c16682d4b6f54f788e8c6669e916f8f226bf`.
+- Contrato de tests de clave: `d569b757e2b5772cd26201cbf2f13c3a94f5ffd9`.
+
+**Estado:** corrección y pruebas de código escritas, no ejecutadas por CI en este corte. El propietario debe generar una sal criptográficamente aleatoria por ambiente y no copiar el placeholder de `.env.example`. Si no se configura, el sistema de limitación falla cerrado y las rutas protegidas pueden devolver 503, que es preferible a desactivar el control silenciosamente.
 
 ### 3.2 Runbook de facturación con una afirmación de licencia obsoleta
 
@@ -53,6 +67,7 @@ El runbook decía que el repositorio no tenía `LICENSE`, pero el árbol revisad
 | REL-01 | **P0** | En el commit `0cef1ee...`, CI, CodeQL y secret scan concluyeron `failure` en 3–4 segundos; las respuestas de los jobs muestran `runner_id: 0` y `steps: []`. | No hay evidencia de que se haya ejecutado el checkout, la instalación, la auditoría, TypeScript, las pruebas, el análisis de código o el escaneo de secretos. Esto **no demuestra** un error de compilación ni que se hayan encontrado secretos. | Recuperar la causa en la configuración/estado de GitHub Actions del propietario; ejecutar de nuevo y exigir pasos/logs reales. No etiquetar estos checks como aprobados ni inferir una causa que no aparece en los logs. |
 | REL-02 | **P0** | El estado combinado del commit de referencia mostró Vercel `pending`; el bot de Vercel ya había reportado el límite gratuito `api-deployments-free-per-day` (más de 100 deploys en el día). | No se pudo confirmar una Preview READY ni abrir los logs de build del proyecto mediante el acceso actual. | Verificar el equipo/proyecto correcto en Vercel, abrir logs de un deployment existente cuando el límite y permisos lo permitan y validar una Preview del SHA exacto. No lanzar intentos repetidos mientras siga el límite. |
 | DB-01 | **P0/P1** | `migrations/0004_public_rate_limits.sql` crea `public.tamv_rate_limit_counters`; README indica que la migración sigue pendiente de aplicar en la base correcta. | Con el limitador compartido habilitado y la tabla ausente, las rutas públicas protegidas por ese limitador pueden responder HTTP 503 deliberadamente. No abrir el sistema sin límite para ocultar el problema. | Preparar backup verificable, usar una base de staging identificada, ejecutar `pnpm db:preflight`, `pnpm db:migrate` y de nuevo `pnpm db:preflight`; comprobar las rutas limitadas. Producción sólo después de revisión y autorización. |
+| RATE-01 | **P1** | La implementación anterior caía en una sal fija y predecible para derivar claves de identidad. | La sal ahora es secreta, mínima (32 caracteres) y aplicada mediante HMAC-SHA-256; falta la configuración real por ambiente y la ejecución de pruebas. | Crear una sal aleatoria y distinta para cada ambiente, confirmar que la migración 0004 esté aplicada y verificar con tests que faltante/sal débil produce 503 controlado. |
 | AUTH-01 | **P0** | La configuración de autenticación depende de `APP_URL`, `BETTER_AUTH_URL` y `BETTER_AUTH_SECRET` del entorno. El README registra advertencias previas de URL/base y secreto por defecto durante build. | El código por sí solo no prueba que el secreto/URL adecuados existan en cada ambiente. Un build verde no garantiza que login, cookies y orígenes confiables estén correctamente configurados en runtime. | Configurar secreto criptográficamente aleatorio (al menos 32 caracteres), origen HTTPS canónico y orígenes confiables explícitos en el gestor de secretos; probar registro, login, cierre de sesión, sesión expirada y rechazo cross-origin en Preview. Nunca copiar secretos al repo. |
 | PAY-01 | **P0 para cobro live** | Checkout y portal de Stripe existen en el árbol; `TAMV_BILLING_MODE` está deshabilitado por defecto y el checkout live depende de claves, webhook y flags explícitos. | No hay evidencia de una transacción de prueba, webhook real, Customer Portal probado, política fiscal/resolución legal aprobada ni ciclo de renovación comprobado. | Completar el runbook `docs/production/membership-billing-runbook.md`: Stripe test, firma inválida, idempotencia, eventos duplicados/desordenados, renovación fallida, cancelación, acceso y reembolsos; conservar cobro live deshabilitado hasta aprobación expresa del responsable. |
 | API-01 | **P1** | El endpoint `/api/assistant` valida origen, forma/tamaño de entrada y usa el limitador compartido; procesa hasta 40 mensajes de entrada y recorta a los 16 recientes antes de llamar al agente. | El límite por solicitud no demuestra presupuesto de proveedor, límite de concurrencia ni protección contra agotamiento de gasto en runtime. | Configurar límites de gasto/concurrencia del proveedor y observar consumo real; prueba de abuso/carga antes de exposición amplia. No introducir un proveedor o presupuesto ficticio en código. |
