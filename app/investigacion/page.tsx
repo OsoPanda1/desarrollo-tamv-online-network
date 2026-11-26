@@ -7,6 +7,7 @@ import { PageIntro } from "@/components/shared/page-intro"
 import { getPublicResearchTopics } from "@/lib/research/queries"
 import { resolveLocale } from "@/lib/i18n"
 import { ResearchFederatedSearch } from "@/components/research-federated-search"
+import { TamvMindMap } from "@/components/tamv-mind-map"
 
 export const dynamic = "force-dynamic"
 type SearchParams = Promise<{ lang?: string }>
@@ -24,6 +25,7 @@ export default async function ResearchIndexPage({ searchParams }: { searchParams
   const topics = await getPublicResearchTopics()
   return <TamvAppShell locale={locale}>
     <PageIntro number="01" eyebrow={english ? "RESEARCH & OPEN QUESTIONS" : "INVESTIGACIÓN Y PREGUNTAS ABIERTAS"} title={english ? "Research with room" : "Investigar con espacio"} accent={english ? "to contribute." : "para aportar."} description={english ? "Browse bilingual editorial topics, learn what evidence is needed, and register your interest privately. A topic is not a call for papers or a promise of publication." : "Explora temas editoriales bilingües, identifica qué evidencia se necesita y registra tu interés de forma privada. Un tema no es una convocatoria ni una promesa de publicación."} locale={locale} actions={<LanguageSwitch pathname="/investigacion" locale={locale} />} />
+    <TamvMindMap mapId="research" locale={locale} />
     <section className="section public-list-section"><div className="container">
       <div className="public-list-heading"><div><p className="eyebrow">{english ? "EDITORIAL AGENDA" : "AGENDA EDITORIAL"}</p><h2>{english ? "Six questions, multiple ways in." : "Seis preguntas, varias formas de entrar."}</h2></div><p>{english ? "Each topic includes a question, suggested contributors, and formats. The catalog is maintained as source data and served through a versioned API." : "Cada tema incluye una pregunta, perfiles que pueden aportar y formatos posibles. El catálogo se mantiene como dato fuente y se sirve mediante una API versionada."}</p></div>
       <div className="topic-directory-grid">{topics.map((topic, index) => <article className="directory-card" key={topic.id}>
