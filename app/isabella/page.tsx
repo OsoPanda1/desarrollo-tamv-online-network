@@ -3,6 +3,7 @@ import { Fragment } from "react"
 import Link from "next/link"
 import { ArrowUpRight, ShieldAlert } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { resolveLocale } from "@/lib/i18n"
@@ -308,5 +309,6 @@ export default async function IsabellaPage({ searchParams }: { searchParams: Sea
       </details>
 
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="isabella" locale={locale} />
+      </TamvAppShell>
 }
