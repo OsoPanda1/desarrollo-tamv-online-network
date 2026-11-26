@@ -12,21 +12,24 @@ Iniciativa mexicana independiente de investigación, tecnología, memoria territ
 
 ## Estado actual de la validación
 
-Validación local ejecutada sobre el árbol integrado:
+> **Alcance de los resultados históricos:** la siguiente tabla conserva los resultados de una ejecución local previa reportada durante la integración. En ese registro no quedó asociado un SHA reproducible. Por tanto, **no valida automáticamente el HEAD actual del PR #45**, que incluye cambios posteriores de medios, estilos, documentación y una prueba de regresión nueva.
 
-| Comando | Resultado |
+| Comando — ejecución local previa | Resultado reportado |
 |---|---|
 | `pnpm test` (`node:test`) | **174/174 pruebas** |
 | `pnpm typecheck` | OK |
 | `pnpm build` (Next.js 16.4.6) | OK |
 | `pnpm audit --prod --audit-level high` | Sin vulnerabilidades conocidas |
 
-Notas honestas sobre esa tabla:
+### Validación del HEAD actual
 
-- El build local mostró advertencias de Better Auth por `BETTER_AUTH_URL`/base URL y secreto por defecto. No se imprimieron ni committed valores secretos; la configuración productiva sigue siendo un gate pendiente.
-- `public/build-evidence.json` se regeneró durante el build y se revirtió antes del commit; el evidence publicado no se sustituye por un artefacto local.
-- No se ejecutó deploy en esta sesión. La integración de Speed Insights no crea por sí sola métricas: éstas aparecen sólo después de un despliegue real y visitas reales.
-- Los runs de GitHub Actions/CodeQL revisados aparecieron sin `steps` recuperables y sin logs por API; no se afirma que pasaron.
+- Los workflows CI, CodeQL y secret scan del commit `0cef1eeec8ff0b25322102c25a6e94416ad4f2d0` concluyeron `failure` antes de ejecutar pasos. Los jobs disponibles muestran `runner_id: 0` y `steps: []`; no hay logs de pasos con causa verificable. Esto **no demuestra** que falle el código ni que se hayan encontrado secretos.
+- La prueba nueva `tests/home-media-visibility.test.mjs` aún no se ha ejecutado. No hay resultado confirmado de typecheck, instalación congelada, suite completa ni build de producción para ese SHA.
+- La revisión del estado de commit mostró Vercel `pending`; una Preview lista para navegador no está comprobada. Un comentario previo del proveedor informó que se había alcanzado el límite diario de despliegues.
+- El build local previo mostró advertencias de Better Auth relativas a `BETTER_AUTH_URL`/base URL y secreto por defecto. La configuración productiva sigue siendo un gate pendiente; la presencia de variables en `.env.example` no demuestra que estén definidas en el gestor de secretos.
+- `public/build-evidence.json` se había regenerado durante una validación local anterior y se revirtió antes del commit; no se debe sustituir evidencia del repositorio por un artefacto local sin identificar el commit y el entorno.
+- No se declara un deploy de producción ni métricas reales. Analytics/Speed Insights necesitan un despliegue y tráfico efectivos.
+- La auditoría actual, con evidencia y orden de cierre, está en [`docs/audit/2026-11-26-total-project-audit.md`](docs/audit/2026-11-26-total-project-audit.md).
 
 ---
 
@@ -264,5 +267,6 @@ La carta bilingüe y el playbook operativo están en [`docs/institutional/charte
 | Investigación a producción | `docs/strategy/evidence-driven-research-to-production.md` |
 | Gobernanza ROR | `docs/strategy/institutional-legalization-and-ror-roadmap.md` |
 | Billing | `docs/production/membership-billing-runbook.md` |
+| Auditoría integral y gates de release | `docs/audit/2026-11-26-total-project-audit.md` |
 
 **Proyecto impulsado con colaboración de tecnología latinoamericana TAMV ONLINE NETWORK Orgullosamente Realmontenses.**
