@@ -29,14 +29,13 @@ test("homepage progressive-reveal allowlist preserves the contextual media secti
 
 test("homepage keeps one assigned image slot and one assigned video slot", () => {
   const media = read("components/tamv-section-media.tsx")
-  const slotRecords = media.match(/\\{ id: "(?:IMG|VID)-\\d{2}", kind: "(?:image|video)", area: "[^"]+",[^}]*\\}/g) ?? []
-  const homeSlots = slotRecords.filter((slot) => /\\barea: "home"/.test(slot))
+  const slotRecords = media.match(/\{ id: "(?:IMG|VID)-\d{2}", kind: "(?:image|video)", area: "[^"]+",[^}]*\}/g) ?? []
+  const homeSlots = slotRecords.filter((slot) => /\barea: "home"/.test(slot))
 
   assert.equal(homeSlots.length, 2, "the homepage must retain exactly two assigned media slots")
   assert.ok(homeSlots.some((slot) => /id: "IMG-04"/.test(slot)), "the institutional homepage image slot must remain assigned")
   assert.ok(homeSlots.some((slot) => /id: "VID-01"/.test(slot)), "the institutional homepage video slot must remain assigned")
 })
-
 test("homepage media remains explicitly editorial until real assets are supplied", () => {
   const media = read("components/tamv-section-media.tsx")
   assert.match(media, /no son imágenes publicadas ni videos reproducibles/)
