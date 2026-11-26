@@ -4215,3 +4215,349 @@ body:has(.tamv-origins-page) .isabella-launcher > svg { color: #51d0bd; }
 @media (prefers-reduced-motion: reduce) {
   .tamv-origins-page * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+
+/* TAMV Pearl / Ivory Home Theme
+   Replaces the homepage-only obsidian skin with the light editorial system used by the rest of TAMV.
+   Also restores visible homepage siblings so the research maps and media atlas are not suppressed. */
+body:has(.sovereign-hero) {
+  --tamv-obsidian: #f7f6f2;
+  --tamv-obsidian-raised: #fffefa;
+  --tamv-obsidian-panel: #ffffff;
+  --tamv-platinum: #cbd4da;
+  --tamv-platinum-dim: rgba(22, 42, 60, .16);
+  --tamv-gold: #875638;
+  --tamv-turquoise: #176d66;
+  --tamv-muted: #566875;
+  --tamv-white: #162a3c;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+}
+body:has(.sovereign-hero) ::selection { background: #d9e2e8; color: #162a3c; }
+body:has(.sovereign-hero) .site-header {
+  background: rgba(255, 254, 250, .96) !important;
+  color: #162a3c !important;
+  border-bottom: 1px solid #ddd9d0 !important;
+  box-shadow: 0 8px 22px rgba(22, 42, 60, .045) !important;
+  backdrop-filter: blur(16px);
+}
+body:has(.sovereign-hero) .utility-bar {
+  background: #eeece6 !important;
+  color: #566875 !important;
+  border-bottom: 1px solid #ddd9d0 !important;
+}
+body:has(.sovereign-hero) .brand-lockup,
+body:has(.sovereign-hero) .footer-brand { color: #162a3c !important; }
+body:has(.sovereign-hero) .brand-type small,
+body:has(.sovereign-hero) .footer-brand small { color: #657580 !important; }
+body:has(.sovereign-hero) .primary-navigation a { color: #31495a !important; }
+body:has(.sovereign-hero) .primary-navigation a:hover,
+body:has(.sovereign-hero) .primary-navigation a[aria-current="page"] { color: #875638 !important; }
+body:has(.sovereign-hero) .primary-navigation .nav-contact {
+  border-color: #c8c5bc !important;
+  color: #875638 !important;
+  background: #fffefa !important;
+}
+body:has(.sovereign-hero) .menu-toggle {
+  border-color: #c8c5bc !important;
+  color: #162a3c !important;
+  background: #fffefa !important;
+}
+body:has(.sovereign-hero) .skip-link { background: #17324a !important; color: #fffefa !important; }
+body:has(.sovereign-hero) a:focus-visible,
+body:has(.sovereign-hero) button:focus-visible,
+body:has(.sovereign-hero) input:focus-visible,
+body:has(.sovereign-hero) select:focus-visible,
+body:has(.sovereign-hero) summary:focus-visible { outline-color: #875638 !important; }
+
+/* Do not suppress the mind maps, the audiovisual atlas, or other explicit homepage sections. */
+body:has(.sovereign-hero) main#contenido > :not(.sovereign-hero):not(.sovereign-workspace) { display: block !important; }
+
+body:has(.sovereign-hero) .sovereign-hero {
+  color: #162a3c !important;
+  background:
+    radial-gradient(ellipse at 78% 40%, rgba(23, 109, 102, .075), transparent 40%),
+    linear-gradient(135deg, #fffefa 0%, #f7f6f2 62%, #f1eee7 100%) !important;
+}
+body:has(.sovereign-hero) .sovereign-grid-overlay {
+  opacity: .32;
+  background-image:
+    linear-gradient(rgba(22, 42, 60, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 42, 60, .045) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, #000, transparent 96%);
+}
+body:has(.sovereign-hero) .sovereign-hero::after {
+  background: radial-gradient(ellipse at center, transparent 52%, rgba(247, 246, 242, .24) 100%);
+}
+body:has(.sovereign-hero) .sovereign-telemetry {
+  color: #536673 !important;
+  border-bottom-color: #dedad1 !important;
+}
+body:has(.sovereign-hero) .sovereign-telemetry-brand,
+body:has(.sovereign-hero) .sovereign-telemetry-item strong { color: #263e50 !important; }
+body:has(.sovereign-hero) .sovereign-telemetry-item > span,
+body:has(.sovereign-hero) .sovereign-origin span { color: #667783 !important; }
+body:has(.sovereign-hero) .sovereign-telemetry-divider { background: #d7d4ca !important; }
+body:has(.sovereign-hero) .sovereign-quick-links a { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-kicker { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-kicker > span {
+  border-color: rgba(135, 86, 56, .42) !important;
+  color: #875638 !important;
+  background: #f8efe8;
+}
+body:has(.sovereign-hero) .sovereign-hero-copy h1,
+body:has(.sovereign-hero) .sovereign-hero-copy h1 em { color: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-hero-copy h1 em { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-lead { color: #4e606e !important; }
+body:has(.sovereign-hero) .sovereign-origin { border-top-color: #dedad1 !important; }
+body:has(.sovereign-hero) .sovereign-origin strong { color: #263e50 !important; }
+body:has(.sovereign-hero) .sovereign-evidence-caption { color: #687984 !important; }
+
+body:has(.sovereign-hero) .sovereign-action {
+  border-color: #d0ccc2 !important;
+  background: #fffefa !important;
+  color: #17324a !important;
+  box-shadow: 0 3px 10px rgba(22, 42, 60, .035);
+}
+body:has(.sovereign-hero) .sovereign-action:hover {
+  border-color: #176d66 !important;
+  background: #eef5f2 !important;
+  color: #143b43 !important;
+}
+body:has(.sovereign-hero) .sovereign-action-primary {
+  border-color: #17324a !important;
+  background: #17324a !important;
+  color: #fffefa !important;
+}
+body:has(.sovereign-hero) .sovereign-action-primary:hover {
+  border-color: #284b63 !important;
+  background: #284b63 !important;
+  color: #fffefa !important;
+}
+
+body:has(.sovereign-hero) .sovereign-atlas-wrap {
+  border-color: #d9d5cc !important;
+  background: #fffefa !important;
+  box-shadow: 0 20px 50px rgba(22, 42, 60, .08) !important;
+}
+body:has(.sovereign-hero) .sovereign-atlas-topline {
+  border-bottom-color: #e2ded6 !important;
+  background: #f7f6f2;
+  color: #566875 !important;
+}
+body:has(.sovereign-hero) .sovereign-atlas-topline > span:last-child,
+body:has(.sovereign-hero) .sovereign-reference-label { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-orbit { stroke: rgba(22, 42, 60, .16) !important; }
+body:has(.sovereign-hero) .sovereign-orbit-outer { stroke: rgba(23, 109, 102, .29) !important; }
+body:has(.sovereign-hero) .sovereign-orbit-middle { stroke: rgba(135, 86, 56, .22) !important; }
+body:has(.sovereign-hero) .sovereign-crosswire { stroke: rgba(22, 42, 60, .12) !important; }
+body:has(.sovereign-hero) .sovereign-core-ring { fill: rgba(23, 109, 102, .04) !important; stroke: rgba(23, 109, 102, .65) !important; }
+body:has(.sovereign-hero) .sovereign-core-ring-inner { stroke: rgba(135, 86, 56, .38) !important; }
+body:has(.sovereign-hero) .sovereign-core-label { fill: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-core-caption { fill: #647580 !important; }
+body:has(.sovereign-hero) .sovereign-core-count { fill: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-node-halo { fill: rgba(23, 109, 102, .025) !important; stroke: rgba(23, 109, 102, .2) !important; }
+body:has(.sovereign-hero) .sovereign-node-core { fill: #fffefa !important; stroke: #667a87 !important; }
+body:has(.sovereign-hero) .sovereign-node-code { fill: #31495a !important; }
+body:has(.sovereign-hero) .sovereign-node-label { fill: #243e51 !important; }
+body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-halo,
+body:has(.sovereign-hero) .sovereign-node:focus-visible .sovereign-node-halo { fill: rgba(23, 109, 102, .1) !important; stroke: #176d66 !important; }
+body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-core,
+body:has(.sovereign-hero) .sovereign-node:focus-visible .sovereign-node-core { fill: #176d66 !important; stroke: #fffefa !important; }
+body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-code,
+body:has(.sovereign-hero) .sovereign-node:focus-visible .sovereign-node-code { fill: #fffefa !important; }
+body:has(.sovereign-hero) .sovereign-node.is-selected .sovereign-node-label { fill: #17324a !important; font-weight: 700; }
+body:has(.sovereign-hero) .sovereign-node-inspector {
+  border-top-color: #e2ded6 !important;
+  background: #fffefa !important;
+}
+body:has(.sovereign-hero) .sovereign-inspector-heading { color: #647580 !important; }
+body:has(.sovereign-hero) .sovereign-node-inspector h2 { color: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-domain { color: #176d66 !important; }
+body:has(.sovereign-hero) .sovereign-node-description { color: #4e606e !important; }
+body:has(.sovereign-hero) .sovereign-repository-links a,
+body:has(.sovereign-hero) .sovereign-reference-strip a { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-reference-strip { color: #61727e !important; }
+body:has(.sovereign-hero) .sovereign-private-note { color: #79522f !important; }
+body:has(.sovereign-hero) .sovereign-reference-note { color: #687984 !important; }
+
+body:has(.sovereign-hero) .sovereign-workspace {
+  background: #f7f6f2 !important;
+  color: #162a3c !important;
+  border-top: 1px solid #dedad1 !important;
+}
+body:has(.sovereign-hero) .sovereign-section-heading h2,
+body:has(.sovereign-hero) .sovereign-section-heading h2 em { color: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-section-heading > p { color: #536673 !important; }
+body:has(.sovereign-hero) .sovereign-module-grid,
+body:has(.sovereign-hero) .sovereign-destination-grid {
+  border-color: #dedad1 !important;
+  background: #dedad1 !important;
+}
+body:has(.sovereign-hero) .sovereign-module-card,
+body:has(.sovereign-hero) .sovereign-path,
+body:has(.sovereign-hero) .sovereign-disclosure,
+body:has(.sovereign-hero) .sovereign-manifest-panel,
+body:has(.sovereign-hero) .sovereign-intent-router,
+body:has(.sovereign-hero) .sovereign-twin-panel,
+body:has(.sovereign-hero) .sovereign-governance-matrix,
+body:has(.sovereign-hero) .sovereign-verifier-section,
+body:has(.sovereign-hero) .sovereign-inspector-panel,
+body:has(.sovereign-hero) .sovereign-research-ledger,
+body:has(.sovereign-hero) .sovereign-sustainability,
+body:has(.sovereign-hero) .sovereign-destination-grid article,
+body:has(.sovereign-hero) .intent-discovery,
+body:has(.sovereign-hero) .intent-panel,
+body:has(.sovereign-hero) .intent-next-step {
+  background: #fffefa !important;
+  color: #162a3c !important;
+  border-color: #ddd9d0 !important;
+  box-shadow: 0 8px 24px rgba(22, 42, 60, .04);
+}
+body:has(.sovereign-hero) .sovereign-module-card h3,
+body:has(.sovereign-hero) .sovereign-twin-heading h3,
+body:has(.sovereign-hero) .sovereign-intent-router h3,
+body:has(.sovereign-hero) .sovereign-manifest-panel h3,
+body:has(.sovereign-hero) .sovereign-inspector-panel h3,
+body:has(.sovereign-hero) .sovereign-ledger-heading h3,
+body:has(.sovereign-hero) .sovereign-twin-layers h4,
+body:has(.sovereign-hero) .sovereign-destination-grid strong,
+body:has(.sovereign-hero) .intent-panel h3,
+body:has(.sovereign-hero) .intent-next-step h3 { color: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-module-card p,
+body:has(.sovereign-hero) .sovereign-path small,
+body:has(.sovereign-hero) .sovereign-paths-note,
+body:has(.sovereign-hero) .sovereign-intent-router > p,
+body:has(.sovereign-hero) .sovereign-twin-intro,
+body:has(.sovereign-hero) .sovereign-twin-layers article > p,
+body:has(.sovereign-hero) .sovereign-manifest-panel > p,
+body:has(.sovereign-hero) .sovereign-inspector-panel > p,
+body:has(.sovereign-hero) .sovereign-ledger-heading > p,
+body:has(.sovereign-hero) .sovereign-footer-integrity > p,
+body:has(.sovereign-hero) .intent-panel p,
+body:has(.sovereign-hero) .intent-heading > p,
+body:has(.sovereign-hero) .intent-next-step > p,
+body:has(.sovereign-hero) .intent-trust-note { color: #536673 !important; }
+body:has(.sovereign-hero) .sovereign-path strong,
+body:has(.sovereign-hero) .sovereign-disclosure > summary > span,
+body:has(.sovereign-hero) .sovereign-citation-row strong { color: #162a3c !important; }
+body:has(.sovereign-hero) .sovereign-path:hover,
+body:has(.sovereign-hero) .sovereign-path[aria-expanded="true"] { background: #f1f6f5 !important; border-color: #176d66 !important; }
+body:has(.sovereign-hero) .sovereign-path-action,
+body:has(.sovereign-hero) .sovereign-module-meta,
+body:has(.sovereign-hero) .sovereign-footer-seal,
+body:has(.sovereign-hero) .sovereign-destination-grid article > span,
+body:has(.sovereign-hero) .sovereign-twin-layer-top { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-text-button,
+body:has(.sovereign-hero) .sovereign-module-card a,
+body:has(.sovereign-hero) .sovereign-machine-links a,
+body:has(.sovereign-hero) .sovereign-footer-origin a { color: #176d66 !important; }
+body:has(.sovereign-hero) .sovereign-module-card a:hover,
+body:has(.sovereign-hero) .sovereign-machine-links a:hover { color: #17324a !important; }
+
+body:has(.sovereign-hero) .sovereign-constitution-controls label,
+body:has(.sovereign-hero) .sovereign-select-label,
+body:has(.sovereign-hero) .sovereign-intent-form > label { color: #31495a !important; }
+body:has(.sovereign-hero) .sovereign-constitution-controls select,
+body:has(.sovereign-hero) .sovereign-constitution-controls input,
+body:has(.sovereign-hero) .sovereign-inspector-panel select,
+body:has(.sovereign-hero) .sovereign-intent-entry input,
+body:has(.sovereign-hero) .intent-search {
+  border-color: #c9c7bf !important;
+  background: #fffefa !important;
+  color: #162a3c !important;
+}
+body:has(.sovereign-hero) .sovereign-intent-entry input::placeholder,
+body:has(.sovereign-hero) .intent-search::placeholder { color: #687984 !important; }
+body:has(.sovereign-hero) .sovereign-json-preview {
+  border-color: #d9d5cc !important;
+  background: #f1f0eb !important;
+  color: #243e51 !important;
+}
+body:has(.sovereign-hero) .sovereign-machine-links a,
+body:has(.sovereign-hero) .sovereign-algorithm-line span,
+body:has(.sovereign-hero) .sovereign-citation-actions a,
+body:has(.sovereign-hero) .sovereign-citation-actions button,
+body:has(.sovereign-hero) .sovereign-footer-digest button {
+  border-color: #d4d0c7 !important;
+  background: #f7f6f2 !important;
+  color: #244055 !important;
+}
+body:has(.sovereign-hero) .sovereign-panel-topline,
+body:has(.sovereign-hero) .sovereign-select-label,
+body:has(.sovereign-hero) .sovereign-demo-label { color: #875638 !important; }
+body:has(.sovereign-hero) .sovereign-constitution-result,
+body:has(.sovereign-hero) .sovereign-denial-result {
+  border-color: #d8c4a6 !important;
+  background: #faf5ec !important;
+}
+body:has(.sovereign-hero) .sovereign-constitution-result > div,
+body:has(.sovereign-hero) .sovereign-denial-result > div { color: #78542f !important; }
+body:has(.sovereign-hero) .sovereign-constitution-result[data-allowed="true"] {
+  border-color: #b7d7ce !important;
+  background: #eff7f3 !important;
+}
+body:has(.sovereign-hero) .sovereign-constitution-result[data-allowed="true"] > div { color: #176d66 !important; }
+body:has(.sovereign-hero) .sovereign-constitution-result p,
+body:has(.sovereign-hero) .sovereign-constitution-result code,
+body:has(.sovereign-hero) .sovereign-denial-result p { color: #31495a !important; }
+body:has(.sovereign-hero) .sovereign-notice,
+body:has(.sovereign-hero) .sovereign-router-boundary,
+body:has(.sovereign-hero) .sovereign-footer-origin > span,
+body:has(.sovereign-hero) .sovereign-footer-integrity > p { color: #647580 !important; }
+body:has(.sovereign-hero) .sovereign-research-ledger,
+body:has(.sovereign-hero) .sovereign-sustainability { border-color: #ddd9d0 !important; }
+body:has(.sovereign-hero) .sovereign-ledger-heading,
+body:has(.sovereign-hero) .sovereign-citation-row { border-bottom-color: #e2ded6 !important; }
+body:has(.sovereign-hero) .sovereign-citation-row code,
+body:has(.sovereign-hero) .sovereign-footer-digest code,
+body:has(.sovereign-hero) .sovereign-footer-origin strong { color: #31495a !important; }
+body:has(.sovereign-hero) .sovereign-destination-grid small { color: #647580 !important; }
+body:has(.sovereign-hero) .sovereign-twin-status { color: #875638 !important; border-color: #d8c4a6 !important; }
+body:has(.sovereign-hero) .sovereign-twin-source-state { color: #79552f !important; border-top-color: #e4dfd5 !important; }
+
+body:has(.sovereign-hero) .intent-discovery {
+  background: #f7f6f2 !important;
+  color: #162a3c !important;
+  border-top-color: #dedad1 !important;
+}
+body:has(.sovereign-hero) .intent-heading h2,
+body:has(.sovereign-hero) .intent-heading h2 em { color: #162a3c !important; }
+body:has(.sovereign-hero) .intent-panel h3,
+body:has(.sovereign-hero) .intent-next-step h3 { color: #162a3c !important; }
+body:has(.sovereign-hero) .intent-option {
+  border-color: #d8d5cc !important;
+  background: #fffefa !important;
+  color: #243e51 !important;
+}
+body:has(.sovereign-hero) .intent-option[aria-pressed=true] {
+  border-color: #176d66 !important;
+  background: #eef6f3 !important;
+  color: #143d40 !important;
+}
+body:has(.sovereign-hero) .intent-interest { border-color: #c8c5bc !important; color: #31495a !important; }
+body:has(.sovereign-hero) .intent-interest[aria-pressed=true] { background: #176d66 !important; border-color: #176d66 !important; color: #fffefa !important; }
+body:has(.sovereign-hero) .intent-summary span { border-color: #c8c5bc !important; color: #31495a !important; }
+body:has(.sovereign-hero) .intent-cta .button-copper { background: #17324a !important; color: #fffefa !important; }
+body:has(.sovereign-hero) .intent-cta .button-outline-dark { background: #fffefa !important; color: #17324a !important; border-color: #c8c5bc !important; }
+body:has(.sovereign-hero) .intent-proof-row { border-color: #dedad1 !important; background: #dedad1 !important; }
+body:has(.sovereign-hero) .intent-proof-row article { background: #fffefa !important; }
+body:has(.sovereign-hero) .intent-proof-row strong { color: #162a3c !important; }
+body:has(.sovereign-hero) .intent-proof-row p { color: #536673 !important; }
+
+body:has(.sovereign-hero) .site-footer {
+  background: #fffefa !important;
+  border-top: 1px solid #dedad1 !important;
+  color: #536673 !important;
+}
+body:has(.sovereign-hero) .site-footer a { color: #17324a !important; }
+body:has(.sovereign-hero) .footer-bottom { border-top-color: #dedad1 !important; }
+body:has(.sovereign-hero) .footer-bottom span { color: #647580 !important; }
+body:has(.sovereign-hero) .isabella-launcher {
+  border-color: #b6ccc8 !important;
+  background: #fffefa !important;
+  color: #17324a !important;
+  box-shadow: 0 8px 25px rgba(22, 42, 60, .12) !important;
+}
+body:has(.sovereign-hero) .isabella-launcher svg { color: #176d66 !important; }
+body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important; }
