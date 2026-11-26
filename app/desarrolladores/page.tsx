@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, ArrowUpRight, BookOpen, Braces, GitBranch, Network, ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { resolveLocale } from "@/lib/i18n"
@@ -427,5 +428,6 @@ curl -fsS 'http://localhost:3000/api/v1/exports/research?format=csv' \
       </div>
       </div>
     </section>
-  </TamvAppShell>
+  <TamvSectionMedia area="developers" locale={locale} />
+      </TamvAppShell>
 }
