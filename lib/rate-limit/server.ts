@@ -100,14 +100,13 @@ export async function enforcePublicRateLimit(
 ): Promise<Response | null> {
   if (!isSharedRateLimitEnabled()) return null;
 
-  const key = hashRateLimitKey(
-    policy.scope,
-    requestIdentity(request),
-    process.env.TAMV_RATE_LIMIT_SALT,
-  );
-
   let decision: RateLimitDecision;
   try {
+    const key = hashRateLimitKey(
+      policy.scope,
+      requestIdentity(request),
+      process.env.TAMV_RATE_LIMIT_SALT,
+    );
     decision = await decideRateLimit(sharedStore, key, {
       limit: policy.limit,
       windowMs: policy.windowMs,
