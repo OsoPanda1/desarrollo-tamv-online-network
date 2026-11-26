@@ -85,5 +85,5 @@ Migration `0003_memberships_billing.sql` is additive: subscriptions, idempotent 
 - This connector cannot provide or create the operator's Stripe keys, webhook secret, tax registration, portal configuration, or live-mode approval.
 - The current Vercel/Stripe account links must be verified by the repository owner.
 - The privacy/terms pages in this branch state the outstanding legal decisions. Do not set approval flags until the responsible operator has completed those reviews.
-- The current repository root has no `LICENSE`; that is an independent governance decision and is not silently fixed by this release.
+- A repository-root `LICENSE` is present and contains Apache License 2.0; `LICENSE-DOCS` contains CC BY 4.0 and `LICENSES.md` documents their intended scopes. This corrects an older audit statement that the root license was absent. The files do not establish ownership or clearance of every contribution, trademark, external repository, cultural record, or media asset. Review rights and file-specific notices before redistribution or commercial use.
 - No preview build or browser E2E is considered passed until CI/Vercel reports it and the relevant routes are exercised.
