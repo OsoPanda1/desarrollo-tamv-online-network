@@ -187,7 +187,7 @@
   text-align: left;
   color: var(--mind-ink);
   background: var(--mind-blue);
-  border: 1px solid #c7d8e7;
+  border: 1px solid #6c8192;
   border-radius: 1rem;
   cursor: pointer;
   box-shadow: 0 8px 22px rgba(22, 42, 60, .06);
@@ -196,7 +196,7 @@
 .branchToggle:hover {
   transform: translateX(3px);
   background: #eaf2f8;
-  border-color: #afc8dc;
+  border-color: #425a6c;
 }
 .branchToggle:focus-visible, .rootToggle:focus-visible, .sources a:focus-visible {
   outline: 3px solid #7669b4;
@@ -325,7 +325,7 @@
 }
 .mapFooter span {
   flex: 0 0 auto;
-  color: #687984;
+  color: #536673;
   font-size: .77rem;
   line-height: 1.5;
   text-align: right;
@@ -367,5 +367,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .rootToggle, .branchToggle { transition: none; }
+  .rootToggle:hover, .branchToggle:hover { transform: none; }
   .subtopics { animation: none; }
 }
