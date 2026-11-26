@@ -72,6 +72,37 @@ test("rate-limit identity keys use a secret salt and never persist raw IP addres
   assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42", "short"), /at least 32 characters/);
 });
 
+test("shared rate limiter fails closed when salt configuration is absent or weak", async () => {
+  const { enforcePublicRateLimit } = await import("../lib/rate-limit/server.ts");
+  const priorEnabled = process.env.TAMV_RATE_LIMIT_ENABLED;
+  const priorSalt = process.env.TAMV_RATE_LIMIT_SALT;
+
+  process.env.TAMV_RATE_LIMIT_ENABLED = "true";
+  delete process.env.TAMV_RATE_LIMIT_SALT;
+
+  try {
+    const missingSalt = await enforcePublicRateLimit(new Request("https://tamv.example/api/test"), {
+      scope: "test",
+      limit: 5,
+      windowMs: 60_000,
+    });
+    assert.equal(missingSalt?.status, 503);
+
+    process.env.TAMV_RATE_LIMIT_SALT = "too-short";
+    const weakSalt = await enforcePublicRateLimit(new Request("https://tamv.example/api/test"), {
+      scope: "test",
+      limit: 5,
+      windowMs: 60_000,
+    });
+    assert.equal(weakSalt?.status, 503);
+  } finally {
+    if (priorEnabled === undefined) delete process.env.TAMV_RATE_LIMIT_ENABLED;
+    else process.env.TAMV_RATE_LIMIT_ENABLED = priorEnabled;
+    if (priorSalt === undefined) delete process.env.TAMV_RATE_LIMIT_SALT;
+    else process.env.TAMV_RATE_LIMIT_SALT = priorSalt;
+  }
+});
+
 test("public rate-limit migration stores atomic shared counters without raw identities", () => {
   const migration = readFileSync(resolve(process.cwd(), "migrations/0004_public_rate_limits.sql"), "utf8");
   assert.match(migration, /CREATE TABLE IF NOT EXISTS public\.tamv_rate_limit_counters/);
