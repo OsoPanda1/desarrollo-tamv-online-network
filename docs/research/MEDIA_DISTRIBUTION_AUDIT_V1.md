@@ -51,7 +51,7 @@ La corrección introduce `TamvSectionMedia`: un componente compartido que recibe
 
 - **Portada:** una imagen y un video; no vuelve a mostrar el inventario completo.
 - **Orígenes, Atlas, HCU, Investigación, Auditoría del creador, Isabella, Proyectos, Gobernanza, Guía, Únete e Institucionalización:** una imagen y un video contextual por sección.
-- **Quiénes somos, Arquitectura, Auditoría del creador, Comunidad, Excelencia, Investigadores, Formación y Desarrolladores:** una imagen contextual.
+- **Quiénes somos, Arquitectura, Fuentes, Comunidad, Excelencia, Investigadores, Formación y Desarrolladores:** una imagen contextual.
 - Las secciones transaccionales o con información de cuenta/privacidad (inicio de sesión, registro, cuenta, portal privado y condiciones de membresía) no reciben marcadores decorativos por defecto. Esas páginas priorizan tareas, privacidad y claridad funcional.
 
 ## Reglas editoriales y de accesibilidad
