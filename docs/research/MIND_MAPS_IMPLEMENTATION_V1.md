@@ -91,3 +91,16 @@ It also links to the existing in-site routes `/arquitectura` and `/hcu`, and to 
 The connected GitHub account confirmed that several LITLE-related repositories have restricted/private visibility. Their contents are not linked as if publicly inspectable. The public map explains this limitation and points back to the metadata matrix instead of treating inaccessible code as verified.
 
 **Integration boundary:** the mind-map structure itself is authored and versioned in the institutional website; it is not yet generated from Atlas/LITLE repository data. Genuine runtime federation still requires authorized access, versioned API/data contracts, permission checks, contract tests, observable status and deployment evidence for each connection.
+
+
+## Homepage visual system update — 2026-11-26
+
+The initial dark/obsidian homepage styling was replaced with a light editorial system consistent with the rest of the institutional site:
+
+- Warm ivory/paper surfaces (`#f7f6f2`, `#fffefa`), deep navy text (`#162a3c`) and restrained copper/turquoise accents.
+- Updated the homepage hero, utility strip, navigation, atlas panel, interactive node labels, CTA states, workspace panels, data controls, disclosures and footer.
+- Replaced the four mind maps' dark canvas and dark subtopic cards with light surfaces, dark text, softer blue/lilac branch nodes, and visible purple connectors.
+- Removed the effective suppression of direct homepage sections so the new governance map and existing media atlas can be visible after the main console.
+- Preserved responsive layout, visible focus states, keyboard disclosure controls and reduced-motion support.
+
+The change is source-committed; visual QA in a live Vercel preview remains outstanding because the connected Vercel account has not returned an accessible project or deployment for this repository.
