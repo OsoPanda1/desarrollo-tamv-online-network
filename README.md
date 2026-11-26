@@ -12,7 +12,7 @@ Iniciativa mexicana independiente de investigación, tecnología, memoria territ
 
 ## Estado actual de la validación
 
-> **Alcance de los resultados históricos:** la siguiente tabla conserva los resultados de una ejecución local previa reportada durante la integración. En ese registro no quedó asociado un SHA reproducible. Por tanto, **no valida automáticamente el HEAD actual del PR #45**, que incluye cambios posteriores de medios, estilos, documentación y una prueba de regresión nueva.
+> **Alcance de los resultados históricos:** la siguiente tabla conserva los resultados de una ejecución local previa reportada durante la integración. En ese registro no quedó asociado un SHA reproducible. Por tanto, **no valida automáticamente el HEAD del PR #45** ni las pruebas de regresión añadidas en esta revisión.
 
 | Comando — ejecución local previa | Resultado reportado |
 |---|---|
@@ -23,9 +23,9 @@ Iniciativa mexicana independiente de investigación, tecnología, memoria territ
 
 ### Validación del HEAD actual
 
-- Los workflows CI, CodeQL y secret scan del último commit de código revisado (`45fe78493dac4f81f78d8feff1d78898cc56f25a`) concluyeron `failure` antes de ejecutar pasos: [CI](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870454997), [CodeQL](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455359), [Secret scan](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455017). Los jobs muestran `runner_id: 0` y `steps: []`; no hay logs con causa verificable. Esto **no demuestra** que falle el código ni que se hayan encontrado secretos.
-- La prueba nueva `tests/home-media-visibility.test.mjs` aún no se ha ejecutado. No hay resultado confirmado de typecheck, instalación congelada, suite completa ni build de producción para ese SHA.
-- La revisión del estado de commit del SHA citado mostró Vercel `pending` ([deployment](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/B2eQSkAKjwWj74dJYS8pPXSZAhjo)); una Preview lista para navegador no está comprobada. El proveedor había reportado el límite diario `api-deployments-free-per-day`.
+- El último commit de código/pro pruebas de regresión revisado es `9fcea0e26daa3e4c2a0929627ea43232c3faf42c`. Sus workflows concluyeron `failure` antes de ejecutar pasos: [CI y build/typecheck](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854605), [CodeQL](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854553), [Secret scan](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45871854473). Los jobs muestran `runner_id: 0` y `steps: []`; no hay logs con causa verificable. Esto **no demuestra** que falle el código ni que se hayan encontrado secretos.
+- Las pruebas nuevas `tests/home-media-visibility.test.mjs`, `tests/media-distribution-contract.test.mjs` y `tests/distributed-rate-limit.test.mjs` aún no se han ejecutado. No hay resultado confirmado de instalación congelada, suite completa, typecheck o build de producción para ese SHA.
+- El estado Vercel del SHA citado es `pending` ([deployment](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/D6vgRd912QC6QMqdJHr5MQpZEwo)); una Preview lista para navegador no está comprobada. Vercel reportó además el límite diario `api-deployments-free-per-day` (más de 100 despliegues/día).
 - El build local previo mostró advertencias de Better Auth relativas a `BETTER_AUTH_URL`/base URL y secreto por defecto. La configuración productiva sigue siendo un gate pendiente; la presencia de variables en `.env.example` no demuestra que estén definidas en el gestor de secretos.
 - `public/build-evidence.json` se había regenerado durante una validación local anterior y se revirtió antes del commit; no se debe sustituir evidencia del repositorio por un artefacto local sin identificar el commit y el entorno.
 - No se declara un deploy de producción ni métricas reales. Analytics/Speed Insights necesitan un despliegue y tráfico efectivos.
@@ -217,7 +217,8 @@ Bloqueos que permanecen explícitos:
 - Vercel reportó `Deployment rate limited — retry in 24 hours`; no se desplegó este árbol.
 - Actions/CodeQL/secret scanning sin logs recuperables; marcar como bloqueado, no pasado.
 - Sin staging controlado para preflight de migración, backup/restore ni pruebas IDOR con sesiones reales.
-- El limitador compartido ahora usa HMAC-SHA-256 con `TAMV_RATE_LIMIT_SALT` de al menos 32 caracteres y sólo usa `x-real-ip` como identidad canónica; configurar una sal secreta por ambiente y comprobar que el ingress sobrescribe esa cabecera. Si falta la sal, las rutas limitadas fallan cerrado con 503.
+- El limitador compartido usa HMAC-SHA-256 con `TAMV_RATE_LIMIT_SALT` secreta y de al menos 32 caracteres; el servidor distingue `rate_limit_configuration_invalid` (sal ausente/débil) de `rate_limit_unavailable` (almacén no disponible). Sólo acepta `x-real-ip` como identidad canónica e ignora `X-Forwarded-For` suministrada por el cliente.
+- Antes de desplegar a Vercel Production, es obligatorio aplicar y verificar la migración 0004 mediante `pnpm db:preflight`, `pnpm db:migrate` y de nuevo `pnpm db:preflight`. La guía conserva que las migraciones sólo se aplican con `scripts/db-migrate.mjs` después de un backup verificado; no aplicar el SQL manualmente.
 - TPVA fases 2–7 y verificación externa real siguen pendientes.
 - No se afirma “100 % producción”, no-repudio, cumplimiento normativo, PQC efectivo ni certificación no emitida.
 
