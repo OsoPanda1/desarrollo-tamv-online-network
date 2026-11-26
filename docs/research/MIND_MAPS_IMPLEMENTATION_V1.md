@@ -76,3 +76,18 @@ These completed reviews informed the branch topics and the caveats above. Their 
 - [Open-source security assessment and verifiable software provenance](https://app.undermind.ai/projects/35383148-1cf7-4662-8e78-a2ce27051a53?path=%2Ffederacion%2FOpen-source%20security%20assessment%20and%20verifiable%20software%20provenance)
 
 The literature review specifically recommends human review of alt text, captions and transcripts for all video media; privacy-conscious video activation; keyboard and assistive-technology testing; and treating automated security scores, signatures, provenance, external audits and certification as distinct claim types.
+
+
+## Atlas/LITLE and repository linkage
+
+The federation map now links directly to these repositories whose public status was confirmed through the connected GitHub account:
+
+- TAMV Core Atlas: https://github.com/OsoPanda1/tamv-core-atlas
+- Método 4L: https://github.com/OsoPanda1/metodo4l
+- Web institucional: https://github.com/OsoPanda1/WEBINSTITUCIONAL-TAMVONLINE
+
+It also links to the existing in-site routes `/arquitectura` and `/hcu`, and to `/api/v1/ecosystem/metadata`, the endpoint already consumed by `EcosystemMetadataBoard`. That endpoint provides repository source metadata; it is not a health check for deployed applications and does not prove cross-repository interoperability.
+
+The connected GitHub account confirmed that several LITLE-related repositories have restricted/private visibility. Their contents are not linked as if publicly inspectable. The public map explains this limitation and points back to the metadata matrix instead of treating inaccessible code as verified.
+
+**Integration boundary:** the mind-map structure itself is authored and versioned in the institutional website; it is not yet generated from Atlas/LITLE repository data. Genuine runtime federation still requires authorized access, versioned API/data contracts, permission checks, contract tests, observable status and deployment evidence for each connection.
