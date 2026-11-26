@@ -222,7 +222,7 @@ export function TamvMindMap({ mapId, locale = "es" }: { mapId: MindMapId; locale
   const toggleBranch = (id: string) => setExpandedBranches((current) => ({ ...current, [id]: !current[id] }))
 
   return (
-    <section className={styles.section} aria-labelledby={`mind-map-title-${mapId}`}>
+    <section className={styles.section} aria-labelledby={`mind-map-title-${mapId}`} data-tamv-mind-map={mapId}>
       <div className={styles.container}>
         <header className={styles.header}>
           <div>
