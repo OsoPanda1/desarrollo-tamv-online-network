@@ -4,7 +4,7 @@
 **Repositorio:** `OsoPanda1/desarrollo-tamv-online-network`  
 **Rama inspeccionada:** `feat/research-evidence-media-atlas-v1`  
 **PR de integración:** [#45 — distribución contextual de medios](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/45)  
-**Commit de referencia para la inspección de código:** `0cef1eeec8ff0b25322102c25a6e94416ad4f2d0`  
+**Commit de referencia para la inspección de código y las últimas correcciones:** `45fe78493dac4f81f78d8feff1d78898cc56f25a`  
 **Dictamen:** **implementación en revisión; no declarar producción lista**.
 
 ## 1. Alcance, método y límites de esta auditoría
@@ -42,6 +42,12 @@ El CSS de la portada ocultaba todos los hijos directos de `main#contenido` salvo
 
 **Estado:** cambios escritos; la suite todavía no se ha ejecutado porque Actions no llega a los pasos del workflow.
 
+### 3.2 Runbook de facturación con una afirmación de licencia obsoleta
+
+El runbook decía que el repositorio no tenía `LICENSE`, pero el árbol revisado contiene `LICENSE`, `LICENSE-DOCS` y `LICENSES.md`. El runbook se actualizó para corregir ese dato y mantener la advertencia pertinente: licencias generales no prueban la titularidad de todos los aportes, marcas, repositorios externos, imágenes, datos culturales ni videos.
+
+**Commit:** `cd63912384bcb91bbfc56f1c0dddd1aaf47412a2`.
+
 ### 3.3 El limitador no debe usar una sal predecible
 
 La implementación previa usaba una cadena fija de fallback (`tamv-shared-rate-limit-v1`) junto con SHA-256. Ese valor era público y no ofrecía una clave secreta frente a enumeración fuera de línea de identidades de baja entropía.
@@ -52,13 +58,19 @@ La implementación previa usaba una cadena fija de fallback (`tamv-shared-rate-l
 - Respuesta fail-closed y prueba asociada: `d416f88bd4fe21319225bcfd69bb88d28074ad29`, `7336c16682d4b6f54f788e8c6669e916f8f226bf`.
 - Contrato de tests de clave: `d569b757e2b5772cd26201cbf2f13c3a94f5ffd9`.
 
-**Estado:** corrección y pruebas de código escritas, no ejecutadas por CI en este corte. El propietario debe generar una sal criptográficamente aleatoria por ambiente y no copiar el placeholder de `.env.example`. Si no se configura, el sistema de limitación falla cerrado y las rutas protegidas pueden devolver 503, que es preferible a desactivar el control silenciosamente.
+**Estado:** cambios escritos, pero no ejecutados por CI en este corte. El propietario debe generar una sal criptográficamente aleatoria por ambiente y no copiar el placeholder de `.env.example`. Si no se configura, el sistema de limitación falla cerrado y las rutas protegidas pueden devolver 503, que es preferible a desactivar el control silenciosamente.
 
-### 3.2 Runbook de facturación con una afirmación de licencia obsoleta
+### 3.4 La IP para rate limit no debe derivarse de una cadena reenviada no confiable
 
-El runbook decía que el repositorio no tenía `LICENSE`, pero el árbol revisado contiene `LICENSE`, `LICENSE-DOCS` y `LICENSES.md`. El runbook se actualizó para corregir ese dato y mantener la advertencia pertinente: licencias generales no prueban la titularidad de todos los aportes, marcas, repositorios externos, imágenes, datos culturales ni videos.
+La implementación previa usaba el primer valor de `X-Forwarded-For` cuando `x-real-ip` no estaba disponible. Esa cadena puede contener valores aportados por el cliente si la infraestructura no la limpia/reescribe.
 
-**Commit:** `cd63912384bcb91bbfc56f1c0dddd1aaf47412a2`.
+**Corrección realizada:** la identidad ahora se obtiene únicamente de `x-real-ip`, que debe ser inyectada/reescrita por el proxy de confianza. Si no llega, el código usa un bucket compartido `anonymous` en lugar de aceptar una identidad seleccionada por el solicitante. Esto evita un bypass sencillo por `X-Forwarded-For`, pero significa que un despliegue sin cabecera canónica puede provocar que los usuarios compartan el mismo límite.
+
+- Helper de identidad: `7f4585cc25299c74abf2b70fee9c02e68d8c8135`.
+- Integración del helper en el servidor: `18ad36926fa10cd627c803b135ab698fbb472419`.
+- Prueba del rechazo de `X-Forwarded-For` no canónico: `45fe78493dac4f81f78d8feff1d78898cc56f25a`.
+
+**Estado:** corrección y prueba fuente añadidas. Antes de producción se debe confirmar que el ingress entrega un `x-real-ip` canónico y sobrescribe el valor entrante; la suite real y la comprobación en Preview siguen pendientes.
 
 ## 4. Bloqueos de liberación prioritarios
 
@@ -68,6 +80,7 @@ El runbook decía que el repositorio no tenía `LICENSE`, pero el árbol revisad
 | REL-02 | **P0** | El estado combinado del commit de referencia mostró Vercel `pending`; el bot de Vercel ya había reportado el límite gratuito `api-deployments-free-per-day` (más de 100 deploys en el día). | No se pudo confirmar una Preview READY ni abrir los logs de build del proyecto mediante el acceso actual. | Verificar el equipo/proyecto correcto en Vercel, abrir logs de un deployment existente cuando el límite y permisos lo permitan y validar una Preview del SHA exacto. No lanzar intentos repetidos mientras siga el límite. |
 | DB-01 | **P0/P1** | `migrations/0004_public_rate_limits.sql` crea `public.tamv_rate_limit_counters`; README indica que la migración sigue pendiente de aplicar en la base correcta. | Con el limitador compartido habilitado y la tabla ausente, las rutas públicas protegidas por ese limitador pueden responder HTTP 503 deliberadamente. No abrir el sistema sin límite para ocultar el problema. | Preparar backup verificable, usar una base de staging identificada, ejecutar `pnpm db:preflight`, `pnpm db:migrate` y de nuevo `pnpm db:preflight`; comprobar las rutas limitadas. Producción sólo después de revisión y autorización. |
 | RATE-01 | **P1** | La implementación anterior caía en una sal fija y predecible para derivar claves de identidad. | La sal ahora es secreta, mínima (32 caracteres) y aplicada mediante HMAC-SHA-256; falta la configuración real por ambiente y la ejecución de pruebas. | Crear una sal aleatoria y distinta para cada ambiente, confirmar que la migración 0004 esté aplicada y verificar con tests que faltante/sal débil produce 503 controlado. |
+| RATE-02 | **P1** | La identidad anterior caía en el primer valor de `X-Forwarded-For` cuando faltaba `x-real-ip`, y el primer valor puede estar controlado por el cliente si el proxy no lo normaliza. | El código ahora acepta sólo `x-real-ip` y usa `anonymous` si falta; falta verificar la cabecera canónica de la infraestructura. | Confirmar que el ingress sobrescriba `x-real-ip`; comprobar en Preview que dos IPs reales reciben buckets distintos y que el valor `X-Forwarded-For` enviado por el cliente no altera la identidad. |
 | AUTH-01 | **P0** | La configuración de autenticación depende de `APP_URL`, `BETTER_AUTH_URL` y `BETTER_AUTH_SECRET` del entorno. El README registra advertencias previas de URL/base y secreto por defecto durante build. | El código por sí solo no prueba que el secreto/URL adecuados existan en cada ambiente. Un build verde no garantiza que login, cookies y orígenes confiables estén correctamente configurados en runtime. | Configurar secreto criptográficamente aleatorio (al menos 32 caracteres), origen HTTPS canónico y orígenes confiables explícitos en el gestor de secretos; probar registro, login, cierre de sesión, sesión expirada y rechazo cross-origin en Preview. Nunca copiar secretos al repo. |
 | PAY-01 | **P0 para cobro live** | Checkout y portal de Stripe existen en el árbol; `TAMV_BILLING_MODE` está deshabilitado por defecto y el checkout live depende de claves, webhook y flags explícitos. | No hay evidencia de una transacción de prueba, webhook real, Customer Portal probado, política fiscal/resolución legal aprobada ni ciclo de renovación comprobado. | Completar el runbook `docs/production/membership-billing-runbook.md`: Stripe test, firma inválida, idempotencia, eventos duplicados/desordenados, renovación fallida, cancelación, acceso y reembolsos; conservar cobro live deshabilitado hasta aprobación expresa del responsable. |
 | API-01 | **P1** | El endpoint `/api/assistant` valida origen, forma/tamaño de entrada y usa el limitador compartido; procesa hasta 40 mensajes de entrada y recorta a los 16 recientes antes de llamar al agente. | El límite por solicitud no demuestra presupuesto de proveedor, límite de concurrencia ni protección contra agotamiento de gasto en runtime. | Configurar límites de gasto/concurrencia del proveedor y observar consumo real; prueba de abuso/carga antes de exposición amplia. No introducir un proveedor o presupuesto ficticio en código. |
@@ -106,11 +119,12 @@ El runbook decía que el repositorio no tenía `LICENSE`, pero el árbol revisad
 
 ## 7. Evidencia de los bloqueos actuales
 
-- CI del commit `0cef1eeec8ff0b25322102c25a6e94416ad4f2d0`: [run 45869216699](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45869216699).
-- CodeQL del mismo commit: [run 45869216676](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45869216676).
-- Secret scan del mismo commit: [run 45869216688](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45869216688).
+- CI del commit `45fe78493dac4f81f78d8feff1d78898cc56f25a`: [run 45870454997](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870454997).
+- CodeQL del mismo commit: [run 45870455359](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455359).
+- Secret scan del mismo commit: [run 45870455017](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/45870455017).
+- El estado combinado del commit mostró Vercel `pending`: [deployment status](https://vercel.com/tamvonlinenetwork-7731s-projects/desarrollo-tamv-online-network/B2eQSkAKjwWj74dJYS8pPXSZAhjo).
 
-Los tres runs concluyeron `failure`; los detalles accesibles muestran `runner_id: 0` y `steps: []`, y no se obtuvieron logs de pasos. Por tanto, se desconoce la causa específica; no se presume ni un error de código ni un hallazgo de secreto. La consulta de estado de commit mostró además Vercel `pending`. No hay en esta auditoría una Preview verificada ni un build exitoso del SHA actual.
+Los tres workflows concluyeron `failure` en aproximadamente dos segundos; la API de jobs muestra `runner_id: 0`, `runner_name: ""` y `steps: []`. Por tanto, no se puede afirmar que los comandos de CI se hayan iniciado. Tampoco se puede inferir que el código compile mal o que se haya encontrado un secreto: la causa concreta sigue sin registros accesibles. No hay Preview verificada ni build exitoso del SHA referido en esta auditoría.
 
 ## 8. Conclusión de auditoría
 
