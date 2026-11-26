@@ -1,5 +1,3 @@
-"use client"
-
 import { Film, Image as ImageIcon } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 import styles from "./tamv-section-media.module.css"
