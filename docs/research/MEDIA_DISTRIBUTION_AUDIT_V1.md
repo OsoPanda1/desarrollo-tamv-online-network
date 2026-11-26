@@ -70,3 +70,42 @@ Se revisaron las páginas públicas de investigación, arquitectura, origen, HCU
 ## Verificación pendiente
 
 Los archivos fuente pueden comprobarse en la rama, pero la vista visual final requiere TypeScript, pruebas, build de producción y un preview accesible. La conexión actual de Vercel no expone un proyecto o deployment consultable para esta rama; no se afirma que la redistribución ya esté publicada en el sitio vivo.
+
+
+## Revisión de las 45 rutas de la aplicación
+
+El árbol de rutas de Next.js contiene 45 archivos `page.tsx`. La asignación no trata cada subruta o pantalla transaccional como un tema editorial nuevo: reserva medios para los veinte temas definidos por el inventario fuente y evita repetir marcadores en páginas de detalle, cuenta o flujos privados.
+
+### Rutas temáticas con medio propio (20)
+
+- `/` — `IMG-04`, `VID-01`: interfaz TAMV Living Atlas y presentación institucional.
+- `/origenes` — `IMG-01`, `VID-02`: origen y autoría.
+- `/atlas` — `IMG-02`, `VID-03`: territorio y recorrido por Living Atlas.
+- `/quienes-somos` — `IMG-03`: memoria viva.
+- `/arquitectura` — `IMG-05`: arquitectura federada.
+- `/hcu` — `IMG-06`, `VID-07`: grafo y observatorio HCU.
+- `/fuentes` — `IMG-07`: procedencia de evidencia; incluye las tarjetas de referencias que antes estaban junto a la galería.
+- `/auditoria-creator` — `IMG-14`, `VID-06`: verificación TPVA y lectura de recibos.
+- `/investigacion` — `IMG-08`, `VID-05`: investigación abierta y fuentes.
+- `/comunidad` — `IMG-09`: comunidad creadora.
+- `/isabella` — `IMG-10`, `VID-08`: Isabella AI.
+- `/proyectos` — `IMG-11`, `VID-10`: RDM Digital y memoria territorial dentro del catálogo de proyectos.
+- `/excelencia` — `IMG-12`: Método 4L.
+- `/gobernanza` — `IMG-13`, `VID-09`: gobernanza y transparencia.
+- `/investigadores` — `IMG-15`: identificadores persistentes.
+- `/formacion` — `IMG-16`: formación digital.
+- `/guia` — `IMG-17`, `VID-04`: experiencia accesible y tutorial de navegación.
+- `/unete` — `IMG-18`, `VID-11`: colaboración latinoamericana y contribuciones.
+- `/desarrolladores` — `IMG-19`: documentación y código.
+- `/institucionalizacion` — `IMG-20`, `VID-12`: visión, hoja de ruta y siguientes hitos.
+
+### Rutas sin un marcador audiovisual independiente (25)
+
+No se fuerza contenido decorativo en estas rutas, porque sus objetivos son distintos, el contenido pertenece a una página temática superior o el límite del inventario no define un medio propio para ellas:
+
+- **Apoyo y cuenta:** `/apoyar`, `/cuenta`, `/sign-in`, `/sign-up`.
+- **Vistas de detalle o complementarias:** `/desarrolladores/independiente`, `/ecosistema`, `/investigacion/[slug]`, `/investigacion/publicaciones`, `/logros`, `/proyectos/[slug]`, `/utamv`.
+- **Membresías y privacidad:** `/membresias`, `/membresias/condiciones`, `/privacidad`.
+- **Portal y flujos privados/de trabajo:** `/portal`, `/portal/hcu`, `/portal/hcu/[id]`, `/portal/intereses`, `/portal/moderacion`, `/portal/moderacion/propuestas/[id]`, `/portal/perfil`, `/portal/propuestas`, `/portal/propuestas/[id]`, `/portal/propuestas/[id]/apelar`, `/portal/propuestas/nueva`.
+
+Estas omisiones son deliberadas, no rutas olvidadas. Si en una siguiente fase se aprueba ampliar el inventario más allá de los 20 espacios de imagen y 12 videos, la prioridad recomendada para revisar es `/ecosistema`, `/utamv` y las páginas de publicaciones/detalle, con recursos propios y derechos documentados, nunca duplicando automáticamente los marcadores actuales.
