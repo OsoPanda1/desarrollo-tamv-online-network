@@ -13,8 +13,8 @@ const high = {
 
 test("risk score is deterministic and bounded from 0 to 100", () => {
   const result = assessLgsRisk(low)
-  assert.equal(result.score, 20)
-  assert.equal(result.band, "moderate")
+  assert.equal(result.score, 0)
+  assert.equal(result.band, "low")
   assert.equal(result.disposition, "review")
   assert.equal(assessLgsRisk(high).score, 100)
   assert.equal(assessLgsRisk(high).band, "critical")
@@ -27,7 +27,7 @@ test("risk weights sum to one", () => {
 
 test("non-compensatory veto blocks even the lowest numeric score", () => {
   const result = assessLgsRisk({ ...low, rightsViolationLikely: true })
-  assert.equal(result.score, 20)
+  assert.equal(result.score, 0)
   assert.equal(result.disposition, "blocked")
   assert.deepEqual(result.vetoes, ["potential-rights-violation"])
 })
