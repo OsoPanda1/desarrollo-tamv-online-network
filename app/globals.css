@@ -4777,3 +4777,111 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
   .nav-discovery-panel { position: static; min-width: 0; margin: 0 0 8px 10px; border: 0; border-left: 2px solid #b9d3cf; box-shadow: none; background: #f7faf9; }
   .primary-navigation .nav-discovery-panel a { min-height: 40px; padding: 10px 12px; }
 }
+
+
+/* LATAMV Governance System — institutional ivory/navy interface */
+.lgs-workspace { padding-top: clamp(30px, 5vw, 64px); padding-bottom: 72px; }
+.lgs-private-header { display:flex; justify-content:space-between; align-items:flex-start; gap:28px; padding-bottom:28px; border-bottom:1px solid var(--rule); }
+.lgs-private-header h1 { margin:8px 0 10px; max-width:850px; font-family:var(--serif); font-size:clamp(36px,5vw,58px); line-height:1.02; font-weight:400; letter-spacing:-.025em; color:var(--navy-deep); }
+.lgs-private-header > div:first-child > p:last-child { max-width:720px; margin:0; color:var(--muted-ink); font-size:15px; }
+.lgs-access-status { display:flex; align-items:center; gap:12px; flex:none; padding:13px 16px; border:1px solid #b7d9ce; border-radius:10px; background:#f0f8f4; color:#174d40; }
+.lgs-access-status svg { width:23px; height:23px; }
+.lgs-access-status span { display:flex; flex-direction:column; line-height:1.4; }
+.lgs-access-status strong { font-size:12px; }
+.lgs-access-status small { font-size:10px; overflow-wrap:anywhere; }
+.lgs-workspace-body { display:grid; gap:22px; padding-top:24px; }
+.lgs-summary-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.lgs-summary-grid article { display:grid; grid-template-columns:32px 1fr; column-gap:12px; align-items:start; padding:20px; border:1px solid var(--rule); border-radius:12px; background:var(--white); }
+.lgs-summary-grid article svg { grid-row:span 3; width:25px; height:25px; color:var(--copper-dark); }
+.lgs-summary-grid article > span { color:var(--muted-ink); font-size:11px; }
+.lgs-summary-grid article strong { margin:3px 0; font-size:16px; line-height:1.35; color:var(--navy); }
+.lgs-summary-grid article small { color:var(--muted-ink); font-size:11px; line-height:1.5; }
+.lgs-panel { min-width:0; padding:clamp(18px,3vw,30px); border:1px solid var(--rule); border-radius:14px; background:var(--white); box-shadow:0 10px 34px rgba(22,42,60,.035); }
+.lgs-panel h2 { margin:5px 0 9px; color:var(--navy-deep); font-family:var(--serif); font-size:clamp(25px,3vw,34px); font-weight:400; line-height:1.12; }
+.lgs-panel-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:18px; }
+.lgs-panel-heading > div > p:last-child { margin:0; max-width:650px; color:var(--muted-ink); font-size:13px; }
+.lgs-panel-heading > svg { color:var(--copper-dark); width:28px; height:28px; }
+.lgs-secondary-button { flex:none; border:1px solid var(--rule); border-radius:7px; padding:9px 12px; color:var(--navy); background:#f8f7f3; font-size:12px; cursor:pointer; }
+.lgs-secondary-button:hover { background:#eeece6; }
+.lgs-graph-layout { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(220px,.75fr); gap:18px; margin-top:22px; }
+.lgs-graph-canvas { min-width:0; overflow:hidden; border:1px solid #e5e1d8; border-radius:10px; background:radial-gradient(circle at 50% 50%,#fffefa 0,#f8f7f2 78%); }
+.lgs-graph-canvas svg { display:block; width:100%; height:auto; min-height:260px; }
+.lgs-edge { stroke:#c9c0ad; stroke-width:1.6; opacity:.62; transition:stroke .15s,opacity .15s,stroke-width .15s; }
+.lgs-edge.is-connected { stroke:#b77a54; stroke-width:2.5; opacity:1; }
+.lgs-graph-node { cursor:pointer; outline:none; }
+.lgs-graph-node rect { fill:#fffefa; stroke:#c9c4b9; stroke-width:1.2; transition:fill .15s,stroke .15s,stroke-width .15s; }
+.lgs-graph-node text { fill:#263b4c; font:600 11px Arial,sans-serif; pointer-events:none; }
+.lgs-graph-node:hover rect,.lgs-graph-node:focus rect { stroke:#875638; stroke-width:2.4; }
+.lgs-graph-node.is-connected rect { fill:#f4f0e6; stroke:#b9a781; }
+.lgs-graph-node.is-selected rect { fill:#162a3c; stroke:#d6a54a; stroke-width:2.5; }
+.lgs-graph-node.is-selected text { fill:#fffefa; }
+.lgs-node-inspector { display:flex; flex-direction:column; align-items:flex-start; gap:11px; padding:20px; border-radius:10px; background:#f5f3ed; border:1px solid #e5e0d5; }
+.lgs-inspector-index { color:var(--copper-dark); font:600 9px/1.4 var(--mono); letter-spacing:.13em; }
+.lgs-node-inspector h3 { margin:0; font-size:20px; line-height:1.2; color:var(--navy); }
+.lgs-node-inspector p { margin:0; color:#536371; font-size:13px; line-height:1.65; }
+.lgs-node-inspector > div { display:flex; flex-direction:column; gap:3px; padding-top:10px; border-top:1px solid #ded8cb; width:100%; }
+.lgs-node-inspector > div strong { font-size:11px; color:var(--navy); }
+.lgs-node-inspector > div span { color:#536371; font-size:12px; line-height:1.55; }
+.lgs-dual-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; align-items:stretch; }
+.lgs-flow-list { list-style:none; margin:22px 0 0; padding:0; display:grid; gap:0; }
+.lgs-flow-list li { position:relative; display:grid; grid-template-columns:36px 1fr; gap:12px; padding:0 0 18px; }
+.lgs-flow-list li:not(:last-child)::after { content:""; position:absolute; left:17px; top:31px; bottom:1px; width:1px; background:#d8d0c1; }
+.lgs-flow-list li > span { display:grid; place-items:center; width:35px; height:35px; border:1px solid #d5c7a7; border-radius:50%; color:#775d2f; background:#faf6e9; font:10px var(--mono); }
+.lgs-flow-list li div { display:flex; flex-direction:column; gap:3px; padding-top:2px; }
+.lgs-flow-list li strong { font-size:14px; color:var(--navy); }
+.lgs-flow-list li small { color:var(--muted-ink); font-size:12px; line-height:1.5; }
+.lgs-formula { display:flex; flex-direction:column; gap:3px; padding:15px 0; border-bottom:1px solid #e8e4db; }
+.lgs-formula > span { color:var(--muted-ink); font-size:11px; }
+.lgs-formula strong { color:var(--navy); font:600 21px/1.35 var(--mono); letter-spacing:-.03em; overflow-wrap:anywhere; }
+.lgs-formula small { color:#697782; font-size:11px; line-height:1.5; }
+.lgs-caveat { margin:15px 0 0; padding:11px 13px; border-left:3px solid #d6a54a; background:#faf6e9; color:#655a44; font-size:11px; line-height:1.6; }
+.lgs-merkle-tree { display:grid; gap:0; margin:22px 0; padding:20px 12px; border:1px solid #e5e1d8; border-radius:10px; background:#faf9f5; }
+.lgs-merkle-level { display:flex; justify-content:space-evenly; align-items:center; gap:12px; position:relative; }
+.lgs-merkle-level:not(:last-child) { padding-bottom:30px; }
+.lgs-merkle-level:not(:first-child) { padding-top:0; }
+.lgs-merkle-level span { display:flex; align-items:center; justify-content:center; min-height:42px; min-width:0; width:42%; padding:8px; border:1px solid #d5c7a7; border-radius:8px; background:#fffefa; color:#263b4c; text-align:center; font:600 11px/1.4 var(--mono); overflow-wrap:anywhere; }
+.lgs-merkle-level:first-child span { width:min(100%,340px); background:#162a3c; color:#fffefa; border-color:#d6a54a; }
+.lgs-merkle-level:nth-child(3) span { width:22%; }
+.lgs-merkle-level:nth-child(4) { color:#697782; font-size:10px; }
+.lgs-merkle-level:nth-child(4) small { width:22%; text-align:center; }
+.lgs-merkle-notes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.lgs-merkle-notes p { margin:0; padding:13px; background:#f5f3ed; border-radius:8px; color:#586875; font-size:11px; line-height:1.65; overflow-wrap:anywhere; }
+.lgs-merkle-notes strong { color:var(--navy); }
+.lgs-mindmap { display:grid; grid-template-columns:minmax(150px,.7fr) minmax(0,1.6fr); align-items:center; gap:28px; margin-top:20px; }
+.lgs-mindmap-root { display:grid; place-items:center; aspect-ratio:1; max-width:200px; width:100%; border-radius:50%; border:2px solid #d6a54a; background:#162a3c; color:#fffefa; text-align:center; font:600 13px/1.7 var(--mono); letter-spacing:.08em; box-shadow:0 0 0 9px #f4f0e6,0 0 0 10px #e3d9c3; }
+.lgs-mindmap-branches { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.lgs-mindmap-branches > div { display:flex; flex-direction:column; gap:4px; padding:14px; border:1px solid #e2ddd2; border-left:3px solid #b77a54; border-radius:7px; background:#fffefa; }
+.lgs-mindmap-branches strong { color:var(--navy); font-size:12px; }
+.lgs-mindmap-branches span { color:var(--muted-ink); font-size:11px; line-height:1.5; }
+.lgs-limitations { background:#fdfcf8; }
+.lgs-limitations > p:not(.eyebrow) { max-width:920px; color:#586875; font-size:13px; line-height:1.8; }
+.lgs-maturity { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 22px; }
+.lgs-maturity span { display:inline-flex; align-items:center; gap:7px; padding:7px 9px; border:1px solid #e1ddd3; border-radius:99px; background:#fffefa; color:#65727d; font-size:10px; }
+.lgs-maturity i { width:7px; height:7px; border-radius:50%; background:#c8c8c3; }
+.lgs-maturity i.is-specified { background:#b77a54; }
+.lgs-limitations .button { display:inline-flex; align-items:center; gap:8px; width:fit-content; }
+.lgs-limitations .button svg { width:15px; height:15px; }
+.lgs-version-note { display:flex; align-items:center; gap:8px; margin:0; color:#78838a; font:10px/1.5 var(--mono); letter-spacing:.05em; }
+.lgs-version-note svg { width:15px; height:15px; }
+@media (max-width: 900px) {
+  .lgs-private-header { flex-direction:column; }
+  .lgs-graph-layout { grid-template-columns:1fr; }
+  .lgs-node-inspector { display:grid; grid-template-columns:1fr 1fr; }
+  .lgs-node-inspector h3,.lgs-node-inspector > p,.lgs-inspector-index { grid-column:1/-1; }
+  .lgs-dual-grid { grid-template-columns:1fr; }
+}
+@media (max-width: 620px) {
+  .lgs-workspace { width:calc(100% - 28px); }
+  .lgs-summary-grid { grid-template-columns:1fr; }
+  .lgs-panel { padding:17px; }
+  .lgs-panel-heading { flex-direction:column; }
+  .lgs-graph-canvas svg { min-height:210px; }
+  .lgs-graph-node text { font-size:10px; }
+  .lgs-node-inspector { display:flex; }
+  .lgs-merkle-notes { grid-template-columns:1fr; }
+  .lgs-mindmap { grid-template-columns:1fr; justify-items:center; gap:25px; }
+  .lgs-mindmap-root { max-width:145px; }
+  .lgs-mindmap-branches { grid-template-columns:1fr; width:100%; }
+  .lgs-access-status { max-width:100%; }
+  .lgs-access-status small { overflow-wrap:anywhere; }
+}
