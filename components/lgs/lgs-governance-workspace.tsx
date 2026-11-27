@@ -134,7 +134,7 @@ export function LgsGovernanceWorkspace() {
         <p className="eyebrow">06 / LÍMITES Y ESTADO</p><h2>Propuesta verificable, no certificación declarativa</h2>
         <p>Esta interfaz visualiza la arquitectura propuesta. No implica que los controles, APIs, firmas, raíces Merkle, comités o procesos estén desplegados o auditados. Antes de afirmar conformidad se requieren implementación, vectores de prueba, revisión independiente y evidencia fechada por versión.</p>
         <div className="lgs-maturity"><span><i className="is-specified" />Especificado</span><span><i />Implementado</span><span><i />Probado</span><span><i />Revisión independiente</span><span><i />Verificado en producción</span></div>
-        <a className="button button-copper" href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/feat/tamv-progressive-onboarding-v1/docs/LATAMV-GOVERNANCE-SYSTEM-v1.1.md" target="_blank" rel="noreferrer">Consultar especificación documental <GitBranch aria-hidden="true" /></a>
+        <p className="lgs-private-spec-notice">La especificación fundacional completa se carga desde configuración privada del servidor; no debe publicarse en el repositorio público.</p>
       </section>
       <p className="lgs-version-note"><Sigma aria-hidden="true" /> LGS v1.1.0 · Borrador canónico · Revisión institucional pendiente</p>
     </div>
