@@ -1,0 +1,90 @@
+name: License and SBOM evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "LICENSE"
+      - "LICENSES/**"
+      - "NOTICE"
+      - "docs/legal/**"
+      - ".github/workflows/license-compliance.yml"
+  push:
+    branches: [main]
+    paths:
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "LICENSE"
+      - "LICENSES/**"
+      - "NOTICE"
+      - "docs/legal/**"
+      - ".github/workflows/license-compliance.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: license-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sbom:
+    name: Generate dependency SBOM and preserve audit evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: "12.16.1"
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate SPDX JSON SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: spdx-json
+          output-file: tamv-sbom.spdx.json
+          upload-artifact: false
+          artifact-name: tamv-sbom-spdx
+      - name: Generate CycloneDX JSON SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: tamv-sbom.cdx.json
+          upload-artifact: false
+          artifact-name: tamv-sbom-cyclonedx
+      - name: Upload SBOMs and lockfile as audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: tamv-license-audit-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            tamv-sbom.spdx.json
+            tamv-sbom.cdx.json
+            pnpm-lock.yaml
+            LICENSE
+            LICENSES/**
+            NOTICE
+            docs/legal/asset-register.csv
+      - name: Record evidence metadata
+        run: |
+          {
+            echo "## TAMV license evidence"
+            echo
+            echo "- Commit: $GITHUB_SHA"
+            echo "- Ref: $GITHUB_REF"
+            echo "- SBOM formats: SPDX JSON, CycloneDX JSON"
+            echo "- Dependency install: frozen lockfile"
+            echo "- Limitation: SBOM generation is inventory evidence, not a legal compatibility verdict."
+          } >> "$GITHUB_STEP_SUMMARY"
