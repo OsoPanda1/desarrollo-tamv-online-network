@@ -51,6 +51,13 @@ test("issues a short-lived audience-bound RS256 token from a known authenticated
   assert.ok(Number(claims.exp) - Number(claims.iat) <= TAMV_PASS_TOKEN_TTL_SECONDS);
 });
 
+test("requires explicit scopes rather than silently disclosing a default profile", async () => {
+  await assert.rejects(
+    () => createTamvPassToken(subject, "https://api.example.test"),
+    /Scopes must be explicitly requested/,
+  );
+});
+
 test("refuses an audience not explicitly allowlisted and an unsupported scope", async () => {
   await assert.rejects(
     () => createTamvPassToken(subject, "https://attacker.example.test"),
@@ -84,7 +91,7 @@ test("rejects a correctly signed token after its expiration", async () => {
 });
 
 test("verifier rejects audience substitution and a modified signature", async () => {
-  const issued = await createTamvPassToken(subject, "https://api.example.test");
+  const issued = await createTamvPassToken(subject, "https://api.example.test", ["profile:read"]);
   await assert.rejects(
     () => verifyTamvPassToken(issued.accessToken, "https://worker.example.test"),
   );
@@ -151,7 +158,7 @@ test("feature flag can be closed without issuing tokens", async () => {
   process.env.TAMV_PASS_ENABLED = "false";
   assert.equal(isTamvPassEnabled(), false);
   await assert.rejects(
-    () => createTamvPassToken(subject, "https://api.example.test"),
+    () => createTamvPassToken(subject, "https://api.example.test", ["profile:read"]),
     /TAMV Pass is disabled/,
   );
   process.env.TAMV_PASS_ENABLED = "true";
