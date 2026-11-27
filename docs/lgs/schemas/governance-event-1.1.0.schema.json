@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tamv.online/schemas/lgs/governance-event-1.1.0.json",
+  "title": "LATAMV Governance Event",
+  "description": "Public-safe metadata envelope for a governance event. Sensitive evidence belongs in separately protected storage.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "system_id",
+    "event_type",
+    "actor_ref",
+    "occurred_at_utc",
+    "policy_version",
+    "risk_level",
+    "decision",
+    "artifact_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "event_id": { "type": "string", "minLength": 8, "maxLength": 128, "pattern": "^[A-Za-z0-9._:-]+$" },
+    "system_id": { "type": "string", "minLength": 3, "maxLength": 160 },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "system_registered",
+        "risk_assessed",
+        "evidence_attached",
+        "deployment_proposed",
+        "deployment_approved",
+        "deployment_rejected",
+        "deployment_completed",
+        "configuration_changed",
+        "incident_opened",
+        "incident_contained",
+        "incident_closed",
+        "human_review_completed",
+        "complaint_received",
+        "system_suspended",
+        "system_retired"
+      ]
+    },
+    "actor_ref": { "type": "string", "minLength": 3, "maxLength": 160 },
+    "authorization_ref": { "type": ["string", "null"], "maxLength": 160 },
+    "occurred_at_utc": { "type": "string", "format": "date-time" },
+    "policy_version": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "risk_level": { "enum": ["L0", "L1", "L2", "L3", "unassessed"] },
+    "decision": { "enum": ["allow", "deny", "defer", "suspend", "revoke", "record"] },
+    "reason_code": { "type": ["string", "null"], "maxLength": 128 },
+    "artifact_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "previous_event_digest": {
+      "type": ["string", "null"],
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "type": "string", "minLength": 3, "maxLength": 512 }
+    },
+    "signature_ref": { "type": ["string", "null"], "maxLength": 512 },
+    "privacy_class": { "enum": ["public", "internal", "confidential", "restricted"] },
+    "retention_class": { "type": "string", "minLength": 1, "maxLength": 64 }
+  }
+}
