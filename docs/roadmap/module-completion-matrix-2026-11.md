@@ -18,7 +18,9 @@ No se asignan porcentajes de avance sin una medición reproducible.
 ## Fase 0 — integridad del repositorio y entrega
 
 ### M0.1 Build de producción y módulo LGS
-**Estado:** corrección propuesta en PR #50; validación pendiente.
+**Estado:** corrección propuesta en PR #50; se añadieron pruebas contractuales de Fase 0 y un runbook operativo. Validación de ejecución pendiente.
+
+**Documentación y guardrails añadidos en la rama del PR:** `docs/roadmap/phase-0-closure-runbook.md` define comandos reproducibles, gates LGS, evidencia por SHA, plan de migración con digest, prueba 429/503 y reversión; `tests/phase-0-contracts.test.mjs` verifica estáticamente los contratos de CI, seguridad y migraciones. Estos tests todavía requieren ejecución real en CI.
 
 **Puntos de entrada**
 - components/lgs/lgs-risk-assessment-panel.tsx
@@ -42,7 +44,7 @@ No se asignan porcentajes de avance sin una medición reproducible.
 - Las pruebas y el build corresponden al SHA candidato.
 
 ### M0.2 GitHub Actions, CodeQL y secret scanning
-**Estado:** bloqueado por ejecuciones anteriores que terminaban antes de asignar runner; para el último commit de PR #50 aún no hay resultado de workflow recuperado.
+**Estado:** bloqueado por ejecuciones que concluyen `failure` con `steps: null` y `logs_url: null`, sin evidencia de runner ni comandos ejecutados. El fallo no permite concluir si el código pasa o falla. Requiere revisar habilitación/políticas/cuota/runners de Actions y re-ejecutar manualmente. El runbook define el procedimiento.
 
 **Trabajo de cierre**
 1. Confirmar en GitHub Actions que los workflows estén habilitados y que el repositorio/cuenta no tenga restricciones de ejecución.
@@ -56,7 +58,7 @@ No se asignan porcentajes de avance sin una medición reproducible.
 - No se acepta runner_id 0, steps vacíos o ausencia de logs como un PASS.
 
 ### M0.3 Base de datos y rate limiting compartido
-**Estado:** esquema de limitación compartida requiere verificación operativa; la migración 0004 está identificada en la documentación como pendiente de aplicar/verificar.
+**Estado:** guardrails de código y contrato documentados; bloqueado para cierre operativo porque no se ha demostrado acceso a staging, backup/restauración, digest de plan, migración aplicada ni respuestas HTTP 429/503. No se ejecutó ni debe inferirse una migración en producción. Seguir `docs/roadmap/phase-0-closure-runbook.md`.
 
 **Trabajo de cierre**
 1. Confirmar la base de datos de staging correcta.
