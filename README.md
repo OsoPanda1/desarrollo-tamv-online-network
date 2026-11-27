@@ -254,7 +254,7 @@ La carta bilingüe y el playbook operativo están en [`docs/institutional/charte
 
 ---
 
-## Mapa de documentos
+## Cierre modular y Fase 0\n\n- [Matriz de cierre modular M0–M11](docs/roadmap/module-completion-matrix-2026-11.md) — estados con evidencia, dependencias y criterios de aceptación.\n- [Runbook de cierre de Fase 0](docs/roadmap/phase-0-closure-runbook.md) — comandos reproducibles, CI/seguridad, preflight/migraciones, rate limit, evidencias y reversión.\n- [Playbook de trabajo por módulos](docs/roadmap/README.md) — expediente obligatorio por PR y reglas de cierre.\n\n## Mapa de documentos
 
 | Tema | Documento |
 |---|---|
