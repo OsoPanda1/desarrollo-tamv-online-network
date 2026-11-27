@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { createTamvPassToken, isTamvPassEnabled } from "@/lib/tamv-pass/tokens";
+import { enforcePublicRateLimit } from "@/lib/rate-limit/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,6 +78,13 @@ export async function POST(request: Request) {
   }
   if (origin !== requestOrigin) return jsonError("cross_origin_request_rejected", 403);
 
+  const rateLimited = await enforcePublicRateLimit(request, {
+    scope: "tamv-pass-token",
+    limit: 10,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   const parsed = await readBoundedJson(request);
   if (parsed.response) return parsed.response;
 
@@ -132,7 +140,7 @@ export async function POST(request: Request) {
     }, { status: 200, headers: NO_STORE_HEADERS });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
-    if (/audience is required|audience must|not allowlisted|Scopes must|scope are not supported|scope are not/i.test(message)) {
+    if (/audience is required|audience must|not allowlisted|Scopes must|requested scopes are not supported/i.test(message)) {
       return jsonError("invalid_audience_or_scopes", 400);
     }
     return jsonError("tamv_pass_unavailable", 503);
