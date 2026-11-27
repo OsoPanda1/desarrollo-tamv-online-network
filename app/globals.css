@@ -4686,3 +4686,45 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
     width: calc(100% - 28px);
   }
 }
+
+
+/* Secondary discovery content is opt-in on the home page. */
+.home-extras-disclosure {
+  width: min(100% - 48px, 1440px);
+  margin: 24px auto 36px;
+  border: 1px solid #c9d4d8;
+  background: #f7faf9;
+  color: #183447;
+}
+.home-extras-disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 62px;
+  padding: 16px 20px;
+  color: #183447;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  list-style: none;
+}
+.home-extras-disclosure > summary::-webkit-details-marker { display: none; }
+.home-extras-disclosure > summary span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  border: 1px solid #8eaaa9;
+  color: #176c68;
+  font-size: 21px;
+  font-weight: 400;
+}
+.home-extras-disclosure[open] > summary span { font-size: 0; }
+.home-extras-disclosure[open] > summary span::after { content: '−'; font-size: 21px; }
+.home-extras-content > :first-child { margin-top: 0; }
+@media (max-width: 680px) {
+  .home-extras-disclosure { width: calc(100% - 28px); margin: 18px auto 26px; }
+  .home-extras-disclosure > summary { padding: 14px; font-size: 13px; }
+}
