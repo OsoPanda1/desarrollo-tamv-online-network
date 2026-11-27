@@ -222,6 +222,18 @@ Si una comprobación falla, registra el comando, versión de Node/pnpm, SHA del 
 
 Variables de entorno y credenciales deben gestionarse localmente o mediante el gestor de secretos del entorno. No incluyas archivos .env reales en Git.
 
+## Pruebas visuales y conexión con Meticulous
+
+Se prepara la integración de Meticulous para registrar sesiones de uso, reproducir flujos entre commits, detectar regresiones visuales/DOM y consultar cobertura. Esta integración complementa las pruebas existentes; no reemplaza tests, typecheck, auditoría de seguridad ni validación de despliegue.
+
+- **CLI:** instalar con \`npm install --global @alwaysmeticulous/cli@latest\`.
+- **MCP:** endpoint \`https://app.meticulous.ai/api/mcp\`, configurado para clientes compatibles en \`.mcp.json\` y \`.cursor/mcp.json\`.
+- **Guía de integración:** [docs/qa/METICULOUS-INTEGRATION.md](docs/qa/METICULOUS-INTEGRATION.md).
+- **Workflow manual de exploración:** [Meticulous Agent Swarm](.github/workflows/meticulous-agent-swarm.yml), sujeto a habilitación beta, token de proyecto y URL HTTPS de preview.
+- **Estado:** preparado en la rama de trabajo; no se afirma que la organización/proyecto Meticulous esté conectado, que el recorder esté instalado o que exista un test run satisfactorio hasta completar la activación externa.
+
+Antes de grabar sesiones, utilizar staging y cuentas sintéticas. Las grabaciones pueden contener solicitudes, respuestas y cabeceras; nunca registrar datos personales reales, credenciales administrativas o tokens. El workflow no debe ejecutarse hasta que el proyecto esté habilitado por Meticulous y se haya guardado el secreto \`METICULOUS_API_TOKEN\` en GitHub Actions.
+
 ## Licenciamiento híbrido y derechos
 
 La propuesta distingue capas que no deben aplicarse automáticamente al mismo activo:
