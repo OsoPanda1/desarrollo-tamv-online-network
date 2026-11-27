@@ -16,9 +16,9 @@ import {
   TAMV_PASS_SIGNING_ALGORITHM,
   type TamvPassClaims,
   type TamvPassScope,
-} from "./contract";
-export { TAMV_PASS_TOKEN_TTL_SECONDS, TAMV_PASS_SUPPORTED_SCOPES } from "./contract";
-export type { TamvPassClaims, TamvPassScope } from "./contract";
+} from "./contract.ts";
+export { TAMV_PASS_TOKEN_TTL_SECONDS, TAMV_PASS_SUPPORTED_SCOPES } from "./contract.ts";
+export type { TamvPassClaims, TamvPassScope } from "./contract.ts";
 
 const TOKEN_TYPE = TAMV_PASS_TOKEN_TYPE;
 const TOKEN_PURPOSE = TAMV_PASS_TOKEN_PURPOSE;
