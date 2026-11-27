@@ -43,6 +43,7 @@ The workspace must remain unavailable unless every mandatory gate is evidenced. 
 
 - [ ] Execute canonicalization and Merkle inclusion test vectors, including malformed and adversarial inputs.
 - [ ] Execute audit-chain tamper tests and verify chain sequence, previous-hash links and event hashes.
+- [ ] Apply migration 0005 only after a tested backup and strict database preflight; verify the append-only trigger and least-privilege database grants.
 - [ ] Add authenticated signatures to checkpoints; hashing alone does not prove authorship.
 - [ ] Anchor checkpoints with an independent witness or append-only external store to detect truncation/equivocation.
 - [ ] Define durable retention, access control, backup, restoration and key rotation.
@@ -87,7 +88,7 @@ Do not promote a control to a higher state without linked evidence, timestamp, t
 2. Founder MFA/step-up and its recovery procedure are not implemented and independently tested.
 3. The canonical private specification secret must be configured in the deployment environment without exposing it to client bundles.
 4. The risk engine, lifecycle gates and hash-linked audit-chain modules require CI execution and typecheck/build verification.
-5. The hash-linked audit chain is an in-memory/pure utility only; durable persistence, signed checkpoints and independent witnesses are not implemented.
+5. The restricted audit-ledger schema, migration and founder-gated API are implemented in the PR branch but are not yet applied to a database or verified in deployment. Signed checkpoints and independent witnesses are not implemented.
 6. No production release is authorized by this checklist.
 
 ## Release decision

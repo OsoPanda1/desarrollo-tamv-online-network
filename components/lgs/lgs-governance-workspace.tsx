@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { Activity, BookOpenCheck, Network, ShieldCheck, Sigma } from "lucide-react"
 import { LgsRiskAssessmentPanel } from "./lgs-risk-assessment-panel"
+import { LgsLifecycleGatePanel } from "./lgs-lifecycle-gate-panel"
 
 type Domain = "governance" | "rights" | "risk" | "data" | "security" | "evidence" | "assurance"
 type Node = { id: Domain; label: string; x: number; y: number; detail: string; control: string }
@@ -102,6 +103,7 @@ export function LgsGovernanceWorkspace() {
       </section>
 
       <LgsRiskAssessmentPanel />
+      <LgsLifecycleGatePanel />
 
       <section className="lgs-panel" aria-labelledby="lgs-merkle-title">
         <div className="lgs-panel-heading"><div><p className="eyebrow">04 / EVIDENCIA CRIPTOGRÁFICA</p><h2 id="lgs-merkle-title">Árbol de Merkle — modelo conceptual</h2><p>Las hojas representan eventos canónicos; los nodos internos combinan los digests.</p></div><BookOpenCheck aria-hidden="true" /></div>
