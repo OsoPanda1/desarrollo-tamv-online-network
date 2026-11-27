@@ -9,7 +9,7 @@ import {
   TAMV_PASS_TOKEN_TTL_SECONDS,
   type TamvPassClaims,
   type TamvPassScope,
-} from "./contract";
+} from "./contract.ts";
 
 const TOKEN_TYPE = "tamv-pass+jwt";
 const TOKEN_PURPOSE = "tamv_pass";
