@@ -2,7 +2,7 @@
 
 **Policy in this branch:** Apache License 2.0 for original software; Creative Commons Attribution 4.0 International for authored narrative documentation; ODbL 1.0 reserved for individually identified and cleared datasets; and a separate TAMV private license draft for named private assets only. The latter two do not automatically license any repository asset.
 
-The two licenses have different scopes. Do not interpret this file as proof that every file in the repository is owned by the maintainer or cleared for redistribution.
+These instruments have different scopes. Do not interpret this file as proof that every file in the repository is owned by the maintainer or cleared for redistribution.
 
 ## Scope matrix
 
