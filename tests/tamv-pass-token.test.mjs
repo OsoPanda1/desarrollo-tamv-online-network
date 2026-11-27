@@ -5,7 +5,6 @@ import { importPKCS8, SignJWT } from "jose";
 
 const currentPair = generateKeyPairSync("rsa", { modulusLength: 2048 });
 const currentPrivatePem = currentPair.privateKey.export({ format: "pem", type: "pkcs8" }).toString();
-const currentPublicPem = currentPair.publicKey.export({ format: "pem", type: "spki" }).toString();
 
 process.env.TAMV_PASS_ENABLED = "true";
 process.env.TAMV_PASS_ISSUER = "https://issuer.example.test";
@@ -60,6 +59,27 @@ test("refuses an audience not explicitly allowlisted and an unsupported scope", 
   await assert.rejects(
     () => createTamvPassToken(subject, "https://api.example.test", ["admin:all"]),
     /scopes are not supported/,
+  );
+});
+
+test("rejects a correctly signed token after its expiration", async () => {
+  const privateKey = await importPKCS8(currentPrivatePem, "RS256");
+  const expiredToken = await new SignJWT({
+    token_use: "tamv_pass",
+    tamv_version: 1,
+    scope: "profile:read",
+  })
+    .setProtectedHeader({ alg: "RS256", typ: "tamv-pass+jwt", kid: "test-current-key" })
+    .setIssuer("https://issuer.example.test")
+    .setAudience("https://api.example.test")
+    .setSubject("expired-user")
+    .setIssuedAt()
+    .setExpirationTime("-10s")
+    .setJti("expired-token-test")
+    .sign(privateKey);
+
+  await assert.rejects(
+    () => verifyTamvPassToken(expiredToken, "https://api.example.test"),
   );
 });
 
