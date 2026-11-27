@@ -42,10 +42,10 @@ export function LgsLifecycleGatePanel() {
           <label key={requirement}>
             <input
               type="checkbox"
-              checked={evidence[`${gate}:${requirement}`] === true}
+              checked={evidence[requirement] === true}
               onChange={(event) => setEvidence((current) => ({
                 ...current,
-                [`${gate}:${requirement}`]: event.target.checked,
+                [requirement]: event.target.checked,
               }))}
             />
             <span>{requirement.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase())}</span>
