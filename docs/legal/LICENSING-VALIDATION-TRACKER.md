@@ -9,7 +9,7 @@
 
 | # | Tarea | Entregable/evidencia | Estado |
 |---|---|---|---|
-| 1 | Inventario de dependencias y SBOM | Workflow de SPDX JSON y CycloneDX JSON, artefactos vinculados al SHA | Workflow definido; ejecución pendiente de resultado verificable |
+| 1 | Inventario de dependencias y SBOM | Workflow de SPDX JSON y CycloneDX JSON, artefactos vinculados al SHA | Workflow ejecutado como run #5; los tres jobs fallaron sin pasos ni logs recuperables, por lo que el resultado es bloqueado/no concluyente |
 | 2 | Auditoría de dependencias | Revisión de lockfile y puerta propuesta para pnpm audit | Pendiente de ejecución contra el commit de liberación |
 | 3 | Registro de activos | docs/legal/asset-register.csv con categorías iniciales y estado explícito | Inventario inicial creado; revisión de titularidad incompleta |
 | 4 | Separación público/privado | Matriz de alcance, NOTICE, borrador de licencia privada y reglas de exclusión | Documentado; aislamiento técnico de todos los activos aún debe comprobarse |
@@ -17,6 +17,10 @@
 | 6 | Preparación jurídica | Síntesis de investigación, plan de implementación y lista de verificaciones | Preparación documental; dictamen jurídico no realizado |
 | 7 | Tests, typecheck y build | Scripts declarados en package.json; CI debe producir evidencia para el SHA exacto | Pendiente de ejecución reproducible y revisión de resultados |
 | +1 | Reescritura integral del README.md | README actualizado con stack, superficies, APIs, límites, operaciones y licencias | Editado en esta rama; revisar diff y enlaces antes de merge |
+
+## Última ejecución observada
+
+El run de GitHub Actions [#46073005175](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions/runs/46073005175) del commit `5039dc24ebe486e63433207af741edf4b8b00342` figura como `failure` en los tres jobs (`SBOM`, `dependency-audit`, `repository-validation`). La API de jobs devuelve `steps: []`; al solicitar los logs, GitHub devuelve `BlobNotFound`. Por tanto, no hay evidencia de que los comandos hayan comenzado ni de que el código o las dependencias hayan fallado. Clasificación: **infraestructura/ejecución bloqueada; causa raíz no verificable**. Se requiere nueva ejecución cuando Actions permita inicializar runners y, después, revisar cada job.
 
 ## Tarea 1 — SBOM
 
@@ -87,13 +91,13 @@ El README.md de esta rama se reescribió para explicar el propósito del proyect
 
 ## Condiciones para cerrar el PR
 
-- [ ] Workflow de SBOM ejecutado con resultado y artefactos comprobados.
-- [ ] Auditoría de dependencias ejecutada; findings triageados y excepciones justificadas.
+- [ ] Workflow de SBOM completado con artefactos comprobados; la ejecución observada quedó bloqueada antes de los pasos.
+- [ ] Auditoría de dependencias ejecutada con salida verificable; la ejecución observada no llegó a producir logs.
 - [ ] Activos de publicación prioritaria revisados con evidencia de titularidad y procedencia.
 - [ ] Confirmación técnica de que los activos privados no se publican accidentalmente.
 - [ ] Revisión de marca, afiliación y privacidad asignada a responsables competentes.
 - [ ] Revisión jurídica externa completada o el alcance se mantiene explícitamente como borrador.
-- [ ] Tests, typecheck y build ejecutados contra el SHA final.
+- [ ] Tests, typecheck y build ejecutados contra el SHA final; el run observado no inició pasos y no cuenta como resultado.
 - [ ] README y enlaces revisados; el PR sigue sin fusionar hasta cumplir las puertas acordadas.
 
 **Estado global:** implementación documental en progreso; validación de CI, revisión de titularidad y revisión jurídica permanecen como puertas pendientes.
