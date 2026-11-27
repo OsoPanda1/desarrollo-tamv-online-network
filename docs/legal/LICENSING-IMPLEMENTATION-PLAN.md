@@ -21,6 +21,8 @@
 
 ## Fase C — aportaciones y cadena de titularidad
 
+**Recomendación de entrada:** para contribuciones al proyecto abierto que se mantendrán bajo la misma licencia, empezar con DCO (Developer Certificate of Origin) y revisión obligatoria de procedencia. Adoptar CLA sólo si TAMV necesita derechos adicionales concretos —por ejemplo, dual licensing comercial— y después de explicar al contribuyente qué derechos se conceden, para qué fines, si hay sublicencia y cómo se conservan los derechos personales/morales que no puedan cederse. No exigir cesión exclusiva de forma implícita ni convertir el envío de un PR en una transferencia automática de titularidad.
+
 1. Elegir un flujo de contribución. Para una base abierta con contribuciones bajo la misma licencia, DCO puede aportar trazabilidad; una CLA puede ser necesaria si el proyecto requiere derechos adicionales o dual licensing.
 2. No introducir CLA retrospectiva ni exigir cesiones ambiguas sin explicación y aceptación expresa.
 3. Definir política de contribuciones, código de conducta, proceso de revisión, derechos de empleadores/contratistas y tratamiento de aportaciones de terceros.
