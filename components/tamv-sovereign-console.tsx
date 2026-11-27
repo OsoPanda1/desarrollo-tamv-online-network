@@ -334,9 +334,8 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
                       {citationRecords.map((record) => <a key={record.key} href={record.url} target="_blank" rel="noopener noreferrer">{record.label} <ArrowUpRight aria-hidden="true" /></a>)}
                       <span className="sovereign-reference-note">{english ? "Citation metadata must be checked at the source." : "Verifica los metadatos de cita en cada fuente."}</span>
                     </div>
-                  </div>
         </details>
-
+        </div>
       </section>
 
       <section className="sovereign-workspace" id="sovereign-modules" lang={locale} aria-labelledby="sovereign-modules-title">
