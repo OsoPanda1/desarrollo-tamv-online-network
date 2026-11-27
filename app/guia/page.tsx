@@ -13,7 +13,9 @@ import {
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { TamvLearningLab } from "@/components/tamv-learning-lab"
+import { TamvMindMap } from "@/components/tamv-mind-map"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { localizedPath, resolveLocale, type Locale } from "@/lib/i18n"
@@ -116,6 +118,7 @@ export default async function GuidePage({ searchParams }: { searchParams: Search
         actions={<LanguageSwitch pathname="/guia" locale={locale} />}
       />
 
+      <TamvMindMap mapId="isabella" locale={locale} />
       <section className="section tamv-guide-overview" aria-labelledby="tamv-guide-definition">
         <div className="container tamv-guide-overview-grid">
           <div className="tamv-guide-definition">
@@ -207,6 +210,7 @@ export default async function GuidePage({ searchParams }: { searchParams: Search
           </div>
         </div>
       </section>
-    </TamvAppShell>
+    <TamvSectionMedia area="guide" locale={locale} />
+      </TamvAppShell>
   )
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { PageIntro } from "@/components/shared/page-intro"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { VideoCapsule } from "@/components/visuals/video-capsule"
@@ -152,6 +153,7 @@ export default async function AtlasPage({ searchParams }: { searchParams: Search
           </Link>
         </div>
       </section>
-    </TamvAppShell>
+    <TamvSectionMedia area="atlas" locale={locale} />
+      </TamvAppShell>
   )
 }

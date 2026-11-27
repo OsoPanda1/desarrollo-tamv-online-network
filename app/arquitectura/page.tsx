@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { TamvArchitectureReference } from "@/components/tamv-architecture-reference"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
@@ -20,5 +21,6 @@ export default async function ArchitecturePage({ searchParams }: { searchParams:
   return <TamvAppShell locale={locale}>
     <PageIntro number="07" eyebrow={english ? "ARCHITECTURE & MATURITY" : "ARQUITECTURA Y MADUREZ"} title={english ? "Specify clearly." : "Especificar con claridad."} accent={english ? "Implement transparently." : "Implementar con transparencia."} description={english ? "A traceable reading of the supplied Isabella Cero documents, with current runtime boundaries made explicit." : "Una lectura trazable de los documentos Isabella Cero proporcionados, con límites del runtime actual explícitos."} locale={locale} actions={<LanguageSwitch pathname="/arquitectura" locale={locale} />} />
     <section className="section architecture-page-section"><div className="container"><TamvArchitectureReference locale={locale} /></div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="architecture" locale={locale} />
+      </TamvAppShell>
 }

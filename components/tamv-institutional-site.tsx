@@ -2,6 +2,8 @@ import { ArrowUpRight } from "lucide-react"
 import { TamvSiteHeader } from "./tamv-site-header"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
+import { TamvSectionMedia } from "./tamv-section-media"
+import { TamvMindMap } from "./tamv-mind-map"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
 export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
@@ -24,6 +26,8 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
           />
         </section>
         <TamvSovereignConsole locale={locale} />
+        <TamvMindMap mapId="governance" locale={locale} />
+        <TamvSectionMedia area="home" locale={locale} />
       </main>
       <footer className="site-footer" lang={locale}>
         <div className="container footer-main">
@@ -40,9 +44,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
           </p>
           <div className="ai-lounge-profile">
             <span className="ai-lounge-label">{english ? "PUBLIC AUTHOR PROFILE" : "PERFIL PÚBLICO DE AUTOR"}</span>
-            <a href="https://lounge.ai/@tamvonline" target="_blank" rel="noopener noreferrer">
-              AI Lounge <ArrowUpRight aria-hidden="true" />
-            </a>
+            <a href="https://lounge.ai/@tamvonline" target="_blank" rel="noopener noreferrer">AI Lounge <ArrowUpRight aria-hidden="true" /></a>
           </div>
           <nav className="footer-links" aria-label={english ? "Institutional links" : "Enlaces institucionales"}>
             <a href={localizedPath("/origenes", locale)}>{english ? "Origins" : "Orígenes"}</a>

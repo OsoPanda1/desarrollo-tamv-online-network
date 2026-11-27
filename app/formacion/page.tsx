@@ -3,6 +3,7 @@ import Link from "next/link"
 import { headers } from "next/headers"
 import { ArrowLeft, ArrowUpRight, BookOpenCheck, CheckCircle2, FileText, Lightbulb, ShieldAlert, ShieldCheck, Target } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { PageIntro } from "@/components/shared/page-intro"
 import { MembershipCheckout } from "@/components/membership-checkout"
 import { MemberCourseProgress } from "@/components/member-course-progress"
@@ -252,5 +253,6 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
       )}
       <p className="membership-back-link"><Link className="text-link" href="/membresias"><ArrowLeft aria-hidden="true" /> {english ? "Back to memberships" : "Volver a membresías"}</Link></p>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="learning" locale={locale} />
+      </TamvAppShell>
 }

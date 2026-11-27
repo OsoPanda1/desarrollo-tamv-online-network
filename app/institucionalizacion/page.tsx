@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, FileCheck2, Landmark, ShieldCheck, Users } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { PageIntro } from "@/components/shared/page-intro"
 import { resolveLocale } from "@/lib/i18n"
 
@@ -92,5 +93,6 @@ export default async function InstitutionalizationPage({ searchParams }: { searc
         : "La membresía es una suscripción al alcance publicado del servicio TAMV; no es una donación restringida a la constitución, una inversión de capital, una participación de propiedad ni una promesa de estatus jurídico futuro."}</p>
       <p><Link className="text-link" href={english ? "/membresias?lang=en" : "/membresias"}>{english ? "Review memberships and conditions" : "Consultar membresías y condiciones"} <ArrowUpRight aria-hidden="true" /></Link></p>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="institutionalization" locale={locale} />
+      </TamvAppShell>
 }

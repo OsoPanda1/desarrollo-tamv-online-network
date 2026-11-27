@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHmac } from "node:crypto";
 
 /**
  * Storage contract for a counter that is shared by every serverless instance.
@@ -24,11 +24,26 @@ export interface RateLimitPolicy {
   now?: number;
 }
 
-const DEFAULT_SALT = "tamv-shared-rate-limit-v1";
+/**
+ * Read only the canonical client address supplied by a trusted ingress.
+ * Do not trust the first X-Forwarded-For value: callers can prepend entries
+ * unless the proxy is explicitly configured to strip/overwrite that header.
+ * When no canonical address is present, use one shared anonymous bucket rather
+ * than allowing a client-controlled header to select a fresh bucket per call.
+ */
+export function requestIdentityFromHeaders(headers?: Headers): string {
+  const realIp = headers?.get("x-real-ip")?.trim();
+  return realIp ? `ip:${realIp}` : "anonymous";
+}
 
-export function hashRateLimitKey(scope: string, identity: string, salt = DEFAULT_SALT): string {
-  return createHash("sha256")
-    .update(`${scope}\u0000${salt}\u0000${identity}`)
+export function hashRateLimitKey(scope: string, identity: string, salt?: string): string {
+  const secretSalt = salt?.trim();
+  if (!secretSalt || secretSalt.length < 32) {
+    throw new Error("TAMV_RATE_LIMIT_SALT must contain at least 32 characters");
+  }
+
+  return createHmac("sha256", secretSalt)
+    .update(`${scope}\u0000${identity}`)
     .digest("hex");
 }
 

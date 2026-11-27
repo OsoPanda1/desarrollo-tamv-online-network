@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight, ShieldAlert } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { AuditSheetGenerator } from "@/components/audit/audit-sheet-generator"
@@ -58,5 +59,6 @@ export default async function AuditCreatorPage({ searchParams }: { searchParams:
       </div>
       <p><Link className="text-link" href={`/desarrolladores?lang=${locale}`}>{english ? "Back to developer interfaces" : "Volver a interfaces para desarrollo"} <ArrowUpRight aria-hidden="true" /></Link></p>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="audit" locale={locale} />
+      </TamvAppShell>
 }

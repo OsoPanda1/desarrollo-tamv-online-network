@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
-import { decideRateLimit, hashRateLimitKey, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { decideRateLimit, hashRateLimitKey, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { createPublicRateLimitEnforcer } from "../lib/rate-limit/server.ts";
 
 class FakeSharedStore {
   constructor() {
@@ -59,12 +60,83 @@ test("shared rate limiter fails closed when its store throws", async () => {
   await assert.rejects(decideRateLimit(store, "key", { limit: 5, windowMs: 60_000 }), /shared store unavailable/);
 });
 
-test("rate limit keys do not persist raw IP addresses", () => {
-  const key = hashRateLimitKey("federated", "ip:203.0.113.42", "test-salt");
+test("rate-limit identity trusts the canonical ingress address and ignores X-Forwarded-For", () => {
+  const forwardedOnly = new Headers({ "x-forwarded-for": "203.0.113.42, 198.51.100.7" });
+  assert.equal(requestIdentityFromHeaders(forwardedOnly), "anonymous");
+
+  const canonical = new Headers({
+    "x-real-ip": "198.51.100.8",
+    "x-forwarded-for": "203.0.113.42",
+  });
+  assert.equal(requestIdentityFromHeaders(canonical), "ip:198.51.100.8");
+});
+
+test("rate-limit identity keys use a secret salt and never persist raw IP addresses", () => {
+  const salt = "test-rate-limit-salt-with-32-randomish-characters-01";
+  const otherSalt = "other-rate-limit-salt-with-32-randomish-characters";
+  const key = hashRateLimitKey("federated", "ip:203.0.113.42", salt);
+
   assert.match(key, /^[a-f0-9]{64}$/);
   assert.equal(key.includes("203.0.113.42"), false);
-  assert.notEqual(key, hashRateLimitKey("federated", "ip:203.0.113.42", "other-salt"));
-  assert.notEqual(key, hashRateLimitKey("other", "ip:203.0.113.42", "test-salt"));
+  assert.notEqual(key, hashRateLimitKey("federated", "ip:203.0.113.42", otherSalt));
+  assert.notEqual(key, hashRateLimitKey("other", "ip:203.0.113.42", salt));
+  assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42"), /at least 32 characters/);
+  assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42", "short"), /at least 32 characters/);
+});
+
+test("missing or weak rate-limit salt is rejected before the shared store is reached", async () => {
+  let storeCalls = 0;
+  const fakeStore = {
+    consume: async () => {
+      storeCalls += 1;
+      throw new Error("store must not be reached for invalid configuration");
+    },
+  };
+  const policy = { scope: "test", limit: 5, windowMs: 60_000 };
+  const request = new Request("https://tamv.example/api/test");
+
+  for (const salt of [undefined, "too-short"]) {
+    const enforce = createPublicRateLimitEnforcer({
+      store: fakeStore,
+      getSalt: () => salt,
+      isEnabled: () => true,
+    });
+    const response = await enforce(request, policy);
+
+    assert.equal(response?.status, 503);
+    assert.deepEqual(await response?.json(), {
+      error: "rate_limit_configuration_invalid",
+      retryAfterSeconds: 30,
+    });
+    assert.equal(storeCalls, 0, "configuration validation must happen before DB/store access");
+  }
+});
+
+test("a valid rate-limit salt with an unavailable store reports a different failure", async () => {
+  let storeCalls = 0;
+  const enforce = createPublicRateLimitEnforcer({
+    store: {
+      consume: async () => {
+        storeCalls += 1;
+        throw new Error("store unavailable for test");
+      },
+    },
+    getSalt: () => "test-rate-limit-salt-with-32-randomish-characters-01",
+    isEnabled: () => true,
+  });
+
+  const response = await enforce(new Request("https://tamv.example/api/test"), {
+    scope: "test",
+    limit: 5,
+    windowMs: 60_000,
+  });
+
+  assert.equal(response?.status, 503);
+  assert.deepEqual(await response?.json(), {
+    error: "rate_limit_unavailable",
+    retryAfterSeconds: 30,
+  });
+  assert.equal(storeCalls, 1);
 });
 
 test("public rate-limit migration stores atomic shared counters without raw identities", () => {

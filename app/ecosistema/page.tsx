@@ -3,6 +3,7 @@ import { TamvAppShell } from "@/components/tamv-app-shell"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { EcosystemMetadataBoard } from "@/components/ecosystem-metadata-board"
+import { TamvMindMap } from "@/components/tamv-mind-map"
 import { resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string }>
@@ -38,6 +39,7 @@ export default async function EcosystemPage({ searchParams }: { searchParams: Se
         locale={locale}
         actions={<LanguageSwitch pathname="/ecosistema" locale={locale} />}
       />
+      <TamvMindMap mapId="federation" locale={locale} />
       <section className="section ecosystem-status-section">
         <div className="container">
           <EcosystemMetadataBoard locale={locale} />

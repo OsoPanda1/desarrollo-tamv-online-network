@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
+import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
 import { projectCategoryLabel, resolveLocale } from "@/lib/i18n"
@@ -36,5 +37,6 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Sea
       <p className="editorial-caveat">{english ? "Maturity terms are descriptive labels from project documentation, not a standardized readiness score." : "Las etiquetas de madurez describen el material del proyecto; no constituyen una escala estandarizada de preparación."}</p>
       <p><Link className="text-link" href={`/isabella?lang=${locale}`}>{english ? "Isabella AI / TINA — governed federated intelligence, 54% overall progress, not certified for production" : "Isabella AI / TINA — inteligencia federada gobernada, 54% de avance global, no certificada para producción"} <ArrowUpRight aria-hidden="true" /></Link></p>
     </div></section>
-  </TamvAppShell>
+  <TamvSectionMedia area="projects" locale={locale} />
+      </TamvAppShell>
 }
