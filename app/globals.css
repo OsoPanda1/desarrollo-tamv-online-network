@@ -4885,3 +4885,11 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
   .lgs-access-status { max-width:100%; }
   .lgs-access-status small { overflow-wrap:anywhere; }
 }
+
+
+.lgs-private-spec-notice { margin:20px 0 0; padding:14px 16px; border-left:3px solid #d6a54a; border-radius:0 8px 8px 0; background:#f7f4eb; color:#596875; font-size:12px; line-height:1.7; }
+.lgs-private-specification { margin-top:22px; }
+.lgs-private-spec-content { max-height:72vh; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; margin:18px 0 0; padding:20px; border:1px solid #e2ddd2; border-radius:9px; background:#faf9f5; color:#24394b; font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.lgs-private-spec-missing { margin-top:18px; padding:18px; border:1px solid #e6d7b7; border-radius:9px; background:#fbf7ed; color:#655a44; }
+.lgs-private-spec-missing strong { display:block; color:#4c412b; font-size:13px; }
+.lgs-private-spec-missing p { margin:7px 0 0; font-size:12px; line-height:1.8; }
