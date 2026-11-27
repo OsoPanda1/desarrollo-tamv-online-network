@@ -7,7 +7,7 @@ TAMV is evolving. A public project record does not imply production readiness, p
 ## Where to start / Por dónde empezar
 
 1. Read the [README](README.md), [developer API guide](docs/api/public-api-quickstart.md), [architecture boundaries](docs/architecture/federation-contract.md), and [Code of Conduct](CODE_OF_CONDUCT.md).
-2. Review [licensing status](docs/governance/licensing-status.md) and [license scope](LICENSES.md). The repository includes root `LICENSE` and `LICENSE-DOCS` files for works that their rightsholders can license; do not infer rights over third-party, private or community-governed material.
+2. Review [licensing status](docs/governance/licensing-status.md), [license scope](LICENSES.md), and the [hybrid licensing map](LICENSES/README.md). The repository's Apache-2.0 and CC BY 4.0 files apply only within their documented scope. ODbL is reserved for specifically reviewed dataset releases; the TAMV private license is still a draft and must not be used for signature. Do not infer rights over third-party, private or community-governed material.
 3. Choose a small, verifiable issue: documentation, Spanish/English parity, accessibility, test coverage, source provenance, safe error handling, or a narrowly scoped feature.
 4. Open or review an [issue in GitHub](https://github.com/OsoPanda1/desarrollo-tamv-online-network/issues) before large refactors so the intended result and acceptance criteria are clear.
 5. Reproduce the problem and record environment, steps, actual result, expected result and relevant logs. Remove tokens, personal data and production identifiers.
@@ -46,7 +46,7 @@ Some pages and APIs depend on PostgreSQL and a configured Better Auth secret. A 
 
 ## Licensing and permission to reuse
 
-This branch proposes Apache-2.0 for original software and CC BY 4.0 for authored narrative documentation. Review [the scope matrix](LICENSES.md) and [license status](docs/governance/licensing-status.md) before redistributing any component. The scope separation becomes the project's published policy only when accepted into the default branch and remains limited to work whose rightsholders can grant those rights.
+The repository uses a layered asset model: Apache-2.0 for original software and CC BY 4.0 for authored narrative documentation, with ODbL-1.0 reserved for individually cleared public datasets and a separate private-license draft for specifically listed private assets. Review [the scope matrix](LICENSES.md), [hybrid license map](LICENSES/README.md), and [license status](docs/governance/licensing-status.md) before redistributing any component. The scope separation becomes the project's published policy only when accepted into the default branch and remains limited to work whose rightsholders can grant those rights.
 
 `CITATION.cff` attributes the repository but does not grant reuse rights. Do not apply a document license to source code, images, models, datasets or third-party material by implication. When introducing outside code or assets, record source URL, version, license and compatibility. Do not relicense material you do not own or have permission to redistribute.
 

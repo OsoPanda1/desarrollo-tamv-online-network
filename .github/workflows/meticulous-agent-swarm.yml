@@ -1,0 +1,49 @@
+name: Meticulous Agent Swarm
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: "HTTPS Vercel preview URL for the exact commit under test"
+        required: true
+        type: string
+      commit_sha:
+        description: "Exact commit SHA represented by the preview"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: meticulous-agent-swarm-${{ inputs.commit_sha }}
+  cancel-in-progress: false
+
+jobs:
+  agent-swarm:
+    name: Explore TAMV preview with Meticulous
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Validate configuration
+        env:
+          METICULOUS_API_TOKEN: ${{ secrets.METICULOUS_API_TOKEN }}
+          PREVIEW_URL: ${{ inputs.preview_url }}
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+          if [ -z "$METICULOUS_API_TOKEN" ]; then
+            echo "::error::Missing repository secret METICULOUS_API_TOKEN. Add a project-scoped token in GitHub Actions secrets."
+            exit 1
+          fi
+          node -e 'const u = new URL(process.env.PREVIEW_URL); if (u.protocol !== "https:") throw new Error("preview_url must use HTTPS"); if (!/^[0-9a-f]{40}$/i.test(process.env.COMMIT_SHA)) throw new Error("commit_sha must be a full 40-character Git SHA");'
+      - name: Launch Meticulous Agent Swarm against the preview
+        env:
+          METICULOUS_API_TOKEN: ${{ secrets.METICULOUS_API_TOKEN }}
+          PREVIEW_URL: ${{ inputs.preview_url }}
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+        run: |
+          npx --yes @alwaysmeticulous/cli@latest ci agent-test \
+            --previewUrlAgentSwarm \
+            --backendUrl "$PREVIEW_URL" \
+            --commitSha "$COMMIT_SHA"
