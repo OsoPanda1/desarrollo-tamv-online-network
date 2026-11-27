@@ -39,3 +39,9 @@ DROP TRIGGER IF EXISTS lgs_audit_events_no_mutation ON public.lgs_audit_events;
 CREATE TRIGGER lgs_audit_events_no_mutation
   BEFORE UPDATE OR DELETE ON public.lgs_audit_events
   FOR EACH ROW EXECUTE FUNCTION public.lgs_reject_audit_mutation();
+
+
+DROP TRIGGER IF EXISTS lgs_audit_events_no_truncate ON public.lgs_audit_events;
+CREATE TRIGGER lgs_audit_events_no_truncate
+  BEFORE TRUNCATE ON public.lgs_audit_events
+  FOR EACH STATEMENT EXECUTE FUNCTION public.lgs_reject_audit_mutation();
