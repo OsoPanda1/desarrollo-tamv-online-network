@@ -8,6 +8,7 @@ import {
   smallint,
   text,
   timestamp,
+  uniqueIndex,
 } from "drizzle-orm/pg-core"
 
 const timestamptz = (name: string) => timestamp(name, { withTimezone: true, mode: "date" })
@@ -332,3 +333,29 @@ export const tqafAssessments = pgTable("tqaf_assessments", {
   reviewerId: text("reviewer_id"),
   updatedAt: timestamptz("updated_at").notNull().defaultNow(),
 })
+
+
+/**
+ * Restricted governance audit ledger. Do not expose this table through public
+ * endpoints. Hashes provide tamper evidence, not proof of authorship/truth.
+ */
+export const lgsAuditEvents = pgTable("lgs_audit_events", {
+  sequence: integer("sequence").primaryKey(),
+  eventId: text("event_id").notNull(),
+  occurredAt: timestamptz("occurred_at").notNull(),
+  actorUserId: text("actor_user_id").notNull().references(() => user.id, { onDelete: "restrict" }),
+  actorRef: text("actor_ref").notNull(),
+  action: text("action").notNull(),
+  subjectRef: text("subject_ref").notNull(),
+  outcome: text("outcome").notNull(),
+  policyVersion: text("policy_version").notNull(),
+  metadata: jsonb("metadata").$type<Record<string, string | number | boolean | null>>().notNull().default({}),
+  previousHash: text("previous_hash").notNull(),
+  eventHash: text("event_hash").notNull(),
+  createdAt: timestamptz("created_at").notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("lgs_audit_events_event_id_uq").on(table.eventId),
+  uniqueIndex("lgs_audit_events_event_hash_uq").on(table.eventHash),
+  uniqueIndex("lgs_audit_events_sequence_uq").on(table.sequence),
+  uniqueIndex("lgs_audit_events_occurred_at_idx").on(table.occurredAt),
+])
