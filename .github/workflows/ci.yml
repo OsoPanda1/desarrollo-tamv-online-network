@@ -40,6 +40,7 @@ jobs:
         run: |
           node --check scripts/db-migrate.mjs
           node --check scripts/db-preflight.mjs
+          node --check scripts/db-migration-contract.mjs
       - name: Automated tests
         run: pnpm test
       - name: TypeScript validation

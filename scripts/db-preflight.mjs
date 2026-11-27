@@ -72,10 +72,11 @@ try {
   try {
     // Make the diagnostic connection fail closed against accidental writes and
     // bound long scans so the preflight cannot run indefinitely.
+    await client.query("SET search_path TO public")
     await client.query("SET default_transaction_read_only = on")
     await client.query("SET statement_timeout = '15000ms'")
     const schema = await client.query(
-      "SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = current_schema()",
+      "SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = 'public'",
     )
     const columns = new Map()
     for (const row of schema.rows) {
