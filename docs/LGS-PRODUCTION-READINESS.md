@@ -43,7 +43,8 @@ The workspace must remain unavailable unless every mandatory gate is evidenced. 
 
 - [ ] Execute canonicalization and Merkle inclusion test vectors, including malformed and adversarial inputs.
 - [ ] Execute audit-chain tamper tests and verify chain sequence, previous-hash links and event hashes.
-- [ ] Apply migration 0005 only after a tested backup and strict database preflight; verify the append-only trigger and least-privilege database grants.\n- [ ] Add authenticated signatures to checkpoints; hashing alone does not prove authorship.
+- [ ] Apply migration 0005 only after a tested backup and strict database preflight; verify the append-only trigger and least-privilege database grants.
+- [ ] Add authenticated signatures to checkpoints; hashing alone does not prove authorship.
 - [ ] Anchor checkpoints with an independent witness or append-only external store to detect truncation/equivocation.
 - [ ] Define durable retention, access control, backup, restoration and key rotation.
 - [ ] Redact or pseudonymize actor/subject references and avoid placing sensitive data directly in immutable logs.
