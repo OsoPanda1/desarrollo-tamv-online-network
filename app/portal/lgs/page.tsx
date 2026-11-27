@@ -3,6 +3,8 @@ import { ShieldCheck } from "lucide-react"
 import { TamvAppShell } from "@/components/tamv-app-shell"
 import { requireLgsFounder } from "@/lib/lgs-founder-guard"
 import { LgsGovernanceWorkspace } from "@/components/lgs/lgs-governance-workspace"
+import { LgsPrivateSpecification } from "@/components/lgs/lgs-private-specification"
+import { getPrivateLgsSpecification } from "@/lib/lgs/private-spec"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
 
 export default async function LgsFounderPage() {
   const founder = await requireLgsFounder()
+  const specification = getPrivateLgsSpecification()
   return (
     <TamvAppShell>
       <main className="lgs-workspace container" aria-labelledby="lgs-title">
@@ -29,6 +32,7 @@ export default async function LgsFounderPage() {
           </div>
         </header>
         <LgsGovernanceWorkspace />
+        <LgsPrivateSpecification content={specification} />
       </main>
     </TamvAppShell>
   )
