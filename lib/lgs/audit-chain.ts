@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto"
-import { canonicalizeMerkleRecord } from "./merkle"
+import { canonicalizeMerkleRecord } from "./merkle.ts"
 
 const SHA256_HEX = /^[a-f0-9]{64}$/
 export const GENESIS_PREVIOUS_HASH = "0".repeat(64)
