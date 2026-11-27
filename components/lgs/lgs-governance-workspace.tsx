@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Activity, BookOpenCheck, GitBranch, Network, ShieldCheck, Sigma } from "lucide-react"
+import { Activity, BookOpenCheck, Network, ShieldCheck, Sigma } from "lucide-react"
 
 type Domain = "governance" | "rights" | "risk" | "data" | "security" | "evidence" | "assurance"
 type Node = { id: Domain; label: string; x: number; y: number; detail: string; control: string }
