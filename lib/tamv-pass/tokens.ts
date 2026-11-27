@@ -178,10 +178,9 @@ function normalizeAudience(value: string): string {
   return normalizeOrigin(value.trim(), "audience");
 }
 
-function normalizeScopes(scopes?: unknown): TamvPassScope[] {
-  if (scopes === undefined) return ["profile:read"];
+function normalizeScopes(scopes: unknown): TamvPassScope[] {
   if (!Array.isArray(scopes) || scopes.length < 1 || scopes.length > TAMV_PASS_SUPPORTED_SCOPES.length) {
-    throw new Error("Scopes must be a non-empty array containing only supported scopes.");
+    throw new Error("Scopes must be explicitly requested as a non-empty array containing only supported scopes.");
   }
   const unique = [...new Set(scopes)];
   if (unique.some((scope) => typeof scope !== "string" || !TAMV_PASS_SUPPORTED_SCOPES.includes(scope as TamvPassScope))) {
@@ -193,7 +192,7 @@ function normalizeScopes(scopes?: unknown): TamvPassScope[] {
 export async function createTamvPassToken(
   subject: TamvPassSubject,
   audienceInput: string,
-  requestedScopes?: unknown,
+  requestedScopes: unknown,
 ): Promise<{ accessToken: string; expiresIn: number; audience: string; scopes: TamvPassScope[]; keyId: string }> {
   const { issuer, allowedAudiences } = getConfiguration(true);
   if (!subject?.id || typeof subject.id !== "string" || subject.id.length > 200) {
