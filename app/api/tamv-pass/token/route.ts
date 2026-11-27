@@ -96,12 +96,12 @@ export async function POST(request: Request) {
   if (typeof body.audience !== "string" || body.audience.length > 512) {
     return jsonError("audience_required", 400);
   }
-  if (body.scopes !== undefined && (
+  if (
     !Array.isArray(body.scopes) ||
     body.scopes.length === 0 ||
     body.scopes.length > 2 ||
     body.scopes.some((scope) => typeof scope !== "string")
-  )) {
+  ) {
     return jsonError("invalid_scopes", 400);
   }
 
