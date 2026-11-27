@@ -11,6 +11,18 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
       <a className="skip-link" href="#contenido">{english ? "Skip to content" : "Saltar al contenido"}</a>
       <TamvSiteHeader locale={locale} />
       <main id="contenido" lang={locale}>
+        <section className="tamv-hero-banner" aria-label={english ? "TAMV Online Network institutional banner" : "Banner institucional de TAMV Online Network"}>
+          <img
+            src="/tamv-hero-banner.jpg"
+            alt={english
+              ? "TAMV Online Network banner: Advanced Versatile Mexican Technology, an independent Latin American open science platform, with a glowing globe over a Mexican town and the seven federations."
+              : "Banner de TAMV Online Network: Tecnología Avanzada Mexicana Versátil, plataforma latinoamericana independiente de ciencia abierta, con un globo luminoso sobre una ciudad mexicana y las siete federaciones."}
+            width={1376}
+            height={768}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </section>
         <TamvSovereignConsole locale={locale} />
       </main>
       <footer className="site-footer" lang={locale}>

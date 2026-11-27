@@ -5,6 +5,7 @@ import './globals.css'
 import './memberships.css'
 import './visuals.css'
 import './evidence.css'
+import './pearl.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamv.online'),
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#10283d',
+  themeColor: '#FDFCFA',
 }
 
 export default function RootLayout({

@@ -103,7 +103,7 @@ export default async function WhoWeArePage({ searchParams }: { searchParams: Sea
           <div className="container tamv-charter-identity-grid">
             <div>
               <p className="tamv-charter-eyebrow"><span>03</span> {english ? "FOUNDER & LEGACY" : "FUNDADOR Y LEGADO"}</p>
-              <h2>{english ? "Built from a place.<br /><em>Responsible to its people.</em>" : "Construido desde un lugar.<br /><em>Responsable ante su gente.</em>"}</h2>
+              <h2>{english ? <>Built from a place.<br /><em>Responsible to its people.</em></> : <>Construido desde un lugar.<br /><em>Responsable ante su gente.</em></>}</h2>
               <p>{english ? "Project materials identify Edwin Oswaldo Castillo Trejo, using the creative signature Anubis Villaseñor, as founder and principal architect. The intended legacy is a durable, attributable record of what was designed, built, tested, corrected and learned." : "Los materiales del proyecto identifican a Edwin Oswaldo Castillo Trejo, bajo la firma creativa Anubis Villaseñor, como fundador y arquitecto principal. El legado buscado es un registro durable y atribuible de lo diseñado, construido, probado, corregido y aprendido."}</p>
             </div>
             <div className="tamv-charter-legacy-list">
@@ -117,7 +117,7 @@ export default async function WhoWeArePage({ searchParams }: { searchParams: Sea
         <section className="tamv-charter-section tamv-charter-participation">
           <div className="container">
             <div className="tamv-charter-heading">
-              <div><p className="tamv-charter-eyebrow"><span>04</span> {english ? "COOPERATION & AFFILIATION" : "COOPERACIÓN Y AFILIACIÓN"}</p><h2>{english ? "Bring a problem.<br /><em>Build the evidence together.</em>" : "Trae un problema.<br /><em>Construyamos la evidencia.</em>"}</h2></div>
+              <div><p className="tamv-charter-eyebrow"><span>04</span> {english ? "COOPERATION & AFFILIATION" : "COOPERACIÓN Y AFILIACIÓN"}</p><h2>{english ? <>Bring a problem.<br /><em>Build the evidence together.</em></> : <>Trae un problema.<br /><em>Construyamos la evidencia.</em></>}</h2></div>
               <p>{english ? "Participation begins with a concrete contribution. No path implies automatic admission, employment, investment, funding or certification." : "La participación empieza con una contribución concreta. Ninguna ruta implica ingreso automático, empleo, inversión, financiamiento ni certificación."}</p>
             </div>
             <div className="tamv-charter-participation-grid">
@@ -140,7 +140,7 @@ export default async function WhoWeArePage({ searchParams }: { searchParams: Sea
           <div className="container tamv-charter-protection-grid">
             <div>
               <p className="tamv-charter-eyebrow"><span>05</span> {english ? "PROTECTION & TRUST" : "PROTECCIÓN Y CONFIANZA"}</p>
-              <h2>{english ? "Open knowledge.<br /><em>Protected people.</em>" : "Conocimiento abierto.<br /><em>Personas protegidas.</em>"}</h2>
+              <h2>{english ? <>Open knowledge.<br /><em>Protected people.</em></> : <>Conocimiento abierto.<br /><em>Personas protegidas.</em></>}</h2>
               <p>{english ? "Digital sovereignty requires both discoverability and the right to restrict sensitive access. Public visibility does not erase consent, privacy, intellectual property or community-defined cultural protocols." : "La soberanía digital requiere tanto descubribilidad como derecho a limitar accesos sensibles. La visibilidad pública no elimina el consentimiento, la privacidad, la propiedad intelectual ni los protocolos culturales definidos por la comunidad."}</p>
             </div>
             <div className="tamv-charter-protection-list">
