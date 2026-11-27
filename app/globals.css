@@ -4893,3 +4893,28 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
 .lgs-private-spec-missing { margin-top:18px; padding:18px; border:1px solid #e6d7b7; border-radius:9px; background:#fbf7ed; color:#655a44; }
 .lgs-private-spec-missing strong { display:block; color:#4c412b; font-size:13px; }
 .lgs-private-spec-missing p { margin:7px 0 0; font-size:12px; line-height:1.8; }
+
+
+/* LGS risk assessment: accessible controls and explicit non-compensatory stops. */
+.lgs-risk-calculator { display:grid; gap:20px; }
+.lgs-risk-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.lgs-risk-field { display:flex; flex-direction:column; gap:6px; padding:14px; border:1px solid var(--rule); border-radius:9px; background:#fffefa; }
+.lgs-risk-field > span { color:var(--navy); font-size:13px; font-weight:650; }
+.lgs-risk-field > small { min-height:34px; color:var(--muted-ink); font-size:11px; line-height:1.5; }
+.lgs-risk-field select { width:100%; min-height:42px; border:1px solid #bfc9ca; border-radius:6px; padding:8px 10px; color:#162a3c; background:#fff; font:inherit; font-size:12px; }
+.lgs-risk-field select:focus-visible,.lgs-risk-vetoes input:focus-visible { outline:3px solid #38b7a6; outline-offset:2px; }
+.lgs-risk-vetoes { display:grid; gap:12px; margin:0; padding:16px; border:1px solid #e3d8c5; border-radius:9px; background:#faf7ef; }
+.lgs-risk-vetoes legend { padding:0 6px; color:#5f4b2e; font-size:12px; font-weight:700; }
+.lgs-risk-vetoes label { display:flex; align-items:flex-start; gap:10px; color:#374b5b; font-size:12px; line-height:1.55; }
+.lgs-risk-vetoes input { flex:none; width:16px; height:16px; margin:1px 0 0; accent-color:#875638; }
+.lgs-risk-result { display:grid; grid-template-columns:minmax(150px,.7fr) minmax(0,1.3fr); gap:18px; padding:20px; border:1px solid #c8d8d3; border-radius:10px; background:#f2f8f5; }
+.lgs-risk-score,.lgs-risk-decision { display:flex; flex-direction:column; align-items:flex-start; gap:5px; }
+.lgs-risk-score > span,.lgs-risk-decision > span { color:#5b6b74; font-size:11px; }
+.lgs-risk-score > strong { color:#174d40; font:600 42px/1.1 var(--mono); }
+.lgs-risk-score > strong small { font:500 14px var(--mono); }
+.lgs-risk-decision > strong { margin-bottom:5px; color:#174d40; font-size:14px; }
+.lgs-risk-result.is-blocked { border-color:#c56c64; background:#fff3f1; }
+.lgs-risk-result.is-blocked .lgs-risk-score > strong,.lgs-risk-result.is-blocked .lgs-risk-decision > strong { color:#8d2923; }
+.lgs-risk-veto-list { margin:0; padding:0 0 0 20px; color:#8d2923; font-size:12px; line-height:1.8; }
+@media (max-width:760px) { .lgs-risk-controls { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lgs-risk-controls,.lgs-risk-result { grid-template-columns:1fr; } .lgs-risk-field > small { min-height:0; } .lgs-risk-result { gap:14px; } }
