@@ -39,3 +39,22 @@ test("multiple failed controls are all reported", () => {
   assert.equal(decision.allowed, false)
   assert.equal(decision.failedRequirements.length, 3)
 })
+
+test("undefined, null, and omitted controls fail closed", () => {
+  const cases = [
+    { ...fullyApproved, phishingResistantMfaSatisfied: undefined },
+    { ...fullyApproved, phishingResistantMfaSatisfied: null },
+    Object.fromEntries(Object.entries(fullyApproved).filter(([key]) => key !== "phishingResistantMfaSatisfied")),
+  ];
+  for (const input of cases) {
+    const decision = evaluateLgsAccessPolicy(input);
+    assert.equal(decision.allowed, false);
+    assert.ok(decision.failedRequirements.includes("phishing-resistant-mfa-step-up-required"));
+  }
+});
+
+test("an empty policy object cannot grant founder access", () => {
+  const decision = evaluateLgsAccessPolicy({});
+  assert.equal(decision.allowed, false);
+  assert.equal(decision.failedRequirements.length, Object.keys(fullyApproved).length);
+});
