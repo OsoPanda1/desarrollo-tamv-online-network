@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { createTamvPassToken, isTamvPassEnabled } from "@/lib/tamv-pass/tokens";
-import { enforcePublicRateLimit } from "@/lib/rate-limit/server";
+import { enforcePublicRateLimit, isSharedRateLimitEnabled } from "@/lib/rate-limit/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,6 +77,12 @@ export async function POST(request: Request) {
     return jsonError("invalid_request_origin", 400);
   }
   if (origin !== requestOrigin) return jsonError("cross_origin_request_rejected", 403);
+
+  // A sensitive token issuer must not silently run without the shared limiter.
+  // Local development may disable it; production must have it explicitly active.
+  if (process.env.NODE_ENV === "production" && !isSharedRateLimitEnabled()) {
+    return jsonError("rate_limit_disabled", 503);
+  }
 
   const rateLimited = await enforcePublicRateLimit(request, {
     scope: "tamv-pass-token",
