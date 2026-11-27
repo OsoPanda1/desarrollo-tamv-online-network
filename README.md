@@ -254,7 +254,19 @@ La carta bilingüe y el playbook operativo están en [`docs/institutional/charte
 
 ---
 
-## Cierre modular y Fase 0\n\n- [Matriz de cierre modular M0–M11](docs/roadmap/module-completion-matrix-2026-11.md) — estados con evidencia, dependencias y criterios de aceptación.\n- [Runbook de cierre de Fase 0](docs/roadmap/phase-0-closure-runbook.md) — comandos reproducibles, CI/seguridad, preflight/migraciones, rate limit, evidencias y reversión.\n- [Playbook de trabajo por módulos](docs/roadmap/README.md) — expediente obligatorio por PR y reglas de cierre.\n\n## Mapa de documentos
+## Cierre modular y Fase 0\n\n- [Matriz de cierre modular M0–M11](docs/roadmap/module-completion-matrix-2026-11.md) — estados con evidencia, dependencias y criterios de aceptación.\n- [Runbook de cierre de Fase 0](docs/roadmap/phase-0-closure-runbook.md) — comandos reproducibles, CI/seguridad, preflight/migraciones, rate limit, evidencias y reversión.\n- [Playbook de trabajo por módulos](docs/roadmap/README.md) — expediente obligatorio por PR y reglas de cierre.\n\n## Licenciamiento, propiedad intelectual y afiliaciones
+
+TAMV aplica un modelo por capas: **Apache-2.0** para el software comprendido en la licencia raíz; **CC BY 4.0** para documentación/obras editoriales expresamente identificadas; **ODbL-1.0** sólo para bases de datos públicas revisadas y autorizadas; y una **Licencia Privada TAMV Online Network** para activos privados enumerados en contratos específicos. Marcas, afiliaciones, datos personales y contribuciones de terceros se rigen por instrumentos separados. La existencia de un documento no prueba titularidad ni habilita su aplicación automática.
+
+- [Mapa de licencias y alcance](LICENSES/README.md)
+- [Borrador de licencia privada TAMV](LICENSES/TAMV-PRIVATE-LICENSE-DRAFT.md) — no aprobado para firma.
+- [Política de marca y afiliaciones](LICENSES/TRADEMARK-AND-AFFILIATION-POLICY-DRAFT.md) — borrador.
+- [Plan de implementación y blindaje](docs/legal/LICENSING-IMPLEMENTATION-PLAN.md)
+- [Registro de activos y derechos](docs/legal/asset-register.csv)
+- [CC BY 4.0 — identificador y texto oficial](LICENSES/CC-BY-4.0.md)
+- [ODbL 1.0 — identificador y texto oficial](LICENSES/ODbL-1.0.md)
+
+## Mapa de documentos
 
 | Tema | Documento |
 |---|---|
