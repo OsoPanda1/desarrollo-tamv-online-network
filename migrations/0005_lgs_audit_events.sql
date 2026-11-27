@@ -22,3 +22,20 @@ CREATE INDEX IF NOT EXISTS lgs_audit_events_actor_idx
   ON public.lgs_audit_events (actor_user_id, occurred_at DESC);
 
 REVOKE ALL ON TABLE public.lgs_audit_events FROM PUBLIC;
+
+
+-- Prevent accidental mutation through the application connection. A separately
+-- governed retention procedure must be designed before any purge is permitted.
+CREATE OR REPLACE FUNCTION public.lgs_reject_audit_mutation()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RAISE EXCEPTION 'LGS audit ledger is append-only; UPDATE/DELETE is prohibited';
+END;
+$$;
+
+DROP TRIGGER IF EXISTS lgs_audit_events_no_mutation ON public.lgs_audit_events;
+CREATE TRIGGER lgs_audit_events_no_mutation
+  BEFORE UPDATE OR DELETE ON public.lgs_audit_events
+  FOR EACH ROW EXECUTE FUNCTION public.lgs_reject_audit_mutation();
