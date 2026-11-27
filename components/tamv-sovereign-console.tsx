@@ -255,7 +255,13 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
               <span className="sovereign-telemetry-item sovereign-build-item"><Fingerprint aria-hidden="true" /><span>BOOKPI EVENT FEED</span><strong>{english ? "Not connected" : "Sin conexión"}</strong></span>
               <span className="sovereign-telemetry-item sovereign-build-item sovereign-refresh-item"><RefreshCw aria-hidden="true" /><span>{english ? "LAST CHECK · 30S POLL" : "ÚLTIMA CONSULTA · 30S"}</span><strong title={signals.checkedAt ?? undefined}>{checkedTime}</strong></span>
             </div>
-            <div className="sovereign-quick-links"><button type="button" className="sovereign-signals-toggle" aria-expanded={signalsExpanded} aria-controls="sovereign-signals-list" onClick={() => setSignalsExpanded((expanded) => !expanded)}>{signalsExpanded ? (english ? "Fewer signals" : "Menos señales") : (english ? "More signals" : "Más señales")} <ArrowRight aria-hidden="true" /></button><a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a><a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions" target="_blank" rel="noopener noreferrer">{english ? "CI evidence" : "Evidencia CI"} <ArrowUpRight aria-hidden="true" /></a><a href={english ? "/?lang=es" : "/?lang=en"}>{english ? "ES" : "EN"} <Globe2 aria-hidden="true" /></a></div>
+            <div className="sovereign-quick-links">
+              <button type="button" className="sovereign-signals-toggle" aria-expanded={signalsExpanded} aria-controls="sovereign-signals-list" onClick={() => setSignalsExpanded((expanded) => !expanded)}>{signalsExpanded ? (english ? "Fewer signals" : "Menos señales") : (english ? "More signals" : "Más señales")} <ArrowRight aria-hidden="true" /></button>
+              {signalsExpanded && <>
+                <a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a>
+                <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions" target="_blank" rel="noopener noreferrer">{english ? "CI evidence" : "Evidencia CI"} <ArrowUpRight aria-hidden="true" /></a>
+              </>}
+            </div>
           </div>
 
           <div className="sovereign-hero-grid">
