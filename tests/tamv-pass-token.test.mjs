@@ -60,7 +60,7 @@ test("requires explicit scopes rather than silently disclosing a default profile
 
 test("refuses an audience not explicitly allowlisted and an unsupported scope", async () => {
   await assert.rejects(
-    () => createTamvPassToken(subject, "https://attacker.example.test"),
+    () => createTamvPassToken(subject, "https://attacker.example.test", ["profile:read"]),
     /not allowlisted/,
   );
   await assert.rejects(
@@ -167,7 +167,7 @@ test("feature flag can be closed without issuing tokens", async () => {
 test("fails closed when the signing key is removed or malformed", async () => {
   const preserved = process.env.TAMV_PASS_PRIVATE_KEY_B64;
   delete process.env.TAMV_PASS_PRIVATE_KEY_B64;
-  await assert.rejects(() => createTamvPassToken(subject, "https://api.example.test"));
+  await assert.rejects(() => createTamvPassToken(subject, "https://api.example.test", ["profile:read"]));
   process.env.TAMV_PASS_PRIVATE_KEY_B64 = "not-a-pem";
   await assert.rejects(() => createTamvPassToken(subject, "https://api.example.test"));
   process.env.TAMV_PASS_PRIVATE_KEY_B64 = preserved;
