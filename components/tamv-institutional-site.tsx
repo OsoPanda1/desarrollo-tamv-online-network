@@ -14,8 +14,13 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
       <TamvSiteHeader locale={locale} />
       <main id="contenido" lang={locale}>
         <TamvSovereignConsole locale={locale} />
-        <TamvMindMap mapId="governance" locale={locale} />
-        <TamvSectionMedia area="home" locale={locale} />
+        <details className="home-extras-disclosure" lang={locale}>
+          <summary>{english ? "Explore the extended atlas and media library" : "Explorar el atlas ampliado y la biblioteca multimedia"} <span aria-hidden="true">+</span></summary>
+          <div className="home-extras-content">
+            <TamvMindMap mapId="governance" locale={locale} />
+            <TamvSectionMedia area="home" locale={locale} />
+          </div>
+        </details>
       </main>
       <footer className="site-footer" lang={locale}>
         <div className="container footer-main">
