@@ -358,4 +358,5 @@ export const lgsAuditEvents = pgTable("lgs_audit_events", {
   uniqueIndex("lgs_audit_events_event_id_uq").on(table.eventId),
   uniqueIndex("lgs_audit_events_event_hash_uq").on(table.eventHash),
   index("lgs_audit_events_occurred_at_idx").on(table.occurredAt),
+  index("lgs_audit_events_actor_idx").on(table.actorUserId, table.occurredAt),
 ])
