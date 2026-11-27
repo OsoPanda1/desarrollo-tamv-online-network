@@ -44,7 +44,7 @@ function assertDimension(name: string, value: unknown): asserts value is RiskDim
 }
 
 /**
- * Weighted score: 100 * Σ(weight_i * dimension_i / 5).
+ * Weighted score: 100 * (Σ(weight_i * dimension_i) - 1) / 4; maps the 1–5 scale to 0–100.
  * Rights/safety/oversight vetoes are non-compensatory: a low average cannot
  * cancel a hard-stop condition.
  */
@@ -55,7 +55,7 @@ export function assessLgsRisk(input: RiskAssessmentInput): RiskAssessment {
 
   const weighted = (Object.keys(WEIGHTS) as (keyof typeof WEIGHTS)[])
     .reduce((sum, key) => sum + WEIGHTS[key] * input[key], 0)
-  const score = Math.round((weighted / 5) * 100)
+  const score = Math.round(((weighted - 1) / 4) * 100)
 
   const vetoes: string[] = []
   if (input.rightsViolationLikely) vetoes.push("potential-rights-violation")
@@ -82,6 +82,6 @@ export function assessLgsRisk(input: RiskAssessmentInput): RiskAssessment {
     disposition,
     vetoes,
     weights: { ...WEIGHTS },
-    formula: "round(100 × Σ(weightᵢ × dimensionᵢ) / 5); weights sum to 1",
+    formula: "round(100 × (Σ(weightᵢ × dimensionᵢ) − 1) / 4); weights sum to 1",
   }
 }
