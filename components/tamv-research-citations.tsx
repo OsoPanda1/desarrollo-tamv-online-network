@@ -16,7 +16,30 @@ const areas = [
 
 export function TamvResearchCitations({ locale = "es" }: { locale?: Locale }) {
   const en = locale === "en"
-  return <section className={styles.wrapper} aria-labelledby="research-citations-title">
-    <div className={styles.intro}><p className={styles.eyebrow}>{en ? "RESEARCH TRACEABILITY" : "TRAZABILIDAD DE INVESTIGACIÓN"}</p><h3 id="research-citations-title">{en ? "What supports each section?" : "¿Qué respalda cada sección?"}</h3><p>{en ? "Primary standards and research resources support these design decisions. They do not certify TAMV or prove that every proposed control is deployed." : "Los estándares primarios y recursos de investigación respaldan estos criterios de diseño. No certifican TAMV ni demuestran que todos los controles propuestos estén desplegados."}</p><a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/research/SECTION_EVIDENCE_AND_CITATIONS.md" target="_blank" rel="noopener noreferrer">{en ? "Open the full evidence guide" : "Abrir la guía completa de evidencia"} ↗</a></div>
-    <div className={styles.grid}>{areas.map((area) => <article className={styles.card} key={area.id}><span className={styles.number}>{area.id}</span><h4>{en ? area.en : area.es}</h4><p>{en ? area.descEn : area.descEs}</p><div className={styles.links}>{area.refs.map(([label, url]) => <a key={url} href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a>)}</div></article>)}</div>
-  </section>
+  return (
+    <section className={styles.wrapper} aria-labelledby="research-citations-title">
+      <div className={styles.intro}>
+        <p className={styles.eyebrow}>{en ? "RESEARCH TRACEABILITY" : "TRAZABILIDAD DE INVESTIGACIÓN"}</p>
+        <h3 id="research-citations-title">{en ? "What supports each section?" : "¿Qué respalda cada sección?"}</h3>
+        <p>{en ? "Primary standards and research resources support these design decisions. They do not certify TAMV or prove that every proposed control is deployed." : "Los estándares primarios y recursos de investigación respaldan estos criterios de diseño. No certifican TAMV ni demuestran que todos los controles propuestos estén desplegados."}</p>
+        <a href="https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/docs/research/SECTION_EVIDENCE_AND_CITATIONS.md" target="_blank" rel="noopener noreferrer">
+          {en ? "Open the full evidence guide" : "Abrir la guía completa de evidencia"} ↗
+        </a>
+      </div>
+      <div className={styles.grid}>
+        {areas.map((area) => (
+          <article className={styles.card} key={area.id}>
+            <span className={styles.number}>{area.id}</span>
+            <h4>{en ? area.en : area.es}</h4>
+            <p>{en ? area.descEn : area.descEs}</p>
+            <div className={styles.links}>
+              {area.refs.map(([label, url]) => (
+                <a key={url} href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
