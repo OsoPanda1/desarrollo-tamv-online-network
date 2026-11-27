@@ -7,17 +7,23 @@ import {
   jwtVerify,
   SignJWT,
   type JWK,
-  type JWTPayload,
 } from "jose";
+import {
+  TAMV_PASS_TOKEN_TTL_SECONDS,
+  TAMV_PASS_SUPPORTED_SCOPES,
+  TAMV_PASS_TOKEN_TYPE,
+  TAMV_PASS_TOKEN_PURPOSE,
+  TAMV_PASS_SIGNING_ALGORITHM,
+  type TamvPassClaims,
+  type TamvPassScope,
+} from "./contract";
+export { TAMV_PASS_TOKEN_TTL_SECONDS, TAMV_PASS_SUPPORTED_SCOPES } from "./contract";
+export type { TamvPassClaims, TamvPassScope } from "./contract";
 
-export const TAMV_PASS_TOKEN_TTL_SECONDS = 180;
-export const TAMV_PASS_SUPPORTED_SCOPES = ["profile:read", "tamv:read"] as const;
-const TOKEN_TYPE = "tamv-pass+jwt";
-const TOKEN_PURPOSE = "tamv_pass";
-const ALGORITHM = "RS256";
+const TOKEN_TYPE = TAMV_PASS_TOKEN_TYPE;
+const TOKEN_PURPOSE = TAMV_PASS_TOKEN_PURPOSE;
+const ALGORITHM = TAMV_PASS_SIGNING_ALGORITHM;
 const KID_PATTERN = /^[A-Za-z0-9._-]{1,64}$/;
-
-export type TamvPassScope = (typeof TAMV_PASS_SUPPORTED_SCOPES)[number];
 
 export interface TamvPassSubject {
   id: string;
@@ -27,16 +33,6 @@ export interface TamvPassSubject {
   role?: string | null;
 }
 
-export interface TamvPassClaims extends JWTPayload {
-  sub: string;
-  token_use: typeof TOKEN_PURPOSE;
-  tamv_version: 1;
-  scope: string;
-  name?: string;
-  email?: string;
-  email_verified?: boolean;
-  tamv_role?: "member" | "moderator" | "admin";
-}
 
 interface SigningMaterial {
   kid: string;
