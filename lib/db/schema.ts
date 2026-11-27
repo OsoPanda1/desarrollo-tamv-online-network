@@ -8,6 +8,7 @@ import {
   smallint,
   text,
   timestamp,
+  index,
   uniqueIndex,
 } from "drizzle-orm/pg-core"
 
@@ -356,6 +357,5 @@ export const lgsAuditEvents = pgTable("lgs_audit_events", {
 }, (table) => [
   uniqueIndex("lgs_audit_events_event_id_uq").on(table.eventId),
   uniqueIndex("lgs_audit_events_event_hash_uq").on(table.eventHash),
-  uniqueIndex("lgs_audit_events_sequence_uq").on(table.sequence),
-  uniqueIndex("lgs_audit_events_occurred_at_idx").on(table.occurredAt),
+  index("lgs_audit_events_occurred_at_idx").on(table.occurredAt),
 ])
