@@ -4561,3 +4561,128 @@ body:has(.sovereign-hero) .isabella-launcher {
 }
 body:has(.sovereign-hero) .isabella-launcher svg { color: #176d66 !important; }
 body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important; }
+
+
+/* Progressive disclosure: keep the landing experience focused and let visitors
+   opt into technical depth instead of exposing every module at once. */
+.sovereign-advanced-modules,
+.sovereign-reference-disclosure {
+  border: 1px solid rgba(126, 153, 168, 0.24);
+  background: rgba(10, 27, 41, 0.72);
+}
+.sovereign-advanced-modules {
+  margin-top: 24px;
+}
+.sovereign-advanced-modules > summary,
+.sovereign-reference-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 16px 20px;
+  color: #f0f4f5;
+  cursor: pointer;
+  list-style: none;
+}
+.sovereign-advanced-modules > summary::-webkit-details-marker,
+.sovereign-reference-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.sovereign-advanced-modules > summary::before,
+.sovereign-reference-disclosure > summary::before {
+  content: '+';
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(56, 183, 166, 0.48);
+  color: #65d2c1;
+  font-size: 20px;
+  line-height: 1;
+}
+.sovereign-advanced-modules[open] > summary::before,
+.sovereign-reference-disclosure[open] > summary::before {
+  content: '−';
+}
+.sovereign-advanced-modules > summary > span {
+  color: #f0f4f5;
+  font-size: 15px;
+  font-weight: 650;
+}
+.sovereign-advanced-modules > summary > small {
+  margin-left: auto;
+  color: #aab9c3;
+  font-size: 11px;
+  text-align: right;
+}
+.sovereign-advanced-modules > summary > svg,
+.sovereign-reference-disclosure > summary > svg {
+  width: 16px;
+  height: 16px;
+  color: #65d2c1;
+  transition: transform .2s ease;
+}
+.sovereign-advanced-modules[open] > summary > svg,
+.sovereign-reference-disclosure[open] > summary > svg {
+  transform: rotate(90deg);
+}
+.sovereign-advanced-intro {
+  max-width: 760px;
+  margin: 0;
+  padding: 0 20px 20px 60px;
+  color: #aebdc7;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.sovereign-advanced-modules .sovereign-module-grid {
+  margin: 0 18px 18px;
+}
+.sovereign-reference-disclosure {
+  margin: 0 auto;
+  width: min(100% - 48px, 1440px);
+  border-top: 0;
+}
+.sovereign-reference-disclosure > summary {
+  min-height: 52px;
+  color: #b9c7cf;
+  font-size: 12px;
+}
+.sovereign-reference-disclosure > summary::before {
+  flex-basis: 22px;
+  width: 22px;
+  height: 22px;
+  font-size: 16px;
+}
+.sovereign-reference-disclosure .sovereign-reference-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 0 20px 20px;
+  border: 0;
+}
+.sovereign-reference-disclosure .sovereign-reference-note {
+  flex-basis: 100%;
+}
+@media (max-width: 680px) {
+  .sovereign-advanced-modules > summary,
+  .sovereign-reference-disclosure > summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 14px;
+  }
+  .sovereign-advanced-modules > summary > small {
+    flex-basis: 100%;
+    margin-left: 40px;
+    text-align: left;
+  }
+  .sovereign-advanced-intro {
+    padding: 0 14px 16px;
+  }
+  .sovereign-advanced-modules .sovereign-module-grid {
+    margin: 0 10px 10px;
+  }
+  .sovereign-reference-disclosure {
+    width: calc(100% - 28px);
+  }
+}
