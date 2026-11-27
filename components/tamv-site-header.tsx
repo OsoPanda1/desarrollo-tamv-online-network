@@ -9,13 +9,16 @@ import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { localizedPath, type Locale } from "@/lib/i18n"
 import { TamvAssistant } from "@/components/tamv-assistant"
 
-const links = [
+const primaryLinks = [
   { href: "/proyectos", labelEs: "Proyectos", labelEn: "Projects" },
-  { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
-  { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
   { href: "/guia", labelEs: "Guía práctica", labelEn: "Practical guide" },
   { href: "/atlas", labelEs: "Atlas", labelEn: "Atlas" },
-  { href: "/origenes", labelEs: "ORÍGENES", labelEn: "ORIGINS" },
+  { href: "/origenes", labelEs: "Orígenes", labelEn: "Origins" },
+]
+
+const discoveryLinks = [
+  { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
+  { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
   { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
 ]
@@ -49,9 +52,17 @@ export function TamvSiteHeader({ locale = "es" }: { locale?: Locale }) {
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
         <nav className={`primary-navigation${menuOpen ? " is-open" : ""}`} id="primary-navigation" aria-label={english ? "Main navigation" : "Navegación principal"}>
-          {links.map((link) => (
+          {primaryLinks.map((link) => (
             <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
           ))}
+          <details className="nav-discovery">
+            <summary>{english ? "Explore more" : "Más secciones"} <span aria-hidden="true">+</span></summary>
+            <div className="nav-discovery-panel">
+              {discoveryLinks.map((link) => (
+                <Link key={link.href} href={localizedPath(link.href, locale)} aria-current={pathname.startsWith(link.href) ? "page" : undefined} onClick={closeMenu}>{english ? link.labelEn : link.labelEs}</Link>
+              ))}
+            </div>
+          </details>
           {!pathname.startsWith("/portal") && <LanguageSwitch pathname={pathname} locale={locale} />}
           <TamvDonationCTA locale={locale} variant="compact" />
           <Link className="nav-contact" href={contactHash} onClick={closeMenu}>{english ? "Contact" : "Contacto"} <ArrowUpRight aria-hidden="true" /></Link>
