@@ -18,10 +18,36 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
       }
     : {
         title: "Orígenes | TAMV Online Network",
-        description: "La historia personal detrás de TAMV Online Network: adversidad, reconstrucción, memoria y la decisión de construir un lugar donde las personas puedan pertenecer.",
-        openGraph: { locale: "es_MX", title: "Orígenes | TAMV Online Network", description: "La historia, la convicción y el origen humano detrás de TAMV Online Network." },
+        description: "Biografía de Edwin Oswaldo Castillo Trejo, Anubis Villaseñor: desarrollador autodidacta, investigador independiente y fundador de TAMV Online Network desde Real del Monte, Hidalgo.",
+        openGraph: { locale: "es_MX", title: "Orígenes | TAMV Online Network", description: "La historia personal, trayectoria tecnológica y obra documentada de Edwin Oswaldo Castillo Trejo, Anubis Villaseñor." },
       }
 }
+
+
+type ProfileResource = { label: string; href: string; es: string; en: string }
+const professionalProfiles: ProfileResource[] = [
+  { label: "ORCID", href: "https://orcid.org/0009-0008-5050-1539", es: "Identificador persistente de autor e investigador. Los metadatos dependen de las obras y datos declarados en el registro.", en: "Persistent author and researcher identifier. Metadata depends on works and details entered in the record." },
+  { label: "ISNI", href: "https://isni.org/isni/0000000531699229", es: "Identificador normalizado de identidad pública y autoral.", en: "Standardized identifier for public and author identity." },
+  { label: "GitHub · OsoPanda1", href: "https://github.com/OsoPanda1", es: "Repositorios de código, arquitectura, documentación y evolución de proyectos TAMV.", en: "Code repositories, architecture, documentation, and TAMV project development." },
+  { label: "LinkedIn", href: "https://mx.linkedin.com/in/teamanubismodelos", es: "Perfil profesional de Edwin Oswaldo Castillo Trejo y su actividad en TAMV Online Network.", en: "Professional profile for Edwin Oswaldo Castillo Trejo and his work at TAMV Online Network." },
+  { label: "AVIXA Xchange · TAMV e Isabella", href: "https://xchange.avixa.org/posts/tamv-e-isabella-villasenor-ai-el-parteaguas-que-redefine-el-metaverso-desde-mexico", es: "Artículo profesional publicado en la comunidad de AVIXA sobre TAMV e Isabella Villaseñor AI (5 de diciembre de 2025).", en: "Professional article published in AVIXA's community about TAMV and Isabella Villaseñor AI (December 5, 2025)." },
+  { label: "AVIXA Xchange · Isabella AI", href: "https://xchange.avixa.org/posts/isabella-villasenor-ai", es: "Presentación del enfoque de acompañamiento contextual, gobernanza y supervisión humana de Isabella AI.", en: "Overview of Isabella AI's contextual assistance, governance, and human-oversight approach." },
+  { label: "Autores Editores", href: "https://www.autoreseditores.com/edwin.oswaldo", es: "Perfil de autor en una plataforma editorial; la ficha consultada no mostraba libros publicados.", en: "Author profile on a publishing platform; the profile reviewed did not list published books." },
+  { label: "TAMV Online · sitio público", href: "https://tamvonline-oficial.odoo.com/", es: "Publicaciones y documentación institucional del propio ecosistema TAMV; deben distinguirse de fuentes externas independientes.", en: "Publications and institutional documentation from TAMV itself; these should be distinguished from independent external sources." },
+  { label: "Isabella AI · repositorio", href: "https://github.com/OsoPanda1/isabella-ai-tina", es: "Código y documentación técnica del proyecto Isabella AI Genesis.", en: "Code and technical documentation for the Isabella AI Genesis project." },
+]
+type ResearchRecord = { titleEs: string; titleEn: string; doi: string; detailEs: string; detailEn: string }
+const researchRecords: ResearchRecord[] = [
+  { titleEs: "CITEMESH / BookPI — redes P2P y registro de conocimiento territorial", titleEn: "CITEMESH / BookPI — P2P networks and territorial knowledge records", doi: "10.5281/zenodo.19436662", detailEs: "Documento técnico citado en el corpus público TAMV. La existencia de un DOI identifica un registro persistente, no garantiza revisión por pares.", detailEn: "Technical document referenced in the public TAMV corpus. A DOI identifies a persistent record; it does not guarantee peer review." },
+  { titleEs: "UTAMV AI Academic Core — arquitectura y gobernanza de IA", titleEn: "UTAMV AI Academic Core — AI architecture and governance", doi: "10.5281/zenodo.19562517", detailEs: "Libro blanco de arquitectura publicado y enlazado por el ecosistema TAMV.", detailEn: "Architecture white paper published and linked by the TAMV ecosystem." },
+  { titleEs: "Isabella AI Genesis — evaluación de consistencia conceptual y gobernanza", titleEn: "Isabella AI Genesis — conceptual consistency and governance assessment", doi: "10.5281/zenodo.20606361", detailEs: "Registro técnico asociado a la documentación de Isabella AI / IGE-Ω.", detailEn: "Technical record associated with Isabella AI / IGE-Ω documentation." },
+  { titleEs: "Archivo técnico TAMV · Zenodo 19564367", titleEn: "TAMV technical archive · Zenodo 19564367", doi: "10.5281/zenodo.19564367", detailEs: "Registro adicional referenciado por el autor; consultar el registro para confirmar título, versión, autoría y alcance.", detailEn: "Additional record referenced by the author; consult the record to confirm title, version, authorship, and scope." },
+  { titleEs: "Archivo técnico TAMV · Zenodo 19414631", titleEn: "TAMV technical archive · Zenodo 19414631", doi: "10.5281/zenodo.19414631", detailEs: "Registro adicional del corpus documental referido por el autor.", detailEn: "Additional record in the documentation corpus referenced by the author." },
+  { titleEs: "Archivo técnico TAMV · Zenodo 19411506", titleEn: "TAMV technical archive · Zenodo 19411506", doi: "10.5281/zenodo.19411506", detailEs: "Registro adicional del corpus documental referido por el autor.", detailEn: "Additional record in the documentation corpus referenced by the author." },
+  { titleEs: "Registro documental en Figshare · 32135389", titleEn: "Figshare documentation record · 32135389", doi: "https://figshare.com/articles/32135389", detailEs: "Enlace a un registro de Figshare citado por el autor; confirmar título y metadatos en la fuente.", detailEn: "Link to a Figshare record cited by the author; confirm its title and metadata at the source." },
+  { titleEs: "Registro documental en Figshare · 32098846", titleEn: "Figshare documentation record · 32098846", doi: "https://figshare.com/articles/32098846", detailEs: "Enlace a un registro de Figshare citado por el autor; confirmar título y metadatos en la fuente.", detailEn: "Link to a Figshare record cited by the author; confirm its title and metadata at the source." },
+  { titleEs: "Isabella AI Genesis · registro OSF", titleEn: "Isabella AI Genesis · OSF record", doi: "https://osf.io/t3wmy/", detailEs: "Registro de proyecto asociado a la documentación técnica de Isabella AI.", detailEn: "Project record associated with Isabella AI technical documentation." },
+]
 
 type Paragraph = { es: string; en: string }
 const story: Paragraph[] = [
@@ -130,6 +156,96 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                   </>
                 )}
               </section>
+
+              <section className="tamv-origins-biography" aria-labelledby="tamv-origins-biography-title">
+                <div className="tamv-origins-biography-heading">
+                  <p className="tamv-origins-manifesto-kicker">{english ? "BIOGRAPHY · DOCUMENTED WORK · PUBLIC IDENTIFIERS" : "BIOGRAFÍA · OBRA DOCUMENTADA · IDENTIFICADORES PÚBLICOS"}</p>
+                  <h2 id="tamv-origins-biography-title">{english ? "An autodidact building from Real del Monte" : "Un autodidacta que construye desde Real del Monte"}</h2>
+                </div>
+                <div className="tamv-origins-biography-prose">
+                  <p>{english ? "Edwin Oswaldo Castillo Trejo, known digitally as Anubis Villaseñor and The Alfa RedHat, is a Mexican self-taught developer, independent researcher, and founder and lead architect of TAMV Online Network. He identifies proudly with Real del Monte (Mineral del Monte), Hidalgo, and places that origin at the center of his work: technology should preserve community memory, expand local capacity, and help Latin America create—not merely supply low-cost labor or consume products built elsewhere." : "Edwin Oswaldo Castillo Trejo, conocido digitalmente como Anubis Villaseñor y The Alfa RedHat, es un desarrollador mexicano autodidacta, investigador independiente y fundador y arquitecto principal de TAMV Online Network. Se reconoce orgullosamente realmontense, de Mineral del Monte (Real del Monte), Hidalgo, y coloca ese origen en el centro de su obra: la tecnología debe preservar la memoria comunitaria, ampliar las capacidades locales y ayudar a que América Latina cree, y no sea vista únicamente como proveedora de mano de obra barata o consumidora de productos desarrollados en otros lugares."}</p>
+                  <p>{english ? "His career is organized around a long-running independent effort to design a connected technology ecosystem rather than a single application. The public corpus includes product concepts, architecture notes, software repositories, technical white papers, and versioned records relating to AI governance, digital sovereignty, provenance, open knowledge, human-computer interaction, community safety, and territorial memory. These materials make the project traceable and citable; each still needs to be evaluated on its own merits, implementation state, and available evidence." : "Su trayectoria se articula alrededor de un esfuerzo independiente y sostenido por diseñar un ecosistema tecnológico conectado, en lugar de una sola aplicación. El corpus público incluye conceptos de producto, notas de arquitectura, repositorios de software, libros blancos técnicos y registros versionados sobre gobernanza de IA, soberanía digital, procedencia de la información, conocimiento abierto, interacción humano-computadora, seguridad comunitaria y memoria territorial. Estos materiales permiten rastrear y citar la obra; cada uno debe evaluarse por sus propios méritos, estado de implementación y evidencias disponibles."}</p>
+                  <p>{english ? "The author's public materials report more than 23,000 hours devoted to research and development. This is a self-reported measure, not an independently audited timesheet or a formal academic qualification. The central evidence of the work is therefore the material that can be inspected: source repositories, dated technical documents, identifiers, versions, and project artifacts." : "Los materiales públicos del autor reportan más de 23,000 horas dedicadas a investigación y desarrollo. Se trata de una cifra declarada por el propio autor, no de un registro horario auditado de forma independiente ni de una cualificación académica formal. La evidencia central de la obra debe ser, por tanto, el material que puede inspeccionarse: repositorios fuente, documentos técnicos fechados, identificadores, versiones y artefactos de los proyectos."}</p>
+                </div>
+                <div className="tamv-origins-contribution-grid">
+                  <article>
+                    <span>01 / TAMV ONLINE NETWORK</span>
+                    <h3>{english ? "Digital ecosystem and living memory" : "Ecosistema digital y memoria viva"}</h3>
+                    <p>{english ? "A proposed platform architecture joining creator communities, digital identity, knowledge preservation, governance, participation, and economic coordination. The public record contains evolving specifications; production readiness must be checked module by module." : "Una arquitectura de plataforma que busca conectar comunidades creadoras, identidad digital, preservación del conocimiento, gobernanza, participación y coordinación económica. El registro público contiene especificaciones en evolución; la preparación para producción debe comprobarse módulo por módulo."}</p>
+                  </article>
+                  <article>
+                    <span>02 / ISABELLA VILLASEÑOR AI</span>
+                    <h3>{english ? "Governed AI and human oversight" : "IA gobernada y supervisión humana"}</h3>
+                    <p>{english ? "An AI project documented around contextual assistance, policy boundaries, privacy, auditability, and human responsibility. Its technical records should not be confused with independent certification or proof that every proposed capability is deployed." : "Un proyecto de IA documentado alrededor de la asistencia contextual, límites de política, privacidad, auditabilidad y responsabilidad humana. Sus registros técnicos no deben confundirse con certificación independiente ni con prueba de que todas las capacidades propuestas estén desplegadas."}</p>
+                  </article>
+                  <article>
+                    <span>03 / MD-X4 · CITEMESH · BookPI</span>
+                    <h3>{english ? "Federated architecture and provenance" : "Arquitectura federada y procedencia"}</h3>
+                    <p>{english ? "Design work exploring federated digital infrastructure, peer-to-peer networking, source traceability, persistent knowledge records, and data sovereignty. Documentation and implementation status vary by component." : "Trabajo de diseño que explora infraestructura digital federada, redes entre pares, trazabilidad de fuentes, registros persistentes de conocimiento y soberanía de datos. La documentación y el estado de implementación varían por componente."}</p>
+                  </article>
+                  <article>
+                    <span>04 / RDM DIGITAL</span>
+                    <h3>{english ? "Territorial technology from Real del Monte" : "Tecnología territorial desde Real del Monte"}</h3>
+                    <p>{english ? "A place-based digital initiative designed to connect local heritage, visitor information, mapping, storytelling, and potential smart-territory services without displacing the identity of the community it serves." : "Una iniciativa digital vinculada al territorio, diseñada para conectar patrimonio local, información al visitante, cartografía, narrativa y posibles servicios territoriales inteligentes sin desplazar la identidad de la comunidad a la que sirve."}</p>
+                  </article>
+                </div>
+                <section className="tamv-origins-resource-block" aria-labelledby="tamv-origin-identifiers-title">
+                  <div className="tamv-origins-resource-heading">
+                    <p className="tamv-origins-manifesto-kicker">{english ? "AUTHOR AND PROFESSIONAL PRESENCE" : "IDENTIDAD AUTORAL Y PRESENCIA PROFESIONAL"}</p>
+                    <h3 id="tamv-origin-identifiers-title">{english ? "Identifiers and public profiles" : "Identificadores y perfiles públicos"}</h3>
+                    <p>{english ? "These links allow readers to inspect the identity, repository activity, professional publications, and project records directly." : "Estos enlaces permiten consultar directamente la identidad, actividad en repositorios, publicaciones profesionales y registros de proyecto."}</p>
+                  </div>
+                  <div className="tamv-origins-resource-grid">
+                    {professionalProfiles.map((profile) => (
+                      <a key={profile.label} href={profile.href} target="_blank" rel="noopener noreferrer" className="tamv-origins-resource-card">
+                        <strong>{profile.label}</strong>
+                        <span>{english ? profile.en : profile.es}</span>
+                        <small>{english ? "Open external source" : "Abrir fuente externa"} <ArrowUpRight aria-hidden="true" /></small>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+                <section className="tamv-origins-resource-block" aria-labelledby="tamv-origin-doi-title">
+                  <div className="tamv-origins-resource-heading">
+                    <p className="tamv-origins-manifesto-kicker">{english ? "PERSISTENT RECORDS · OPEN DOCUMENTATION" : "REGISTROS PERSISTENTES · DOCUMENTACIÓN ABIERTA"}</p>
+                    <h3 id="tamv-origin-doi-title">{english ? "Selected research and technical records" : "Selección de registros técnicos y de investigación"}</h3>
+                    <p>{english ? "A DOI or repository record supports citation and retrieval. It does not, by itself, certify academic quality, peer review, deployment, or institutional endorsement. Confirm title, version, authorship, and license on each source page." : "Un DOI o registro de repositorio facilita la cita y recuperación. Por sí solo no certifica calidad académica, revisión por pares, despliegue ni respaldo institucional. Confirma el título, versión, autoría y licencia en cada fuente."}</p>
+                  </div>
+                  <ol className="tamv-origins-research-records">
+                    {researchRecords.map((record) => (
+                      <li key={record.doi}>
+                        <div>
+                          <strong>{english ? record.titleEn : record.titleEs}</strong>
+                          <p>{english ? record.detailEn : record.detailEs}</p>
+                        </div>
+                        <a href={record.doi.startsWith("http") ? record.doi : "https://doi.org/" + record.doi} target="_blank" rel="noopener noreferrer">{record.doi.startsWith("http") ? (english ? "Open record" : "Abrir registro") : record.doi} <ArrowUpRight aria-hidden="true" /></a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+                <aside className="tamv-origins-recognition-note" aria-labelledby="tamv-origins-recognition-title">
+                  <p className="tamv-origins-manifesto-kicker">{english ? "RECOGNITION · ACCURACY · ACADEMIC INTEGRITY" : "RECONOCIMIENTO · PRECISIÓN · INTEGRIDAD ACADÉMICA"}</p>
+                  <h3 id="tamv-origins-recognition-title">{english ? "Honorific recognition is not the same as an academic degree" : "Un reconocimiento honorífico no es lo mismo que un grado académico"}</h3>
+                  {english ? (
+                    <>
+                      <p>The founder reports having been addressed as “Ph.D.” in communications associated with Universidad Politécnica Salesiana in Ecuador and as “Dr.” in communications he associates with a university in Querétaro and Frontiers. He describes these forms of address as honorary recognition of his contributions, not as an official academic qualification.</p>
+                      <p>A TAMV-published account about CITIS 2026 also describes a Ph.D.-level recognition linked to the Ecuador event. In the public sources reviewed for this biography, however, I could not independently verify an official university resolution or an honorary-doctorate certificate specifying the institution, date, and terms of conferment. Therefore, this biography does not present a formally awarded Ph.D., bachelor's degree, engineering degree, or editorial appointment as independently verified fact.</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>El fundador refiere haber recibido el tratamiento “Ph.D.” en comunicaciones asociadas a la Universidad Politécnica Salesiana de Ecuador y “Dr.” en comunicaciones que vincula con una universidad de Querétaro y con Frontiers. Describe esas formas de tratamiento como un reconocimiento honorífico a sus aportaciones, no como una titulación académica oficial.</p>
+                      <p>Una publicación del propio ecosistema TAMV sobre CITIS 2026 también describe un reconocimiento de nivel Ph.D. vinculado al evento en Ecuador. Sin embargo, en las fuentes públicas consultadas para esta biografía no pude verificar de manera independiente una resolución universitaria oficial ni un certificado de doctorado honoris causa que especifique institución, fecha y términos de concesión. Por eso esta biografía no presenta como hecho verificado un Ph.D. formalmente conferido, una licenciatura, una ingeniería ni un nombramiento editorial.</p>
+                    </>
+                  )}
+                  <p className="tamv-origins-recognition-footnote">{english ? "The appropriate professional description at this stage is self-taught developer, independent researcher, founder, and lead architect. If the institutions publish a letter, resolution, or certificate, this record can be updated with its exact wording and provenance." : "La descripción profesional adecuada en este momento es desarrollador autodidacta, investigador independiente, fundador y arquitecto principal. Si las instituciones publican una carta, resolución o certificado, este registro podrá actualizarse con su denominación exacta y procedencia."}</p>
+                  <a href="https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11" target="_blank" rel="noopener noreferrer">{english ? "Read the TAMV account about CITIS 2026" : "Consultar la publicación de TAMV sobre CITIS 2026"} <ArrowUpRight aria-hidden="true" /></a>
+                  <details className="tamv-origins-profile-audit">
+                    <summary>{english ? "Profile verification notes" : "Notas de verificación de perfiles"}</summary>
+                    <p>{english ? "The Frontiers Loop ID 3117809 referenced in technical material currently resolves to a profile-not-found page; it is not presented here as an active profile. I did not find a ResearchGate profile I could confidently match to this identity, an independently verifiable Frontiers-authored peer-reviewed article, or an official Frontiers editor appointment during this search. These findings describe the public evidence available during review, not a claim that no private or unindexed records exist." : "El identificador Frontiers Loop 3117809 citado en material técnico actualmente dirige a una página de perfil inexistente; por ello no se presenta aquí como perfil activo. Durante esta búsqueda no localicé un perfil de ResearchGate que pudiera atribuir con suficiente confianza a esta identidad, un artículo revisado por pares firmado en Frontiers que pudiera verificar de forma independiente ni un nombramiento oficial como editor de Frontiers. Estos hallazgos describen la evidencia pública disponible durante la revisión; no afirman que no existan registros privados o no indexados."}</p>
+                  </details>
+                </aside>
+              </section>
+
               {paragraphs.map((paragraph, index) => (
                 <p key={index} className={index === 2 ? "tamv-origins-emphasis" : undefined}>{paragraph}</p>
               ))}
