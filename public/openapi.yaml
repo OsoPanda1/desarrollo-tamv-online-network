@@ -30,6 +30,11 @@ tags:
     description: Public evidence metadata and stateless receipt verification.
   - name: Ecosystem
     description: Public ecosystem repository discovery and metadata.
+  - name: Standard
+    description: >-
+      TAMV Open Integrity Standard (ETIA/TOIS) v1: structural evaluation of
+      classification, funding, publication and certification claims. Not a
+      certification scheme, accreditation body or legal opinion.
 paths:
   /api/v1/research/topics:
     get:
@@ -420,6 +425,129 @@ paths:
                         code: { type: string }
                         message: { type: string }
                   semantics: { type: string }
+  /api/v1/standard:
+    get:
+      operationId: getOpenIntegrityStandard
+      tags: [Standard]
+      summary: Catalog of the TAMV Open Integrity Standard
+      description: >-
+        Publishes pillars, evidence levels, limitations and endpoint locations.
+        It does not evaluate a declaration, certify an organization or imply
+        that any identifier or repository is trustworthy.
+      responses:
+        "200":
+          description: Standard catalog.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StandardCatalog"
+  /api/v1/standard/references:
+    get:
+      operationId: getOpenIntegrityReferences
+      tags: [Standard]
+      summary: External reference catalog with explicit non-goals
+      description: >-
+        Lists external identifiers, infrastructures, standards and legal
+        frameworks, recording what each one does and does not do. Inclusion is
+        not endorsement, membership, accreditation or evidence of compliance.
+        ISO records are usually paywalled; the linked page is the catalog
+        record, not the full text.
+      responses:
+        "200":
+          description: Reference catalog.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [schemaVersion, standard, groups, references]
+                properties:
+                  schemaVersion: { type: string }
+                  standard: { type: string }
+                  generatedAt: { type: string, format: date-time }
+                  semantics: { type: string }
+                  groups:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+                  references:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/StandardReference"
+  /api/v1/standard/schema:
+    get:
+      operationId: getOpenIntegrityDeclarationSchema
+      tags: [Standard]
+      summary: JSON Schema projection of the declaration schema
+      description: >-
+        Derived from the authoritative Zod schema. Custom refinements (safe
+        URLs, identifier checksums, date consistency) are enforced by the
+        evaluate endpoint and are not fully representable in JSON Schema.
+      responses:
+        "200":
+          description: JSON Schema document.
+          content:
+            application/schema+json:
+              schema:
+                type: object
+        "503":
+          description: The projection could not be generated in this runtime.
+  /api/v1/standard/evaluate:
+    post:
+      operationId: evaluateOpenIntegrityDeclaration
+      tags: [Standard]
+      summary: Structurally evaluate an integrity declaration
+      description: >-
+        Stateless structural evaluation. The endpoint never fetches declared
+        URLs, resolves identifiers, queries registries, contacts certifiers or
+        stores the declaration. `verification` is always "unverified". A
+        "complete" outcome means structural completeness, not truth. Expiry
+        checks use server time, which is returned as `report.referenceDate` and
+        covered by the report digest.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StandardDeclaration"
+      responses:
+        "200":
+          description: Structural report with digest.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StandardEvaluationResponse"
+        "400":
+          description: Malformed JSON or invalid UTF-8.
+        "413":
+          description: Payload exceeds 65536 bytes.
+        "415":
+          description: Content-Type must be application/json.
+        "422":
+          description: The declaration fails the schema; no report is produced.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, error, issues]
+                properties:
+                  valid: { type: boolean, const: false }
+                  error: { type: string, const: schema_validation_failed }
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      required: [path, code, message]
+                      properties:
+                        path: { type: string }
+                        code: { type: string }
+                        message: { type: string }
+                  semantics: { type: string }
+                  semanticsEs: { type: string }
+        "429":
+          description: Shared rate limit exceeded; retry after the indicated seconds.
+        "503":
+          description: The shared rate limiter is unavailable; the endpoint fails closed.
 components:
   responses:
     CatalogUnavailable:
@@ -822,3 +950,246 @@ components:
         prohibitedAssumptions:
           type: array
           items: { type: string }
+    StandardCatalog:
+      type: object
+      additionalProperties: true
+      required: [schemaVersion, standard, semanticsEs, semanticsEn, evidenceLevels, pillars, endpoints]
+      properties:
+        schemaVersion: { type: string }
+        standard:
+          type: object
+          required: [id, version, status, nameEs, nameEn]
+          properties:
+            id: { type: string, const: tamv.open_integrity.v1 }
+            version: { type: string, const: 1.0.0 }
+            status: { type: string, enum: [public-draft] }
+            nameEs: { type: string }
+            nameEn: { type: string }
+            shortEs: { type: string }
+            shortEn: { type: string }
+            url: { type: string, format: uri }
+        semanticsEs: { type: string }
+        semanticsEn: { type: string }
+        limitationsEs:
+          type: array
+          items: { type: string }
+        limitationsEn:
+          type: array
+          items: { type: string }
+        outcomes:
+          type: object
+          additionalProperties: { type: string }
+        evidenceLevels:
+          type: array
+          items:
+            type: object
+            required: [id, labelEs, labelEn, descriptionEs, descriptionEn]
+            properties:
+              id: { type: string, enum: [declared, documented, attested, verified] }
+              labelEs: { type: string }
+              labelEn: { type: string }
+              descriptionEs: { type: string }
+              descriptionEn: { type: string }
+        pillars:
+          type: array
+          items:
+            type: object
+            required: [id, nameEs, nameEn, purposeEs, purposeEn]
+            properties:
+              id:
+                type: string
+                enum: [classification, funding, publication, certification, cross_cutting]
+              nameEs: { type: string }
+              nameEn: { type: string }
+              purposeEs: { type: string }
+              purposeEn: { type: string }
+        endpoints:
+          type: object
+          additionalProperties: { type: string }
+        references:
+          type: object
+          additionalProperties: true
+    StandardReference:
+      type: object
+      additionalProperties: false
+      required: [id, name, kind, issuer, url, access, pillars, group, whatItDoesEs, whatItDoesEn, whatItDoesNotDoEs, whatItDoesNotDoEn]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        kind:
+          type: string
+          enum: [identifier, definition, standard, metadata, repository, certification, policy, platform, legal, taxonomy]
+        issuer: { type: string }
+        url: { type: string, format: uri }
+        access:
+          type: string
+          enum: [open, registration, membership, paywalled, mixed]
+        pillars:
+          type: array
+          items:
+            type: string
+            enum: [classification, funding, publication, certification, cross_cutting]
+        group:
+          type: string
+          enum: [identity, publication, licensing, certification, funding, policy, metadata, legal]
+        whatItDoesEs: { type: string }
+        whatItDoesEn: { type: string }
+        whatItDoesNotDoEs: { type: string }
+        whatItDoesNotDoEn: { type: string }
+        noteEs: { type: string }
+        noteEn: { type: string }
+    StandardDeclaration:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, subject, funding, publication, transparency]
+      description: >-
+        Shape summary. The authoritative, full projection is served by
+        GET /api/v1/standard/schema and enforced by POST /api/v1/standard/evaluate.
+      properties:
+        schemaVersion: { type: string, const: tamv.open_integrity.declaration.v1 }
+        subject:
+          type: object
+          additionalProperties: true
+        funding:
+          type: object
+          additionalProperties: true
+        publication:
+          type: object
+          additionalProperties: true
+        certificationClaims:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        transparency:
+          type: object
+          additionalProperties: true
+        legal:
+          type: object
+          additionalProperties: true
+        security:
+          type: object
+          additionalProperties: true
+        accessibility:
+          type: object
+          additionalProperties: true
+    StandardCheck:
+      type: object
+      additionalProperties: false
+      required: [id, pillar, titleEs, titleEn, status, evidence, detailEs, detailEn]
+      properties:
+        id: { type: string }
+        pillar:
+          type: string
+          enum: [classification, funding, publication, certification, cross_cutting]
+        titleEs: { type: string }
+        titleEn: { type: string }
+        status: { type: string, enum: [pass, warn, fail, not_applicable] }
+        evidence: { type: string, enum: [declared, documented, attested] }
+        detailEs: { type: string }
+        detailEn: { type: string }
+        remediationEs: { type: string }
+        remediationEn: { type: string }
+    StandardPillarSummary:
+      type: object
+      additionalProperties: false
+      required: [pillar, status, total, passed, warnings, failed, notApplicable]
+      properties:
+        pillar:
+          type: string
+          enum: [classification, funding, publication, certification, cross_cutting]
+        status: { type: string, enum: [complete, conditional, blocked] }
+        total: { type: integer, minimum: 0 }
+        passed: { type: integer, minimum: 0 }
+        warnings: { type: integer, minimum: 0 }
+        failed: { type: integer, minimum: 0 }
+        notApplicable: { type: integer, minimum: 0 }
+    StandardClaimAssessment:
+      type: object
+      additionalProperties: false
+      required: [id, claimType, declaredStatus, issuerType, evidence, verification, noteEs, noteEn]
+      properties:
+        id: { type: string }
+        claimType:
+          type: string
+          enum: [self_declaration, third_party_certification, accreditation, registration, indexing, badge, award]
+        declaredStatus:
+          type: string
+          enum: [active, suspended, revoked, expired, unknown]
+        issuerType:
+          type: string
+          enum: [intergovernmental, standards_body, accreditation_body, certification_body, repository, publisher, community, self, unknown]
+        expiresAt: { type: [string, "null"], format: date-time }
+        expiresInDays: { type: [integer, "null"] }
+        expired: { type: [boolean, "null"] }
+        evidence: { type: string, enum: [declared, documented, attested] }
+        verification: { type: string, const: unverified }
+        noteEs: { type: string }
+        noteEn: { type: string }
+    StandardReport:
+      type: object
+      additionalProperties: false
+      required: [schema, standard, subject, outcome, verification, evidenceCeiling, pillars, checks, claimAssessments, limitationsEs, limitationsEn, remediation, semanticsEs, semanticsEn, digest]
+      properties:
+        schema: { type: string, const: tamv.open_integrity.report.v1 }
+        standard:
+          type: object
+          additionalProperties: true
+        subject:
+          type: object
+          required: [id, name, type]
+          properties:
+            id: { type: string }
+            name: { type: string }
+            type: { type: string, enum: [project, organization, person, output, infrastructure, event] }
+        outcome: { type: string, enum: [complete, conditional, blocked] }
+        outcomeMeaningEs: { type: string }
+        outcomeMeaningEn: { type: string }
+        verification: { type: string, const: unverified }
+        evidenceCeiling: { type: string, enum: [declared, documented, attested] }
+        referenceDate: { type: [string, "null"], format: date-time }
+        pillars:
+          type: array
+          items:
+            $ref: "#/components/schemas/StandardPillarSummary"
+        checks:
+          type: array
+          items:
+            $ref: "#/components/schemas/StandardCheck"
+        claimAssessments:
+          type: array
+          items:
+            $ref: "#/components/schemas/StandardClaimAssessment"
+        limitationsEs:
+          type: array
+          items: { type: string }
+        limitationsEn:
+          type: array
+          items: { type: string }
+        remediation:
+          type: array
+          items:
+            type: object
+            required: [checkId, pillar, severity, actionEs, actionEn]
+            properties:
+              checkId: { type: string }
+              pillar:
+                type: string
+                enum: [classification, funding, publication, certification, cross_cutting]
+              severity: { type: string, enum: [warning, blocker] }
+              actionEs: { type: string }
+              actionEn: { type: string }
+        semanticsEs: { type: string }
+        semanticsEn: { type: string }
+        canonicalization: { type: string, const: tamv-jcs-1 }
+        digestScope: { type: string }
+        digest: { type: string, pattern: "^sha256:[a-f0-9]{64}$" }
+    StandardEvaluationResponse:
+      type: object
+      additionalProperties: false
+      required: [valid, report, note]
+      properties:
+        valid: { type: boolean, const: true }
+        report:
+          $ref: "#/components/schemas/StandardReport"
+        note: { type: string }

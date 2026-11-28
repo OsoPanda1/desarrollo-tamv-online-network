@@ -5,6 +5,7 @@ import './globals.css'
 import './memberships.css'
 import './visuals.css'
 import './evidence.css'
+import './standard.css'
 import './pearl.css'
 
 export const metadata: Metadata = {

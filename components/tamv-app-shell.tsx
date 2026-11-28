@@ -33,6 +33,7 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
             <Link href={localizedPath("/atlas", locale)}>{english ? "Visual atlas" : "Atlas visual"}</Link>
             <Link href={localizedPath("/logros", locale)}>{english ? "Achievements" : "Logros"}</Link>
             <Link href={localizedPath("/desarrolladores", locale)}>API <ArrowUpRight aria-hidden="true" /></Link>
+            <Link href={localizedPath("/estandar", locale)}>{english ? "Open integrity standard" : "Estándar de integridad abierta"}</Link>
             <Link href={localizedPath("/ecosistema", locale)}>{english ? "Ecosystem metadata" : "Metadatos del ecosistema"}</Link>
           </nav>
         </div>
