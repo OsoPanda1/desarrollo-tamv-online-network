@@ -374,6 +374,18 @@ El registro inicial está marcado `UNREVIEWED` y no prueba titularidad. La licen
 
 La hoja de ruta y las dependencias de cierre están en [`docs/roadmap/module-completion-matrix-2026-11.md`](docs/roadmap/module-completion-matrix-2026-11.md).
 
+## Seguridad de secretos y activos visuales
+
+La auditoría de límites de secretos del 28 de noviembre de 2026 documenta el estado de evidencia, los controles de código observados y el procedimiento para responder a una posible exposición. La lectura de variables de Vercel no estuvo disponible durante esa revisión; por ello no se afirma ni una filtración confirmada ni ausencia de filtraciones.
+
+- [Auditoría de límites de secretos y activos](docs/audit/2026-11-28-secret-boundary-and-assets-audit.md)
+- [Workflow de escaneo histórico de secretos](.github/workflows/secret-scan.yml)
+- [Inventario y procedencia de imágenes del hub](docs/audit/hub-images-mapping.md)
+
+![Diagrama accesible de límites de confianza: navegador público, rutas de servidor, gestor de secretos y servicios externos. Es un esquema conceptual, no evidencia de la configuración desplegada.](public/security/tamv-secret-boundaries.svg)
+
+**Regla operativa:** no guardar valores reales en Git, `NEXT_PUBLIC_*`, documentación, capturas o logs. Si una credencial pudo exponerse, rotarla en el proveedor propietario, revocar la anterior, actualizar consumidores y revisar actividad antes de cerrar el incidente.
+
 ## Contribuir
 
 Consulta [`CONTRIBUTING.md`](CONTRIBUTING.md) antes de abrir un pull request.
