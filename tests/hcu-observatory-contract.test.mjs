@@ -128,6 +128,8 @@ test("homepage leads with technology and exposes a research-first visual system"
     assert.match(asset, /<desc/)
   }
   const media = read("components/tamv-section-media.tsx")
+  assert.doesNotMatch(home, /src="\/tamv-hero-banner\.jpg"/)
+  assert.match(media, /src: "\/visuals\/tamv-innovation-hub-hero\.svg"/)
   assert.match(media, /src: "\/visuals\/zero-trust-security\.svg"/)
   assert.match(media, /src: "\/visuals\/hcu-hypergraph-field\.svg"/)
   assert.match(media, /src: "\/visuals\/cryptographic-provenance\.svg"/)
