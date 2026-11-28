@@ -192,3 +192,12 @@ test("Origins exposes traceable author profiles, DOI records, and the founder-su
   assert.match(origins, /nombramiento oficial como editor de Frontiers/i)
   assert.match(styles, /\.tamv-origins-recognition-sources/)
 })
+
+
+test("Origins references the confirmed ResearchGate identity and its listed Isabella AI publication", () => {
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /researchgate\.net\/profile\/Edwin-Oswaldo-Castillo-Trejo/)
+  assert.match(origins, /10\.5281\/zenodo\.23418238/)
+  assert.match(origins, /ResearchGate profile was located|perfil de ResearchGate sí fue localizado/)
+  assert.match(origins, /not proof of peer review|no evidencia de revisión por pares/)
+})
