@@ -156,7 +156,7 @@ export function TamvVisualSystems({ locale = "es" }: { locale?: Locale }) {
           {cards.map((card, index) => (
             <article className={styles.card} key={card.id}>
               <div className={styles.imageFrame}>
-                <img src={card.image} alt={en ? card.altEn : card.altEs} loading={index < 3 ? "eager" : "lazy"} decoding="async" />
+                <img src={card.image} alt={en ? card.altEn : card.altEs} loading={index < 3 ? "eager" : "lazy"} decoding="async" referrerPolicy={card.image.startsWith("https://") ? "no-referrer" : undefined} />
                 <span className={styles.cardIndex}>{String(index + 1).padStart(2, "0")}</span>
               </div>
               {card.sourceUrl && (
