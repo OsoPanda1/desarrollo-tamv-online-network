@@ -237,7 +237,7 @@ test("Origins metadata exposes a bilingual title, description, and social previe
   assert.match(origins, /Edwin Oswaldo Castillo Trejo \(Anubis Villaseñor\) \| Orígenes/)
   assert.match(origins, /openGraph:[\s\S]*?images: \[socialImage\]/)
   assert.match(origins, /twitter:[\s\S]*?card: "summary_large_image"/)
-  assert.match(origins, /tamv-innovation-hub-hero\.svg/)
+  assert.match(origins, /founder-edwin-oswaldo-castillo-trejo\.webp/)
 })
 
 test("Origins links verified and exploratory identity directories without presenting them as endorsements", () => {

@@ -19,9 +19,9 @@
 
 Pesos usados: implementación visible 30%, contenido y accesibilidad 10%, build/tipos 20%, pruebas automatizadas 15%, seguridad 10% y despliegue 15%.
 
-Cálculo: `(76×0.30) + (80×0.10) + (25×0.20) + (18×0.15) + (35×0.10) + (10×0.15) = 42.8%`.
+Cálculo: `(76×0.30) + (80×0.10) + (25×0.20) + (18×0.15) + (35×0.10) + (10×0.15) = 43.5%`.
 
-**Estimación global de preparación para producción: 43%.**  
+**Estimación global de preparación para producción: 44% (43.5 antes de redondear).**  
 **Implementación de funcionalidades visibles: aproximadamente 76%.**  
 **Preparación de despliegue verificable: aproximadamente 10–15%.**
 

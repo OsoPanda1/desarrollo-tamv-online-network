@@ -11,18 +11,18 @@ type SearchParams = Promise<{ lang?: string }>
 export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
   const english = resolveLocale((await searchParams).lang) === "en"
   const title = english
-    ? "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor) | Origins — TAMV Online Network"
-    : "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor) | Orígenes — TAMV Online Network"
+    ? "Edwin Oswaldo Castillo Trejo | Origins — TAMV"
+    : "Edwin Oswaldo Castillo Trejo | Orígenes — TAMV"
   const description = english
     ? "Founder biography, self-taught technology work, public identifiers, repositories, and citable technical records for Edwin Oswaldo Castillo Trejo, creator of TAMV Online Network in Real del Monte, Hidalgo."
     : "Biografía del fundador, obra tecnológica autodidacta, identificadores públicos, repositorios y registros técnicos citables de Edwin Oswaldo Castillo Trejo, creador de TAMV Online Network desde Real del Monte, Hidalgo."
   const socialImage = {
-    url: "/visuals/tamv-innovation-hub-hero.svg",
-    width: 1584,
-    height: 672,
+    url: "/visuals/founder-edwin-oswaldo-castillo-trejo.webp",
+    width: 360,
+    height: 515,
     alt: english
-      ? "TAMV Online Network: research, AI governance, security, open knowledge, and digital sovereignty."
-      : "TAMV Online Network: investigación, gobernanza de IA, seguridad, conocimiento abierto y soberanía digital.",
+      ? "Portrait of Edwin Oswaldo Castillo Trejo, founder of TAMV Online Network."
+      : "Retrato de Edwin Oswaldo Castillo Trejo, fundador de TAMV Online Network.",
   }
 
   return {
