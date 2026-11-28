@@ -5649,3 +5649,79 @@ body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card a:h
   outline: 3px solid #e4c17b;
   outline-offset: 3px;
 }
+
+
+/* Source-linked founder timeline: separate observed records from author-reported claims. */
+.tamv-origins-milestones {
+  margin-top: clamp(2.6rem, 5vw, 4rem);
+}
+.tamv-origins-milestone-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tamv-origins-milestone-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.15rem;
+  border: 1px solid rgba(151, 174, 185, .22);
+  border-radius: 11px;
+  background: linear-gradient(150deg, #121c24, #0c1219);
+}
+.tamv-origins-milestone-date {
+  margin: 0 0 .75rem;
+  color: #91dfd5;
+  font-size: .65rem;
+  font-weight: 850;
+  letter-spacing: .1em;
+  line-height: 1.5;
+}
+.tamv-origins-milestone-card h4 {
+  margin: 0 0 .65rem;
+  color: #f5f8fa;
+  font-size: 1.02rem;
+  font-weight: 850;
+  line-height: 1.4;
+}
+.tamv-origins-milestone-detail {
+  margin: 0 0 1rem;
+  color: #c4d0d7;
+  font-size: .84rem;
+  line-height: 1.8;
+}
+.tamv-origins-milestone-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 38px;
+  margin-top: auto;
+  padding: .55rem .75rem;
+  border: 1px solid rgba(127, 221, 210, .38);
+  border-radius: 7px;
+  background: #eaf8f5;
+  color: #103b40;
+  font-size: .72rem;
+  font-weight: 850;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.tamv-origins-milestone-card a:hover {
+  border-color: #83e3d7;
+  background: #fff;
+}
+.tamv-origins-milestone-card a:focus-visible {
+  outline: 3px solid #e4c17b;
+  outline-offset: 3px;
+}
+.tamv-origins-milestone-card a svg {
+  width: 14px;
+  height: 14px;
+}
+@media (max-width: 720px) {
+  .tamv-origins-milestone-list { grid-template-columns: minmax(0, 1fr); }
+}
