@@ -159,6 +159,12 @@ export function TamvVisualSystems({ locale = "es" }: { locale?: Locale }) {
                 <img src={card.image} alt={en ? card.altEn : card.altEs} loading={index < 3 ? "eager" : "lazy"} decoding="async" />
                 <span className={styles.cardIndex}>{String(index + 1).padStart(2, "0")}</span>
               </div>
+              {card.sourceUrl && (
+                <p className={styles.credit}>
+                  <a href={card.sourceUrl} target="_blank" rel="noopener noreferrer">{en ? card.sourceLabelEn : card.sourceLabelEs}</a>
+                  <span>{en ? card.licenseEn : card.licenseEs}</span>
+                </p>
+              )}
               <div className={styles.cardBody}>
                 <h3>{en ? card.titleEn : card.titleEs}</h3>
                 <p>{en ? card.bodyEn : card.bodyEs}</p>
