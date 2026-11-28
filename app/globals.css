@@ -5196,3 +5196,76 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
   .hcu-launch-button { transition: none; }
   .hcu-launch-button:hover { transform: none; }
 }
+
+
+/* Contrast repair: light-blue disclosure panels must use dark, bold text.
+   Keep the light institutional palette; reserve white text for dark surfaces. */
+body:has(.sovereign-hero) .sovereign-reference-disclosure,
+body:has(.sovereign-hero) .sovereign-advanced-modules {
+  border-color: #c5d3dd !important;
+  background: #eaf1f6 !important;
+  color: #12324a !important;
+}
+body:has(.sovereign-hero) .sovereign-reference-disclosure > summary,
+body:has(.sovereign-hero) .sovereign-advanced-modules > summary {
+  background: #eaf1f6 !important;
+  color: #12324a !important;
+  font-weight: 800 !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules > summary > span {
+  color: #12324a !important;
+  font-weight: 800 !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules > summary > small {
+  color: #29495f !important;
+  font-weight: 650 !important;
+}
+body:has(.sovereign-hero) .sovereign-reference-disclosure > summary {
+  color: #12324a !important;
+  font-weight: 800 !important;
+}
+body:has(.sovereign-hero) .sovereign-reference-disclosure > summary::before,
+body:has(.sovereign-hero) .sovereign-advanced-modules > summary::before {
+  border-color: #176d66 !important;
+  background: #fffefa !important;
+  color: #12324a !important;
+  font-weight: 800 !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-intro {
+  color: #29495f !important;
+  font-weight: 500;
+}
+body:has(.sovereign-hero) .sovereign-reference-strip {
+  background: #fffefa !important;
+  color: #29495f !important;
+}
+body:has(.sovereign-hero) .sovereign-reference-strip a {
+  color: #123f66 !important;
+  font-weight: 800 !important;
+  text-decoration-thickness: 1.5px;
+}
+body:has(.sovereign-hero) .sovereign-reference-label,
+body:has(.sovereign-hero) .sovereign-reference-note {
+  color: #29495f !important;
+  font-weight: 700 !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card {
+  background: #fffefa !important;
+  color: #162a3c !important;
+  border-color: #cbd6dd !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card h3,
+body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card p {
+  color: #162a3c !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card a {
+  background: #17324a !important;
+  border-color: #17324a !important;
+  color: #fffefa !important;
+  font-weight: 800 !important;
+}
+body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card a:hover {
+  background: #284b63 !important;
+  border-color: #284b63 !important;
+  color: #fffefa !important;
+}
