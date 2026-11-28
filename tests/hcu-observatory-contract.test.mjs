@@ -1,6 +1,6 @@
 import test from "node:test"
 import assert from "node:assert/strict"
-import { readFileSync } from "node:fs"
+import { readFileSync, existsSync, statSync } from "node:fs"
 import { resolve } from "node:path"
 
 const read = (path) => readFileSync(resolve(process.cwd(), path), "utf8")
@@ -200,4 +200,14 @@ test("Origins references the confirmed ResearchGate identity and its listed Isab
   assert.match(origins, /10\.5281\/zenodo\.23418238/)
   assert.match(origins, /ResearchGate profile was located|perfil de ResearchGate sí fue localizado/)
   assert.match(origins, /not proof of peer review|no evidencia de revisión por pares/)
+})
+
+
+test("Origins founder portrait asset is present at the public path used by the page", () => {
+  const asset = resolve(process.cwd(), "public/visuals/founder-edwin-oswaldo-castillo-trejo.webp")
+  assert.ok(existsSync(asset), "founder portrait must be included in the repository")
+  assert.ok(statSync(asset).size >= 5000, "founder portrait should be a real optimized image, not an empty placeholder")
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /src="\/visuals\/founder-edwin-oswaldo-castillo-trejo\.webp"/)
+  assert.match(origins, /width=\{320\}[\s\S]*?height=\{457\}/)
 })
