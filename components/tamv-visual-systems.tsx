@@ -15,6 +15,11 @@ type VisualCard = {
   route: string
   labelEs: string
   labelEn: string
+  sourceUrl?: string
+  sourceLabelEs?: string
+  sourceLabelEn?: string
+  licenseEs?: string
+  licenseEn?: string
 }
 
 const cards: VisualCard[] = [
@@ -96,6 +101,42 @@ const cards: VisualCard[] = [
     labelEs: "Explorar supervisión",
     labelEn: "Explore oversight",
   },
+  {
+    id: "research-photo",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Researcher_at_work_in_her_laboratory.jpg?width=1200",
+    altEs: "Investigadora trabajando en un laboratorio científico; imagen de contexto de investigación, no una afiliación con TAMV.",
+    altEn: "Researcher working in a scientific laboratory; contextual research photography, not an affiliation with TAMV.",
+    titleEs: "Investigación científica en contexto",
+    titleEn: "Scientific research in context",
+    bodyEs: "La investigación tecnológica requiere método, trabajo sostenido, documentación y revisión. Esta fotografía es contextual y no representa personal de TAMV.",
+    bodyEn: "Technology research requires method, sustained work, documentation and review. This photograph is contextual and does not depict TAMV personnel.",
+    route: "/investigacion",
+    labelEs: "Explorar investigación",
+    labelEn: "Explore research",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Researcher_at_work_in_her_laboratory.jpg",
+    sourceLabelEs: "axventura · Wikimedia Commons",
+    sourceLabelEn: "axventura · Wikimedia Commons",
+    licenseEs: "CC BY 4.0 · requiere atribución",
+    licenseEn: "CC BY 4.0 · attribution required",
+  },
+  {
+    id: "infrastructure-photo",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Datacenter.jpg?width=1200",
+    altEs: "Filas de racks de servidores en un centro de datos; fotografía de infraestructura informática, no infraestructura operada por TAMV.",
+    altEn: "Rows of server racks in a data center; computing infrastructure photography, not infrastructure operated by TAMV.",
+    titleEs: "Infraestructura y resiliencia",
+    titleEn: "Infrastructure and resilience",
+    bodyEs: "Una referencia visual para hablar de disponibilidad, segmentación, continuidad operativa y protección de infraestructura, sin insinuar que TAMV opera este centro de datos.",
+    bodyEn: "A visual reference for availability, segmentation, operational continuity and infrastructure protection, without implying TAMV operates this data center.",
+    route: "/estandar",
+    labelEs: "Explorar seguridad",
+    labelEn: "Explore security",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Datacenter.jpg",
+    sourceLabelEs: "Wil Weterings · Wikimedia Commons",
+    sourceLabelEn: "Wil Weterings · Wikimedia Commons",
+    licenseEs: "Dominio público declarado por el titular",
+    licenseEn: "Public domain as declared by the rights holder",
+  },
 ]
 
 export function TamvVisualSystems({ locale = "es" }: { locale?: Locale }) {
@@ -109,7 +150,7 @@ export function TamvVisualSystems({ locale = "es" }: { locale?: Locale }) {
             <h2 id="tamv-visual-systems-title">{en ? "Technology explained with technical substance." : "Tecnología explicada con sustancia técnica."}</h2>
             <p>{en ? "Explore the systems behind TAMV: research provenance, AI governance, security boundaries, cryptographic integrity and human oversight. These original diagrams explain concepts; they do not claim production certification or measured results." : "Explora los sistemas que sustentan TAMV: procedencia de investigación, gobernanza de IA, límites de seguridad, integridad criptográfica y supervisión humana. Son diagramas originales para explicar conceptos; no afirman certificación de producción ni resultados medidos."}</p>
           </div>
-          <span className={styles.status}>{en ? "ORIGINAL TAMV DIAGRAMS" : "DIAGRAMAS ORIGINALES TAMV"}</span>
+          <span className={styles.status}>{en ? "ORIGINAL DIAGRAMS + SOURCED PHOTOGRAPHY" : "DIAGRAMAS ORIGINALES + FOTOGRAFÍA CON FUENTE"}</span>
         </header>
         <div className={styles.grid}>
           {cards.map((card, index) => (
@@ -126,7 +167,7 @@ export function TamvVisualSystems({ locale = "es" }: { locale?: Locale }) {
             </article>
           ))}
         </div>
-        <p className={styles.note}>{en ? "Visual status: original conceptual diagrams. Production status, external endorsements, empirical claims and security guarantees must be established by separate evidence." : "Estado visual: diagramas conceptuales originales. El estado de producción, los respaldos externos, las afirmaciones empíricas y las garantías de seguridad requieren evidencia independiente."}</p>
+        <p className={styles.note}>{en ? "Visual status: original conceptual diagrams and two externally sourced photographs with visible credits and license details. None of these assets proves production status, endorsement, empirical results or security guarantees." : "Estado visual: diagramas conceptuales originales y dos fotografías externas con fuente y licencia visibles. Ninguno de estos recursos prueba estado de producción, respaldo externo, resultados empíricos ni garantías de seguridad."}</p>
       </div>
     </section>
   )
