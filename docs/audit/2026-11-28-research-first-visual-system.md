@@ -63,3 +63,18 @@ La edición de archivos en GitHub confirma que los cambios están escritos en la
 ## Criterio de aceptación
 
 La experiencia debe comunicar de forma inmediata que TAMV es una iniciativa tecnológica con investigación, IA, seguridad, gobernanza y conocimiento verificable. Las imágenes deben explicar el tema de cada sección; la identidad territorial debe conservarse en sus contextos propios. La estética por sí sola no constituye prueba de madurez o seguridad.
+
+
+### Cobertura adicional de módulos
+
+Se añadieron cinco diagramas locales adicionales para evitar que la formación, accesibilidad, colaboración externa, arquitectura de conectores y hoja de ruta sigan representadas por espacios genéricos pendientes:
+
+| Archivo | Tema | Uso |
+|---|---|---|
+| `public/visuals/learning-pathway.svg` | Orientación, práctica, evidencia y revisión | Formación digital |
+| `public/visuals/accessibility-by-design.svg` | HTML semántico, teclado, contraste y reduced motion | Guía y accesibilidad |
+| `public/visuals/collaborator-staging-flow.svg` | Identidad, staging, PR, revisión y migración | Colaboración externa |
+| `public/visuals/developer-connector-architecture.svg` | SDK, policy gate, adaptador, API y procedencia | Desarrolladores |
+| `public/visuals/evidence-gated-roadmap.svg` | Propuesto, implementado, probado, desplegado y verificado | Institucionalización |
+
+En total, la rama contiene catorce ilustraciones SVG originales locales: trece diagramas temáticos y una portada tecnológica. Los activos de comunidad, autoría y memoria cultural que requieren personas reales, consentimiento o contexto histórico no se falsifican; permanecen pendientes hasta disponer de materiales autorizados.
