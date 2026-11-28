@@ -26,11 +26,12 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
 
 type ProfileResource = { label: string; href: string; es: string; en: string }
 const professionalProfiles: ProfileResource[] = [
-  { label: "ORCID", href: "https://orcid.org/0009-0008-5050-1539", es: "Identificador persistente de autor e investigador. Los metadatos dependen de las obras y datos declarados en el registro.", en: "Persistent author and researcher identifier. Metadata depends on works and details entered in the record." },
+  { label: "ORCID", href: "https://orcid.org/0009-0008-5050-1539", es: "Identificador persistente de autor e investigador. El autor refiere 19 obras asociadas al registro; el contador no pudo confirmarse desde la vista automatizada, por lo que se recomienda revisar la ficha primaria.", en: "Persistent author and researcher identifier. The author reports 19 works associated with the record; the count could not be confirmed in the automated view, so readers should inspect the primary profile." },
+  { label: "ResearchGate · Edwin Oswaldo Castillo Trejo", href: "https://www.researchgate.net/profile/Edwin-Oswaldo-Castillo-Trejo", es: "Perfil público que lo identifica como autodidacta y CEO de TAMV Online Network. La ficha mostraba una publicación en la fecha de revisión.", en: "Public profile identifying him as self-taught and CEO of TAMV Online Network. The page listed one publication when reviewed." },
   { label: "ISNI", href: "https://isni.org/isni/0000000531699229", es: "Identificador normalizado de identidad pública y autoral.", en: "Standardized identifier for public and author identity." },
   { label: "GitHub · OsoPanda1", href: "https://github.com/OsoPanda1", es: "Repositorios de código, arquitectura, documentación y evolución de proyectos TAMV.", en: "Code repositories, architecture, documentation, and TAMV project development." },
   { label: "LinkedIn · Edwin Oswaldo Castillo Trejo", href: "https://mx.linkedin.com/in/edwin-oswaldo-castillo-aka-anubis-villase%C3%B1or-69a847376", es: "Perfil profesional público con artículos sobre TAMV e Isabella TERMINUS-V6.", en: "Public professional profile with articles about TAMV and Isabella TERMINUS-V6." },
-  { label: "AI Lounge · @tamvonline", href: "https://ai.lounge.ai/@tamvonline", es: "Perfil profesional de proyectos y actividad técnica; incluye repositorios enlazados del ecosistema.", en: "Professional profile for projects and technical activity, including linked ecosystem repositories." },
+  { label: "AI Lounge · @tamvonline", href: "https://lounge.ai/@tamvonline", es: "Perfil profesional de proyectos y actividad técnica; incluye repositorios enlazados del ecosistema.", en: "Professional profile for projects and technical activity, including linked ecosystem repositories." },
   { label: "AVIXA Xchange · TAMV e Isabella", href: "https://xchange.avixa.org/posts/tamv-e-isabella-villasenor-ai-el-parteaguas-que-redefine-el-metaverso-desde-mexico", es: "Artículo profesional publicado en la comunidad de AVIXA sobre TAMV e Isabella Villaseñor AI (5 de diciembre de 2025).", en: "Professional article published in AVIXA's community about TAMV and Isabella Villaseñor AI (December 5, 2025)." },
   { label: "AVIXA Xchange · Isabella AI", href: "https://xchange.avixa.org/posts/isabella-villasenor-ai", es: "Presentación del enfoque de acompañamiento contextual, gobernanza y supervisión humana de Isabella AI.", en: "Overview of Isabella AI's contextual assistance, governance, and human-oversight approach." },
   { label: "Autores Editores · perfil verificado", href: "https://www.autoreseditores.com/edwin.oswaldo", es: "La plataforma muestra un perfil verificado y lo ubica en Mineral del Monte, Hidalgo; al revisar la ficha no aparecían libros publicados.", en: "The platform marks the user profile as verified and locates it in Mineral del Monte, Hidalgo; no published books were listed when reviewed." },
@@ -41,11 +42,72 @@ const professionalProfiles: ProfileResource[] = [
   { label: "Isabella TERMINUS-V6 · repositorio", href: "https://github.com/OsoPanda1/ISABELLA-VERSION-TERMINUS-V6", es: "Repositorio de código y documentación técnica de la arquitectura Isabella.", en: "Code repository and technical documentation for the Isabella architecture." },
   { label: "TAMV · CITIS 2026 y Nodo Cero", href: "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11", es: "Artículo editorial del propio ecosistema que relata el vínculo con CITIS y el reconocimiento Ph.D. reportado por el autor.", en: "An article from the TAMV ecosystem reporting the CITIS connection and the Ph.D.-level recognition described by the author." },
 ]
+
+type BiographyMilestone = { dateEs: string; dateEn: string; titleEs: string; titleEn: string; detailEs: string; detailEn: string; sourceLabelEs: string; sourceLabelEn: string; sourceUrl: string }
+const biographyMilestones: BiographyMilestone[] = [
+  {
+    dateEs: "ENERO DE 2021 · PERFIL PROFESIONAL",
+    dateEn: "JANUARY 2021 · PROFESSIONAL PROFILE",
+    titleEs: "Proyecto de arquitectura TAMV MD-X4",
+    titleEn: "TAMV MD-X4 architecture project",
+    detailEs: "El perfil público de LinkedIn lista el proyecto MD-X4 con fecha de enero de 2021. Es una referencia temporal publicada en el perfil profesional del autor; no sustituye una auditoría independiente de la implementación.",
+    detailEn: "The public LinkedIn profile lists the MD-X4 project with a January 2021 date. This is a timeline reference from the author's professional profile, not an independent implementation audit.",
+    sourceLabelEs: "Ver perfil profesional",
+    sourceLabelEn: "View professional profile",
+    sourceUrl: "https://mx.linkedin.com/in/edwin-oswaldo-castillo-aka-anubis-villase%C3%B1or-69a847376",
+  },
+  {
+    dateEs: "DICIEMBRE DE 2025 · COMUNIDAD TECNOLÓGICA",
+    dateEn: "DECEMBER 2025 · TECHNOLOGY COMMUNITY",
+    titleEs: "Publicación profesional en AVIXA Xchange",
+    titleEn: "Professional publication on AVIXA Xchange",
+    detailEs: "Una publicación sobre TAMV e Isabella Villaseñor AI aparece en AVIXA Xchange. Documenta divulgación y presencia en una comunidad profesional de tecnología audiovisual; no se presenta como artículo revisado por pares.",
+    detailEn: "A post about TAMV and Isabella Villaseñor AI appears on AVIXA Xchange. It documents professional outreach in an audiovisual technology community and is not represented as a peer-reviewed article.",
+    sourceLabelEs: "Leer publicación",
+    sourceLabelEn: "Read post",
+    sourceUrl: "https://xchange.avixa.org/posts/tamv-e-isabella-villasenor-ai-el-parteaguas-que-redefine-el-metaverso-desde-mexico",
+  },
+  {
+    dateEs: "OCTUBRE DE 2026 · REGISTRO DOI",
+    dateEn: "OCTOBER 2026 · DOI RECORD",
+    titleEs: "Isabella Villaseñor AI V6 Genesis",
+    titleEn: "Isabella Villaseñor AI V6 Genesis",
+    detailEs: "ResearchGate lista un documento técnico del autor con DOI 10.5281/zenodo.23418238. El registro hace posible la recuperación y citación; la existencia del DOI no demuestra revisión por pares ni validación externa de las métricas descritas.",
+    detailEn: "ResearchGate lists an author-uploaded technical document with DOI 10.5281/zenodo.23418238. The record supports retrieval and citation; the DOI alone does not prove peer review or external validation of its stated metrics.",
+    sourceLabelEs: "Consultar registro y autoría",
+    sourceLabelEn: "Inspect record and authorship",
+    sourceUrl: "https://www.researchgate.net/publication/416024217_ISABELLA_VILLASENOR_AI_V6_GENESIS_Puede_una_AI_ser_gobernada_con_etica_y_transparencia",
+  },
+  {
+    dateEs: "OCTUBRE DE 2026 · CITIS 2026",
+    dateEn: "OCTOBER 2026 · CITIS 2026",
+    titleEs: "Vinculación reportada con el congreso de UPS en Ecuador",
+    titleEn: "Reported connection with the UPS conference in Ecuador",
+    detailEs: "La Universidad Politécnica Salesiana confirma el congreso CITIS del 28 al 30 de octubre de 2026 en Guayaquil. El fundador aportó una invitación y TAMV publicó un relato sobre un reconocimiento Ph.D.; la participación individual y los términos del reconocimiento requieren comprobante institucional propio.",
+    detailEn: "Universidad Politécnica Salesiana confirms CITIS took place in Guayaquil on October 28–30, 2026. The founder supplied an invitation and TAMV published an account of a Ph.D.-level recognition; personal participation and the terms of recognition require an individual institutional document.",
+    sourceLabelEs: "Fuente institucional del congreso",
+    sourceLabelEn: "Official conference source",
+    sourceUrl: "https://citis.ups.edu.ec/es/",
+  },
+  {
+    dateEs: "2026 · HORAS DE DESARROLLO DECLARADAS",
+    dateEn: "2026 · SELF-REPORTED DEVELOPMENT HOURS",
+    titleEs: "Más de 23,000 horas reportadas en la documentación de TAMV",
+    titleEn: "More than 23,000 hours reported in TAMV documentation",
+    detailEs: "Una publicación del ecosistema cifra la inversión del fundador en 23,100 horas. Se muestra como dato autodeclarado de la documentación del proyecto, no como registro horario auditado independientemente.",
+    detailEn: "A TAMV ecosystem article puts the founder's investment at 23,100 hours. It is shown as a self-reported figure from project documentation, not an independently audited timesheet.",
+    sourceLabelEs: "Leer declaración de TAMV",
+    sourceLabelEn: "Read TAMV account",
+    sourceUrl: "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11",
+  },
+]
+
 type ResearchRecord = { titleEs: string; titleEn: string; doi: string; detailEs: string; detailEn: string }
 const researchRecords: ResearchRecord[] = [
-  { titleEs: "CITEMESH / BookPI — redes P2P y registro de conocimiento territorial", titleEn: "CITEMESH / BookPI — P2P networks and territorial knowledge records", doi: "10.5281/zenodo.19436662", detailEs: "Documento técnico citado en el corpus público TAMV. La existencia de un DOI identifica un registro persistente, no garantiza revisión por pares.", detailEn: "Technical document referenced in the public TAMV corpus. A DOI identifies a persistent record; it does not guarantee peer review." },
-  { titleEs: "UTAMV AI Academic Core — arquitectura y gobernanza de IA", titleEn: "UTAMV AI Academic Core — AI architecture and governance", doi: "10.5281/zenodo.19562517", detailEs: "Libro blanco de arquitectura publicado y enlazado por el ecosistema TAMV.", detailEn: "Architecture white paper published and linked by the TAMV ecosystem." },
-  { titleEs: "Isabella AI Genesis — evaluación de consistencia conceptual y gobernanza", titleEn: "Isabella AI Genesis — conceptual consistency and governance assessment", doi: "10.5281/zenodo.20606361", detailEs: "Registro técnico asociado a la documentación de Isabella AI / IGE-Ω.", detailEn: "Technical record associated with Isabella AI / IGE-Ω documentation." },
+  { titleEs: "Registro técnico TAMV / MD-X4 · Zenodo 19436662", titleEn: "TAMV / MD-X4 technical record · Zenodo 19436662", doi: "10.5281/zenodo.19436662", detailEs: "Registro atribuido por el autor a la arquitectura TAMV/MD-X4. El título, la versión y la autoría exactos deben confirmarse en la ficha del repositorio.", detailEn: "Record attributed by the author to the TAMV/MD-X4 architecture. Exact title, version, and authorship should be confirmed on the repository record." },
+  { titleEs: "UTAMV AI Academic Core · libro blanco de arquitectura y gobernanza", titleEn: "UTAMV AI Academic Core · architecture and governance white paper", doi: "10.5281/zenodo.19562517", detailEs: "La comunidad pública del ecosistema TAMV lo referencia como libro blanco UTAMV; confirma metadatos y versión en la ficha primaria antes de citarlo externamente.", detailEn: "The public TAMV ecosystem community references it as the UTAMV white paper; confirm metadata and version on the primary record before external citation." },
+  { titleEs: "Isabella Villaseñor AI V6 Genesis — gobernanza ética y transparencia", titleEn: "Isabella Villaseñor AI V6 Genesis — ethical governance and transparency", doi: "10.5281/zenodo.23418238", detailEs: "Registro DOI enlazado desde la publicación del autor en ResearchGate (octubre de 2026). Es documentación técnica de autor; no se infiere revisión por pares.", detailEn: "DOI record linked from the author’s ResearchGate publication (October 2026). This is author technical documentation; peer review is not inferred." },
+  { titleEs: "Isabella AI Genesis · registro técnico adicional", titleEn: "Isabella AI Genesis · additional technical record", doi: "10.5281/zenodo.20606361", detailEs: "Identificador incluido en la documentación técnica consultada para Isabella AI V6 Genesis.", detailEn: "Identifier included in the technical documentation reviewed for Isabella AI V6 Genesis." },
   { titleEs: "Archivo técnico TAMV · Zenodo 19564367", titleEn: "TAMV technical archive · Zenodo 19564367", doi: "10.5281/zenodo.19564367", detailEs: "Registro adicional referenciado por el autor; consultar el registro para confirmar título, versión, autoría y alcance.", detailEn: "Additional record referenced by the author; consult the record to confirm title, version, authorship, and scope." },
   { titleEs: "Archivo técnico TAMV · Zenodo 19414631", titleEn: "TAMV technical archive · Zenodo 19414631", doi: "10.5281/zenodo.19414631", detailEs: "Registro adicional del corpus documental referido por el autor.", detailEn: "Additional record in the documentation corpus referenced by the author." },
   { titleEs: "Archivo técnico TAMV · Zenodo 19411506", titleEn: "TAMV technical archive · Zenodo 19411506", doi: "10.5281/zenodo.19411506", detailEs: "Registro adicional del corpus documental referido por el autor.", detailEn: "Additional record in the documentation corpus referenced by the author." },
@@ -133,7 +195,7 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                   src="/visuals/founder-edwin-oswaldo-castillo-trejo.webp"
                   alt={english ? "Edwin Oswaldo Castillo Trejo, founder of TAMV Online Network, in a casual dark hoodie." : "Edwin Oswaldo Castillo Trejo, CEO fundador de TAMV Online Network, con una sudadera oscura, en una fotografía personal."}
                   width={320}
-                  height={458}
+                  height={457}
                   loading="lazy"
                   decoding="async"
                 />
@@ -213,6 +275,24 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                     <p>{english ? "A place-based digital initiative designed to connect local heritage, visitor information, mapping, storytelling, and potential smart-territory services without displacing the identity of the community it serves." : "Una iniciativa digital vinculada al territorio, diseñada para conectar patrimonio local, información al visitante, cartografía, narrativa y posibles servicios territoriales inteligentes sin desplazar la identidad de la comunidad a la que sirve."}</p>
                   </article>
                 </div>
+
+                <section className="tamv-origins-milestones" aria-labelledby="tamv-origins-milestones-title">
+                  <div className="tamv-origins-resource-heading">
+                    <p className="tamv-origins-manifesto-kicker">{english ? "PUBLIC TIMELINE · SOURCE-LINKED MILESTONES" : "CRONOLOGÍA PÚBLICA · HITOS CON FUENTE"}</p>
+                    <h3 id="tamv-origins-milestones-title">{english ? "A traceable path from project architecture to published records" : "Una trayectoria rastreable: de la arquitectura a los registros públicos"}</h3>
+                    <p>{english ? "Dates and milestones below come from the linked profile or publication. Author-reported items are labeled as such and do not imply an external award or technical certification." : "Las fechas y los hitos proceden del perfil o la publicación enlazada. Los datos declarados por el autor se identifican como tales y no implican un premio externo ni certificación técnica."}</p>
+                  </div>
+                  <ol className="tamv-origins-milestone-list">
+                    {biographyMilestones.map((milestone) => (
+                      <li key={milestone.titleEn} className="tamv-origins-milestone-card">
+                        <p className="tamv-origins-milestone-date">{english ? milestone.dateEn : milestone.dateEs}</p>
+                        <h4>{english ? milestone.titleEn : milestone.titleEs}</h4>
+                        <p className="tamv-origins-milestone-detail">{english ? milestone.detailEn : milestone.detailEs}</p>
+                        <a href={milestone.sourceUrl} target="_blank" rel="noopener noreferrer">{english ? milestone.sourceLabelEn : milestone.sourceLabelEs} <ArrowUpRight aria-hidden="true" /></a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
                 <section className="tamv-origins-resource-block" aria-labelledby="tamv-origin-identifiers-title">
                   <div className="tamv-origins-resource-heading">
                     <p className="tamv-origins-manifesto-kicker">{english ? "AUTHOR AND PROFESSIONAL PRESENCE" : "IDENTIDAD AUTORAL Y PRESENCIA PROFESIONAL"}</p>
@@ -272,7 +352,7 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                   </div>
                   <details className="tamv-origins-profile-audit">
                     <summary>{english ? "Profile verification notes" : "Notas de verificación de perfiles"}</summary>
-                    <p>{english ? "The Frontiers Loop ID 3117809 referenced in prior technical material did not resolve to a currently verifiable public profile in this review, so it is not presented as an active profile. I did not identify a ResearchGate or Google Scholar profile, an independently verifiable Frontiers peer-reviewed article authored by this identity, a Scopus or Web of Science author record, or an official Frontiers editor appointment that I could confidently attribute to this person. These findings describe the public evidence available during this review; they do not prove that private, invitation-only, unindexed, or name-variant records do not exist." : "El identificador Frontiers Loop 3117809 mencionado en material técnico anterior no permitió verificar un perfil público activo durante esta revisión, por lo que no se presenta como perfil vigente. Tampoco logré identificar con suficiente confianza un perfil de ResearchGate o Google Scholar, un artículo de Frontiers revisado por pares y atribuible a esta identidad, un registro de autor en Scopus o Web of Science, ni un nombramiento oficial como editor de Frontiers. Estos hallazgos describen la evidencia pública localizada durante esta revisión; no demuestran que no existan registros privados, restringidos, no indexados o con variantes del nombre."}</p>
+                    <p>{english ? "The ResearchGate profile was located and matches the full name, TAMV role, and self-described autodidact identity; at review time the page showed one publication, eight reads, and zero platform-reported citations. The listed Isabella Villaseñor AI V6 Genesis publication links to DOI 10.5281/zenodo.23418238. These metrics are platform indicators, not an independent quality assessment or proof of peer review. The Frontiers Loop ID 3117809 referenced in prior technical material did not allow a public profile to be confirmed during this review. I also could not verify a peer-reviewed Frontiers article attributable to this identity, a Scopus or Web of Science author record, or an official Frontiers editor appointment. These findings describe the public evidence located, not the nonexistence of private, restricted, or unindexed records." : "El perfil de ResearchGate sí fue localizado y coincide con el nombre completo, el rol en TAMV y la descripción de desarrollador autodidacta; durante la revisión mostraba una publicación, ocho lecturas y cero citas reportadas por esa plataforma. La publicación listada sobre Isabella Villaseñor AI V6 Genesis remite al DOI 10.5281/zenodo.23418238. Estas métricas son indicadores de la plataforma, no una evaluación independiente de calidad ni evidencia de revisión por pares. El identificador Frontiers Loop 3117809 mencionado en material técnico anterior no permitió confirmar un perfil público activo en esta revisión. Tampoco pude verificar un artículo revisado por pares en Frontiers atribuible a esta identidad, un registro Scopus o Web of Science, ni un nombramiento oficial como editor de Frontiers. Estos hallazgos describen la evidencia pública localizada, no prueban la inexistencia de registros privados, restringidos o no indexados."}</p>
                   </details>
                 </aside>
               </section>

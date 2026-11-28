@@ -1,6 +1,6 @@
 import test from "node:test"
 import assert from "node:assert/strict"
-import { readFileSync } from "node:fs"
+import { readFileSync, existsSync, statSync } from "node:fs"
 import { resolve } from "node:path"
 
 const read = (path) => readFileSync(resolve(process.cwd(), path), "utf8")
@@ -191,4 +191,41 @@ test("Origins exposes traceable author profiles, DOI records, and the founder-su
   assert.match(origins, /doctorado honoris causa/i)
   assert.match(origins, /nombramiento oficial como editor de Frontiers/i)
   assert.match(styles, /\.tamv-origins-recognition-sources/)
+})
+
+
+test("Origins references the confirmed ResearchGate identity and its listed Isabella AI publication", () => {
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /researchgate\.net\/profile\/Edwin-Oswaldo-Castillo-Trejo/)
+  assert.match(origins, /10\.5281\/zenodo\.23418238/)
+  assert.match(origins, /ResearchGate profile was located|perfil de ResearchGate sí fue localizado/)
+  assert.match(origins, /not proof of peer review|no evidencia de revisión por pares/)
+})
+
+
+test("Origins founder portrait asset is present at the public path used by the page", () => {
+  const asset = resolve(process.cwd(), "public/visuals/founder-edwin-oswaldo-castillo-trejo.webp")
+  assert.ok(existsSync(asset), "founder portrait must be included in the repository")
+  assert.ok(statSync(asset).size >= 5000, "founder portrait should be a real optimized image, not an empty placeholder")
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /src="\/visuals\/founder-edwin-oswaldo-castillo-trejo\.webp"/)
+  assert.match(origins, /width=\{320\}[\s\S]*?height=\{457\}/)
+})
+
+
+test("Origins timeline ties each milestone to a source and labels author-reported claims", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  for (const token of [
+    "TAMV MD-X4 architecture project",
+    "Professional publication on AVIXA Xchange",
+    "Isabella Villaseñor AI V6 Genesis",
+    "CITIS 2026",
+    "SELF-REPORTED DEVELOPMENT HOURS",
+    "https://citis.ups.edu.ec/es/",
+    "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11",
+  ]) assert.ok(origins.includes(token), "missing source-linked milestone token: " + token)
+  assert.match(origins, /tamv-origins-milestone-list/)
+  assert.match(styles, /\.tamv-origins-milestone-card/)
+  assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?tamv-origins-milestone-list/)
 })

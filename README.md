@@ -100,6 +100,7 @@ La portada y la galería principal priorizan investigación, ciencia abierta, go
 Los SVG son **diagramas conceptuales**, no capturas de producción, certificaciones, mediciones científicas ni resultados de auditoría. El territorio y la identidad de Real del Monte permanecen en las secciones de Orígenes, RDM Digital y Atlas territorial, donde aportan contexto.
 
 - [Auditoría del sistema visual tecnológico](docs/audit/2026-11-28-research-first-visual-system.md)
+- [Auditoría de perfiles públicos, biografía fundacional y readiness de producción](docs/audit/2026-11-28-founder-profile-and-release-readiness.md)
 - [Observatorio HCU](app/hcu/page.tsx)
 - [Galería visual temática](components/tamv-visual-systems.tsx)
 
