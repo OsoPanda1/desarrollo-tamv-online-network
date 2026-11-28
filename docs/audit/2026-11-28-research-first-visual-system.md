@@ -78,3 +78,13 @@ Se añadieron cinco diagramas locales adicionales para evitar que la formación,
 | `public/visuals/evidence-gated-roadmap.svg` | Propuesto, implementado, probado, desplegado y verificado | Institucionalización |
 
 En total, la rama contiene catorce ilustraciones SVG originales locales: trece diagramas temáticos y una portada tecnológica. Los activos de comunidad, autoría y memoria cultural que requieren personas reales, consentimiento o contexto histórico no se falsifican; permanecen pendientes hasta disponer de materiales autorizados.
+
+
+## Fotografía contextual con atribución
+
+Además de los diagramas originales, la galería principal incorpora dos fotografías externas para evitar una experiencia exclusivamente diagramática:
+
+- **Investigación en laboratorio:** [Researcher at work in her laboratory](https://commons.wikimedia.org/wiki/File:Researcher_at_work_in_her_laboratory.jpg), autoría de axventura, licencia Creative Commons Attribution 4.0 International (CC BY 4.0). La tarjeta enlaza a la ficha de origen, muestra atribución y declara que la imagen es contextual y no representa personal ni afiliación de TAMV. Se debe conservar la atribución y enlazar la licencia.
+- **Infraestructura informática:** [Datacenter.jpg](https://commons.wikimedia.org/wiki/File:Datacenter.jpg), Wikimedia Commons; la ficha declara que el titular dedicó la imagen al dominio público. La atribución mostrada identifica a Wil Weterings como aparece en la ficha, sin afirmar que TAMV opere ese centro de datos.
+
+Estas fotografías se sirven desde el host de Wikimedia Commons y, a diferencia de los SVG locales, dependen de disponibilidad externa. La ficha de licencia se verificó durante la preparación de esta revisión; se debe revalidar antes de reutilizar los archivos en otros medios. No se utilizan imágenes de terceros para insinuar alianzas, personal o infraestructura de TAMV.
