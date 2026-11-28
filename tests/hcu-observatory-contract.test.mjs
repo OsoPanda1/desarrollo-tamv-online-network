@@ -96,3 +96,40 @@ test("homepage exposes the live HCU observatory and does not substitute a flat p
   assert.match(styles, /\.hcu-launch-section/)
   assert.match(styles, /@media \(max-width: 760px\)/)
 })
+
+test("homepage leads with technology and exposes a research-first visual system", () => {
+  const home = read("components/tamv-institutional-site.tsx")
+  assert.match(home, /src="\/visuals\/tamv-innovation-hub-hero\.svg"/)
+  assert.match(home, /<TamvVisualSystems locale=\{locale\} \/>/)
+  assert.match(home, /AI governance|gobernanza de IA/i)
+  const gallery = read("components/tamv-visual-systems.tsx")
+  for (const topic of [
+    "research-evidence-network.svg",
+    "ai-governance-framework.svg",
+    "zero-trust-security.svg",
+    "cryptographic-provenance.svg",
+    "knowledge-provenance.svg",
+    "human-oversight-ai.svg",
+  ]) assert.ok(gallery.includes(topic), "missing contextual visual: " + topic)
+  for (const topic of [
+    "tamv-innovation-hub-hero.svg",
+    "research-evidence-network.svg",
+    "ai-governance-framework.svg",
+    "zero-trust-security.svg",
+    "cryptographic-provenance.svg",
+    "knowledge-provenance.svg",
+    "hcu-hypergraph-field.svg",
+    "open-science-lab.svg",
+    "human-oversight-ai.svg",
+  ]) {
+    const asset = read("public/visuals/" + topic)
+    assert.match(asset, /<svg/)
+    assert.match(asset, /<title/)
+    assert.match(asset, /<desc/)
+  }
+  const media = read("components/tamv-section-media.tsx")
+  assert.match(media, /src: "\/visuals\/zero-trust-security\.svg"/)
+  assert.match(media, /src: "\/visuals\/hcu-hypergraph-field\.svg"/)
+  assert.match(media, /src: "\/visuals\/cryptographic-provenance\.svg"/)
+  assert.match(media, /src: "\/visuals\/open-science-lab\.svg"/)
+})
