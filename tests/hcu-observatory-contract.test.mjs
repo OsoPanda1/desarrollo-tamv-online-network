@@ -211,3 +211,21 @@ test("Origins founder portrait asset is present at the public path used by the p
   assert.match(origins, /src="\/visuals\/founder-edwin-oswaldo-castillo-trejo\.webp"/)
   assert.match(origins, /width=\{320\}[\s\S]*?height=\{457\}/)
 })
+
+
+test("Origins timeline ties each milestone to a source and labels author-reported claims", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  for (const token of [
+    "TAMV MD-X4 architecture project",
+    "Professional publication on AVIXA Xchange",
+    "Isabella Villaseñor AI V6 Genesis",
+    "CITIS 2026",
+    "SELF-REPORTED DEVELOPMENT HOURS",
+    "https://citis.ups.edu.ec/es/",
+    "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11",
+  ]) assert.ok(origins.includes(token), "missing source-linked milestone token: " + token)
+  assert.match(origins, /tamv-origins-milestone-list/)
+  assert.match(styles, /\.tamv-origins-milestone-card/)
+  assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?tamv-origins-milestone-list/)
+})
