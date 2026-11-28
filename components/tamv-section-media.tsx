@@ -249,11 +249,12 @@ export function TamvSectionMedia({ area, locale = "es" }: { area: TamvMediaArea;
                     </div>
                   </div>
                   <p className={styles.publicationNote}>
-                    {asset
-                      ? (en ? "Source linked · attribution shown above" : "Fuente enlazada · atribución visible arriba")
-                      : (en ? "Editorial status: pending asset and rights review" : "Estado editorial: recurso pendiente y revisión de derechos")}
-                    {asset?.kind === "video" && (
-                      <> · <a href={asset.sourceUrl} target="_blank" rel="noopener noreferrer">{en ? "Open original video" : "Abrir video original"}</a></>
+                    {asset?.kind === "video" ? (
+                      <>{en ? "External video · source:" : "Video externo · fuente:"} <a href={asset.sourceUrl} target="_blank" rel="noopener noreferrer">{en ? asset.sourceLabelEn : asset.sourceLabelEs}</a></>
+                    ) : asset ? (
+                      en ? "Source linked · attribution shown above" : "Fuente enlazada · atribución visible arriba"
+                    ) : (
+                      en ? "Editorial status: pending asset and rights review" : "Estado editorial: recurso pendiente y revisión de derechos"
                     )}
                   </p>
                 </div>
