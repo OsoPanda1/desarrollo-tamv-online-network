@@ -29,6 +29,7 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
             <Link href={localizedPath("/hcu", locale)}>{english ? "HCU map" : "Mapa HCU"}</Link>
             <Link href={localizedPath("/fuentes", locale)}>{english ? "Sources" : "Fuentes"}</Link>
             <Link href={localizedPath("/gobernanza", locale)}>{english ? "Governance" : "Gobernanza"}</Link>
+            <Link href={localizedPath("/soberania-digital", locale)}>{english ? "Digital sovereignty and AI" : "Soberanía digital e IA"}</Link>
             <Link href={localizedPath("/atlas", locale)}>{english ? "Visual atlas" : "Atlas visual"}</Link>
             <Link href={localizedPath("/logros", locale)}>{english ? "Achievements" : "Logros"}</Link>
             <Link href={localizedPath("/desarrolladores", locale)}>API <ArrowUpRight aria-hidden="true" /></Link>

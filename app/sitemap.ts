@@ -19,6 +19,7 @@ const publicPaths = [
   "/hcu",
   "/fuentes",
   "/gobernanza",
+  "/soberania-digital",
   "/utamv",
   "/isabella",
   "/excelencia",

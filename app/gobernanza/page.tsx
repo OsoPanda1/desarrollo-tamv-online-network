@@ -5,7 +5,7 @@ import { TamvAppShell } from "@/components/tamv-app-shell"
 import { TamvSectionMedia } from "@/components/tamv-section-media"
 import { LanguageSwitch } from "@/components/shared/language-switch"
 import { PageIntro } from "@/components/shared/page-intro"
-import { resolveLocale } from "@/lib/i18n"
+import { localizedPath, resolveLocale } from "@/lib/i18n"
 
 type SearchParams = Promise<{ lang?: string }>
 
@@ -70,7 +70,7 @@ export default async function GovernancePage({ searchParams }: { searchParams: S
   return <TamvAppShell locale={locale}>
     <PageIntro number="04" eyebrow={english ? "GOVERNANCE & PARTICIPATION" : "GOBERNANZA Y PARTICIPACIÓN"} title={english ? "Trust needs" : "La confianza requiere"} accent={english ? "visible rules." : "reglas visibles."} description={english ? "Policies distinguish editorial decisions, privacy, consent, external review, academic recognition, and funding introductions." : "Las políticas separan decisiones editoriales, privacidad, consentimiento, revisión externa, reconocimiento académico e introducciones de financiamiento."} locale={locale} actions={<LanguageSwitch pathname="/gobernanza" locale={locale} />} />
     <section className="section governance-page-section"><div className="container policy-layout">
-      <nav className="policy-index" aria-label={english ? "Policy index" : "Índice de políticas"}><p className="eyebrow">{english ? "INDEX" : "ÍNDICE"}</p>{policies.map((policy) => <a href={`#${policy.id}`} key={policy.id}>{english ? policy.labelEn : policy.labelEs}</a>)}</nav>
+      <nav className="policy-index" aria-label={english ? "Policy index" : "Índice de políticas"}><p className="eyebrow">{english ? "INDEX" : "ÍNDICE"}</p><Link href={localizedPath("/soberania-digital", locale)}>{english ? "Digital sovereignty and AI" : "Soberanía digital e IA"}</Link>{policies.map((policy) => <a href={`#${policy.id}`} key={policy.id}>{english ? policy.labelEn : policy.labelEs}</a>)}</nav>
       <div className="policy-content">{policies.map((policy, index) => <article className="policy-article" id={policy.id} key={policy.id}><p className="eyebrow">{String(index + 1).padStart(2, "0")} / {english ? "POLICY" : "POLÍTICA"}</p><h2>{english ? policy.labelEn : policy.labelEs}</h2><p>{english ? policy.en : policy.es}</p></article>)}
         <article className="policy-article" id="formulacion-canonica"><p className="eyebrow">{english ? "CANONICAL FORMULATION" : "FORMULACIÓN CANÓNICA"}</p><h2>{english ? "Canonical formulation: 6 dimensions of separation" : "Formulación canónica: 6 dimensiones de separación"}</h2><p>{english ? "The canonical formulation is the 6-dimension separation from the TINA case study (§2) and “Soberanía TAMV” (§4.1): it is the only one defined link by link. The other formulations below are variants; they are not mapped to each other and are not presented as a single system." : "La formulación canónica es la separación en 6 dimensiones del caso de estudio TINA (§2) y de «Soberanía TAMV» (§4.1): es la única definida eslabón por eslabón. Las demás formulaciones siguientes son variantes; no están mapeadas entre sí ni se presentan como un único sistema."}</p><ul>{dimensions.map((d) => <li key={d.id}><strong>{english ? d.labelEn : d.labelEs}:</strong> {english ? d.en : d.es}</li>)}</ul></article>
         {variants.map((v) => <article className="policy-article" id={v.id} key={v.id}><p className="eyebrow">{english ? "VARIANT FORMULATION" : "FORMULACIÓN VARIANTE"}</p><h2>{english ? v.labelEn : v.labelEs}</h2><p>{english ? v.en : v.es}</p></article>)}

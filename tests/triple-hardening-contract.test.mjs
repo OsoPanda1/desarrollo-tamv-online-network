@@ -42,7 +42,7 @@ test("production auth accepts only HTTPS origins and sets explicit hardened cook
 
 test("origin, redirect and body boundaries remain present for CSRF and resource exhaustion", () => {
   assert.match(http, /export function isSameOriginRequest/);
-  assert.match(http, /sec-fetch-site"\) !== "cross-site/);
+  assert.match(http, /request\.headers\.get\("sec-fetch-site"\) === "cross-site"/);
   assert.match(http, /export async function readJsonBody\(request: Request, maxBytes = 32_768\)/);
   assert.match(http, /if \(totalBytes > maxBytes\)/);
   assert.match(redirect, /export function resolveInternalRedirect/);

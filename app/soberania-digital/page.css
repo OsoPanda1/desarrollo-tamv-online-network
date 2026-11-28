@@ -1,0 +1,1220 @@
+.sovereignty-status-section {
+  padding-top: 0;
+}
+
+.sovereignty-status-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  padding: 24px;
+  border: 1px solid #cfdadd;
+  background: linear-gradient(125deg, #eef5f3, #fffefa 58%);
+}
+
+.sovereignty-status-card > svg {
+  width: 30px;
+  height: 30px;
+  color: #477a79;
+}
+
+.sovereignty-status-card h2 {
+  margin: 5px 0 6px;
+  color: var(--navy);
+  font: 31px/1.12 var(--serif);
+}
+
+.sovereignty-status-card p:last-child {
+  max-width: 720px;
+  margin: 0;
+  color: #40535f;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.sovereignty-separation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.sovereignty-separation span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #4b5d68;
+  font: 700 10px var(--mono);
+  letter-spacing: .08em;
+}
+
+.sovereignty-separation span:not(:last-child)::after {
+  content: "≠";
+  color: #a56847;
+  font-size: 16px;
+}
+
+.sovereignty-separation-note {
+  max-width: 850px;
+  margin: 12px auto 0;
+  color: #5b6a74;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.sovereignty-hub-section {
+  padding-top: clamp(50px, 6vw, 78px);
+  background: #fbfaf7;
+}
+
+.sovereignty-hub-layout {
+  align-items: start;
+}
+
+.sovereignty-index {
+  max-height: calc(100vh - 145px);
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+}
+
+.sovereignty-index a {
+  padding: 5px 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.sovereignty-content-section {
+  padding-bottom: clamp(62px, 7vw, 92px);
+  margin-bottom: clamp(62px, 7vw, 92px);
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: 115px;
+}
+
+.sovereignty-content-section:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+.sovereignty-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 26px;
+}
+
+.sovereignty-section-heading h2 {
+  margin: 7px 0 0;
+  color: var(--navy);
+  font: clamp(30px, 4vw, 42px)/1.08 var(--serif);
+}
+
+.sovereignty-section-heading > p {
+  margin: 0;
+  color: #52636e;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.sovereignty-principle-grid,
+.sovereignty-layer-grid,
+.sovereignty-commitment-grid,
+.sovereignty-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sovereignty-principle {
+  position: relative;
+  min-height: 0;
+  padding: 24px;
+  border: 1px solid #d9e0e1;
+  background: #fffefa;
+}
+
+.sovereignty-card-number {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #d4b39c;
+  border-radius: 50%;
+  color: #835335;
+  font: 10px var(--mono);
+}
+
+.sovereignty-principle h3 {
+  margin: 15px 0 9px;
+  font-size: 25px;
+}
+
+.sovereignty-practice {
+  margin-top: 15px !important;
+  padding-top: 13px;
+  border-top: 1px solid #e4e5e1;
+  color: #425763 !important;
+}
+
+.sovereignty-layer {
+  padding: 24px;
+  border: 1px solid #d7dfdf;
+  background: #f4f7f5;
+}
+
+.sovereignty-layer > span {
+  color: #8b5b3e;
+  font: 10px var(--mono);
+}
+
+.sovereignty-layer h3,
+.sovereignty-cycle h3,
+.sovereignty-access-rules h3,
+.sovereignty-reference-grid h3,
+.sovereignty-subheading {
+  color: var(--navy);
+  font: 27px/1.12 var(--serif);
+}
+
+.sovereignty-layer h3 {
+  margin: 10px 0;
+}
+
+.sovereignty-question {
+  margin: 0 0 17px;
+  color: #334e5d;
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 600;
+}
+
+.sovereignty-layer dl,
+.sovereignty-audit-protocol dl {
+  margin: 0;
+}
+
+.sovereignty-layer dt,
+.sovereignty-audit-protocol dt {
+  margin-top: 10px;
+  color: #82563b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.sovereignty-layer dd,
+.sovereignty-audit-protocol dd {
+  margin: 4px 0 0;
+  color: #52636d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-cycle {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 1px;
+  background: #d8dfdf;
+  list-style: none;
+}
+
+.sovereignty-cycle li {
+  min-width: 0;
+  padding: 22px 18px;
+  background: #fffefa;
+}
+
+.sovereignty-cycle li > span {
+  color: #9a6545;
+  font: 10px var(--mono);
+}
+
+.sovereignty-cycle h3 {
+  margin: 13px 0 9px;
+  font-size: 25px;
+}
+
+.sovereignty-cycle p {
+  color: #52636e;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-output {
+  margin-bottom: 0;
+  padding-top: 12px;
+  border-top: 1px solid #e2e5e2;
+  color: #3d5260 !important;
+}
+
+.sovereignty-method-list {
+  border-top: 1px solid #d6dddd;
+}
+
+.sovereignty-method-list details {
+  border-bottom: 1px solid #d6dddd;
+}
+
+.sovereignty-method-list summary,
+.sovereignty-reference-flags summary {
+  cursor: pointer;
+}
+
+.sovereignty-method-list summary {
+  position: relative;
+  padding: 17px 38px 17px 0;
+  color: #223f50;
+  font: 23px/1.25 var(--serif);
+  list-style: none;
+}
+
+.sovereignty-method-list summary::-webkit-details-marker,
+.sovereignty-reference-flags summary::-webkit-details-marker {
+  display: none;
+}
+
+.sovereignty-method-list summary::after {
+  content: "+";
+  position: absolute;
+  top: 14px;
+  right: 4px;
+  color: #9b6241;
+  font: 22px var(--sans);
+}
+
+.sovereignty-method-list details[open] summary::after {
+  content: "−";
+}
+
+.sovereignty-method-list details > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding: 0 0 20px;
+}
+
+.sovereignty-method-list p {
+  margin: 0;
+  color: #4f616c;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.sovereignty-control-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sovereignty-control-grid .governance-card {
+  min-height: 0;
+  border: 1px solid #d9dfdf;
+  background: #fffefa;
+}
+
+.sovereignty-control-grid h3 {
+  margin-top: 0;
+}
+
+.sovereignty-commitment-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sovereignty-commitment-grid article {
+  padding: 21px;
+  border-top: 2px solid #b27a58;
+  background: #f1f4f1;
+}
+
+.sovereignty-commitment-grid svg {
+  width: 18px;
+  height: 18px;
+  color: #4d7d7c;
+}
+
+.sovereignty-commitment-grid h3 {
+  margin: 13px 0 8px;
+  color: var(--navy);
+  font: 23px/1.12 var(--serif);
+}
+
+.sovereignty-commitment-grid p {
+  margin: 0;
+  color: #4e606b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-implementation-list {
+  border-top: 1px solid #d7dede;
+}
+
+.sovereignty-implementation-list article {
+  display: grid;
+  grid-template-columns: minmax(190px, .8fr) minmax(0, 1.2fr) auto;
+  align-items: start;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #d7dede;
+}
+
+.sovereignty-implementation-list h3 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font: 23px/1.15 var(--serif);
+}
+
+.sovereignty-status-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid #c6d6d5;
+  background: #edf4f1;
+  color: #365e5d;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.sovereignty-implementation-list p {
+  margin: 0;
+  color: #50616c;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-implementation-list .inline-link {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.sovereignty-audit-protocol {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sovereignty-audit-protocol li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  padding: 20px 0;
+  border-bottom: 1px solid #dbe1df;
+}
+
+.sovereignty-audit-protocol h3 {
+  margin: 2px 0 7px;
+  color: var(--navy);
+  font: 25px/1.15 var(--serif);
+}
+
+.sovereignty-audit-protocol p {
+  margin: 0;
+  color: #415763;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sovereignty-access-rules {
+  margin-top: 28px;
+  padding: 23px;
+  border: 1px solid #d7dfdf;
+  background: #f2f6f3;
+}
+
+.sovereignty-access-rules h3 {
+  margin: 0 0 12px;
+  font-size: 26px;
+}
+
+.sovereignty-access-rules ul,
+.sovereignty-limitations {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.sovereignty-access-rules li,
+.sovereignty-limitations li {
+  margin: 8px 0;
+  color: #415763;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sovereignty-audit-builder {
+  margin-top: 28px;
+}
+
+.sovereignty-audit-builder .governance-notice {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.sovereignty-audit-builder .governance-notice strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #274653;
+  font-size: 14px;
+}
+
+.sovereignty-audit-builder .governance-notice p {
+  font-size: 13px;
+}
+
+.sovereignty-audit-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sovereignty-audit-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.sovereignty-audit-fields label.is-wide {
+  grid-column: 1 / -1;
+}
+
+.sovereignty-audit-fields label > span {
+  color: #2c4858;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sovereignty-audit-fields em {
+  color: #9c503b;
+  font-style: normal;
+}
+
+.sovereignty-audit-fields input,
+.sovereignty-audit-fields textarea,
+.sovereignty-bibliography-selects select,
+.sovereignty-search input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #b7c4c7;
+  border-radius: 3px;
+  background: #fffefa;
+  color: #213b4b;
+  font: 13px/1.5 var(--sans);
+}
+
+.sovereignty-audit-fields input,
+.sovereignty-search input,
+.sovereignty-bibliography-selects select {
+  min-height: 44px;
+  padding: 10px 12px;
+}
+
+.sovereignty-audit-fields textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+.sovereignty-audit-fields input::placeholder,
+.sovereignty-audit-fields textarea::placeholder,
+.sovereignty-search input::placeholder {
+  color: #65747c;
+  opacity: 1;
+}
+
+.sovereignty-audit-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.sovereignty-audit-actions p {
+  margin: 0;
+  color: #5a6972;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.sovereignty-audit-preview {
+  margin-top: 25px;
+  padding: 22px;
+  border: 1px solid #cfdad9;
+  background: #f5f8f5;
+}
+
+.sovereignty-audit-preview h3 {
+  margin: 6px 0 0;
+  color: var(--navy);
+  font: 27px/1.15 var(--serif);
+}
+
+.sovereignty-audit-preview pre {
+  max-height: 420px;
+  overflow: auto;
+  margin: 18px 0;
+  padding: 17px;
+  border: 1px solid #d5dddc;
+  background: #fffefa;
+  color: #314a58;
+  font: 11px/1.65 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sovereignty-audit-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sovereignty-audit-send-note {
+  margin: 13px 0 0;
+  color: #556771;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.sovereignty-action-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 20px;
+  margin: 12px 0 0;
+  color: #3c6763;
+  font-size: 12px;
+}
+
+.sovereignty-action-status svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sovereignty-reference-grid article {
+  padding: 20px;
+  border: 1px solid #d8dfdf;
+  background: #fffefa;
+}
+
+.sovereignty-reference-grid h3 {
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.sovereignty-reference-grid h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sovereignty-reference-grid h3 a:hover {
+  color: #7c4f35;
+}
+
+.sovereignty-reference-grid svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sovereignty-reference-grid p {
+  margin: 0;
+  color: #52636e;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-subheading {
+  margin: 35px 0 15px;
+  font-size: 28px;
+}
+
+.sovereignty-core-reading {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #d7dede;
+  list-style: none;
+}
+
+.sovereignty-core-reading li {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #d7dede;
+}
+
+.sovereignty-core-reading li > span {
+  padding-top: 3px;
+  color: #8a583c;
+  font: 10px var(--mono);
+}
+
+.sovereignty-core-reading h4 {
+  margin: 0 0 5px;
+  color: #243f50;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.sovereignty-core-reading p {
+  margin: 0;
+  color: #596a74;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.sovereignty-core-reading a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #7c5037;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.sovereignty-core-reading svg {
+  width: 13px;
+  height: 13px;
+}
+
+.sovereignty-corpus-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-bottom: 18px;
+  background: #d5dedd;
+  border: 1px solid #d5dedd;
+}
+
+.sovereignty-corpus-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px;
+  background: #f2f6f3;
+}
+
+.sovereignty-corpus-summary strong {
+  color: var(--navy);
+  font: 27px/1.1 var(--serif);
+}
+
+.sovereignty-corpus-summary span {
+  color: #52646e;
+  font-size: 11px;
+}
+
+.sovereignty-source-integrity {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr) auto;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid #d7dfdf;
+  background: #fffefa;
+}
+
+.sovereignty-source-integrity > div {
+  min-width: 0;
+}
+
+.sovereignty-source-integrity span {
+  display: block;
+  margin-bottom: 6px;
+  color: #5a6a73;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.sovereignty-source-integrity code {
+  display: block;
+  color: #344d5a;
+  font: 10px/1.6 var(--mono);
+  overflow-wrap: anywhere;
+}
+
+.sovereignty-source-integrity p {
+  margin: 0;
+  color: #3f5664;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.sovereignty-bibliography-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1.1fr);
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #d4dddc;
+  background: #f0f5f2;
+}
+
+.sovereignty-search {
+  position: relative;
+  display: block;
+}
+
+.sovereignty-search svg {
+  position: absolute;
+  top: 14px;
+  left: 13px;
+  width: 16px;
+  height: 16px;
+  color: #5f747c;
+  pointer-events: none;
+}
+
+.sovereignty-search input {
+  padding-left: 39px;
+}
+
+.sovereignty-bibliography-selects {
+  display: grid;
+  grid-template-columns: 1.2fr .75fr 1fr;
+  gap: 10px;
+}
+
+.sovereignty-bibliography-selects label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sovereignty-bibliography-selects label > span {
+  color: #425b68;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sovereignty-bibliography-selects select {
+  padding: 8px 28px 8px 9px;
+  font-size: 11px;
+}
+
+.sovereignty-bibliography-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 2px;
+}
+
+.sovereignty-bibliography-status p {
+  margin: 0;
+  color: #4f626d;
+  font-size: 11px;
+}
+
+.sovereignty-bibliography-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sovereignty-reference {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 19px;
+  border: 1px solid #d8dfdf;
+  background: #fffefa;
+}
+
+.sovereignty-reference-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5b6c75;
+  font: 10px var(--mono);
+}
+
+.sovereignty-reference-key {
+  color: #8a5639;
+}
+
+.sovereignty-reference h3 {
+  margin: 13px 0 8px;
+  color: #233f50;
+  font: 21px/1.25 var(--serif);
+  overflow-wrap: anywhere;
+}
+
+.sovereignty-reference-authors,
+.sovereignty-reference-journal {
+  margin: 0;
+  color: #50616c;
+  font-size: 11px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.sovereignty-reference-journal {
+  margin-top: 5px;
+  color: #64737b;
+  font-style: italic;
+}
+
+.sovereignty-reference-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 13px;
+}
+
+.sovereignty-reference-themes span {
+  padding: 4px 7px;
+  border: 1px solid #d5dfdc;
+  background: #f2f6f2;
+  color: #45615f;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.sovereignty-reference-flags {
+  margin-top: 11px;
+  color: #825235;
+  font-size: 10px;
+}
+
+.sovereignty-reference-flags summary {
+  width: fit-content;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sovereignty-reference-flags ul {
+  margin: 7px 0 0;
+  padding-left: 17px;
+  color: #6a594e;
+  line-height: 1.55;
+}
+
+.sovereignty-reference-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.sovereignty-reference-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #784d34;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sovereignty-reference-links svg {
+  width: 12px;
+  height: 12px;
+}
+
+.sovereignty-reference-links > span {
+  margin-left: auto;
+  color: #718089;
+  font-size: 9px;
+}
+
+.sovereignty-bibliography-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.sovereignty-bibliography-pagination button {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid #aebfc1;
+  border-radius: 3px;
+  background: #fffefa;
+  color: #284553;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sovereignty-bibliography-pagination button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.sovereignty-bibliography-pagination span {
+  color: #50646f;
+  font: 11px var(--mono);
+}
+
+.sovereignty-glossary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: #d8dfdf;
+  border: 1px solid #d8dfdf;
+}
+
+.sovereignty-glossary > div {
+  padding: 20px;
+  background: #fffefa;
+}
+
+.sovereignty-glossary dt {
+  color: var(--navy);
+  font: 24px/1.15 var(--serif);
+}
+
+.sovereignty-glossary dd {
+  margin: 9px 0 0;
+  color: #50626d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.sovereignty-limitations {
+  padding: 22px 22px 22px 39px;
+  border: 1px solid #d6dedc;
+  background: #f3f6f2;
+}
+
+.sovereignty-content a:focus-visible,
+.sovereignty-content button:focus-visible,
+.sovereignty-content input:focus-visible,
+.sovereignty-content textarea:focus-visible,
+.sovereignty-content select:focus-visible,
+.sovereignty-content summary:focus-visible,
+.sovereignty-content pre:focus-visible {
+  outline: 3px solid #b36c45;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .sovereignty-status-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .sovereignty-status-card > .button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .sovereignty-section-heading {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sovereignty-cycle {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sovereignty-commitment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sovereignty-implementation-list article {
+    grid-template-columns: minmax(180px, .8fr) minmax(0, 1.2fr);
+  }
+
+  .sovereignty-implementation-list .inline-link {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .sovereignty-source-integrity {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sovereignty-source-integrity > .button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .sovereignty-bibliography-toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .sovereignty-status-card,
+  .sovereignty-principle-grid,
+  .sovereignty-layer-grid,
+  .sovereignty-control-grid,
+  .sovereignty-commitment-grid,
+  .sovereignty-reference-grid,
+  .sovereignty-bibliography-list,
+  .sovereignty-glossary {
+    grid-template-columns: 1fr;
+  }
+
+  .sovereignty-hub-layout {
+    display: block;
+  }
+
+  .sovereignty-index {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 16px;
+    max-height: none;
+    margin-bottom: 45px;
+    padding: 17px;
+    overflow: visible;
+    border: 1px solid #d7dfdf;
+    background: #f1f5f2;
+  }
+
+  .sovereignty-index .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: 6px;
+  }
+
+  .sovereignty-content {
+    max-width: none;
+  }
+
+  .sovereignty-method-list details > div {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sovereignty-implementation-list article {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sovereignty-implementation-list .inline-link {
+    grid-column: auto;
+  }
+
+  .sovereignty-audit-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .sovereignty-audit-fields label.is-wide {
+    grid-column: auto;
+  }
+
+  .sovereignty-audit-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sovereignty-core-reading li {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .sovereignty-core-reading li > a {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .sovereignty-corpus-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sovereignty-source-integrity {
+    grid-template-columns: 1fr;
+  }
+
+  .sovereignty-source-integrity > .button {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .sovereignty-status-section {
+    padding-top: 0;
+  }
+
+  .sovereignty-status-card {
+    grid-template-columns: 1fr;
+    padding: 19px;
+  }
+
+  .sovereignty-status-card > .button {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .sovereignty-separation {
+    gap: 7px;
+  }
+
+  .sovereignty-separation span {
+    gap: 7px;
+    font-size: 9px;
+  }
+
+  .sovereignty-cycle,
+  .sovereignty-bibliography-selects {
+    grid-template-columns: 1fr;
+  }
+
+  .sovereignty-bibliography-status {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sovereignty-reference-links > span {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .sovereignty-audit-protocol li {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .sovereignty-audit-preview {
+    padding: 16px;
+  }
+
+  .sovereignty-audit-preview-actions .button {
+    width: 100%;
+  }
+
+  .sovereignty-corpus-summary strong {
+    font-size: 23px;
+  }
+
+  .sovereignty-bibliography-pagination {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sovereignty-separation span:not(:last-child)::after {
+    content: "";
+  }
+
+  .sovereignty-bibliography-pagination button {
+    padding-inline: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sovereignty-status-card,
+  .sovereignty-principle,
+  .sovereignty-layer,
+  .sovereignty-reference,
+  .sovereignty-audit-builder .button,
+  .sovereignty-bibliography-pagination button {
+    transition: none;
+  }
+}

@@ -1,5 +1,17 @@
 {
   "schemaVersion": 1,
-  "status": "pending",
-  "note": "This file is replaced after a successful Next.js production build. A pending manifest is not a build verification result."
+  "status": "generated",
+  "algorithm": "SHA-512",
+  "manifestSha512": "66dbacefce723e92d0d0044f6bce1e28bfe532ae6e53ec51b3491ac1ac1e29d87d197b4f42e385e8e5ec9bba7d6d7e0398bbf24fd1aac476ef69e5857b9debe4",
+  "commitSha": null,
+  "branch": null,
+  "environment": "local-build",
+  "generatedAt": "2026-11-28T07:18:49.028Z",
+  "manifestFiles": [
+    ".next/BUILD_ID",
+    ".next/build-manifest.json",
+    ".next/server/app-paths-manifest.json",
+    ".next/prerender-manifest.json"
+  ],
+  "scope": "Digest of the exact bytes of .next/BUILD_ID and available selected Next.js build manifests. It is not a digest of the complete deployment, a digital signature, a trusted timestamp, or evidence that CI passed."
 }

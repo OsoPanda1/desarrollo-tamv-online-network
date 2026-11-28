@@ -67,7 +67,7 @@ test("rate-limit decisions allow up to the limit and deny the next hit", async (
 test("invalid policies and malformed store results fail closed by throwing", async () => {
   const store = { async consume() { return { hits: 0, resetAt: 10_000 }; } };
   await assert.rejects(() => decideRateLimit(store, "key", { limit: 0, windowMs: 10_000 }), /positive integer/);
-  await assert.rejects(() => decideRateLimit(store, "key", { limit: 1, windowMs: 999 }), /at least 1000ms/);
+  await assert.rejects(() => decideRateLimit(store, "key", { limit: 1, windowMs: 999 }), /between 1000ms and 86400000ms/);
   await assert.rejects(() => decideRateLimit(store, "key", { limit: 1, windowMs: 10_000, now: 1_000 }), /invalid counter/);
 });
 

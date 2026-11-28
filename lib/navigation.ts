@@ -29,6 +29,7 @@ export const discoveryNavigation: NavigationLink[] = [
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
   { href: "/institucionalizacion", labelEs: "Institucionalización", labelEn: "Institutional pathway" },
   { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },
+  { href: "/soberania-digital", labelEs: "Soberanía digital e IA", labelEn: "Digital sovereignty and AI" },
 ]
 
 export const userNavigation: NavigationGroup[] = [
@@ -52,6 +53,7 @@ export const userNavigation: NavigationGroup[] = [
       { href: "/investigacion/publicaciones", labelEs: "Publicaciones", labelEn: "Publications" },
       { href: "/investigadores", labelEs: "Perfiles públicos", labelEn: "Public profiles" },
       { href: "/fuentes", labelEs: "Fuentes", labelEn: "Sources" },
+      { href: "/soberania-digital", labelEs: "Soberanía digital e IA", labelEn: "Digital sovereignty and AI" },
     ],
   },
   {
@@ -98,6 +100,7 @@ export const organizationNavigation: NavigationGroup[] = [
     links: [
       { href: "/quienes-somos", labelEs: "Identidad institucional", labelEn: "Institutional identity" },
       { href: "/gobernanza", labelEs: "Gobernanza", labelEn: "Governance" },
+      { href: "/soberania-digital", labelEs: "Soberanía digital e IA", labelEn: "Digital sovereignty and AI" },
       { href: "/estandar", labelEs: "Estándar de integridad", labelEn: "Integrity standard" },
       { href: "/utamv", labelEs: "UTAMV", labelEn: "UTAMV" },
     ],
@@ -111,6 +114,7 @@ export const organizationNavigation: NavigationGroup[] = [
       { href: "/investigacion/publicaciones", labelEs: "Publicaciones", labelEn: "Publications" },
       { href: "/investigadores", labelEs: "Investigadores", labelEn: "Researchers" },
       { href: "/excelencia", labelEs: "Excelencia", labelEn: "Excellence" },
+      { href: "/soberania-digital", labelEs: "Soberanía digital e IA", labelEn: "Digital sovereignty and AI" },
       { href: "/auditoria-creator", labelEs: "Auditoría creator", labelEn: "Creator audit" },
     ],
   },

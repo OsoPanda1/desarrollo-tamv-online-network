@@ -27,7 +27,8 @@ const search = await readFile(new URL("../components/research-federated-search.t
 
 test("central navigation separates audiences without changing server authorization", () => {
   assert.deepEqual(primaryNavigation.map((link) => link.href), ["/proyectos", "/guia", "/origenes", "/atlas"]);
-  assert.equal(discoveryNavigation.length, 8);
+  assert.equal(discoveryNavigation.length, 9);
+  assert.equal(discoveryNavigation.at(-1)?.href, "/soberania-digital");
   assert.equal(userNavigation.length, 4);
   assert.equal(organizationNavigation.length, 4);
   assert.equal(userNavigation.flatMap((group) => group.links).some((link) => link.href === "/portal"), true);

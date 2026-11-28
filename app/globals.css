@@ -3235,7 +3235,7 @@ body:has(.sovereign-hero) summary:focus-visible { outline: 3px solid var(--tamv-
 
 body:has(.sovereign-hero) .hero-section,
 body:has(.sovereign-hero) .facts-section { display: none !important; }
-body:has(.sovereign-hero) main#contenido > :not(.sovereign-hero):not(.sovereign-workspace):not(.tamv-hero-banner):not([data-tamv-mind-map="governance"]):not([data-media-area="home"]) { display: none !important; }
+body:has(.sovereign-hero) main#contenido > :not(.sovereign-hero):not(.sovereign-workspace):not(.tamv-hero-banner):not(.home-extras-disclosure):not([data-tamv-mind-map="governance"]):not([data-media-area="home"]) { display: none !important; }
 body:has(.sovereign-hero) .section,
 body:has(.sovereign-hero) .facts-section,
 body:has(.sovereign-hero) .institutional-section,

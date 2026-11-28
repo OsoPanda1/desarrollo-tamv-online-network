@@ -22,7 +22,9 @@ test("legacy landing-page body is not rendered beside the new console", () => {
   assert.doesNotMatch(home, /<section className="hero-section"/);
   assert.doesNotMatch(home, /<TamvSiteGuide/);
   assert.doesNotMatch(home, /<HomeVisualBand/);
-  assert.match(consoleSource, /id="inicio"/);
+  assert.match(consoleSource, /className="sovereign-hero" id="consola-soberana"/);
+  assert.doesNotMatch(consoleSource, /id="inicio"/);
+  assert.equal((home.match(/id="inicio"/g) ?? []).length, 1);
   assert.match(consoleSource, /id="contacto"/);
   assert.match(fingerprint, /sovereign-footer-integrity container" id="contacto"/);
 });

@@ -59,6 +59,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
             <a href={localizedPath("/ecosistema", locale)}>{english ? "Ecosystem" : "Ecosistema"}</a>
             <a href={localizedPath("/desarrolladores", locale)}>{english ? "Developers" : "Desarrolladores"}</a>
             <a href={localizedPath("/estandar", locale)}>{english ? "Open integrity standard" : "Estándar de integridad abierta"}</a>
+            <a href={localizedPath("/soberania-digital", locale)}>{english ? "Digital sovereignty and AI" : "Soberanía digital e IA"}</a>
             <a href={localizedPath("/comunidad", locale)}>{english ? "Community" : "Comunidad"}</a>
             <a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://isni.org/isni/0000000531699229" target="_blank" rel="noopener noreferrer">ISNI <ArrowUpRight aria-hidden="true" /></a>
