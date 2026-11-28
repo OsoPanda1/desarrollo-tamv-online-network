@@ -81,3 +81,18 @@ test("institutional 3D engine preserves source-derived analytics and bilingual c
     assert.match(html, /mapa\/map\.js\?v=hcu-observatory-v2/)
   }
 })
+
+
+test("homepage exposes the live HCU observatory and does not substitute a flat placeholder on the HCU route", () => {
+  const home = read("components/tamv-institutional-site.tsx")
+  assert.match(home, /className="hcu-launch-section"/)
+  assert.match(home, /href=\{english \? "\/hcu\?lang=en" : "\/hcu"\}/)
+  assert.match(home, /Open HCU Observatory|Abrir observatorio HCU/)
+  const page = read("app/hcu/page.tsx")
+  assert.match(page, /<HcuExperience graph=\{graph\}/)
+  assert.doesNotMatch(page, /TamvSectionMedia area="hcu"/)
+  assert.doesNotMatch(page, /import \{ TamvSectionMedia \}/)
+  const styles = read("app/globals.css")
+  assert.match(styles, /\.hcu-launch-section/)
+  assert.match(styles, /@media \(max-width: 760px\)/)
+})
