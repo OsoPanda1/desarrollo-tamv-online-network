@@ -77,7 +77,7 @@ const publishedAssets: Record<string, PublishedAsset> = {
     src: "/security/tamv-secret-boundaries.svg",
     altEs: "Diagrama conceptual que separa navegador público, rutas de servidor, gestor de secretos y servicios externos; no certifica la configuración desplegada.",
     altEn: "Conceptual diagram separating the public browser, server routes, secret manager and external services; it does not certify deployed configuration.",
-    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/security/secret-boundary-and-visual-audit/public/security/tamv-secret-boundaries.svg",
+    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/65c78fcc51d51ce20c116135abe4e31c2f759fc0/public/security/tamv-secret-boundaries.svg",
     sourceLabelEs: "Diagrama original TAMV · versión conceptual",
     sourceLabelEn: "Original TAMV diagram · conceptual version",
   },
