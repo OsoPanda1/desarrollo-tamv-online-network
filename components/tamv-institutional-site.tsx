@@ -4,6 +4,7 @@ import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
 import { TamvSectionMedia } from "./tamv-section-media"
 import { TamvMindMap } from "./tamv-mind-map"
+import { TamvVisualSystems } from "./tamv-visual-systems"
 import { localizedPath, type Locale } from "@/lib/i18n"
 
 export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
@@ -14,10 +15,10 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
       <main id="contenido" lang={locale}>
         <section id="inicio" className="tamv-hero-banner" aria-label={english ? "TAMV Online Network institutional banner" : "Banner institucional de TAMV Online Network"}>
           <img
-            src="/tamv-hero-banner.jpg"
+            src="/visuals/tamv-innovation-hub-hero.svg"
             alt={english
-              ? "TAMV Online Network banner: Advanced Versatile Mexican Technology, an independent Latin American open science platform, with a glowing globe over a Mexican town and the seven federations."
-              : "Banner de TAMV Online Network: Tecnología Avanzada Mexicana Versátil, plataforma latinoamericana independiente de ciencia abierta, con un globo luminoso sobre una ciudad mexicana y las siete federaciones."}
+              ? "Original TAMV technology artwork: research, AI governance, security, open knowledge and digital sovereignty represented as a luminous network."
+              : "Arte tecnológico original de TAMV: investigación, gobernanza de IA, seguridad, conocimiento abierto y soberanía digital representados como una red luminosa."}
             width={1584}
             height={672}
             fetchPriority="high"
@@ -46,6 +47,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
             </div>
           </div>
         </section>
+        <TamvVisualSystems locale={locale} />
         <details className="home-extras-disclosure" lang={locale}>
           <summary>{english ? "Explore the extended atlas and media library" : "Explorar el atlas ampliado y la biblioteca multimedia"} <span aria-hidden="true">+</span></summary>
           <div className="home-extras-content">
