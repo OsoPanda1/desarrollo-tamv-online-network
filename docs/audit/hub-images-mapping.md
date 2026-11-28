@@ -82,3 +82,10 @@ La rama de trabajo incorpora nueve SVG originales locales en `public/visuals/`. 
 | `human-oversight-ai.svg` | Revisión, parada, reversión y reparación | Diagrama conceptual |
 
 La portada y la galería principal apuntan a estos activos locales. Las imágenes territoriales se mantienen en los slots de Atlas y proyectos territoriales; no se deben reutilizar como ilustración genérica de investigación o seguridad. La validación de renderizado, contraste, teclado, rutas ES/EN, solicitudes 404 y rendimiento sigue pendiente hasta disponer de una ejecución de navegador verificable.
+
+
+| `learning-pathway.svg` | Formación digital | Diagrama original, no certificación |
+| `accessibility-by-design.svg` | Accesibilidad y guía | Diagrama original |
+| `collaborator-staging-flow.svg` | Colaboración externa segura | Diagrama original |
+| `developer-connector-architecture.svg` | SDK y arquitectura de conectores | Diagrama original, no captura de código |
+| `evidence-gated-roadmap.svg` | Estados de madurez y hoja de ruta | Diagrama original, no estado real del proyecto |
