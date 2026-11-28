@@ -36,6 +36,71 @@ type MediaSlot = {
   ratio: string
 }
 
+type PublishedAsset = {
+  kind: MediaKind
+  src?: string
+  altEs?: string
+  altEn?: string
+  sourceUrl: string
+  sourceLabelEs: string
+  sourceLabelEn: string
+  licenseLabelEs?: string
+  licenseLabelEn?: string
+  embedUrl?: string
+}
+
+// Only assets with a traceable source are published. Unverified screenshots,
+// founder portraits and product recordings remain explicitly unpublished.
+const publishedAssets: Record<string, PublishedAsset> = {
+  "IMG-02": {
+    kind: "image",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/PlazaRealdelMonte.JPG?width=1200",
+    altEs: "Plaza principal de Real del Monte, Hidalgo, fotografía de archivo tomada el 14 de septiembre de 2008.",
+    altEn: "Main plaza of Real del Monte, Hidalgo, archival photograph taken on 14 September 2008.",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:PlazaRealdelMonte.JPG",
+    sourceLabelEs: "Thelmadatter · Wikimedia Commons",
+    sourceLabelEn: "Thelmadatter · Wikimedia Commons",
+    licenseLabelEs: "Dominio público declarado por la autora",
+    licenseLabelEn: "Public domain as declared by the author",
+  },
+  "IMG-04": {
+    kind: "image",
+    src: "/tamv-hero-banner.jpg",
+    altEs: "Banner institucional de TAMV Online Network con la identidad visual del proyecto.",
+    altEn: "TAMV Online Network institutional banner using the project's visual identity.",
+    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/public/tamv-hero-banner.jpg",
+    sourceLabelEs: "Activo institucional del repositorio TAMV",
+    sourceLabelEn: "TAMV repository institutional asset",
+  },
+  "IMG-05": {
+    kind: "image",
+    src: "/security/tamv-secret-boundaries.svg",
+    altEs: "Diagrama conceptual que separa navegador público, rutas de servidor, gestor de secretos y servicios externos; no certifica la configuración desplegada.",
+    altEn: "Conceptual diagram separating the public browser, server routes, secret manager and external services; it does not certify deployed configuration.",
+    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/security/secret-boundary-and-visual-audit/public/security/tamv-secret-boundaries.svg",
+    sourceLabelEs: "Diagrama original TAMV · versión conceptual",
+    sourceLabelEn: "Original TAMV diagram · conceptual version",
+  },
+  "IMG-11": {
+    kind: "image",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Street2PlazaRealdelMonte.JPG?width=1200",
+    altEs: "Calle de Hidalgo que conduce a la plaza principal de Real del Monte, fotografía de archivo del 14 de septiembre de 2008.",
+    altEn: "Hidalgo street leading to the main plaza of Real del Monte, archival photograph dated 14 September 2008.",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Street2PlazaRealdelMonte.JPG",
+    sourceLabelEs: "Thelmadatter · Wikimedia Commons",
+    sourceLabelEn: "Thelmadatter · Wikimedia Commons",
+    licenseLabelEs: "Dominio público declarado por la autora",
+    licenseLabelEn: "Public domain as declared by the author",
+  },
+  "VID-10": {
+    kind: "video",
+    embedUrl: "https://www.youtube-nocookie.com/embed/n31wbn6skew?rel=0",
+    sourceUrl: "https://www.youtube.com/watch?v=n31wbn6skew",
+    sourceLabelEs: "Canal Once · Viajar para contar: Real del Monte, Hidalgo",
+    sourceLabelEn: "Canal Once · Viajar para contar: Real del Monte, Hidalgo",
+  },
+}
+
 const areaLabels: Record<TamvMediaArea, { es: string; en: string }> = {
   home: { es: "Presentación institucional", en: "Institutional introduction" },
   origins: { es: "Orígenes y autoría", en: "Origins and authorship" },
@@ -61,16 +126,16 @@ const areaLabels: Record<TamvMediaArea, { es: string; en: string }> = {
 
 const slots: MediaSlot[] = [
   { id: "IMG-01", kind: "image", area: "origins", titleEs: "Orígenes de TAMV", titleEn: "TAMV origins", purposeEs: "Retrato editorial del origen del proyecto y su autoría, con consentimiento y contexto.", purposeEn: "Editorial image documenting the project's origins and authorship, with consent and context.", ratio: "16 / 9" },
-  { id: "IMG-02", kind: "image", area: "atlas", titleEs: "Real del Monte, Hidalgo", titleEn: "Real del Monte, Hidalgo", purposeEs: "Paisaje territorial con crédito, fecha y licencia.", purposeEn: "Territorial landscape with credit, date and license.", ratio: "16 / 9" },
+  { id: "IMG-02", kind: "image", area: "atlas", titleEs: "Real del Monte, Hidalgo", titleEn: "Real del Monte, Hidalgo", purposeEs: "Fotografía de archivo de la plaza principal; no representa necesariamente las condiciones actuales.", purposeEn: "Archival photograph of the main plaza; it does not necessarily represent current conditions.", ratio: "16 / 9" },
   { id: "IMG-03", kind: "image", area: "who-we-are", titleEs: "Memoria viva", titleEn: "Living memory", purposeEs: "Archivo cultural con procedencia y consentimiento cuando aplique.", purposeEn: "Cultural archive with provenance and consent where applicable.", ratio: "4 / 5" },
-  { id: "IMG-04", kind: "image", area: "home", titleEs: "TAMV Living Atlas", titleEn: "TAMV Living Atlas", purposeEs: "Captura real de la interfaz, identificando versión y fecha.", purposeEn: "Actual interface screenshot labeled with version and date.", ratio: "16 / 9" },
-  { id: "IMG-05", kind: "image", area: "architecture", titleEs: "Arquitectura federada", titleEn: "Federated architecture", purposeEs: "Diagrama técnico revisado y accesible en texto.", purposeEn: "Reviewed technical diagram with a text equivalent.", ratio: "16 / 9" },
+  { id: "IMG-04", kind: "image", area: "home", titleEs: "Banner institucional TAMV", titleEn: "TAMV institutional banner", purposeEs: "Activo gráfico institucional; no se presenta como captura de la aplicación.", purposeEn: "Institutional graphic asset; not presented as an application screenshot.", ratio: "16 / 9" },
+  { id: "IMG-05", kind: "image", area: "architecture", titleEs: "Límites de confianza y secretos", titleEn: "Trust boundaries and secrets", purposeEs: "Diagrama conceptual de seguridad; no constituye una auditoría ni prueba de la configuración de producción.", purposeEn: "Conceptual security diagram; it is not an audit or proof of production configuration.", ratio: "16 / 9" },
   { id: "IMG-06", kind: "image", area: "hcu", titleEs: "Atlas HCU", titleEn: "HCU Atlas", purposeEs: "Visualización real del grafo, con nota de fuente y limitaciones.", purposeEn: "Actual graph visualization with source and limitation notes.", ratio: "16 / 9" },
   { id: "IMG-07", kind: "image", area: "sources", titleEs: "Procedencia de evidencia", titleEn: "Evidence provenance", purposeEs: "Diagrama del recorrido de un artefacto y su recibo.", purposeEn: "Diagram showing an artifact's provenance and receipt.", ratio: "16 / 9" },
   { id: "IMG-08", kind: "image", area: "research", titleEs: "Investigación abierta", titleEn: "Open research", purposeEs: "Captura de ficha de investigación con referencias verificables.", purposeEn: "Research record screenshot with verifiable references.", ratio: "4 / 3" },
   { id: "IMG-09", kind: "image", area: "community", titleEs: "Comunidad creadora", titleEn: "Creator community", purposeEs: "Fotografía autorizada de colaboración, sin sugerir afiliaciones inexistentes.", purposeEn: "Authorized collaboration photo without implying nonexistent affiliations.", ratio: "4 / 3" },
   { id: "IMG-10", kind: "image", area: "isabella", titleEs: "Isabella AI", titleEn: "Isabella AI", purposeEs: "Imagen de producto rotulada como captura o concepto, según corresponda.", purposeEn: "Product image labeled as a screenshot or concept, as appropriate.", ratio: "4 / 3" },
-  { id: "IMG-11", kind: "image", area: "projects", titleEs: "RDM Digital", titleEn: "RDM Digital", purposeEs: "Imagen territorial y cultural con derechos documentados.", purposeEn: "Territorial and cultural image with documented rights.", ratio: "4 / 3" },
+  { id: "IMG-11", kind: "image", area: "projects", titleEs: "Calles de Real del Monte", titleEn: "Streets of Real del Monte", purposeEs: "Fotografía de archivo del acceso a la plaza; imagen territorial de referencia, no una captura de RDM Digital.", purposeEn: "Archival photograph of the street leading to the plaza; a territorial reference, not a screenshot of RDM Digital.", ratio: "4 / 3" },
   { id: "IMG-12", kind: "image", area: "excellence", titleEs: "Método 4L", titleEn: "4L Method", purposeEs: "Infografía del método, citando la versión fuente.", purposeEn: "Method infographic citing its source version.", ratio: "4 / 3" },
   { id: "IMG-13", kind: "image", area: "governance", titleEs: "Gobernanza y transparencia", titleEn: "Governance and transparency", purposeEs: "Matriz de responsabilidades con fecha de revisión.", purposeEn: "Responsibility matrix with review date.", ratio: "4 / 3" },
   { id: "IMG-14", kind: "image", area: "audit", titleEs: "Verificación TPVA", titleEn: "TPVA verification", purposeEs: "Captura de verificación real; nunca maquillar estados o resultados.", purposeEn: "Real verification screenshot; never fabricate statuses or results.", ratio: "16 / 9" },
@@ -90,7 +155,7 @@ const slots: MediaSlot[] = [
   { id: "VID-07", kind: "video", area: "hcu", titleEs: "Observatorio HCU", titleEn: "HCU Observatory", purposeEs: "Demostración del grafo con explicación de sus límites analíticos.", purposeEn: "Graph walkthrough explaining analytical limitations.", ratio: "16 / 9" },
   { id: "VID-08", kind: "video", area: "isabella", titleEs: "Isabella AI: guía de uso", titleEn: "Isabella AI: user guide", purposeEs: "Casos permitidos, límites, privacidad y supervisión humana.", purposeEn: "Supported use cases, limits, privacy and human oversight.", ratio: "16 / 9" },
   { id: "VID-09", kind: "video", area: "governance", titleEs: "Gobernanza comunitaria", titleEn: "Community governance", purposeEs: "Explicar decisiones, participación, apelaciones y transparencia.", purposeEn: "Explain decisions, participation, appeals and transparency.", ratio: "16 / 9" },
-  { id: "VID-10", kind: "video", area: "projects", titleEs: "RDM Digital y memoria territorial", titleEn: "RDM Digital and territorial memory", purposeEs: "Recorrido cultural con créditos, autorizaciones y fuentes.", purposeEn: "Cultural tour with credits, permissions and sources.", ratio: "16 / 9" },
+  { id: "VID-10", kind: "video", area: "projects", titleEs: "Real del Monte: historia y territorio", titleEn: "Real del Monte: history and territory", purposeEs: "Video de contexto territorial producido por Canal Once; es una fuente externa y no una producción de TAMV ni una demostración de RDM Digital.", purposeEn: "Territorial-context video produced by Canal Once; it is an external source, not a TAMV production or an RDM Digital demonstration.", ratio: "16 / 9" },
   { id: "VID-11", kind: "video", area: "join", titleEs: "Cómo contribuir", titleEn: "How to contribute", purposeEs: "Flujo real para proponer, revisar y documentar contribuciones.", purposeEn: "Real workflow to propose, review and document contributions.", ratio: "16 / 9" },
   { id: "VID-12", kind: "video", area: "institutionalization", titleEs: "Hoja de ruta y transparencia", titleEn: "Roadmap and transparency", purposeEs: "Estado actual, tareas pendientes, financiación y próximos hitos.", purposeEn: "Current status, pending work, funding and next milestones.", ratio: "16 / 9" },
 ]
@@ -110,37 +175,71 @@ export function TamvSectionMedia({ area, locale = "es" }: { area: TamvMediaArea;
             <h2 id={`section-media-title-${area}`}>{en ? `Visual resources · ${areaLabel.en}` : `Recursos visuales · ${areaLabel.es}`}</h2>
             <p className={styles.description}>
               {en
-                ? "Reserved media appears here, beside the topic it supports. These are editorial placeholders, not published images or playable videos."
-                : "Los recursos se reservan en esta sección, junto al tema al que pertenecen. Son espacios editoriales: no son imágenes publicadas ni videos reproducibles."}
+                ? "Verified assets appear beside the topic they support. Unavailable recordings and screenshots remain marked as pending rather than being represented as real."
+                : "Los activos verificables aparecen junto al tema que ilustran. Las grabaciones y capturas que no existen o no están verificadas permanecen marcadas como pendientes."}
             </p>
           </div>
-          <span className={styles.count}>{String(scopedSlots.length).padStart(2, "0")} {en ? "items" : "recursos"}</span>
+          <span className={styles.count}>{String(scopedSlots.filter((slot) => publishedAssets[slot.id]).length).padStart(2, "0")} / {String(scopedSlots.length).padStart(2, "0")} {en ? "published" : "publicados"}</span>
         </header>
 
         <div className={styles.grid} data-count={scopedSlots.length}>
           {scopedSlots.map((slot, index) => {
             const title = en ? slot.titleEn : slot.titleEs
             const purpose = en ? slot.purposeEn : slot.purposeEs
+            const asset = publishedAssets[slot.id]
             const isVideo = slot.kind === "video"
-            const kindLabel = isVideo ? (en ? "VIDEO · NOT PUBLISHED" : "VIDEO · NO PUBLICADO") : (en ? "IMAGE · PENDING ASSET" : "IMAGEN · RECURSO PENDIENTE")
+            const kindLabel = asset ? (isVideo ? (en ? "EXTERNAL VIDEO" : "VIDEO EXTERNO") : (en ? "PUBLISHED IMAGE" : "IMAGEN PUBLICADA")) : (isVideo ? (en ? "VIDEO · PENDING" : "VIDEO · PENDIENTE") : (en ? "IMAGE · PENDING" : "IMAGEN · PENDIENTE"))
             return (
-              <article className={styles.card} key={slot.id} data-kind={slot.kind}>
-                <div
-                  className={styles.placeholder}
-                  style={{ aspectRatio: slot.ratio }}
-                  role="img"
-                  aria-label={en
-                    ? `${slot.id}, reserved ${slot.kind} slot for ${title}. Not published yet.`
-                    : `${slot.id}, espacio reservado para ${isVideo ? "video" : "imagen"} de ${title}. Pendiente de publicación.`}
-                >
-                  <span className={styles.slotId}>{slot.id}</span>
-                  <span className={styles.slotStatus}>{kindLabel}</span>
-                  <span className={styles.iconFrame} aria-hidden="true">
-                    {isVideo ? <Film size={26} strokeWidth={1.45} /> : <ImageIcon size={26} strokeWidth={1.45} />}
-                  </span>
-                  <span className={styles.placeholderTitle}>{isVideo ? (en ? "Video asset to be added" : "Video pendiente de incorporar") : (en ? "Image asset to be added" : "Imagen pendiente de incorporar")}</span>
-                  <span className={styles.placeholderHint}>{en ? "Source, rights and accessibility review required" : "Requiere fuente, derechos y revisión de accesibilidad"}</span>
-                </div>
+              <article className={styles.card} key={slot.id} data-kind={slot.kind} data-published={asset ? "true" : "false"}>
+                {asset?.kind === "video" && asset.embedUrl ? (
+                  <div className={styles.videoFrame} style={{ aspectRatio: slot.ratio }}>
+                    <iframe
+                      src={asset.embedUrl}
+                      title={title}
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : asset?.kind === "image" && asset.src ? (
+                  <figure className={styles.mediaFigure}>
+                    <div className={styles.mediaFrame} style={{ aspectRatio: slot.ratio }}>
+                      <img
+                        src={asset.src}
+                        alt={en ? asset.altEn ?? title : asset.altEs ?? title}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy={asset.src.startsWith("https://") ? "no-referrer" : undefined}
+                      />
+                      <span className={styles.slotId}>{slot.id}</span>
+                      <span className={styles.slotStatus}>{kindLabel}</span>
+                    </div>
+                    <figcaption className={styles.mediaCredit}>
+                      <a href={asset.sourceUrl} target="_blank" rel="noopener noreferrer">
+                        {en ? asset.sourceLabelEn : asset.sourceLabelEs}
+                      </a>
+                      {asset.licenseLabelEs && <span>{en ? asset.licenseLabelEn : asset.licenseLabelEs}</span>}
+                    </figcaption>
+                  </figure>
+                ) : (
+                  <div
+                    className={styles.placeholder}
+                    style={{ aspectRatio: slot.ratio }}
+                    role="img"
+                    aria-label={en
+                      ? `${slot.id}, reserved ${slot.kind} slot for ${title}. Not published yet.`
+                      : `${slot.id}, espacio reservado para ${isVideo ? "video" : "imagen"} de ${title}. Pendiente de publicación.`}
+                  >
+                    <span className={styles.slotId}>{slot.id}</span>
+                    <span className={styles.slotStatus}>{kindLabel}</span>
+                    <span className={styles.iconFrame} aria-hidden="true">
+                      {isVideo ? <Film size={26} strokeWidth={1.45} /> : <ImageIcon size={26} strokeWidth={1.45} />}
+                    </span>
+                    <span className={styles.placeholderTitle}>{isVideo ? (en ? "Video not yet verified" : "Video aún no verificado") : (en ? "Image not yet verified" : "Imagen aún no verificada")}</span>
+                    <span className={styles.placeholderHint}>{en ? "Source, rights and accessibility review required" : "Requiere fuente, derechos y revisión de accesibilidad"}</span>
+                  </div>
+                )}
                 <div className={styles.caption}>
                   <div className={styles.captionHeading}>
                     <span className={styles.index}>{String(index + 1).padStart(2, "0")}</span>
@@ -149,7 +248,14 @@ export function TamvSectionMedia({ area, locale = "es" }: { area: TamvMediaArea;
                       <p className={styles.purpose}>{purpose}</p>
                     </div>
                   </div>
-                  <p className={styles.publicationNote}>{en ? "Publication status: reserved" : "Estado editorial: reservado"}</p>
+                  <p className={styles.publicationNote}>
+                    {asset
+                      ? (en ? "Source linked · attribution shown above" : "Fuente enlazada · atribución visible arriba")
+                      : (en ? "Editorial status: pending asset and rights review" : "Estado editorial: recurso pendiente y revisión de derechos")}
+                    {asset?.kind === "video" && (
+                      <> · <a href={asset.sourceUrl} target="_blank" rel="noopener noreferrer">{en ? "Open original video" : "Abrir video original"}</a></>
+                    )}
+                  </p>
                 </div>
               </article>
             )
