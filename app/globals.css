@@ -5357,3 +5357,263 @@ body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card a:h
   .tamv-origins-founder-portrait,
   .tamv-origins-founder-manifesto { scroll-behavior: auto; }
 }
+
+
+/* Evidence-led founder biography and professional dossier on /origenes. */
+.tamv-origins-biography {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(2.2rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--orig-line, rgba(151, 174, 185, .22));
+  color: #e5edf1;
+}
+.tamv-origins-biography-heading {
+  max-width: 760px;
+  margin-bottom: 1.8rem;
+}
+.tamv-origins-biography-heading h2 {
+  margin: .3rem 0 0;
+  color: #f5f8fa;
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  font-weight: 850;
+  letter-spacing: -.045em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.tamv-origins-biography-prose {
+  display: grid;
+  gap: 1rem;
+}
+.tamv-origins-biography-prose p {
+  margin: 0;
+  color: #d9e3e8;
+  font-size: clamp(.98rem, 1.2vw, 1.05rem);
+  line-height: 1.9;
+}
+.tamv-origins-contribution-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem;
+  margin-top: 2rem;
+}
+.tamv-origins-contribution-grid article {
+  min-width: 0;
+  padding: 1.2rem;
+  border: 1px solid rgba(151, 174, 185, .22);
+  border-radius: 12px;
+  background: linear-gradient(145deg, #121c24, #0c1219);
+}
+.tamv-origins-contribution-grid article > span {
+  display: block;
+  margin-bottom: .7rem;
+  color: #87dace;
+  font-size: .63rem;
+  font-weight: 850;
+  letter-spacing: .11em;
+  line-height: 1.6;
+}
+.tamv-origins-contribution-grid h3 {
+  margin: 0 0 .65rem;
+  color: #f5f8fa;
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.tamv-origins-contribution-grid p {
+  margin: 0;
+  color: #c4d0d7;
+  font-size: .88rem;
+  line-height: 1.8;
+}
+.tamv-origins-resource-block {
+  margin-top: clamp(2.4rem, 5vw, 3.7rem);
+}
+.tamv-origins-resource-heading {
+  max-width: 760px;
+  margin-bottom: 1.1rem;
+}
+.tamv-origins-resource-heading h3 {
+  margin: .25rem 0 .65rem;
+  color: #f5f8fa;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 850;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+}
+.tamv-origins-resource-heading > p:last-child {
+  margin: 0;
+  color: #c2d0d7;
+  font-size: .91rem;
+  line-height: 1.8;
+}
+.tamv-origins-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .7rem;
+}
+.tamv-origins-resource-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .55rem;
+  padding: 1rem;
+  border: 1px solid rgba(151, 174, 185, .22);
+  border-radius: 10px;
+  background: #111a22;
+  color: #e6eef2;
+  text-decoration: none;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.tamv-origins-resource-card:hover {
+  border-color: rgba(105, 215, 202, .72);
+  background: #15242c;
+  transform: translateY(-2px);
+}
+.tamv-origins-resource-card:focus-visible {
+  outline: 3px solid #83e3d7;
+  outline-offset: 3px;
+}
+.tamv-origins-resource-card > strong {
+  color: #f5f8fa;
+  font-size: .93rem;
+  font-weight: 850;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.tamv-origins-resource-card > span {
+  color: #c4d0d7;
+  font-size: .82rem;
+  line-height: 1.7;
+}
+.tamv-origins-resource-card > small {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: auto;
+  padding-top: .3rem;
+  color: #8fe1d5;
+  font-size: .7rem;
+  font-weight: 850;
+}
+.tamv-origins-resource-card svg,
+.tamv-origins-research-records svg,
+.tamv-origins-recognition-note > a svg {
+  width: 14px;
+  height: 14px;
+}
+.tamv-origins-research-records {
+  display: grid;
+  gap: .65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: tamv-record;
+}
+.tamv-origins-research-records li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid rgba(151, 174, 185, .2);
+  border-radius: 10px;
+  background: #101820;
+  counter-increment: tamv-record;
+}
+.tamv-origins-research-records li > div { min-width: 0; }
+.tamv-origins-research-records strong {
+  display: block;
+  color: #f5f8fa;
+  font-size: .9rem;
+  font-weight: 800;
+  line-height: 1.55;
+}
+.tamv-origins-research-records p {
+  margin: .4rem 0 0;
+  color: #bdcbd3;
+  font-size: .79rem;
+  line-height: 1.7;
+}
+.tamv-origins-research-records li > a,
+.tamv-origins-recognition-note > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  max-width: 100%;
+  min-height: 38px;
+  padding: .55rem .7rem;
+  border: 1px solid rgba(127, 221, 210, .38);
+  border-radius: 7px;
+  background: #eaf8f5;
+  color: #103b40;
+  font-size: .7rem;
+  font-weight: 850;
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.tamv-origins-research-records li > a:hover,
+.tamv-origins-recognition-note > a:hover {
+  background: #fff;
+  border-color: #83e3d7;
+}
+.tamv-origins-recognition-note {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(211, 176, 115, .38);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #1c1a16, #121315);
+}
+.tamv-origins-recognition-note h3 {
+  margin: .2rem 0 1rem;
+  color: #fff8e9;
+  font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+  font-weight: 850;
+  letter-spacing: -.025em;
+  line-height: 1.25;
+}
+.tamv-origins-recognition-note > p:not(.tamv-origins-manifesto-kicker) {
+  margin: 0 0 .9rem;
+  color: #e3e2dc;
+  font-size: .9rem;
+  line-height: 1.85;
+}
+.tamv-origins-recognition-note .tamv-origins-recognition-footnote {
+  padding-left: 1rem;
+  border-left: 3px solid #d1b276;
+  color: #fff4dc;
+  font-weight: 650;
+}
+.tamv-origins-recognition-note > a { margin-top: .3rem; }
+.tamv-origins-profile-audit {
+  margin-top: 1.2rem;
+  border-top: 1px solid rgba(220, 204, 167, .2);
+}
+.tamv-origins-profile-audit summary {
+  padding: .9rem 0 .25rem;
+  color: #f0d39c;
+  font-size: .82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.tamv-origins-profile-audit p {
+  margin: .6rem 0 0;
+  color: #d2d1ca;
+  font-size: .8rem;
+  line-height: 1.8;
+}
+.tamv-origins-profile-audit summary:focus-visible {
+  outline: 3px solid #e4c17b;
+  outline-offset: 4px;
+}
+@media (max-width: 720px) {
+  .tamv-origins-contribution-grid,
+  .tamv-origins-resource-grid { grid-template-columns: minmax(0, 1fr); }
+  .tamv-origins-research-records li { grid-template-columns: minmax(0, 1fr); }
+  .tamv-origins-research-records li > a { justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tamv-origins-resource-card { transition: none; }
+  .tamv-origins-resource-card:hover { transform: none; }
+}
