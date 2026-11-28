@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "tamv.open_integrity.declaration.v1",
+  "subject": {
+    "id": "example-project",
+    "name": "Proyecto de Ejemplo ETIA",
+    "type": "project",
+    "description": "Declaración de ejemplo, ficticia, usada para probar el evaluador. No describe una organización real ni una certificación real.",
+    "url": "https://example.org/etia-example",
+    "jurisdiction": "MX",
+    "identifiers": {
+      "ror": "04h9j9y04"
+    },
+    "license": "MIT",
+    "maturity": "pilot",
+    "domains": ["knowledge", "technology"],
+    "claims": {
+      "openSource": true,
+      "openScience": true,
+      "openHardware": false
+    },
+    "roles": [
+      {
+        "name": "Persona de Ejemplo",
+        "orcid": "0000-0002-1825-0097",
+        "credit": ["conceptualization", "software", "writing_original_draft"]
+      }
+    ]
+  },
+  "funding": {
+    "active": true,
+    "model": ["donations", "grants"],
+    "legalVehicle": "nonprofit",
+    "jurisdiction": "MX",
+    "taxStatus": {
+      "status": "Entidad sin fines de lucro de ejemplo",
+      "evidenceUrl": "https://example.org/etia-example/tax-status"
+    },
+    "currency": "MXN",
+    "policies": {
+      "giftAcceptanceUrl": "https://example.org/etia-example/policies/gifts",
+      "restrictedFundsUrl": "https://example.org/etia-example/policies/restricted-funds",
+      "donorPrivacyUrl": "https://example.org/etia-example/policies/donor-privacy",
+      "conflictOfInterestUrl": "https://example.org/etia-example/policies/conflict-of-interest",
+      "complaintsUrl": "https://example.org/etia-example/policies/complaints",
+      "transparencyReportUrl": "https://example.org/etia-example/reports/transparency-2026",
+      "auditUrl": "https://example.org/etia-example/reports/audit-2026"
+    },
+    "paymentProcessor": {
+      "name": "Procesador de Ejemplo",
+      "pciScope": "hosted",
+      "url": "https://example.org/etia-example/payments"
+    },
+    "crossBorder": false,
+    "notes": "Datos ficticios para demostración y pruebas automatizadas."
+  },
+  "publication": {
+    "outputType": "report",
+    "repository": {
+      "name": "Repositorio de Ejemplo",
+      "url": "https://example.org/etia-example/repository",
+      "preservationPolicyUrl": "https://example.org/etia-example/repository/preservation",
+      "certification": {
+        "scheme": "Esquema de Ejemplo",
+        "issuer": "Emisor de Ejemplo",
+        "evidenceUrl": "https://example.org/etia-example/certificate",
+        "registryUrl": "https://example.org/etia-example/registry"
+      }
+    },
+    "persistentId": {
+      "scheme": "doi",
+      "value": "10.5281/zenodo.1234567"
+    },
+    "metadataSchema": "DataCite",
+    "version": "1.0.0",
+    "versioningPolicyUrl": "https://example.org/etia-example/repository/versioning",
+    "access": "open",
+    "review": {
+      "model": "community",
+      "evidenceUrl": "https://example.org/etia-example/review",
+      "policyUrl": "https://example.org/etia-example/review/policy"
+    },
+    "license": "CC-BY-4.0",
+    "contributors": [
+      {
+        "name": "Persona de Ejemplo",
+        "orcid": "0000-0002-1825-0097",
+        "credit": ["conceptualization", "software", "writing_original_draft"]
+      }
+    ],
+    "fundingAcknowledgement": [
+      {
+        "funderName": "Fondo de Ejemplo",
+        "funderId": "example-funder-001",
+        "awardId": "EXAMPLE-2026-001"
+      }
+    ],
+    "conflictOfInterest": "No se declaran conflictos de interés en este ejemplo ficticio.",
+    "dataAvailabilityUrl": "https://example.org/etia-example/data",
+    "codeAvailabilityUrl": "https://example.org/etia-example/code",
+    "ethics": {
+      "humanSubjects": false,
+      "animalWelfare": false,
+      "biologicalMaterials": false
+    },
+    "indigenousData": {
+      "involved": false
+    },
+    "accessibilityUrl": "https://example.org/etia-example/accessibility",
+    "language": "es-MX"
+  },
+  "certificationClaims": [
+    {
+      "id": "self-conformance",
+      "claimType": "self_declaration",
+      "claimText": "Autodeclaración de conformidad estructural con ETIA v1. No es una certificación independiente.",
+      "issuer": {
+        "name": "Proyecto de Ejemplo ETIA",
+        "url": "https://example.org/etia-example",
+        "type": "self",
+        "independence": "El emisor es el propio sujeto; no hay independencia."
+      },
+      "scheme": {
+        "name": "ETIA",
+        "version": "1.0.0",
+        "url": "https://tamv.online/estandar"
+      },
+      "scope": {
+        "included": ["documentación del proyecto de ejemplo"],
+        "excluded": ["veracidad de los datos", "calidad científica"]
+      },
+      "evidence": {
+        "url": "https://example.org/etia-example/conformance",
+        "issuedAt": "2026-11-01T00:00:00Z",
+        "expiresAt": "2027-12-31T00:00:00Z"
+      },
+      "status": "active",
+      "appealUrl": "https://example.org/etia-example/appeals"
+    },
+    {
+      "id": "example-indexing",
+      "claimType": "indexing",
+      "claimText": "Indexado en el Catálogo de Ejemplo. La indexación no implica certificación de calidad.",
+      "issuer": {
+        "name": "Catálogo de Ejemplo",
+        "url": "https://example.org/etia-example/catalog",
+        "type": "repository",
+        "independence": "Operado por un tercero ficticio."
+      },
+      "scheme": {
+        "name": "Catálogo de Ejemplo",
+        "version": "2026",
+        "url": "https://example.org/etia-example/catalog/about"
+      },
+      "scope": {
+        "included": ["metadatos del resultado"],
+        "excluded": ["contenido completo", "revisión por pares"]
+      },
+      "evidence": {
+        "url": "https://example.org/etia-example/catalog/entry",
+        "issuedAt": "2026-10-15T00:00:00Z"
+      },
+      "status": "active",
+      "registryUrl": "https://example.org/etia-example/catalog/entry",
+      "appealUrl": "https://example.org/etia-example/catalog/appeals"
+    }
+  ],
+  "transparency": {
+    "provenanceUrl": "https://example.org/etia-example/provenance",
+    "sourceUrl": "https://example.org/etia-example/source",
+    "commit": "0123456789abcdef0123456789abcdef01234567",
+    "correctionsPolicyUrl": "https://example.org/etia-example/corrections",
+    "appealsUrl": "https://example.org/etia-example/appeals",
+    "lastReviewedAt": "2026-11-01T00:00:00Z"
+  },
+  "legal": {
+    "termsUrl": "https://example.org/etia-example/terms",
+    "privacyUrl": "https://example.org/etia-example/privacy",
+    "dataProtection": {
+      "personalData": true,
+      "lawfulBasis": "Consentimiento y obligación legal, según el ejemplo ficticio.",
+      "statementUrl": "https://example.org/etia-example/privacy/data-protection"
+    },
+    "exportControl": {
+      "controlled": false
+    }
+  },
+  "accessibility": {
+    "statementUrl": "https://example.org/etia-example/accessibility/statement",
+    "conformance": "WCAG 2.2 AA (autodeclarado)"
+  }
+}

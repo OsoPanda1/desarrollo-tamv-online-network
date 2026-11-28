@@ -60,6 +60,8 @@ test("institutional and application HCU surfaces remain distinct and documented"
   assert.match(readme, /Membresías y pagos/)
   assert.match(readme, /HCU y visualización territorial/)
   assert.match(readme, /graph\.js/)
+  assert.match(readme, /apoyo institucional|institutional support/i)
+  assert.match(readme, /Observatorio HCU|HCU observatory/i)
 })
 
 test("donation copy does not imply an unconfirmed open-source license for TAMV code", () => {

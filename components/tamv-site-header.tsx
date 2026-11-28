@@ -20,6 +20,7 @@ const discoveryLinks = [
   { href: "/investigacion", labelEs: "Investigación", labelEn: "Research" },
   { href: "/ecosistema", labelEs: "Ecosistema", labelEn: "Ecosystem" },
   { href: "/desarrolladores", labelEs: "Desarrolladores", labelEn: "Developers" },
+  { href: "/estandar", labelEs: "Estándar", labelEn: "Standard" },
   { href: "/membresias", labelEs: "Membresías", labelEn: "Memberships" },
 ]
 

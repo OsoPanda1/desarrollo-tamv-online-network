@@ -25,6 +25,7 @@ const publicPaths = [
   "/auditoria-creator",
   "/desarrolladores",
   "/desarrolladores/independiente",
+  "/estandar",
   "/ecosistema",
   "/membresias",
   "/institucionalizacion",

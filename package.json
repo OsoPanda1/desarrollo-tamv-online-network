@@ -13,6 +13,7 @@
     "db:migrate:apply": "node scripts/db-migrate.mjs --apply",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "db:preflight": "node scripts/db-preflight.mjs",
+    "standard:check": "node --experimental-strip-types scripts/standard-check.mjs",
     "hf:snapshot": "node scripts/hf-evidence-snapshot.mjs"
   },
   "dependencies": {

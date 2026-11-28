@@ -1,0 +1,794 @@
+/* TAMV Open Integrity Standard (ETIA/TOIS) v1 */
+
+.etia-page-section {
+  border-top: 1px solid rgba(23, 43, 61, 0.12);
+}
+
+.etia-section-head {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.etia-section-head h2 {
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.etia-section-head p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.etia-notice {
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.etia-notice svg {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  color: var(--copper-dark);
+  flex: none;
+}
+
+.etia-notice strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.etia-notice p {
+  margin: 0 0 8px;
+  color: var(--muted-ink);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.etia-notice .etia-id {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.etia-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 48px;
+}
+
+.etia-principles article {
+  padding: 24px;
+  border: 1px solid rgba(23, 43, 61, 0.14);
+  background: #fffefa;
+}
+
+.etia-principles svg {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 16px;
+  color: var(--copper-dark);
+}
+
+.etia-principles h2 {
+  margin: 0 0 9px;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.etia-principles p {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.etia-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.etia-pillar-grid article {
+  padding: 20px 18px;
+  border-top: 2px solid var(--copper);
+  background: #fffefa;
+}
+
+.etia-pillar-number {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--copper-dark);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.etia-pillar-grid h3 {
+  margin: 0 0 9px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.etia-pillar-grid p {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* Evaluator */
+
+.etia-evaluator {
+  display: grid;
+  gap: 22px;
+}
+
+.etia-editor {
+  border: 1px solid rgba(23, 43, 61, 0.16);
+  background: #fffefa;
+}
+
+.etia-editor-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(23, 43, 61, 0.12);
+}
+
+.etia-editor-head label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+}
+
+.etia-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.etia-editor textarea {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  background: #fbf9f4;
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.etia-editor textarea:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: -2px;
+}
+
+.etia-editor-note {
+  margin: 0;
+  padding: 12px 20px;
+  border-top: 1px solid rgba(23, 43, 61, 0.1);
+  color: var(--muted-ink);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.etia-alert,
+.etia-issues {
+  padding: 16px 20px;
+  border-left: 2px solid #9b2c2c;
+  background: #fbf1ef;
+  color: #6f1d1d;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.etia-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+}
+
+.etia-alert svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.etia-issues h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.etia-issues ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.etia-issues code {
+  color: #6f1d1d;
+}
+
+.etia-report {
+  display: grid;
+  gap: 18px;
+}
+
+.etia-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.4fr);
+  border: 1px solid rgba(23, 43, 61, 0.16);
+  background: #fffefa;
+}
+
+.etia-summary > div {
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+  border-right: 1px solid rgba(23, 43, 61, 0.1);
+}
+
+.etia-summary > div:last-child {
+  border-right: 0;
+}
+
+.etia-summary span {
+  color: var(--muted-ink);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.etia-summary strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.etia-outcome-complete strong {
+  color: #1f5c3a;
+}
+
+.etia-outcome-conditional strong {
+  color: #8a5a12;
+}
+
+.etia-outcome-blocked strong {
+  color: #9b2c2c;
+}
+
+.etia-digest strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.etia-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  padding: 4px 8px;
+  border: 1px solid rgba(23, 43, 61, 0.2);
+  background: transparent;
+  color: var(--muted-ink);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.etia-copy svg {
+  width: 13px;
+  height: 13px;
+}
+
+.etia-copy:hover {
+  border-color: var(--copper);
+  color: var(--copper-dark);
+}
+
+.etia-outcome-meaning {
+  margin: 0;
+  max-width: 860px;
+  color: var(--muted-ink);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.etia-pillar-bar {
+  display: flex;
+  gap: 4px;
+  height: 6px;
+}
+
+.etia-pillar-segment {
+  display: block;
+  min-width: 24px;
+  background: #cfd8cf;
+}
+
+.etia-segment-complete {
+  background: #1f5c3a;
+}
+
+.etia-segment-conditional {
+  background: #c08a2e;
+}
+
+.etia-segment-blocked {
+  background: #9b2c2c;
+}
+
+.etia-pillars {
+  display: grid;
+  gap: 10px;
+}
+
+.etia-pillar {
+  border: 1px solid rgba(23, 43, 61, 0.14);
+  background: #fffefa;
+}
+
+.etia-pillar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 16px 20px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.etia-pillar-head span:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.etia-pillar-head strong {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.etia-pillar-head em {
+  color: var(--muted-ink);
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.etia-pillar-status {
+  flex: none;
+  padding: 4px 9px;
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.etia-checks {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(23, 43, 61, 0.1);
+  list-style: none;
+}
+
+.etia-check {
+  display: grid;
+  gap: 6px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(23, 43, 61, 0.08);
+}
+
+.etia-check:last-child {
+  border-bottom: 0;
+}
+
+.etia-check-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+}
+
+.etia-check-head strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.etia-check-head code {
+  color: var(--muted-ink);
+  font-size: 10px;
+}
+
+.etia-check p {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.etia-pill {
+  padding: 2px 7px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.etia-pill-pass {
+  background: #e3efe6;
+  color: #1f5c3a;
+}
+
+.etia-pill-warn {
+  background: #f7ecd7;
+  color: #7a4f0c;
+}
+
+.etia-pill-fail {
+  background: #f6e2df;
+  color: #8c2525;
+}
+
+.etia-pill-not-applicable {
+  background: #ecebe6;
+  color: #5c5a52;
+}
+
+.etia-remediation {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  color: #6f5524 !important;
+}
+
+.etia-remediation svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+}
+
+.etia-claims {
+  border: 1px solid rgba(23, 43, 61, 0.14);
+  background: #fffefa;
+}
+
+.etia-claims summary {
+  padding: 14px 20px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.etia-claims ul,
+.etia-claims p {
+  margin: 0;
+  padding: 0 20px 16px;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.etia-claims ul {
+  list-style: disc;
+  padding-left: 36px;
+}
+
+.etia-levels {
+  padding: 22px;
+  border: 1px solid rgba(23, 43, 61, 0.14);
+  background: #f6f3ec;
+}
+
+.etia-levels h3 {
+  margin: 0 0 14px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.etia-levels ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etia-levels li {
+  display: grid;
+  gap: 5px;
+  padding-left: 12px;
+  border-left: 2px solid var(--copper);
+}
+
+.etia-levels strong {
+  font-size: 12px;
+}
+
+.etia-levels span {
+  color: var(--muted-ink);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* API */
+
+.etia-endpoints {
+  margin-bottom: 26px;
+}
+
+.etia-code-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.etia-code-grid h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.etia-code-grid pre {
+  margin: 0;
+  padding: 18px;
+  overflow-x: auto;
+  background: #172b3d;
+  color: #f6f1e7;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.etia-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 22px 0 0;
+  font-size: 12px;
+}
+
+.etia-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--copper-dark);
+  text-decoration: none;
+}
+
+.etia-links a:hover {
+  text-decoration: underline;
+}
+
+.etia-links svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* References */
+
+.etia-reference-groups {
+  display: grid;
+  gap: 10px;
+}
+
+.etia-reference-group {
+  border: 1px solid rgba(23, 43, 61, 0.14);
+  background: #fffefa;
+}
+
+.etia-reference-group summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.etia-reference-group summary strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.etia-reference-group summary span {
+  padding: 2px 8px;
+  background: #efece4;
+  color: var(--muted-ink);
+  font-size: 10px;
+}
+
+.etia-reference-group ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(23, 43, 61, 0.1);
+  list-style: none;
+}
+
+.etia-reference-group li {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(23, 43, 61, 0.07);
+}
+
+.etia-reference-group li:last-child {
+  border-bottom: 0;
+}
+
+.etia-reference-group li p {
+  margin: 0 0 6px;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.etia-reference-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.etia-reference-name a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.etia-reference-name a:hover {
+  color: var(--copper-dark);
+}
+
+.etia-reference-name svg {
+  width: 12px;
+  height: 12px;
+}
+
+.etia-access {
+  padding: 2px 7px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.etia-access-open {
+  background: #e3efe6;
+  color: #1f5c3a;
+}
+
+.etia-access-registration,
+.etia-access-membership {
+  background: #f7ecd7;
+  color: #7a4f0c;
+}
+
+.etia-access-paywalled {
+  background: #f6e2df;
+  color: #8c2525;
+}
+
+.etia-access-mixed {
+  background: #ecebe6;
+  color: #5c5a52;
+}
+
+.etia-reference-not strong {
+  color: var(--ink);
+}
+
+.etia-limitations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+  counter-reset: etia-limit;
+}
+
+.etia-limitations li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--muted-ink);
+  font-size: 12px;
+  line-height: 1.75;
+  counter-increment: etia-limit;
+}
+
+.etia-limitations li::before {
+  position: absolute;
+  left: 0;
+  color: var(--copper-dark);
+  font-size: 10px;
+  content: counter(etia-limit, decimal-leading-zero);
+  letter-spacing: 0.08em;
+}
+
+.etia-spin {
+  animation: etia-spin 0.9s linear infinite;
+}
+
+@keyframes etia-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .etia-principles,
+  .etia-code-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .etia-pillar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .etia-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .etia-summary > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .etia-levels ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .etia-pillar-grid,
+  .etia-summary,
+  .etia-levels ol,
+  .etia-limitations {
+    grid-template-columns: 1fr;
+  }
+
+  .etia-summary > div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(23, 43, 61, 0.1);
+  }
+
+  .etia-summary > div:last-child {
+    border-bottom: 0;
+  }
+
+  .etia-pillar-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
