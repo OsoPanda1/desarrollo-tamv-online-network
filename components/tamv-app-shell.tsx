@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
-import { TamvSiteHeader } from "@/components/tamv-site-header"
+import { TamvNavigationChrome } from "@/components/tamv-navigation-chrome"
 import { localizedPath, type Locale } from "@/lib/i18n"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { PageVisualLayer } from "@/components/visuals/visual-layer"
@@ -9,8 +9,7 @@ export function TamvAppShell({ children, locale = "es" }: { children: React.Reac
   const english = locale === "en"
   return (
     <>
-      <a className="skip-link" href="#contenido">{english ? "Skip to content" : "Saltar al contenido"}</a>
-      <TamvSiteHeader locale={locale} />
+      <TamvNavigationChrome locale={locale} />
       <main id="contenido" className="app-main" lang={locale}>{children}</main>
       <PageVisualLayer locale={locale} />
       <div className="container app-support-slot"><TamvDonationCTA locale={locale} variant="inline" /></div>

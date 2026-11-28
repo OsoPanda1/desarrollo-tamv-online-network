@@ -44,9 +44,11 @@ curl -fsS http://localhost:3000/api/v1/exports/research
 
 Returns a Schema.org-oriented `DataCatalog` containing public projects, topics and publications whose records are eligible for publication. It includes dataset items and licensing conditions.
 
-### 5. Federated institutional research query
+### 5. Federated public research query
 
-This endpoint forwards a bounded public search to the institutional application's existing research API. It is disabled until the server-only `TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL` is configured with the verified public HTTPS URL ending in `/api/research/search`. Without that configuration it returns HTTP 503; no URL can be supplied in the request.
+Research queries use the server-configured institutional API when `TAMV_INSTITUTIONAL_RESEARCH_SEARCH_URL` contains a verified public HTTPS URL ending in `/api/research/search`. When that variable is absent, the route falls back to direct anonymous metadata searches of Zenodo, Figshare, DataCite, OSF and CERN Open Data and returns HTTP 200 with per-provider states. An explicitly invalid configured URL still returns HTTP 503, and a configured institutional upstream failure remains an error. No URL can be supplied in the request.
+
+The direct fallback uses fixed HTTPS destinations, omits credentials, rejects redirects, applies a 4-second timeout and 256 KiB response limit per provider, and returns at most 4 unique records per provider and 24 overall. One unavailable provider does not discard successful providers. OSF is a **title-filtered metadata bridge, not full-text search**.
 
 ```sh
 curl -fsS http://localhost:3000/api/v1/research/federated \
@@ -54,9 +56,11 @@ curl -fsS http://localhost:3000/api/v1/research/federated \
   -d '{"query":"memoria viva","type":"research"}'
 ```
 
-Use `"type":"organizations"` for the institutional provider's ROR organization search. The bridge reads public metadata only, does not share sessions or write access, and does not independently verify authorship, peer review, quality, or reuse rights.
-Search terms are forwarded to the configured institutional service and may be processed by its external metadata providers. Do not send personal, confidential or sensitive data.
+Use `"type":"organizations"` only for the configured institutional provider's existing ROR organization search; without that configuration it returns HTTP 503. The direct research fallback does not invent an organization or ROR endpoint. The bridge reads public metadata only, does not share sessions or write access, and does not independently verify authorship, peer review, quality, endorsement, partnership, or reuse rights.
+Search terms are forwarded to the selected institutional service or direct anonymous providers and may be processed under those providers' own retention policies. Do not send personal, confidential or sensitive data.
 Browser requests with a supplied `Origin` must be same-origin. In production this route uses the shared PostgreSQL fixed-window limiter (`20 requests / 10 minutes` per client identity) and returns HTTP 429 with `Retry-After` and `X-RateLimit-*` headers when the quota is exhausted. Apply `migrations/0004_public_rate_limits.sql` before enabling it; if the shared store is unavailable the route returns 503 instead of becoming unlimited. An edge/WAF limit is still recommended in front of the application, and client identity depends on trusted proxy headers being normalized by the deployment.
+
+Titles, creator/author names, DOI, URL and license values are source-declared metadata, not independently verified attribution. Result order is not a quality score. A public record or link does not establish peer review, endorsement, partnership or access rights. A declared license applies only as stated by its source; a missing license grants no permission, and linked materials may have separate terms. Preserve the source URL, declared license and `retrievedAt` when citing or reusing metadata.
 
 ### 6. CSV export
 
@@ -94,7 +98,7 @@ The endpoint is stateless. It validates the strict `tamv.evidence_receipt.v1` sh
 | `GET /api/v1/hcu/graph` | Public read |
 | `GET /api/v1/exports/research` and `?format=csv` | Public read/export |
 | `GET /api/v1/huggingface` | Public read of a committed public-metadata snapshot; no runtime Hub call |
-| `POST /api/v1/research/federated` | Public read-only query proxy; returns 503 until its upstream URL is configured |
+| `POST /api/v1/research/federated` | Public read-only query proxy; direct anonymous research fallback when the institutional URL is absent; organization search requires that URL |
 | `POST /api/v1/evidence/receipts/verify` | Public stateless shape and integrity check; no file upload and no persistence |
 | `POST /api/v1/research/proposals` | Authenticated session and same-origin request required; private by default |
 | `POST /api/v1/research/interests` | Authenticated session and same-origin request required |

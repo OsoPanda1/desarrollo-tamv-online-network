@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const guide = readFileSync("app/guia/page.tsx", "utf8");
-const header = readFileSync("components/tamv-site-header.tsx", "utf8");
+const navigation = readFileSync("lib/navigation.ts", "utf8");
 const shell = readFileSync("components/tamv-app-shell.tsx", "utf8");
 const home = readFileSync("components/tamv-institutional-site.tsx", "utf8");
 const sitemap = readFileSync("app/sitemap.ts", "utf8");
@@ -33,10 +33,9 @@ test("TAMV guide explains the initiative, gives a practical route, and preserves
 });
 
 test("tutorial is reachable from the primary navigation, home, shared footer and sitemap", () => {
-  assert.match(header, /href: "\/guia"/);
-  assert.match(header, /href: "\/ecosistema"/);
-  assert.match(home, /localizedPath\("\/guia", locale\)/);
-  assert.match(home, /<TamvSiteHeader locale={locale} \/>/);
+  assert.match(navigation, /href: "\/guia"/);
+  assert.match(navigation, /href: "\/ecosistema"/);
+  assert.match(home, /<TamvNavigationChrome locale=\{locale\} \/>/);
   assert.match(home, /<TamvSovereignConsole locale={locale} \/>/);
   assert.match(shell, /localizedPath\("\/guia", locale\)/);
   assert.match(sitemap, /"\/guia"/);

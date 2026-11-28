@@ -25,6 +25,8 @@ test("observability caches only the database snapshot for thirty seconds", () =>
   assert.match(route, /async function measureDatabaseSnapshot\(\)/);
   assert.match(route, /createSingleFlightTtlCache\(measureDatabaseSnapshot, 30_000\)/);
   assert.match(route, /await Promise\.all\(\[/);
+  assert.match(route, /probeDatabasePublicCounts\(pool, \{ timeoutMs: DATABASE_PROBE_TIMEOUT_MS \}\)/);
+  assert.doesNotMatch(route, /safeCount|drizzle-orm|\.select\(/);
   assert.match(route, /databaseMeasuredAt: new Date\(\)\.toISOString\(\)/);
   assert.match(route, /databaseMeasuredAt,/);
   assert.ok(route.indexOf("await getDatabaseSnapshot()") < route.indexOf("process.memoryUsage()"));

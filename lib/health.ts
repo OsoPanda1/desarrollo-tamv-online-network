@@ -56,35 +56,53 @@ export function createSingleFlightTtlCache<T>(
   };
 }
 
-// Bound readiness even when the underlying pool is saturated.
+export class BudgetExceededError extends Error {
+  constructor() {
+    super("operation exceeded its time budget")
+    this.name = "BudgetExceededError"
+  }
+}
+
+// Bound dependency work even when the underlying pool is saturated.
+export async function withinBudget<T>(
+  operation: Promise<T>,
+  timeoutMs: number,
+  onTimeout?: () => void,
+): Promise<T> {
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    throw new RangeError("timeoutMs must be a positive finite number")
+  }
+
+  let timer: ReturnType<typeof setTimeout> | undefined
+  try {
+    return await Promise.race([
+      operation,
+      new Promise<T>((_resolve, reject) => {
+        timer = setTimeout(() => {
+          try {
+            onTimeout?.()
+          } catch {
+            // Cleanup must not replace the timeout result.
+          }
+          reject(new BudgetExceededError())
+        }, timeoutMs)
+      }),
+    ])
+  } finally {
+    if (timer) clearTimeout(timer)
+  }
+}
+
 export async function probeWithinBudget(
   operation: Promise<unknown>,
   timeoutMs: number,
   onTimeout?: () => void,
 ): Promise<boolean> {
-  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
-    throw new RangeError("timeoutMs must be a positive finite number");
-  }
-
-  let timer: ReturnType<typeof setTimeout> | undefined;
   try {
-    return await Promise.race([
-      operation.then(
-        () => true,
-        () => false,
-      ),
-      new Promise<boolean>((resolve) => {
-        timer = setTimeout(() => {
-          try {
-            onTimeout?.();
-          } catch {
-            // The probe already reports failure; a cleanup error must not change that result.
-          }
-          resolve(false);
-        }, timeoutMs);
-      }),
-    ]);
-  } finally {
-    if (timer) clearTimeout(timer);
+    await withinBudget(operation, timeoutMs, onTimeout)
+    return true
+  } catch (error) {
+    if (error instanceof RangeError) throw error
+    return false
   }
 }

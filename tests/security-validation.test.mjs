@@ -5,9 +5,35 @@ import { csvCell } from "../lib/research/csv.ts"
 import { estimateHcuSimulationWork, isHcuGraphWithinLimits, isHcuSimulationWithinBudget } from "../lib/hcu/budget.ts"
 import { appealSchema, hcuAtomSchema, hcuHyperedgeSchema, moderationSchema, proposalSchema, simulationSchema, tqafAssessmentSchema } from "../lib/validation.ts"
 import { simulateHcu } from "../lib/hcu/model.ts"
-import { readJsonBody, RequestBodyError } from "../lib/http.ts"
+import { isSameOriginRequest, readJsonBody, RequestBodyError } from "../lib/http.ts"
 import { readFileSync } from "node:fs"
 import { resolve } from "node:path"
+
+test("same-origin validation follows the public Host behind Next URL normalization", () => {
+  const local = new Request("http://localhost:3100/api/v1/test", {
+    headers: { origin: "http://127.0.0.1:3100", host: "127.0.0.1:3100" },
+  })
+  const proxied = new Request("http://internal:3000/api/v1/test", {
+    headers: {
+      origin: "https://tamv.example",
+      host: "internal:3000",
+      "x-forwarded-host": "tamv.example",
+      "x-forwarded-proto": "https",
+    },
+  })
+  assert.equal(isSameOriginRequest(local), true)
+  assert.equal(isSameOriginRequest(proxied), true)
+  assert.equal(isSameOriginRequest(new Request("https://tamv.example/api", {
+    headers: { origin: "https://other.example", host: "tamv.example" },
+  })), false)
+  assert.equal(isSameOriginRequest(new Request("https://tamv.example/api", {
+    headers: { origin: "https://tamv.example", host: "tamv.example", "sec-fetch-site": "cross-site" },
+  })), false)
+  assert.equal(isSameOriginRequest(new Request("https://tamv.example/api", {
+    headers: { origin: "https://user:password@tamv.example", host: "tamv.example" },
+  })), false)
+  assert.equal(isSameOriginRequest(new Request("https://tamv.example/api", { headers: { host: "tamv.example" } })), false)
+})
 
 test("proposal workflow allows only declared transitions", () => {
   assert.equal(canTransitionProposal("received", "triage"), true)

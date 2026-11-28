@@ -2947,10 +2947,123 @@ body {
 .tamv-guide-next-actions { display: grid; gap: 10px; }
 .tamv-guide-next-actions .button { width: 100%; justify-content: space-between; }
 
+.tamv-start-tour { background: #e9eeef; }
+.tamv-start-tour-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .65fr);
+  gap: clamp(24px, 5vw, 68px);
+  align-items: end;
+  margin-bottom: 30px;
+}
+.tamv-start-tour-heading h2 {
+  margin: 0;
+  color: #142a3b;
+  font-size: clamp(32px, 4.1vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -.045em;
+  font-weight: 500;
+}
+.tamv-start-tour-heading h2 em { color: #704426; font-family: var(--serif); font-weight: 400; }
+.tamv-start-tour-heading > p { margin: 0; color: #354957; font-size: 16px; line-height: 1.8; }
+.tamv-start-goals {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.tamv-start-goals button {
+  min-width: 0;
+  min-height: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid #b7c3c8;
+  background: #f8faf9;
+  color: #253f50;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.tamv-start-goals button svg { width: 22px; height: 22px; color: #486477; }
+.tamv-start-goals button span { font-size: 13px; font-weight: 700; line-height: 1.4; }
+.tamv-start-goals button:hover { border-color: #607987; background: #fffefa; transform: translateY(-2px); }
+.tamv-start-goals button.is-active { border-color: #24475b; background: #24475b; color: #fffefa; box-shadow: 0 6px 18px rgba(20,42,59,.12); }
+.tamv-start-goals button.is-active svg { color: #e5c2a5; }
+.tamv-start-goals button:focus-visible,
+.tamv-start-tour-progress button:focus-visible,
+.tamv-start-tour-controls button:focus-visible,
+.tamv-start-tour-storage button:focus-visible,
+.tamv-start-tour-action:focus-visible { outline: 3px solid #b47442; outline-offset: 3px; }
+.tamv-start-tour-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 18px; align-items: start; }
+.tamv-start-tour-card { min-width: 0; padding: clamp(22px, 3.5vw, 38px); border: 1px solid #b9c5ca; background: #fffefa; box-shadow: 12px 12px 0 rgba(36,71,91,.08); }
+.tamv-start-tour-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.tamv-start-tour-card-head h3 { margin: 0; color: #142a3b; font: 500 clamp(25px, 3vw, 36px)/1.15 var(--serif); }
+.tamv-start-tour-card-head > span { flex: 0 0 auto; padding: 7px 9px; border: 1px solid #d3c3b5; background: #f3e9df; color: #704426; font: 700 12px/1 var(--mono); }
+.tamv-start-tour-purpose { margin: 18px 0 0; color: #263e4e; font-size: 17px; line-height: 1.75; }
+.tamv-start-tour-facts { margin: 20px 0 0; padding: 15px 17px; border-left: 3px solid #b98b6c; background: #f5f3ed; }
+.tamv-start-tour-facts dt { color: #704426; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.tamv-start-tour-facts dd { margin: 6px 0 0; color: #354957; font-size: 14px; line-height: 1.7; }
+.tamv-start-tour-progress { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
+.tamv-start-tour-progress li { min-width: 0; }
+.tamv-start-tour-progress button {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid #d3d9d8;
+  background: #f7f8f5;
+  color: #52636e;
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.tamv-start-tour-progress button > span { flex: 0 0 24px; width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid #b9c5c8; border-radius: 50%; color: #344f60; font: 700 11px/1 var(--mono); }
+.tamv-start-tour-progress button svg { width: 13px; height: 13px; }
+.tamv-start-tour-progress li.is-current button { border-color: #31566a; background: #eaf0f2; color: #142a3b; font-weight: 700; }
+.tamv-start-tour-progress li.is-current button > span { border-color: #24475b; background: #24475b; color: #fffefa; }
+.tamv-start-tour-step { margin-top: 26px; padding-top: 25px; border-top: 1px solid #d4dad8; }
+.tamv-start-tour-step h4 { margin: 0; color: #142a3b; font-size: 21px; line-height: 1.3; }
+.tamv-start-tour-step > p:not(.eyebrow) { margin: 11px 0 0; color: #354957; font-size: 15px; line-height: 1.8; }
+.tamv-start-tour-action { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; padding: 10px 13px; border: 1px solid #b98b6c; background: #f4e8dc; color: #5c351f; font-size: 13px; font-weight: 700; text-decoration: none; }
+.tamv-start-tour-action:hover { border-color: #704426; background: #ecd8c6; }
+.tamv-start-tour-action svg { width: 15px; height: 15px; }
+.tamv-start-tour-controls { display: grid; grid-template-columns: minmax(130px, auto) 1fr minmax(190px, auto); gap: 12px; align-items: center; margin-top: 28px; padding-top: 22px; border-top: 1px solid #d4dad8; }
+.tamv-start-tour-controls > span { color: #5a6a74; font: 700 12px/1 var(--mono); text-align: center; }
+.tamv-start-tour-controls button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.tamv-start-tour-controls button svg { width: 16px; height: 16px; }
+.tamv-start-tour-secondary { border: 1px solid #b9c5c8; background: #fffefa; color: #344f60; }
+.tamv-start-tour-next { border: 1px solid #24475b; background: #24475b; color: #fffefa; }
+.tamv-start-tour-controls button:hover:not(:disabled) { filter: brightness(1.08); }
+.tamv-start-tour-controls button:disabled { opacity: .45; cursor: not-allowed; }
+.tamv-start-tour-aside { display: grid; gap: 14px; }
+.tamv-start-tour-measure, .tamv-start-tour-limit, .tamv-start-tour-storage { padding: 23px; border: 1px solid #b9c5ca; }
+.tamv-start-tour-measure { display: grid; grid-template-columns: 25px minmax(0,1fr); gap: 13px; background: #24475b; color: #fffefa; }
+.tamv-start-tour-measure > svg { width: 24px; height: 24px; color: #e5c2a5; }
+.tamv-start-tour-measure .eyebrow, .tamv-start-tour-limit .eyebrow { color: #b9855d; }
+.tamv-start-tour-measure h3 { margin: 0; font: 500 23px/1.2 var(--serif); }
+.tamv-start-tour-measure p:not(.eyebrow) { margin: 11px 0 0; color: #e1e9eb; font-size: 14px; line-height: 1.75; }
+.tamv-start-tour-limit { background: #f3eee7; }
+.tamv-start-tour-limit > p:last-child { margin: 9px 0 0; color: #3c4b56; font-size: 14px; line-height: 1.75; }
+.tamv-start-tour-storage { background: #f8faf9; }
+.tamv-start-tour-storage > svg { width: 22px; height: 22px; color: #486477; }
+.tamv-start-tour-storage p { margin: 10px 0 0; color: #465a66; font-size: 13px; line-height: 1.7; }
+.tamv-start-tour-storage button { min-height: 44px; display: inline-flex; align-items: center; gap: 7px; margin-top: 13px; padding: 7px 0; border: 0; background: transparent; color: #5c351f; font-size: 12px; font-weight: 700; cursor: pointer; }
+.tamv-start-tour-storage button svg { width: 14px; height: 14px; }
+
 @media (max-width: 980px) {
   .tamv-guide-overview-grid, .tamv-guide-howto-grid, .tamv-guide-next-panel { grid-template-columns: 1fr; }
   .tamv-guide-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tamv-guide-boundaries { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tamv-start-tour-heading, .tamv-start-tour-grid { grid-template-columns: 1fr; }
+  .tamv-start-goals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tamv-start-tour-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tamv-start-tour-storage { grid-column: 1 / -1; }
 }
 @media (max-width: 620px) {
   body { font-size: 16px; }
@@ -2965,6 +3078,18 @@ body {
   .tamv-guide-card { padding: 20px; }
   .tamv-guide-definition .tamv-guide-lead { font-size: 17px; }
   .tamv-guide-warning { grid-template-columns: 1fr; }
+  .tamv-start-tour-heading { margin-bottom: 24px; }
+  .tamv-start-goals { grid-template-columns: 1fr; }
+  .tamv-start-goals button { min-height: 58px; flex-direction: row; align-items: center; justify-content: flex-start; }
+  .tamv-start-tour-card { padding: 20px; box-shadow: 7px 7px 0 rgba(36,71,91,.08); }
+  .tamv-start-tour-card-head { gap: 12px; }
+  .tamv-start-tour-card-head > span { font-size: 10px; }
+  .tamv-start-tour-progress { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tamv-start-tour-progress button { min-height: 56px; }
+  .tamv-start-tour-controls { grid-template-columns: 1fr 1fr; }
+  .tamv-start-tour-controls > span { grid-column: 1 / -1; grid-row: 1; }
+  .tamv-start-tour-aside { grid-template-columns: 1fr; }
+  .tamv-start-tour-storage { grid-column: auto; }
 }
 
 
@@ -3110,7 +3235,7 @@ body:has(.sovereign-hero) summary:focus-visible { outline: 3px solid var(--tamv-
 
 body:has(.sovereign-hero) .hero-section,
 body:has(.sovereign-hero) .facts-section { display: none !important; }
-body:has(.sovereign-hero) main#contenido > :not(.sovereign-hero):not(.sovereign-workspace):not([data-tamv-mind-map="governance"]):not([data-media-area="home"]) { display: none !important; }
+body:has(.sovereign-hero) main#contenido > :not(.sovereign-hero):not(.sovereign-workspace):not(.tamv-hero-banner):not([data-tamv-mind-map="governance"]):not([data-media-area="home"]) { display: none !important; }
 body:has(.sovereign-hero) .section,
 body:has(.sovereign-hero) .facts-section,
 body:has(.sovereign-hero) .institutional-section,

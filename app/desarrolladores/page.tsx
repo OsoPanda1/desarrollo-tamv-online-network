@@ -84,10 +84,10 @@ const endpoints = [
   {
     method: "POST",
     path: "/api/v1/research/federated",
-    accessEs: "Público · requiere URL configurada",
-    accessEn: "Public · configured URL required",
-    purposeEs: "Consulta metadatos públicos; devuelve 503 si no está configurado. Requiere Origin del mismo sitio en navegadores; en producción aplica un límite distribuido compartido de 20 solicitudes/10 minutos.",
-    purposeEn: "Queries public metadata; returns 503 until configured. Browser Origin must match; production enforces a shared distributed limit of 20 requests/10 minutes.",
+    accessEs: "Público · metadatos anónimos",
+    accessEn: "Public · anonymous metadata",
+    purposeEs: "Consulta metadatos públicos mediante proveedores anónimos fijos; OSF solo compara títulos. Las organizaciones usan el puente institucional configurado. Exige Origin del mismo sitio en navegadores; en producción aplica un límite distribuido de 20 solicitudes/10 minutos.",
+    purposeEn: "Queries public metadata through fixed anonymous providers; OSF matches titles only. Organizations use the configured institutional bridge. Browser Origin must match; production enforces a shared distributed limit of 20 requests/10 minutes.",
   },
   {
     method: "POST",

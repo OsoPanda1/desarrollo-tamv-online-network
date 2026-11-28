@@ -98,6 +98,10 @@ body:has(.tamv-hero-banner) .site-header {
   z-index: 70;
 }
 
+.tamv-hero-banner {
+  animation: tamv-hero-reveal 900ms cubic-bezier(.2, .75, .25, 1) both;
+}
+
 .tamv-hero-banner img {
   display: block;
   width: 100%;
@@ -107,6 +111,28 @@ body:has(.tamv-hero-banner) .site-header {
   border: 0;
   border-radius: 0;
   object-fit: cover;
+  transform: scale(1.025);
+  animation: tamv-hero-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes tamv-hero-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tamv-hero-drift {
+  from { transform: scale(1.025) translate3d(-.35%, 0, 0); }
+  to { transform: scale(1.045) translate3d(.35%, -.4%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tamv-hero-banner,
+  .tamv-hero-banner img {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
 }
 
 /* =========================================================================

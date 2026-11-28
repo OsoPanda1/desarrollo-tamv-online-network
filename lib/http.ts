@@ -18,10 +18,26 @@ export class RequestBodyError extends Error {
 }
 
 export function isSameOriginRequest(request: Request) {
-  const origin = request.headers.get("origin")
-  if (!origin) return false
+  const originHeader = request.headers.get("origin")
+  if (!originHeader || request.headers.get("sec-fetch-site") === "cross-site") return false
   try {
-    return origin === new URL(request.url).origin && request.headers.get("sec-fetch-site") !== "cross-site"
+    const origin = new URL(originHeader)
+    if ((origin.protocol !== "http:" && origin.protocol !== "https:") || origin.username || origin.password) return false
+
+    // Next may normalize request.url to an internal host while Host preserves the public origin.
+    const target = new URL(request.url)
+    const forwardedHost = request.headers.get("x-forwarded-host")?.split(",", 1)[0]?.trim()
+    const host = forwardedHost || request.headers.get("host")?.trim()
+    if (host) {
+      target.port = ""
+      target.host = host
+    }
+    const forwardedProtocol = request.headers.get("x-forwarded-proto")?.split(",", 1)[0]?.trim()
+    if (forwardedProtocol) {
+      if (forwardedProtocol !== "http" && forwardedProtocol !== "https") return false
+      target.protocol = `${forwardedProtocol}:`
+    }
+    return origin.origin === target.origin
   } catch {
     return false
   }
