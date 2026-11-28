@@ -45,3 +45,21 @@ en el repositorio.
   en el hub (2 ocurrencias, con `alt` distinto en cada una).
 - No se extrajeron imágenes de CSS ni de JavaScript: las 17 ocurrencias son
   etiquetas `<img>` con `src` data URI.
+
+
+## Revalidación del estado de los archivos en Git — 2026-11-28
+
+La tabla anterior documenta el resultado de una extracción histórica, pero **no debe usarse como prueba de que los archivos están presentes en el árbol Git actual**. Durante la revalidación del repositorio, siete rutas representativas de `public/hub/` y `public/hub/README.md` devolvieron 404 en la API de contenidos de GitHub. Por ello, la implementación visual no referencia esos nombres como activos locales hasta que se restauren y se verifiquen en un commit.
+
+Activos que sí se verificaron en la rama de trabajo:
+- `public/tamv-hero-banner.jpg`: archivo local presente.
+- `public/security/tamv-secret-boundaries.svg`: diagrama conceptual añadido en la rama de auditoría.
+
+Activos externos incorporados con procedencia visible:
+- Plaza principal de Real del Monte: [Wikimedia Commons — PlazaRealdelMonte.JPG](https://commons.wikimedia.org/wiki/File:PlazaRealdelMonte.JPG), autora Thelmadatter, fecha declarada 14-09-2008, dominio público declarado por la autora.
+- Calle que conduce a la plaza: [Wikimedia Commons — Street2PlazaRealdelMonte.JPG](https://commons.wikimedia.org/wiki/File:Street2PlazaRealdelMonte.JPG), autora Thelmadatter, fecha declarada 14-09-2008, dominio público declarado por la autora.
+- Video contextual: [Canal Once — Viajar para contar: Real del Monte, Hidalgo](https://www.youtube.com/watch?v=n31wbn6skew), publicado por el canal verificado Canal Once. Es contenido externo y no una producción TAMV ni una demostración de RDM Digital.
+
+Las imágenes externas se enlazan desde Wikimedia Commons para conservar la página de atribución. La disponibilidad del host externo no está bajo control del proyecto; si se decide descargar o transformar estos activos, debe conservarse la ficha de licencia, autoría, fecha y registro de cambios. El video se sirve desde el modo de privacidad mejorada de YouTube y conserva un enlace al original.
+
+Los espacios sin un archivo real verificado (retrato de autoría, captura actual de Isabella, captura de HCU, comprobante TPVA, grabación de TAMV Living Atlas y tutorial propio) permanecen como pendientes. No se generan capturas ficticias ni se atribuye a TAMV contenido de terceros.
