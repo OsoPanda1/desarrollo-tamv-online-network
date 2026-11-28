@@ -121,6 +121,11 @@ test("homepage leads with technology and exposes a research-first visual system"
     "hcu-hypergraph-field.svg",
     "open-science-lab.svg",
     "human-oversight-ai.svg",
+    "collaborator-staging-flow.svg",
+    "learning-pathway.svg",
+    "accessibility-by-design.svg",
+    "developer-connector-architecture.svg",
+    "evidence-gated-roadmap.svg",
   ]) {
     const asset = read("public/visuals/" + topic)
     assert.match(asset, /<svg/)
@@ -134,4 +139,9 @@ test("homepage leads with technology and exposes a research-first visual system"
   assert.match(media, /src: "\/visuals\/hcu-hypergraph-field\.svg"/)
   assert.match(media, /src: "\/visuals\/cryptographic-provenance\.svg"/)
   assert.match(media, /src: "\/visuals\/open-science-lab\.svg"/)
+  assert.match(media, /src: "\/visuals\/learning-pathway\.svg"/)
+  assert.match(media, /src: "\/visuals\/accessibility-by-design\.svg"/)
+  assert.match(media, /src: "\/visuals\/collaborator-staging-flow\.svg"/)
+  assert.match(media, /src: "\/visuals\/developer-connector-architecture\.svg"/)
+  assert.match(media, /src: "\/visuals\/evidence-gated-roadmap\.svg"/)
 })
