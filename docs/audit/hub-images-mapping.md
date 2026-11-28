@@ -67,7 +67,7 @@ Los espacios sin un archivo real verificado (retrato de autoría, captura actual
 
 ## Revisión de activos tecnológicos originales — 2026-11-28
 
-La rama de trabajo incorpora nueve SVG originales locales en `public/visuals/`. Estos recursos no sustituyen los archivos territoriales históricos ni se presentan como fotografías, capturas de producto o evidencia de ejecución. Su función es ilustrar temas tecnológicos específicos.
+La rama de trabajo incorpora catorce SVG originales locales en `public/visuals/`. Estos recursos no sustituyen los archivos territoriales históricos ni se presentan como fotografías, capturas de producto o evidencia de ejecución. Su función es ilustrar temas tecnológicos específicos.
 
 | Activo | Tema | Naturaleza |
 |---|---|---|
@@ -83,7 +83,10 @@ La rama de trabajo incorpora nueve SVG originales locales en `public/visuals/`. 
 
 La portada y la galería principal apuntan a estos activos locales. Las imágenes territoriales se mantienen en los slots de Atlas y proyectos territoriales; no se deben reutilizar como ilustración genérica de investigación o seguridad. La validación de renderizado, contraste, teclado, rutas ES/EN, solicitudes 404 y rendimiento sigue pendiente hasta disponer de una ejecución de navegador verificable.
 
+### Recursos adicionales por tema
 
+| Archivo | Tema | Naturaleza |
+|---|---|---|
 | `learning-pathway.svg` | Formación digital | Diagrama original, no certificación |
 | `accessibility-by-design.svg` | Accesibilidad y guía | Diagrama original |
 | `collaborator-staging-flow.svg` | Colaboración externa segura | Diagrama original |
