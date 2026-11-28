@@ -36,9 +36,13 @@ export function requestIdentityFromHeaders(headers?: Headers): string {
   return realIp ? `ip:${realIp}` : "anonymous";
 }
 
+export function isValidRateLimitSalt(salt?: string): boolean {
+  return (salt?.trim().length ?? 0) >= 32;
+}
+
 export function hashRateLimitKey(scope: string, identity: string, salt?: string): string {
   const secretSalt = salt?.trim();
-  if (!secretSalt || secretSalt.length < 32) {
+  if (!isValidRateLimitSalt(secretSalt) || !secretSalt) {
     throw new Error("TAMV_RATE_LIMIT_SALT must contain at least 32 characters");
   }
 

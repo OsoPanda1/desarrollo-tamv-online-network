@@ -80,6 +80,7 @@ export const membershipSubscriptions = pgTable("membership_subscriptions", {
   currentPeriodEnd: timestamptz("current_period_end"),
   cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
   stripeEventCreated: integer("stripe_event_created").notNull().default(0),
+  stripeCheckoutEventCreated: integer("stripe_checkout_event_created").notNull().default(0),
   createdAt: timestamptz("created_at").notNull().defaultNow(),
   updatedAt: timestamptz("updated_at").notNull().defaultNow(),
 })
@@ -312,6 +313,15 @@ export const hcuRuns = pgTable("hcu_runs", {
   output: jsonb("output").notNull(),
   createdAt: timestamptz("created_at").notNull().defaultNow(),
 })
+
+export const hcuRunReservations = pgTable("hcu_run_reservations", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  expiresAt: timestamptz("expires_at").notNull(),
+  createdAt: timestamptz("created_at").notNull().defaultNow(),
+}, (table) => [
+  index("hcu_run_reservations_user_expiry_idx").on(table.userId, table.expiresAt),
+])
 
 export const hcuShocks = pgTable("hcu_shocks", {
   id: text("id").primaryKey(),

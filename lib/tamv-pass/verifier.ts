@@ -7,6 +7,7 @@ import {
 import {
   TAMV_PASS_SUPPORTED_SCOPES,
   TAMV_PASS_TOKEN_TTL_SECONDS,
+  isTamvPassRole,
   type TamvPassClaims,
   type TamvPassScope,
 } from "./contract.ts";
@@ -131,6 +132,13 @@ export async function verifyTamvPassAccessToken(
     scopes.some((scope) => !TAMV_PASS_SUPPORTED_SCOPES.includes(scope as TamvPassScope))
   ) {
     throw new Error("TAMV Pass token has unsupported or duplicated scopes.");
+  }
+
+  if (
+    (scopes.includes("tamv:read") && !isTamvPassRole(payload.tamv_role)) ||
+    (!scopes.includes("tamv:read") && payload.tamv_role !== undefined)
+  ) {
+    throw new Error("TAMV Pass token role claim is invalid.");
   }
 
   if (

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { createPublicKey, verify } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { stripTypeScriptTypes } from "node:module";
 import test from "node:test";
 import { fingerprintBuildArtifacts } from "../scripts/write-build-evidence.mjs";
 
@@ -12,6 +13,12 @@ const classifier = await import("../lib/tamv-intent-classifier.ts");
 const governance = await readFile(new URL("../components/tamv-governance-matrix.tsx", import.meta.url), "utf8");
 const territorial = await readFile(new URL("../components/tamv-territorial-twin-status.tsx", import.meta.url), "utf8");
 const webgl = await readFile(new URL("../components/tamv-orbit-webgl.tsx", import.meta.url), "utf8");
+const predicateMatch = component.match(/export function isGeneratedBuildEvidence\([\s\S]*?\n\}/);
+assert.ok(predicateMatch, "the build evidence predicate must be exported");
+const predicateModule = await import("data:text/javascript," + encodeURIComponent(
+  stripTypeScriptTypes(predicateMatch[0], { mode: "strip" }),
+));
+const { isGeneratedBuildEvidence } = predicateModule;
 
 test("console defines seven distinct selectable federation nodes", () => {
   const ids = ["cognition", "identity", "vault", "governance", "persistence", "territory", "learning"];
@@ -61,6 +68,64 @@ test("build-manifest fingerprint is deterministic and order independent", () => 
   assert.notEqual(first, changed);
 });
 
+
+test("pending build evidence remains unpublished without a fabricated fingerprint", () => {
+  assert.match(component, /evidence: null, checkedAt: null/);
+  assert.match(component, /Fingerprint not published|Huella no publicada/);
+  assert.match(component, /SHA-512 · not published by this build|SHA-512 · esta compilación no la publica/);
+});
+
+test("malformed build evidence is rejected by the strict shared predicate", () => {
+  const valid = {
+    schemaVersion: 1,
+    status: "generated",
+    algorithm: "SHA-512",
+    manifestSha512: "a".repeat(128),
+  };
+  const malformed = [
+    null,
+    [],
+    {},
+    { ...valid, schemaVersion: 2 },
+    { ...valid, status: "pending" },
+    { ...valid, algorithm: "SHA-256" },
+    { ...valid, manifestSha512: "A".repeat(128) },
+    { ...valid, manifestSha512: "a".repeat(127) },
+    { ...valid, manifestSha512: "a".repeat(129) },
+    { ...valid, manifestSha512: "g".repeat(128) },
+    { ...valid, commitSha: 42 },
+  ];
+  for (const value of malformed) assert.equal(isGeneratedBuildEvidence(value), false);
+});
+
+test("valid generated build evidence passes the predicate used by both UI consumers", () => {
+  const valid = {
+    schemaVersion: 1,
+    status: "generated",
+    algorithm: "SHA-512",
+    manifestSha512: "a".repeat(128),
+    commitSha: null,
+    branch: null,
+    environment: "local-build",
+    generatedAt: "2026-11-21T12:00:00.000Z",
+    scope: "selected Next.js manifests",
+  };
+  assert.equal(isGeneratedBuildEvidence(valid), true);
+  assert.equal((component.match(/isGeneratedBuildEvidence\(/g) ?? []).length, 3);
+  assert.match(component, /evidence\.status === "fulfilled" && isGeneratedBuildEvidence\(evidence\.value\)/);
+  assert.match(component, /\(data: unknown\) => \{ if \(isGeneratedBuildEvidence\(data\)\) setEvidence\(data\) \}/);
+});
+
+test("build evidence is cleared before Next.js and atomically published afterward", async () => {
+  const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  const script = await readFile(new URL("../scripts/write-build-evidence.mjs", import.meta.url), "utf8");
+  const config = await readFile(new URL("../next.config.mjs", import.meta.url), "utf8");
+
+  assert.equal(pkg.scripts.build, "node scripts/write-build-evidence.mjs --clear && next build && node scripts/write-build-evidence.mjs");
+  assert.match(script, /rm\(outputPath, \{ force: true \}\)/);
+  assert.ok(script.indexOf("await writeFile(temporaryPath") < script.indexOf("await rename(temporaryPath, outputPath)"));
+  assert.match(config, /source: '\/build-evidence\.json'[\s\S]*?key: 'Cache-Control', value: 'no-store'/);
+});
 
 test("browser verifier uses WebCrypto for SHA-512 and Ed25519 without server transmission", () => {
   assert.match(verifier, /crypto\.subtle\.digest\("SHA-512"/);

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next"
+import { getSiteOrigin } from "@/lib/seo"
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,7 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/portal/", "/sign-in", "/sign-up"],
     },
-    sitemap: "https://tamv.online/sitemap.xml",
-    host: "https://tamv.online",
+    sitemap: `${getSiteOrigin()}/sitemap.xml`,
   }
 }

@@ -1,7 +1,7 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai"
 import { z } from "zod"
 import { isabellaAgent } from "@/lib/isabella-agent"
-import { isSameOriginRequest } from "@/lib/http"
+import { isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { TAMV_LEARNING_PATHS } from "@/lib/tamv-learning-curriculum"
 import { enforcePublicRateLimit } from "../../../lib/rate-limit/server.ts"
 
@@ -41,17 +41,22 @@ export async function POST(request: Request) {
     return Response.json({ error: "Forbidden" }, { status: 403, headers: { "Cache-Control": "no-store" } })
   }
 
-  const contentLength = Number(request.headers.get("content-length") ?? 0)
-  if (contentLength > 64_000) return Response.json({ error: "Chat request is too large" }, { status: 413 })
-
-  const rawBody = await request.text()
-  if (rawBody.length > 64_000) return Response.json({ error: "Chat request is too large" }, { status: 413 })
-
   let body: unknown
   try {
-    body = JSON.parse(rawBody)
-  } catch {
-    return Response.json({ error: "Invalid chat request" }, { status: 400 })
+    body = await readJsonBody(request, 64_000)
+  } catch (error) {
+    if (!(error instanceof RequestBodyError)) throw error
+    const status = error.code === "payload_too_large" ? 413 : error.code === "unsupported_media_type" ? 415 : 400
+    const message = error.code === "payload_too_large"
+      ? "Chat request is too large"
+      : error.code === "unsupported_media_type"
+        ? "Content-Type must be application/json"
+        : error.code === "invalid_utf8"
+          ? "Chat request must be valid UTF-8"
+          : error.code === "invalid_json"
+            ? "Invalid chat request"
+            : "Chat request body could not be read"
+    return Response.json({ error: message }, { status, headers: { "Cache-Control": "no-store" } })
   }
 
   const parsed = requestSchema.safeParse(body)

@@ -19,6 +19,7 @@ export function TamvDonationCTA({
     <Link
       className={`tamv-support-link tamv-support-link--${variant}`}
       href={localizedPath("/apoyar", locale)}
+      lang={locale}
       aria-label={accessibleLabel}
     >
       <span className="tamv-support-icon"><HeartHandshake aria-hidden="true" /></span>

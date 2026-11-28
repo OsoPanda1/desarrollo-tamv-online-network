@@ -4,8 +4,9 @@ import { proposalAppeals, proposalEvents, proposalReviews, researchProposals } f
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { makeProposalEventHash } from "@/lib/research/provenance"
 import { canTransitionProposal } from "@/lib/research/workflow"
+import { canReviewAppeal } from "@/lib/research/appeals"
 import { moderationSchema } from "@/lib/validation"
-import { and, desc, eq } from "drizzle-orm"
+import { and, desc, eq, inArray } from "drizzle-orm"
 
 export const dynamic = "force-dynamic"
 
@@ -52,14 +53,26 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     if (proposal.userId === moderator.user.id) return { error: "self_review" as const }
 
     const nextStatus = targetStatus[input.outcome]
-    if (proposal.status === "appealed" && nextStatus && ["in_review", "rejected"].includes(nextStatus)) {
-      const [originalDecision] = await transaction
-        .select({ userId: proposalReviews.userId })
-        .from(proposalReviews)
-        .where(and(eq(proposalReviews.proposalId, proposalId), eq(proposalReviews.outcome, "rejected"), eq(proposalReviews.conflictOfInterest, false)))
-        .orderBy(desc(proposalReviews.createdAt))
+    if (nextStatus && input.outcome !== "recusal") {
+      const [openAppeal] = await transaction
+        .select({ status: proposalAppeals.status })
+        .from(proposalAppeals)
+        .where(and(eq(proposalAppeals.proposalId, proposalId), inArray(proposalAppeals.status, ["received", "under_review"])))
+        .orderBy(desc(proposalAppeals.createdAt))
         .limit(1)
-      if (originalDecision?.userId === moderator.user.id) return { error: "appeal_same_reviewer" as const }
+      if (openAppeal) {
+        const rejectingReviews = await transaction
+          .select({ userId: proposalReviews.userId })
+          .from(proposalReviews)
+          .where(and(eq(proposalReviews.proposalId, proposalId), eq(proposalReviews.outcome, "rejected"), eq(proposalReviews.conflictOfInterest, false)))
+        if (rejectingReviews.length === 0) return { error: "appeal_reviewer_unverified" as const }
+        if (!canReviewAppeal({
+          appealStatus: openAppeal.status,
+          proposalStatus: proposal.status,
+          reviewerId: moderator.user.id,
+          rejectingReviewerIds: rejectingReviews.map((review) => review.userId),
+        })) return { error: "appeal_same_reviewer" as const }
+      }
     }
     if (nextStatus && !canTransitionProposal(proposal.status, nextStatus)) return { error: "invalid_transition" as const }
     if (nextStatus === "published" && !proposal.shareConsent) return { error: "consent_required" as const }
@@ -86,7 +99,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
         .update(proposalAppeals)
         .set({ status: "resolved", resolutionNote: input.feedback, resolvedAt: now })
         .where(and(eq(proposalAppeals.proposalId, proposalId), eq(proposalAppeals.status, "received")))
-    } else if (proposal.status === "in_review" && nextStatus) {
+    } else if (proposal.status === "in_review" && (nextStatus === "accepted" || nextStatus === "rejected")) {
       await transaction
         .update(proposalAppeals)
         .set({ status: "resolved", resolutionNote: input.feedback, resolvedAt: now })
@@ -136,6 +149,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     if (result.error === "consent_required") return apiError("La persona autora no autorizó la publicación pública.", 409)
     if (result.error === "self_review") return apiError("No puedes revisar tu propia propuesta.", 403)
     if (result.error === "appeal_same_reviewer") return apiError("La apelación requiere una persona revisora distinta de quien rechazó la propuesta.", 409)
+    if (result.error === "appeal_reviewer_unverified") return apiError("No fue posible verificar la independencia de la revisión de apelación.", 409)
     return apiError("La transición no está permitida desde el estado actual.", 409)
   }
   return apiJson({ status: result.status })

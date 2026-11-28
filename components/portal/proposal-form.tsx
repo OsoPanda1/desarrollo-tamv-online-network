@@ -6,37 +6,59 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { PortalCheckboxField, PortalField, PortalFieldGroup } from "@/components/shared/portal-form-fields"
 
-export function ProposalForm({ topics, initialTopicId = "" }: { topics: Array<{ id: string; slug: string; titleEs: string }>; initialTopicId?: string }) {
+type EditableProposal = {
+  id: string
+  title: string
+  abstract: string
+  proposalType: string
+  topicId: string | null
+  sourceUrl: string | null
+  license: string | null
+  shareConsent: boolean
+}
+
+export function ProposalForm({ topics, initialTopicId = "", proposal }: { topics: Array<{ id: string; slug: string; titleEs: string }>; initialTopicId?: string; proposal?: EditableProposal }) {
   const router = useRouter()
-  const [title, setTitle] = useState("")
-  const [abstract, setAbstract] = useState("")
-  const [proposalType, setProposalType] = useState("article")
-  const [topicId, setTopicId] = useState(initialTopicId)
-  const [sourceUrl, setSourceUrl] = useState("")
-  const [license, setLicense] = useState("")
-  const [shareConsent, setShareConsent] = useState(false)
+  const [title, setTitle] = useState(proposal?.title ?? "")
+  const [abstract, setAbstract] = useState(proposal?.abstract ?? "")
+  const [proposalType, setProposalType] = useState(proposal?.proposalType ?? "article")
+  const [topicId, setTopicId] = useState(proposal?.topicId ?? initialTopicId)
+  const [sourceUrl, setSourceUrl] = useState(proposal?.sourceUrl ?? "")
+  const [license, setLicense] = useState(proposal?.license ?? "")
+  const [shareConsent, setShareConsent] = useState(proposal?.shareConsent ?? false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
+    setSuccess(false)
     setLoading(true)
     try {
-      const response = await fetch("/api/v1/research/proposals", {
+      const response = await fetch(proposal ? `/api/v1/research/proposals/${proposal.id}/resubmit` : "/api/v1/research/proposals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, abstract, proposalType, topicId: topicId || null, sourceUrl: sourceUrl || null, license: license || null, shareConsent }),
       })
       const result = await response.json() as { id?: string; error?: string }
       if (!response.ok || !result.id) throw new Error(result.error ?? "No fue posible enviar la propuesta.")
-      router.push(`/portal/propuestas/${result.id}`)
-      router.refresh()
+      if (proposal) {
+        setSuccess(true)
+        router.refresh()
+      } else {
+        router.push(`/portal/propuestas/${result.id}`)
+        router.refresh()
+      }
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "No fue posible enviar la propuesta.")
     } finally {
       setLoading(false)
     }
+  }
+
+  if (success && proposal) {
+    return <p className="form-status" role="status">La propuesta fue reenviada y queda pendiente de triage editorial.</p>
   }
 
   return (
@@ -53,7 +75,7 @@ export function ProposalForm({ topics, initialTopicId = "" }: { topics: Array<{ 
       </PortalFieldGroup>
       <PortalCheckboxField id="proposal-share-consent" checked={shareConsent} onCheckedChange={setShareConsent} label="Autorizo que el resumen pueda hacerse público si la propuesta llega a publicarse. Esta autorización puede revocarse antes de la publicación." />
       {error && <p className="form-error" role="alert">{error}</p>}
-      <div className="form-actions"><button className="button button-copper" type="submit" disabled={loading}>{loading ? "Enviando…" : "Enviar a revisión editorial"}</button><p>El envío será privado y quedará como <strong>Recibido</strong>. No equivale a aceptación ni revisión por pares.</p></div>
+      <div className="form-actions"><button className="button button-copper" type="submit" disabled={loading}>{loading ? "Enviando…" : proposal ? "Reenviar propuesta corregida" : "Enviar a revisión editorial"}</button><p>{proposal ? "El reenvío registrará una nueva revisión vinculada al historial de la propuesta." : "El envío será privado y quedará como "}<strong>Recibido</strong>. No equivale a aceptación ni revisión por pares.</p></div>
     </form>
   )
 }

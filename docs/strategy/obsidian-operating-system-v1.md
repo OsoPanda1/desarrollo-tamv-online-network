@@ -49,7 +49,9 @@ The orbital atlas uses a native WebGL2 / GLSL shader for a restrained GPU glow l
 
 ## Build evidence generation
 
-The build command runs Next.js build and then scripts/write-build-evidence.mjs. The script writes public/build-evidence.json only if the Next.js build ID and at least one build manifest exist. The UI labels missing evidence as unpublished; it never fabricates a fingerprint.
+The build command is exactly `node scripts/write-build-evidence.mjs --clear && next build && node scripts/write-build-evidence.mjs`. It removes stale evidence before compilation and publishes `public/build-evidence.json` only after a successful Next.js build produces the build ID and at least one selected build manifest. Generation writes a temporary file and atomically renames it into place; `/build-evidence.json` is served with `Cache-Control: no-store`.
+
+Both UI consumers require schema version 1, `status: "generated"`, `algorithm: "SHA-512"`, and a 128-character lowercase hexadecimal SHA-512 digest. Missing, pending, or malformed evidence remains unpublished; the UI never fabricates a fingerprint. The digest retains the limited scope stated below and is not a signature, trusted timestamp, full-deployment digest, or CI approval.
 
 ## Validation state
 

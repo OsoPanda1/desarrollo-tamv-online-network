@@ -18,6 +18,7 @@ type Membership = {
   cancelAtPeriodEnd: boolean
   createdAt: string
   checkoutUrl: string | null
+  entitled: boolean
 }
 
 type StatusState = "loading" | "anonymous" | "available" | "unavailable"
@@ -35,6 +36,7 @@ function statusLabel(status: string, english: boolean) {
     paused: { es: "Pausada", en: "Paused" },
     checkout_failed: { es: "No se completó el checkout", en: "Checkout failed" },
     checkout_expired: { es: "Checkout vencido", en: "Checkout expired" },
+    expired: { es: "Periodo vencido", en: "Period expired" },
   }
   return values[status]?.[english ? "en" : "es"] ?? status
 }
@@ -117,7 +119,10 @@ export function MembershipStatus({ locale = "es" }: { locale?: Locale }) {
       </div>
       <div className="membership-status-list">
         {memberships.map((membership) => {
-          const entitled = membership.status === "active" || membership.status === "trialing"
+          const entitled = membership.entitled
+          const displayStatus = !entitled && (membership.status === "active" || membership.status === "trialing")
+            ? "expired"
+            : membership.status
           const periodEnd = prettyDate(membership.currentPeriodEnd, english)
           return (
             <article className="membership-status-card" key={membership.id}>
@@ -128,7 +133,7 @@ export function MembershipStatus({ locale = "es" }: { locale?: Locale }) {
                 </div>
                 <span className={`membership-status-badge ${entitled ? "is-active" : "is-pending"}`}>
                   {entitled ? <CheckCircle2 aria-hidden="true" /> : <Clock3 aria-hidden="true" />}
-                  {statusLabel(membership.status, english)}
+                  {statusLabel(displayStatus, english)}
                 </span>
               </div>
               {membership.businessName && <p>{english ? "Organization: " : "Organización: "}<strong>{membership.businessName}</strong></p>}

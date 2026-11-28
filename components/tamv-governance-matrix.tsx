@@ -29,7 +29,7 @@ export function TamvGovernanceMatrix({ locale = "es" }: { locale?: Locale }) {
         <div><h3 id="latamv-governance-title">{english ? "Eight universal control areas" : "Ocho áreas de control universal"}</h3><p>{english ? "A structured review matrix, not a legal compliance verdict." : "Una matriz de revisión estructurada, no un dictamen de cumplimiento jurídico."}</p></div>
         <div className="sovereign-governance-count"><span>08</span><small>{english ? "CONTROL AREAS" : "ÁREAS DE CONTROL"}</small></div>
       </div>
-      <div className="sovereign-governance-table-wrap">
+      <div className="sovereign-governance-table-wrap" tabIndex={0} role="region" aria-label={english ? "Governance comparison table" : "Tabla comparativa de gobernanza"}>
         <table className="sovereign-governance-table">
           <caption>{english ? "Declared governance domains by jurisdiction. All evidence states are unconnected." : "Dominios declarados de gobernanza por jurisdicción. Todos los estados de evidencia permanecen sin conexión."}</caption>
           <thead><tr><th scope="col">{english ? "Control" : "Control"}</th>{jurisdictions.map((jurisdiction) => <th key={jurisdiction.id} scope="col">{english ? jurisdiction.en : jurisdiction.es}</th>)}</tr></thead>

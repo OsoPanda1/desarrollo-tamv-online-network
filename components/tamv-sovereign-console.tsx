@@ -124,14 +124,34 @@ const citationRecords = [
 
 type Probe = "checking" | "available" | "unavailable"
 type BuildEvidence = {
-  status?: string
-  manifestSha512?: string
+  schemaVersion: 1
+  status: "generated"
+  algorithm: "SHA-512"
+  manifestSha512: string
   commitSha?: string | null
   branch?: string | null
   environment?: string
   generatedAt?: string
   scope?: string
 }
+
+export function isGeneratedBuildEvidence(value: unknown): value is BuildEvidence {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false
+  const evidence = value as Record<string, unknown>
+  if (
+    evidence.schemaVersion !== 1 ||
+    evidence.status !== "generated" ||
+    evidence.algorithm !== "SHA-512" ||
+    typeof evidence.manifestSha512 !== "string" ||
+    !/^[a-f0-9]{128}$/.test(evidence.manifestSha512)
+  ) return false
+
+  return ["commitSha", "branch", "environment", "generatedAt", "scope"].every((key) => {
+    const field = evidence[key]
+    return field === undefined || typeof field === "string" || ((key === "commitSha" || key === "branch") && field === null)
+  })
+}
+
 type Signals = { runtime: Probe; catalog: Probe; count: number | null; evidence: BuildEvidence | null; checkedAt: string | null }
 
 function usePublicSignals() {
@@ -165,7 +185,7 @@ function usePublicSignals() {
           runtime: runtime.status === "fulfilled" ? "available" : "unavailable",
           catalog: catalog.status === "fulfilled" ? "available" : "unavailable",
           count: catalog.status === "fulfilled" && Array.isArray(catalog.value?.systems) ? catalog.value.systems.length : null,
-          evidence: evidence.status === "fulfilled" && evidence.value?.status === "generated" ? evidence.value as BuildEvidence : null,
+          evidence: evidence.status === "fulfilled" && isGeneratedBuildEvidence(evidence.value) ? evidence.value : null,
           checkedAt: new Date().toISOString(),
         })
       } finally {
@@ -463,7 +483,7 @@ export function TamvBuildFingerprint({ locale = "es" }: { locale?: Locale }) {
     const controller = new AbortController()
     fetch("/build-evidence.json", { cache: "no-store", signal: controller.signal })
       .then((response) => response.ok ? response.json() : Promise.reject(new Error("no evidence")))
-      .then((data: BuildEvidence) => { if (data.status === "generated" && data.manifestSha512) setEvidence(data) })
+      .then((data: unknown) => { if (isGeneratedBuildEvidence(data)) setEvidence(data) })
       .catch(() => undefined)
     return () => controller.abort()
   }, [])

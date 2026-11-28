@@ -3,8 +3,9 @@ import { db } from "@/lib/db"
 import { membershipSubscriptions, user } from "@/lib/db/schema"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { getMembershipPlan, LIVE_MEMBERSHIP_STATUSES, MEMBERSHIP_TERMS_VERSION } from "@/lib/billing/plans"
+import { isMembershipEntitled } from "@/lib/billing/entitlement"
 import { getAppBaseUrl, getStripeSecret, stripePost } from "@/lib/billing/stripe"
-import { and, eq, inArray } from "drizzle-orm"
+import { and, desc, eq, inArray } from "drizzle-orm"
 import { z } from "zod"
 
 export const runtime = "nodejs"
@@ -129,6 +130,7 @@ export async function POST(request: Request) {
         .select({
           id: membershipSubscriptions.id,
           status: membershipSubscriptions.status,
+          currentPeriodEnd: membershipSubscriptions.currentPeriodEnd,
           stripeCheckoutUrl: membershipSubscriptions.stripeCheckoutUrl,
           createdAt: membershipSubscriptions.createdAt,
         })
@@ -138,9 +140,13 @@ export async function POST(request: Request) {
           eq(membershipSubscriptions.planId, input.planId),
           inArray(membershipSubscriptions.status, [...LIVE_MEMBERSHIP_STATUSES]),
         ))
+        .orderBy(desc(membershipSubscriptions.createdAt))
         .limit(1)
 
-      if (existing) {
+      const expiredActive = existing &&
+        (existing.status === "active" || existing.status === "trialing") &&
+        !isMembershipEntitled(existing.status, existing.currentPeriodEnd, now.getTime())
+      if (existing && !expiredActive) {
         const ageMs = now.getTime() - existing.createdAt.getTime()
         if (
           existing.status === "pending" &&

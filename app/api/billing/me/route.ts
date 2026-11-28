@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { membershipSubscriptions } from "@/lib/db/schema"
+import { isMembershipEntitled } from "@/lib/billing/entitlement"
 import { apiError, apiJson } from "@/lib/http"
 import { desc, eq } from "drizzle-orm"
 
@@ -29,10 +30,11 @@ export async function GET(request: Request) {
       .from(membershipSubscriptions)
       .where(eq(membershipSubscriptions.userId, session.user.id))
       .orderBy(desc(membershipSubscriptions.createdAt))
+    const now = Date.now()
     const memberships = records.map((record) => {
       const { stripeCheckoutUrl, ...safeRecord } = record
       let checkoutUrl: string | null = null
-      const ageMs = Date.now() - record.createdAt.getTime()
+      const ageMs = now - record.createdAt.getTime()
       if (record.status === "pending" && stripeCheckoutUrl && ageMs >= 0 && ageMs < 32 * 60 * 1000) {
         try {
           const candidate = new URL(stripeCheckoutUrl)
@@ -41,7 +43,7 @@ export async function GET(request: Request) {
           checkoutUrl = null
         }
       }
-      return { ...safeRecord, checkoutUrl }
+      return { ...safeRecord, checkoutUrl, entitled: isMembershipEntitled(record.status, record.currentPeriodEnd, now) }
     })
     return apiJson({ memberships })
   } catch {

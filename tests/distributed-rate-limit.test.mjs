@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
-import { decideRateLimit, hashRateLimitKey, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
-import { createPublicRateLimitEnforcer } from "../lib/rate-limit/server.ts";
+import { decideRateLimit, hashRateLimitKey, isValidRateLimitSalt, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { createPublicRateLimitEnforcer, isPublicRateLimitConfigurationReady, isSharedRateLimitEnabled } from "../lib/rate-limit/server.ts";
 
 class FakeSharedStore {
   constructor() {
@@ -82,6 +82,69 @@ test("rate-limit identity keys use a secret salt and never persist raw IP addres
   assert.notEqual(key, hashRateLimitKey("other", "ip:203.0.113.42", salt));
   assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42"), /at least 32 characters/);
   assert.throws(() => hashRateLimitKey("federated", "ip:203.0.113.42", "short"), /at least 32 characters/);
+});
+
+test("rate-limit salt validation distinguishes missing, whitespace, short, and valid values", () => {
+  assert.equal(isValidRateLimitSalt(undefined), false);
+  assert.equal(isValidRateLimitSalt(""), false);
+  assert.equal(isValidRateLimitSalt(" \t\n "), false);
+  assert.equal(isValidRateLimitSalt("s".repeat(31)), false);
+  assert.equal(isValidRateLimitSalt("s".repeat(32)), true);
+  assert.equal(isValidRateLimitSalt(`  ${"s".repeat(32)}  `), true);
+
+  assert.throws(() => hashRateLimitKey("scope", "anonymous", "   "), /at least 32 characters/);
+  assert.match(hashRateLimitKey("scope", "anonymous", `  ${"s".repeat(32)}  `), /^[a-f0-9]{64}$/);
+});
+
+test("public rate-limit configuration is required only when enabled", () => {
+  assert.equal(isPublicRateLimitConfigurationReady(undefined, true), false);
+  assert.equal(isPublicRateLimitConfigurationReady("   ", true), false);
+  assert.equal(isPublicRateLimitConfigurationReady("s".repeat(31), true), false);
+  assert.equal(isPublicRateLimitConfigurationReady("s".repeat(32), true), true);
+  assert.equal(isPublicRateLimitConfigurationReady(undefined, false), true);
+  assert.equal(isPublicRateLimitConfigurationReady("short", false), true);
+});
+
+test("production cannot disable shared public rate limiting", () => {
+  const keys = ["NODE_ENV", "VERCEL_ENV", "TAMV_RATE_LIMIT_ENABLED"];
+  const previous = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  try {
+    process.env.NODE_ENV = "development";
+    process.env.VERCEL_ENV = "preview";
+    process.env.TAMV_RATE_LIMIT_ENABLED = "false";
+    assert.equal(isSharedRateLimitEnabled(), false);
+
+    process.env.TAMV_RATE_LIMIT_ENABLED = "true";
+    assert.equal(isSharedRateLimitEnabled(), true);
+
+    process.env.NODE_ENV = "production";
+    process.env.TAMV_RATE_LIMIT_ENABLED = "false";
+    assert.equal(isSharedRateLimitEnabled(), true);
+
+    process.env.NODE_ENV = "development";
+    process.env.VERCEL_ENV = "production";
+    assert.equal(isSharedRateLimitEnabled(), true);
+  } finally {
+    for (const key of keys) {
+      if (previous[key] === undefined) delete process.env[key];
+      else process.env[key] = previous[key];
+    }
+  }
+});
+
+test("readiness checks enabled rate-limit configuration before probing PostgreSQL", () => {
+  const route = readFileSync(resolve(process.cwd(), "app/api/health/ready/route.ts"), "utf8");
+  const configurationCheck = route.lastIndexOf("isPublicRateLimitConfigurationReady(");
+  const databaseProbe = route.indexOf("await probeDatabaseReadiness(");
+
+  assert.ok(configurationCheck >= 0);
+  assert.ok(databaseProbe > configurationCheck);
+  assert.match(route, /isPublicRateLimitConfigurationReady\(process\.env\.TAMV_RATE_LIMIT_SALT, true\)/);
+  assert.match(route, /database: databaseUrl \? "not_checked" : "not_configured"/);
+  assert.match(route, /rateLimit === "invalid" \|\| !databaseUrl/);
+  assert.match(route, /readinessPayload\(\{/);
+  assert.match(route, /headers: noStoreHeaders/);
+  assert.doesNotMatch(route, /enforcePublicRateLimit|\.consume\(/);
 });
 
 test("missing or weak rate-limit salt is rejected before the shared store is reached", async () => {

@@ -35,6 +35,18 @@ This is a capacity estimate, not a guarantee: provider-side poolers and other ap
 
 Readiness and observability probes now record the exact `pg_backend_pid()` before running `SELECT 1`. If the 1.5 s outer budget expires, a separate short-lived client calls `pg_cancel_backend(pid)` and the pooled client is always released. The response stays 503 with no driver text; liveness remains independent of the database. This is cancellation evidence at the application level, not a substitute for staging saturation tests or provider-side connection limits.
 
+## Build evidence gate
+
+Run the build with the exact ordered command:
+
+```bash
+node scripts/write-build-evidence.mjs --clear && next build && node scripts/write-build-evidence.mjs
+```
+
+The first command removes stale evidence without failing when it is absent. Evidence is generated only after a successful Next.js build, written to a temporary file, and atomically renamed to `public/build-evidence.json`. The public endpoint carries `Cache-Control: no-store`. Review the generated artifact and its diff; do not treat its presence as proof that CI, security review, or deployment passed.
+
+Both UI consumers accept only schema version 1, `status: "generated"`, `algorithm: "SHA-512"`, and a 128-character lowercase hexadecimal digest. Missing or malformed evidence stays unpublished. The digest covers selected Next.js build artifacts only, not the complete deployment, and it is not a digital signature or trusted timestamp.
+
 ## Required evidence record
 
 For each release, record:

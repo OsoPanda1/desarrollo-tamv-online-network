@@ -1,13 +1,9 @@
-import { getPublicProjects, getPublicResearchTopics, getPublishedProposals } from "@/lib/research/queries"
+import { getPublicProjects, getPublicResearchTopics, getPublishedProposals, PublicCollectionLimitError, PUBLIC_RESEARCH_RECORD_LIMIT } from "@/lib/research/queries"
 import { csvCell } from "@/lib/research/csv"
+import { getSiteOrigin } from "@/lib/seo"
 import { NextResponse } from "next/server"
 
 export const dynamic = "force-dynamic"
-
-function baseUrl() {
-  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL
-  return host ? `https://${host}` : "https://tamv.online"
-}
 
 export async function GET(request: Request) {
   try {
@@ -16,7 +12,7 @@ export async function GET(request: Request) {
       getPublicResearchTopics(),
       getPublishedProposals(),
     ])
-    const origin = baseUrl()
+    const origin = getSiteOrigin()
     const records = [
       ...projects.map((project) => ({
         "@type": "ResearchProject",
@@ -71,22 +67,27 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       {
-        "@context": ["https://schema.org", { tamv: "https://tamv.online/vocab/" }],
+        "@context": ["https://schema.org", { tamv: `${origin}/vocab/` }],
         "@type": "DataCatalog",
         name: "TAMV Online Network — catálogo de investigación",
         url: `${origin}/investigacion`,
         dateModified: new Date().toISOString(),
+        recordLimitPerCollection: PUBLIC_RESEARCH_RECORD_LIMIT,
+        recordCounts: { projects: projects.length, topics: topics.length, publications: proposals.length },
         distribution: [
           { "@type": "DataDownload", encodingFormat: "application/ld+json", contentUrl: `${origin}/api/v1/exports/research` },
           { "@type": "DataDownload", encodingFormat: "text/csv", contentUrl: `${origin}/api/v1/exports/research?format=csv` },
         ],
         dataset: records,
         conditionsOfAccess: "Los metadatos públicos pueden reutilizarse respetando la licencia declarada por cada registro. Una licencia ausente no concede permisos adicionales.",
-        note: "Este exporte describe metadatos; no deposita, certifica ni valida los materiales citados.",
+        note: `Este exporte describe metadatos; no deposita, certifica ni valida los materiales citados. Admite hasta ${PUBLIC_RESEARCH_RECORD_LIMIT} registros por colección y responde 503 en lugar de truncarlos.`,
       },
       { headers: { "Content-Type": "application/ld+json; charset=utf-8", "Cache-Control": "no-store" } },
     )
-  } catch {
-    return NextResponse.json({ error: "El exporte no está disponible." }, { status: 503, headers: { "Cache-Control": "no-store" } })
+  } catch (error) {
+    const payload = error instanceof PublicCollectionLimitError
+      ? { error: "El exporte supera el límite operativo; no se devuelven registros truncados.", code: "public_collection_limit_exceeded" }
+      : { error: "El exporte no está disponible." }
+    return NextResponse.json(payload, { status: 503, headers: { "Cache-Control": "no-store" } })
   }
 }

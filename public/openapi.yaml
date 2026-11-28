@@ -36,7 +36,10 @@ paths:
       operationId: listPublicResearchTopics
       tags: [Research]
       summary: List public research topics
-      description: Editorial topics and contribution modes. A topic is not a publication guarantee or a commitment to fund a proposal.
+      description: >-
+        Editorial topics and contribution modes. A topic is not a publication guarantee
+        or a commitment to fund a proposal. The catalog is bounded at 250 records and
+        returns 503 instead of silently truncating a larger collection.
       responses:
         "200":
           description: Public topic catalog.
@@ -51,7 +54,11 @@ paths:
       operationId: listPublicResearchProjects
       tags: [Research]
       summary: List public project records
-      description: Public records include maturity, declared limitations and provenance metadata. A record's presence does not imply production deployment, peer review, certification or measured impact.
+      description: >-
+        Public records include maturity, declared limitations and provenance metadata.
+        A record's presence does not imply production deployment, peer review, certification
+        or measured impact. The catalog is bounded at 250 records and returns 503 instead
+        of silently truncating a larger collection.
       responses:
         "200":
           description: Public project catalog.
@@ -94,7 +101,9 @@ paths:
         Returns visible domains, atoms and active, structurally valid public
         relationships. The graph represents declared exploratory parameters;
         it is not a causally validated model, a prediction, or a measurement
-        of social impact.
+        of social impact. Operational limits are 50 domains, 250 atoms and 1,000
+        edges; exceeding any limit returns 503 rather than a truncated graph or
+        a digest that omits records.
       responses:
         "200":
           description: Public HCU graph.
@@ -113,7 +122,9 @@ paths:
         Without a format query parameter, returns a Schema.org-oriented
         DataCatalog with public project, topic and consented publication
         metadata. Use format=csv for tabular output. A missing license remains
-        unspecified and does not grant reuse rights.
+        unspecified and does not grant reuse rights. Each collection is bounded
+        at 250 records; a larger collection returns 503 in either format instead
+        of a partial export.
       parameters:
         - name: format
           in: query
@@ -423,7 +434,7 @@ paths:
 components:
   responses:
     CatalogUnavailable:
-      description: A database-backed public catalog could not be read.
+      description: A database-backed public catalog could not be read or exceeded its operational record limit.
       content:
         application/json:
           schema:
@@ -595,6 +606,7 @@ components:
           type: string
         records:
           type: array
+          maxItems: 250
           items:
             type: object
             required: [id, slug, area, title, question, contributors, formats, modes, status]
@@ -622,6 +634,7 @@ components:
         version: { type: string }
         records:
           type: array
+          maxItems: 250
           items:
             type: object
             required: [id, slug, category, title, subtitle, description, maturity, limits, provenance]
@@ -668,12 +681,13 @@ components:
       additionalProperties: false
     HcuGraph:
       type: object
-      required: [version, modelVersion, domains, atoms, edges, caveat]
+      required: [version, modelVersion, domains, atoms, edges, limits, caveat]
       properties:
         version: { type: string }
         modelVersion: { type: string }
         domains:
           type: array
+          maxItems: 50
           items:
             type: object
             required: [id, nameEs, nameEn, descriptionEs, descriptionEn, sortOrder]
@@ -686,6 +700,7 @@ components:
               sortOrder: { type: integer }
         atoms:
           type: array
+          maxItems: 250
           items:
             type: object
             required: [id, domainId, nameEs, nameEn, descriptionEs, descriptionEn, influenceX, riskY, evidenceZ, isProvisional, isQuarantined]
@@ -703,6 +718,7 @@ components:
               isQuarantined: { type: boolean }
         edges:
           type: array
+          maxItems: 1000
           items:
             type: object
             required: [id, sourceAtomIds, targetAtomIds, weight, sign, delayYears, tqafLevel, evidenceStatus, sourceTitle, sourceUrl]
@@ -723,10 +739,18 @@ components:
               sourceUrl:
                 type: [string, "null"]
                 format: uri
+        limits:
+          type: object
+          additionalProperties: false
+          required: [domains, atoms, edges]
+          properties:
+            domains: { type: integer, const: 50 }
+            atoms: { type: integer, const: 250 }
+            edges: { type: integer, const: 1000 }
         caveat: { type: string }
     DataCatalog:
       type: object
-      required: ["@context", "@type", name, url, dateModified, distribution, dataset, conditionsOfAccess, note]
+      required: ["@context", "@type", name, url, dateModified, recordLimitPerCollection, recordCounts, distribution, dataset, conditionsOfAccess, note]
       properties:
         "@context":
           type: array
@@ -741,6 +765,17 @@ components:
         dateModified:
           type: string
           format: date-time
+        recordLimitPerCollection:
+          type: integer
+          const: 250
+        recordCounts:
+          type: object
+          additionalProperties: false
+          required: [projects, topics, publications]
+          properties:
+            projects: { type: integer, minimum: 0, maximum: 250 }
+            topics: { type: integer, minimum: 0, maximum: 250 }
+            publications: { type: integer, minimum: 0, maximum: 250 }
         distribution:
           type: array
           items:

@@ -2,6 +2,7 @@ import { db } from "@/lib/db"
 import { billingWebhookEvents, membershipSubscriptions } from "@/lib/db/schema"
 import { apiError, apiJson } from "@/lib/http"
 import { verifyStripeSignature } from "@/lib/billing/signature"
+import { invoiceBillingStatus, isEstablishedSubscriptionStatus, shouldApplyBillingEvent, type BillingOrderDomain } from "@/lib/billing/event-order"
 import { eq } from "drizzle-orm"
 
 export const runtime = "nodejs"
@@ -95,32 +96,79 @@ async function findMembership(transaction: BillingTransaction, membershipId?: st
   return null
 }
 
+type MembershipSnapshot = {
+  id: string
+  status: string
+  stripeEventCreated: number
+  stripeCheckoutEventCreated: number
+  stripeCustomerId: string | null
+  stripeSubscriptionId: string | null
+  stripeCheckoutSessionId: string | null
+  currentPeriodEnd: Date | null
+  cancelAtPeriodEnd: boolean
+}
+
+type MembershipUpdate = Partial<typeof membershipSubscriptions.$inferInsert>
+
 async function syncMembership(
   transaction: BillingTransaction,
   membershipId: string | null,
   eventCreated: number,
-  values: Partial<typeof membershipSubscriptions.$inferInsert>,
+  domain: BillingOrderDomain,
+  values: MembershipUpdate | ((current: MembershipSnapshot) => MembershipUpdate),
 ) {
   if (!membershipId) return
   const [current] = await transaction.select({
     id: membershipSubscriptions.id,
     status: membershipSubscriptions.status,
     stripeEventCreated: membershipSubscriptions.stripeEventCreated,
+    stripeCheckoutEventCreated: membershipSubscriptions.stripeCheckoutEventCreated,
+    stripeCustomerId: membershipSubscriptions.stripeCustomerId,
+    stripeSubscriptionId: membershipSubscriptions.stripeSubscriptionId,
+    stripeCheckoutSessionId: membershipSubscriptions.stripeCheckoutSessionId,
+    currentPeriodEnd: membershipSubscriptions.currentPeriodEnd,
+    cancelAtPeriodEnd: membershipSubscriptions.cancelAtPeriodEnd,
   }).from(membershipSubscriptions)
     .where(eq(membershipSubscriptions.id, membershipId))
     .for("update")
     .limit(1)
-  if (!current || eventCreated < current.stripeEventCreated) return
-  // A session expiry/failure is terminal for this Checkout flow. Do not let a
-  // delayed "incomplete" subscription event reopen a failed reservation.
-  if (
-    (current.status === "checkout_expired" || current.status === "checkout_failed") &&
-    values.status === "incomplete"
-  ) return
+  if (!current) return
+
+  const update = typeof values === "function" ? values(current) : { ...values }
+  const currentWatermark = domain === "checkout" ? current.stripeCheckoutEventCreated : current.stripeEventCreated
+  if (!shouldApplyBillingEvent({
+    domain,
+    currentWatermark,
+    eventCreated,
+    currentStatus: current.status,
+    incomingStatus: update.status,
+  })) return
+
+  if (domain === "checkout") {
+    if (current.status === "checkout_expired" && update.status === "checkout_failed") return
+    if (update.status && isEstablishedSubscriptionStatus(current.status)) delete update.status
+    update.stripeCheckoutSessionId = current.stripeCheckoutSessionId ?? update.stripeCheckoutSessionId
+    update.stripeCustomerId = current.stripeCustomerId ?? update.stripeCustomerId
+    update.stripeSubscriptionId = current.stripeSubscriptionId ?? update.stripeSubscriptionId
+    update.stripeCheckoutEventCreated = eventCreated
+  } else {
+    if (
+      (current.status === "checkout_expired" || current.status === "checkout_failed") &&
+      update.status === "incomplete"
+    ) return
+    update.stripeCustomerId = current.stripeCustomerId ?? update.stripeCustomerId
+    update.stripeSubscriptionId = current.stripeSubscriptionId ?? update.stripeSubscriptionId
+    if (current.currentPeriodEnd && (!update.currentPeriodEnd || update.currentPeriodEnd < current.currentPeriodEnd)) {
+      update.currentPeriodEnd = current.currentPeriodEnd
+    }
+    if (eventCreated === currentWatermark && typeof update.cancelAtPeriodEnd === "boolean") {
+      update.cancelAtPeriodEnd = current.cancelAtPeriodEnd || update.cancelAtPeriodEnd
+    }
+    update.stripeEventCreated = eventCreated
+  }
 
   await transaction.update(membershipSubscriptions).set({
-    ...values,
-    stripeEventCreated: eventCreated,
+    ...update,
     updatedAt: new Date(),
   }).where(eq(membershipSubscriptions.id, membershipId))
 }
@@ -157,7 +205,10 @@ export async function POST(request: Request) {
   if (!event || typeof event.id !== "string" || typeof event.type !== "string" || !event.data || typeof event.data.object !== "object" || event.data.object === null) {
     return apiError("Estructura de evento no válida.", 400)
   }
-  const eventCreated = typeof event.created === "number" && Number.isSafeInteger(event.created) ? event.created : Math.floor(Date.now() / 1000)
+  if (typeof event.created !== "number" || !Number.isSafeInteger(event.created) || event.created <= 0) {
+    return apiError("La fecha del evento no es válida.", 400)
+  }
+  const eventCreated = event.created
 
   try {
     const result = await db.transaction(async (transaction) => {
@@ -182,7 +233,7 @@ export async function POST(request: Request) {
           checkout.metadata?.userId === existing.userId &&
           checkout.metadata?.planId === existing.planId
         ) {
-          await syncMembership(transaction, existing.id, eventCreated, {
+          await syncMembership(transaction, existing.id, eventCreated, "checkout", {
             stripeCheckoutSessionId: checkout.id,
             stripeCustomerId: customerId,
             stripeSubscriptionId: subscriptionId,
@@ -199,7 +250,7 @@ export async function POST(request: Request) {
           existing &&
           checkout.metadata?.userId === existing.userId &&
           checkout.metadata?.planId === existing.planId
-        ) await syncMembership(transaction, existing.id, eventCreated, {
+        ) await syncMembership(transaction, existing.id, eventCreated, "checkout", {
           status: event.type === "checkout.session.expired" ? "checkout_expired" : "checkout_failed",
         })
       } else if (event.type.startsWith("customer.subscription.")) {
@@ -217,7 +268,7 @@ export async function POST(request: Request) {
           subscription.metadata?.membershipId === matching.id &&
           subscription.metadata?.userId === matching.userId &&
           subscription.metadata?.planId === matching.planId
-        ) await syncMembership(transaction, matching.id, eventCreated, {
+        ) await syncMembership(transaction, matching.id, eventCreated, "subscription", {
           stripeSubscriptionId: subscription.id,
           stripeCustomerId: stripeId(subscription.customer),
           status: subscriptionStatus(subscription.status),
@@ -230,12 +281,9 @@ export async function POST(request: Request) {
         const subscriptionId = stripeId(invoice.subscription)
         const membershipId = await findMembership(transaction, undefined, subscriptionId ?? undefined)
         if (membershipId) {
-          const [current] = await transaction.select({ status: membershipSubscriptions.status })
-            .from(membershipSubscriptions).where(eq(membershipSubscriptions.id, membershipId)).limit(1)
-          const status = event.type === "invoice.payment_failed"
-            ? "past_due"
-            : current?.status === "past_due" || current?.status === "unpaid" ? "active" : current?.status
-          if (status) await syncMembership(transaction, membershipId, eventCreated, { status })
+          await syncMembership(transaction, membershipId, eventCreated, "subscription", (current) => ({
+            status: invoiceBillingStatus(current.status, event.type),
+          }))
         }
       }
       return "processed" as const

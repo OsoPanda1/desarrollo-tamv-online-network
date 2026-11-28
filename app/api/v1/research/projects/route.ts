@@ -1,4 +1,4 @@
-import { getPublicProjects } from "@/lib/research/queries"
+import { getPublicProjects, PublicCollectionLimitError } from "@/lib/research/queries"
 import { apiJson } from "@/lib/http"
 
 export const dynamic = "force-dynamic"
@@ -21,7 +21,10 @@ export async function GET() {
       })),
       note: "La madurez y verificación corresponden al registro documentado; no certifican despliegue, seguridad o impacto.",
     })
-  } catch {
+  } catch (error) {
+    if (error instanceof PublicCollectionLimitError) {
+      return apiJson({ error: "El catálogo supera el límite operativo; no se devuelve una lista truncada.", code: "public_collection_limit_exceeded" }, 503)
+    }
     return apiJson({ error: "El catálogo de proyectos no está disponible." }, 503)
   }
 }

@@ -7,7 +7,6 @@ const nextConfig = {
     return [
       { source: '/temas', destination: '/investigacion', permanent: true },
       { source: '/investigacion/temas', destination: '/investigacion', permanent: true },
-      { source: '/ecosistema', destination: '/proyectos', permanent: true },
       { source: '/modulos', destination: '/proyectos', permanent: true },
       { source: '/mapa-hcu', destination: '/hcu', permanent: true },
       { source: '/publicaciones', destination: '/investigacion/publicaciones', permanent: true },
@@ -19,6 +18,12 @@ const nextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/build-evidence.json',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
       {
         source: '/:path*',
         headers: [

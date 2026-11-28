@@ -1,6 +1,9 @@
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Suspense } from 'react'
 import type { Metadata, Viewport } from 'next'
+import { DocumentLanguage } from '@/components/shared/document-language'
+import { getSiteOrigin } from '@/lib/seo'
 import './globals.css'
 import './memberships.css'
 import './visuals.css'
@@ -8,7 +11,7 @@ import './evidence.css'
 import './pearl.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tamv.online'),
+  metadataBase: new URL(getSiteOrigin()),
   title: {
     default: 'TAMV Online Network — Investigación, tecnología y memoria viva',
     template: '%s | TAMV Online Network',
@@ -17,13 +20,9 @@ export const metadata: Metadata = {
     'Iniciativa mexicana independiente de investigación, tecnología y memoria territorial. Conocimiento con contexto, tecnología con responsabilidad.',
   applicationName: 'TAMV Online Network',
   generator: 'Next.js',
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     locale: 'es_MX',
-    url: 'https://tamv.online',
     siteName: 'TAMV Online Network',
     title: 'TAMV Online Network — El futuro digital necesita raíces',
     description:
@@ -51,8 +50,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body className="antialiased">
+        <Suspense fallback={null}><DocumentLanguage /></Suspense>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}

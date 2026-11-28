@@ -120,7 +120,7 @@ export function HcuAnalyticsOverview({ graph, locale, onSelectDomain }: Props) {
 
       <article className="hcu-analytics-card">
         <h4>{english ? "Domain comparison" : "Comparativa por dominio"}</h4>
-        <div className="hcu-analytics-table-scroll">
+        <div className="hcu-analytics-table-scroll" tabIndex={0} role="region" aria-label={english ? "Domain comparison table" : "Tabla comparativa por dominio"}>
           <table className="hcu-analytics-table">
             <thead><tr><th>{english ? "Domain" : "Dominio"}</th><th>{english ? "Atoms" : "Átomos"}</th><th>{english ? "Mean risk" : "Riesgo medio"}</th><th>{english ? "Risk ≥ 65" : "Riesgo ≥ 65"}</th><th>{english ? "Relations" : "Relaciones"}</th></tr></thead>
             <tbody>{stats.domains.map((row) => <tr key={row.domain.id}>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Textarea } from "@/components/ui/textarea"
 import { PortalField, PortalFieldGroup } from "@/components/shared/portal-form-fields"
 
-export function AppealForm({ proposalId }: { proposalId: string }) {
+export function AppealForm({ proposalId, submitted = false }: { proposalId: string; submitted?: boolean }) {
   const router = useRouter()
   const [reason, setReason] = useState("")
   const [error, setError] = useState<string | null>(null)
@@ -33,6 +33,10 @@ export function AppealForm({ proposalId }: { proposalId: string }) {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (submitted) {
+    return <p className="form-status" role="status">La apelación ya fue recibida y está pendiente de una revisión independiente.</p>
   }
 
   return <form className="portal-form" onSubmit={submit}>

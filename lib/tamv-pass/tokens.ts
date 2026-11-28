@@ -14,6 +14,7 @@ import {
   TAMV_PASS_TOKEN_TYPE,
   TAMV_PASS_TOKEN_PURPOSE,
   TAMV_PASS_SIGNING_ALGORITHM,
+  isTamvPassRole,
   type TamvPassClaims,
   type TamvPassScope,
 } from "./contract.ts";
@@ -216,7 +217,7 @@ export async function createTamvPassToken(
   }
   if (scopes.includes("tamv:read")) {
     const role = subject.role;
-    claims.tamv_role = role === "admin" || role === "moderator" ? role : "member";
+    claims.tamv_role = role === "admin" ? "admin" : ["moderator", "reviewer", "editor"].includes(role ?? "") ? "moderator" : "member";
   }
 
   const accessToken = await new SignJWT(claims)
@@ -263,14 +264,23 @@ export async function verifyTamvPassToken(token: string, expectedAudience: strin
     || payload.tamv_version !== 1
     || typeof payload.sub !== "string"
     || payload.sub.length === 0
+    || typeof payload.jti !== "string"
+    || payload.jti.length === 0
     || typeof payload.scope !== "string"
   ) {
     throw new Error("TAMV Pass token claims are invalid.");
   }
 
-  const scopes = payload.scope.split(" ").filter(Boolean);
-  if (scopes.length === 0 || scopes.some((scope) => !TAMV_PASS_SUPPORTED_SCOPES.includes(scope as TamvPassScope))) {
-    throw new Error("TAMV Pass token has unsupported scopes.");
+  const rawScopes = payload.scope.split(" ").filter(Boolean);
+  const scopes = [...new Set(rawScopes)];
+  if (scopes.length === 0 || scopes.length !== rawScopes.length || scopes.some((scope) => !TAMV_PASS_SUPPORTED_SCOPES.includes(scope as TamvPassScope))) {
+    throw new Error("TAMV Pass token has unsupported or duplicated scopes.");
+  }
+  if (
+    (scopes.includes("tamv:read") && !isTamvPassRole(payload.tamv_role)) ||
+    (!scopes.includes("tamv:read") && payload.tamv_role !== undefined)
+  ) {
+    throw new Error("TAMV Pass token role claim is invalid.");
   }
   if (typeof payload.iat !== "number" || typeof payload.exp !== "number" || payload.exp <= payload.iat || payload.exp - payload.iat > TAMV_PASS_TOKEN_TTL_SECONDS) {
     throw new Error("TAMV Pass token lifetime is invalid.");

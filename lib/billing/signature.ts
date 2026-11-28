@@ -4,7 +4,8 @@ const DEFAULT_TOLERANCE_SECONDS = 300
 
 /**
  * Stripe signs the exact raw body. Call this before JSON parsing or any body
- * transformation. A bounded timestamp window limits replay of captured events.
+ * transformation. Past timestamps remain valid because retries keep the
+ * original signature; the webhook event ledger provides replay protection.
  */
 export function verifyStripeSignature(
   rawBody: string,
@@ -19,7 +20,7 @@ export function verifyStripeSignature(
   const timestampText = fields.find(([key]) => key === "t")?.[1]
   const timestamp = Number(timestampText)
   if (!timestampText || !Number.isSafeInteger(timestamp) || timestamp <= 0) return false
-  if (Math.abs(Math.floor(nowMs / 1000) - timestamp) > toleranceSeconds) return false
+  if (timestamp - Math.floor(nowMs / 1000) > toleranceSeconds) return false
 
   const expected = createHmac("sha256", secret).update(`${timestamp}.${rawBody}`, "utf8").digest()
   const signatures = fields

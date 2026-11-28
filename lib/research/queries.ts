@@ -18,21 +18,41 @@ import {
   tqafAssessments,
 } from "@/lib/db/schema"
 import { and, count, desc, eq, inArray } from "drizzle-orm"
+import { MAX_PUBLIC_HCU_ATOMS, MAX_PUBLIC_HCU_EDGES } from "@/lib/hcu/budget"
+
+export const PUBLIC_RESEARCH_RECORD_LIMIT = 250
+export const PUBLIC_HCU_DOMAIN_LIMIT = 50
+
+export class PublicCollectionLimitError extends Error {
+  constructor(collection: string) {
+    super(`${collection}_public_limit_exceeded`)
+    this.name = "PublicCollectionLimitError"
+  }
+}
+
+function enforcePublicLimit<T>(records: T[], limit: number, collection: string): T[] {
+  if (records.length > limit) throw new PublicCollectionLimitError(collection)
+  return records
+}
 
 export async function getPublicResearchTopics() {
-  return db
+  const topics = await db
     .select()
     .from(researchTopics)
     .where(and(eq(researchTopics.userId, "system"), eq(researchTopics.status, "open")))
-    .orderBy(researchTopics.area, researchTopics.titleEs)
+    .orderBy(researchTopics.area, researchTopics.titleEs, researchTopics.id)
+    .limit(PUBLIC_RESEARCH_RECORD_LIMIT + 1)
+  return enforcePublicLimit(topics, PUBLIC_RESEARCH_RECORD_LIMIT, "research_topics")
 }
 
 export async function getPublicResearchTopicsIncludingClosed() {
-  return db
+  const topics = await db
     .select()
     .from(researchTopics)
     .where(eq(researchTopics.userId, "system"))
-    .orderBy(researchTopics.area, researchTopics.titleEs)
+    .orderBy(researchTopics.area, researchTopics.titleEs, researchTopics.id)
+    .limit(PUBLIC_RESEARCH_RECORD_LIMIT + 1)
+  return enforcePublicLimit(topics, PUBLIC_RESEARCH_RECORD_LIMIT, "research_topics")
 }
 
 export async function getPublicResearchTopic(slug: string) {
@@ -45,11 +65,13 @@ export async function getPublicResearchTopic(slug: string) {
 }
 
 export async function getPublicProjects() {
-  return db
+  const projects = await db
     .select()
     .from(researchProjects)
     .where(eq(researchProjects.visibility, "public"))
-    .orderBy(researchProjects.category, researchProjects.titleEs)
+    .orderBy(researchProjects.category, researchProjects.titleEs, researchProjects.id)
+    .limit(PUBLIC_RESEARCH_RECORD_LIMIT + 1)
+  return enforcePublicLimit(projects, PUBLIC_RESEARCH_RECORD_LIMIT, "research_projects")
 }
 
 export async function getPublicProject(slug: string) {
@@ -66,20 +88,29 @@ export async function getPublicHcuGraph() {
     .select()
     .from(hcuDomains)
     .where(and(eq(hcuDomains.userId, "system"), eq(hcuDomains.visibility, "public")))
-    .orderBy(hcuDomains.sortOrder)
+    .orderBy(hcuDomains.sortOrder, hcuDomains.id)
+    .limit(PUBLIC_HCU_DOMAIN_LIMIT + 1)
+  enforcePublicLimit(domains, PUBLIC_HCU_DOMAIN_LIMIT, "hcu_domains")
+
   const domainIds = domains.map((domain) => domain.id)
   const atoms = domainIds.length
     ? await db
         .select()
         .from(hcuAtoms)
         .where(and(eq(hcuAtoms.userId, "system"), eq(hcuAtoms.visibility, "public"), inArray(hcuAtoms.domainId, domainIds)))
-        .orderBy(hcuAtoms.nameEs)
+        .orderBy(hcuAtoms.nameEs, hcuAtoms.id)
+        .limit(MAX_PUBLIC_HCU_ATOMS + 1)
     : []
+  enforcePublicLimit(atoms, MAX_PUBLIC_HCU_ATOMS, "hcu_atoms")
+
   const edges = await db
     .select()
     .from(hcuHyperedges)
     .where(and(eq(hcuHyperedges.userId, "system"), eq(hcuHyperedges.visibility, "public"), eq(hcuHyperedges.isActive, true)))
-    .orderBy(hcuHyperedges.createdAt)
+    .orderBy(hcuHyperedges.createdAt, hcuHyperedges.id)
+    .limit(MAX_PUBLIC_HCU_EDGES + 1)
+  enforcePublicLimit(edges, MAX_PUBLIC_HCU_EDGES, "hcu_edges")
+
   const atomIds = new Set(atoms.map((atom) => atom.id))
   return {
     domains,
@@ -146,7 +177,7 @@ export async function getPublicResearchers() {
 }
 
 export async function getPublishedProposals() {
-  return db
+  const proposals = await db
     .select({
       id: researchProposals.id,
       title: researchProposals.title,
@@ -165,7 +196,9 @@ export async function getPublishedProposals() {
         eq(researchProposals.shareConsent, true),
       ),
     )
-    .orderBy(desc(researchProposals.publishedAt))
+    .orderBy(desc(researchProposals.publishedAt), researchProposals.id)
+    .limit(PUBLIC_RESEARCH_RECORD_LIMIT + 1)
+  return enforcePublicLimit(proposals, PUBLIC_RESEARCH_RECORD_LIMIT, "research_proposals")
 }
 
 export async function getUserResearchProfile(userId: string) {

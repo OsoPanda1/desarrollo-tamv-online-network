@@ -18,7 +18,7 @@ test("TAMV membership plan amounts and monthly recurrence are authoritative", ()
   assert.equal(COURSE_MODULE_IDS.length, 5);
 });
 
-test("Stripe signature verifier accepts valid signatures and rejects tampering/replay", () => {
+test("Stripe signature verifier accepts valid retries and rejects tampering/future timestamps", () => {
   const secret = "local-signature-fixture-not-a-credential";
   const now = 1_800_000_000_000;
   const timestamp = Math.floor(now / 1000);
@@ -28,7 +28,9 @@ test("Stripe signature verifier accepts valid signatures and rejects tampering/r
 
   assert.equal(verifyStripeSignature(body, header, secret, now), true);
   assert.equal(verifyStripeSignature(body + " ", header, secret, now), false);
-  assert.equal(verifyStripeSignature(body, header, secret, now + 600_000), false);
+  assert.equal(verifyStripeSignature(body, header, secret, now + 301_000), true);
+  assert.equal(verifyStripeSignature(body, header, secret, now + 24 * 60 * 60_000), true);
+  assert.equal(verifyStripeSignature(body, header, secret, now - 301_000), false);
   assert.equal(verifyStripeSignature(body, null, secret, now), false);
 });
 
@@ -102,7 +104,8 @@ test("course progression is server-gated to active or trialing membership and ow
   const progressApi = read("app/api/memberships/course-progress/route.ts");
   const coursePage = read("app/formacion/page.tsx");
   assert.match(progressApi, /auth\.api\.getSession/);
-  assert.match(progressApi, /inArray\(membershipSubscriptions\.status, \["active", "trialing"\]\)/);
+  assert.match(progressApi, /membershipEntitlementCondition/);
+  assert.match(progressApi, /\.for\("update"\)/);
   assert.match(progressApi, /eq\(memberCourseProgress\.userId, session\.user\.id\)/);
   assert.match(coursePage, /eq\(memberCourseProgress\.courseSlug, COURSE_SLUG\)/);
   assert.match(coursePage, /activeMembership/);
@@ -140,7 +143,7 @@ test("billing status is scoped to the authenticated user and never exposes the s
   assert.match(status, /eq\(membershipSubscriptions\.userId, session\.user\.id\)/);
   assert.match(status, /const \{ stripeCheckoutUrl, \.\.\.safeRecord \} = record/);
   assert.match(status, /candidate\.hostname === "checkout\.stripe\.com"/);
-  assert.match(status, /return \{ \.\.\.safeRecord, checkoutUrl \}/);
+  assert.match(status, /return \{ \.\.\.safeRecord, checkoutUrl, entitled: isMembershipEntitled\(/);
 });
 
 test("company membership is explicitly per organization and current seat limitations are documented", () => {

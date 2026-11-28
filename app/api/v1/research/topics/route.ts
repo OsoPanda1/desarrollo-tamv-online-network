@@ -1,4 +1,4 @@
-import { getPublicResearchTopics } from "@/lib/research/queries"
+import { getPublicResearchTopics, PublicCollectionLimitError } from "@/lib/research/queries"
 import { apiJson } from "@/lib/http"
 
 export const dynamic = "force-dynamic"
@@ -22,7 +22,10 @@ export async function GET() {
       })),
       note: "Las líneas describen temas editoriales; no constituyen convocatorias ni garantizan publicación.",
     })
-  } catch {
+  } catch (error) {
+    if (error instanceof PublicCollectionLimitError) {
+      return apiJson({ error: "El catálogo supera el límite operativo; no se devuelve una lista truncada.", code: "public_collection_limit_exceeded" }, 503)
+    }
     return apiJson({ error: "El catálogo de investigación no está disponible." }, 503)
   }
 }

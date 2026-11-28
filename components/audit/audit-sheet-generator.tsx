@@ -97,6 +97,7 @@ export function AuditSheetGenerator({ locale }: { locale: Locale }) {
   const [verify, setVerify] = useState("—")
   const [pubHex, setPubHex] = useState("")
   const [edAvailable, setEdAvailable] = useState(true)
+  const [keyReady, setKeyReady] = useState(false)
   const [message, setMessage] = useState("")
   const keyPairRef = useRef<CryptoKeyPair | null>(null)
   const renderToken = useRef(0)
@@ -159,6 +160,7 @@ export function AuditSheetGenerator({ locale }: { locale: Locale }) {
         if (cancelled) return
         keyPairRef.current = kp
         setPubHex(hexOf(raw))
+        setKeyReady(true)
       })
       .catch(() => {
         if (!cancelled) setEdAvailable(false)
@@ -210,7 +212,7 @@ export function AuditSheetGenerator({ locale }: { locale: Locale }) {
         if (token !== renderToken.current) return
         setDigest("— digest no calculado en este navegador —")
       })
-  }, [canonical, english])
+  }, [canonical, english, keyReady])
 
   function applyPreset(preset: Preset, label: string) {
     setPack(preset.pack)

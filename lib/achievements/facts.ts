@@ -14,6 +14,7 @@ import {
   researcherProfiles,
 } from "@/lib/db/schema"
 import { COURSE_SLUG } from "@/lib/billing/plans"
+import { membershipEntitlementCondition } from "@/lib/billing/entitlement-query"
 import { and, count, eq, inArray } from "drizzle-orm"
 import type { AchievementFacts } from "./catalog"
 
@@ -87,12 +88,7 @@ export async function loadAchievementFacts(userId: string): Promise<AchievementF
     db
       .select({ status: membershipSubscriptions.status })
       .from(membershipSubscriptions)
-      .where(
-        and(
-          eq(membershipSubscriptions.userId, userId),
-          inArray(membershipSubscriptions.status, ["active", "trialing"]),
-        ),
-      )
+      .where(membershipEntitlementCondition(userId))
       .limit(1),
   ])
 

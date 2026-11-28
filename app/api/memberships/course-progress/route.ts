@@ -3,6 +3,7 @@ import { db } from "@/lib/db"
 import { memberCourseProgress, membershipSubscriptions } from "@/lib/db/schema"
 import { apiError, apiJson, isSameOriginRequest, readJsonBody, RequestBodyError } from "@/lib/http"
 import { COURSE_MODULE_IDS, COURSE_SLUG, isCourseModuleId } from "@/lib/billing/plans"
+import { membershipEntitlementCondition } from "@/lib/billing/entitlement-query"
 import { and, eq, inArray } from "drizzle-orm"
 
 export const runtime = "nodejs"
@@ -11,10 +12,7 @@ export const dynamic = "force-dynamic"
 async function paidMember(userId: string) {
   const [membership] = await db.select({ id: membershipSubscriptions.id })
     .from(membershipSubscriptions)
-    .where(and(
-      eq(membershipSubscriptions.userId, userId),
-      inArray(membershipSubscriptions.status, ["active", "trialing"]),
-    ))
+    .where(membershipEntitlementCondition(userId))
     .limit(1)
   return Boolean(membership)
 }
@@ -54,28 +52,39 @@ export async function POST(request: Request) {
   if (!isCourseModuleId(input.moduleId) || typeof input.completed !== "boolean") {
     return apiError("Módulo o estado de progreso no válido.", 400)
   }
+  const moduleId = input.moduleId
+  const completed = input.completed
 
   try {
-    if (!(await paidMember(session.user.id))) return apiError("El curso requiere una membresía activa.", 403)
+    const updated = await db.transaction(async (transaction) => {
+      const [membership] = await transaction.select({ id: membershipSubscriptions.id })
+        .from(membershipSubscriptions)
+        .where(membershipEntitlementCondition(session.user.id))
+        .for("update")
+        .limit(1)
+      if (!membership) return false
 
-    if (input.completed) {
-      await db.insert(memberCourseProgress).values({
-        id: crypto.randomUUID(),
-        userId: session.user.id,
-        courseSlug: COURSE_SLUG,
-        moduleId: input.moduleId,
-        completedAt: new Date(),
-        updatedAt: new Date(),
-      }).onConflictDoNothing()
-    } else {
-      await db.delete(memberCourseProgress).where(and(
-        eq(memberCourseProgress.userId, session.user.id),
-        eq(memberCourseProgress.courseSlug, COURSE_SLUG),
-        eq(memberCourseProgress.moduleId, input.moduleId),
-      ))
-    }
+      if (completed) {
+        await transaction.insert(memberCourseProgress).values({
+          id: crypto.randomUUID(),
+          userId: session.user.id,
+          courseSlug: COURSE_SLUG,
+          moduleId,
+          completedAt: new Date(),
+          updatedAt: new Date(),
+        }).onConflictDoNothing()
+      } else {
+        await transaction.delete(memberCourseProgress).where(and(
+          eq(memberCourseProgress.userId, session.user.id),
+          eq(memberCourseProgress.courseSlug, COURSE_SLUG),
+          eq(memberCourseProgress.moduleId, moduleId),
+        ))
+      }
+      return true
+    })
+    if (!updated) return apiError("El curso requiere una membresía activa.", 403)
 
-    return apiJson({ updated: true, moduleId: input.moduleId, completed: input.completed })
+    return apiJson({ updated: true, moduleId, completed })
   } catch {
     return apiError("No fue posible guardar el progreso. Comprueba las migraciones.", 503)
   }

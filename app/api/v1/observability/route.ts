@@ -1,6 +1,7 @@
 import { db, pool } from "@/lib/db"
 import { hcuAtoms, researchProposals, researchTopics, researcherProfiles } from "@/lib/db/schema"
 import { probeDatabaseReadiness } from "@/lib/db/readiness"
+import { createSingleFlightTtlCache } from "@/lib/health"
 import { apiJson } from "@/lib/http"
 import { and, count, eq } from "drizzle-orm"
 
@@ -12,6 +13,14 @@ const DATABASE_PROBE_TIMEOUT_MS = 1_500
 const processStartedAt = Date.now()
 
 type Probe = { ok: boolean; latencyMs: number | null }
+type DatabaseSnapshot = {
+  database: Probe;
+  publishedProposals: number | null;
+  publicResearchers: number | null;
+  publicTopics: number | null;
+  publicHcuAtoms: number | null;
+  databaseMeasuredAt: string;
+};
 
 async function probeDatabase(): Promise<Probe> {
   const started = performance.now()
@@ -36,17 +45,7 @@ async function safeCount(run: () => PromiseLike<{ value: number | string }[]>): 
   }
 }
 
-const toMb = (bytes: number) => Math.round((bytes / (1024 * 1024)) * 10) / 10
-
-/**
- * Public observability snapshot for this single instance.
- *
- * Everything here is measured or counted at request time. Nothing is
- * extrapolated: the payload explicitly says it covers one process, not the
- * whole platform, and every field can be `null` when the measurement fails.
- * No host, connection string, driver text, or secret is ever returned.
- */
-export async function GET() {
+async function measureDatabaseSnapshot(): Promise<DatabaseSnapshot> {
   const [database, publishedProposals, publicResearchers, publicTopics, publicHcuAtoms] = await Promise.all([
     probeDatabase(),
     safeCount(() =>
@@ -75,6 +74,37 @@ export async function GET() {
     ),
   ])
 
+  return {
+    database,
+    publishedProposals,
+    publicResearchers,
+    publicTopics,
+    publicHcuAtoms,
+    databaseMeasuredAt: new Date().toISOString(),
+  };
+}
+
+const getDatabaseSnapshot = createSingleFlightTtlCache(measureDatabaseSnapshot, 30_000);
+
+const toMb = (bytes: number) => Math.round((bytes / (1024 * 1024)) * 10) / 10
+
+/**
+ * Public observability snapshot for this single instance.
+ *
+ * Database readiness and public counts share a 30-second snapshot, including
+ * failed probes and null counts. Memory, uptime, and measuredAt remain specific
+ * to each request. No host, connection string, driver text, or secret is returned.
+ */
+export async function GET() {
+  const {
+    database,
+    publishedProposals,
+    publicResearchers,
+    publicTopics,
+    publicHcuAtoms,
+    databaseMeasuredAt,
+  } = await getDatabaseSnapshot()
+
   const memory = process.memoryUsage()
   const commit = process.env.VERCEL_GIT_COMMIT_SHA
 
@@ -83,6 +113,7 @@ export async function GET() {
       status: "measured",
       service: "tamv-online-network",
       measuredAt: new Date().toISOString(),
+      databaseMeasuredAt,
       scope: "single-instance",
       instance: {
         uptimeSeconds: Math.round((Date.now() - processStartedAt) / 1000),
@@ -110,8 +141,8 @@ export async function GET() {
         publicHcuAtoms,
       },
       notes: {
-        es: "Medición de una sola instancia. Los conteos son agregados públicos y pueden ser nulos si la consulta falla.",
-        en: "Single-instance measurement. Counts are public aggregates and may be null when a query fails.",
+        es: "Instantánea de una sola instancia. PostgreSQL y los conteos públicos se comparten durante 30 s; memoria y uptime corresponden a cada solicitud. Los conteos pueden ser nulos si la consulta falla.",
+        en: "Single-instance snapshot. PostgreSQL and public counts are shared for 30 seconds; memory and uptime are request-specific. Counts may be null when a query fails.",
       },
     },
     200,

@@ -51,6 +51,45 @@ test("issues a short-lived audience-bound RS256 token from a known authenticated
   assert.ok(Number(claims.exp) - Number(claims.iat) <= TAMV_PASS_TOKEN_TTL_SECONDS);
 });
 
+test("maps application moderation roles to the federated moderator role without elevating unknown roles", async () => {
+  for (const role of ["reviewer", "editor", "moderator"]) {
+    const issued = await createTamvPassToken({ ...subject, role }, "https://api.example.test", ["tamv:read"]);
+    const claims = await verifyTamvPassToken(issued.accessToken, "https://api.example.test");
+    assert.equal(claims.tamv_role, "moderator");
+  }
+  for (const role of ["member", "owner", "", null]) {
+    const issued = await createTamvPassToken({ ...subject, role }, "https://api.example.test", ["tamv:read"]);
+    const claims = await verifyTamvPassToken(issued.accessToken, "https://api.example.test");
+    assert.equal(claims.tamv_role, "member");
+  }
+});
+
+test("rejects missing or inconsistent role claims and duplicated scopes", async () => {
+  const privateKey = await importPKCS8(currentPrivatePem, "RS256");
+  const sign = (claims) => new SignJWT(claims)
+    .setProtectedHeader({ alg: "RS256", typ: "tamv-pass+jwt", kid: "test-current-key" })
+    .setIssuer("https://issuer.example.test")
+    .setAudience("https://api.example.test")
+    .setSubject("role-validation-user")
+    .setIssuedAt()
+    .setExpirationTime("180s")
+    .setJti("role-validation-token")
+    .sign(privateKey);
+
+  await assert.rejects(
+    async () => verifyTamvPassToken(await sign({ token_use: "tamv_pass", tamv_version: 1, scope: "tamv:read" }), "https://api.example.test"),
+    /role claim is invalid/,
+  );
+  await assert.rejects(
+    async () => verifyTamvPassToken(await sign({ token_use: "tamv_pass", tamv_version: 1, scope: "profile:read", tamv_role: "admin" }), "https://api.example.test"),
+    /role claim is invalid/,
+  );
+  await assert.rejects(
+    async () => verifyTamvPassToken(await sign({ token_use: "tamv_pass", tamv_version: 1, scope: "profile:read profile:read" }), "https://api.example.test"),
+    /duplicated scopes/,
+  );
+});
+
 test("requires explicit scopes rather than silently disclosing a default profile", async () => {
   await assert.rejects(
     () => createTamvPassToken(subject, "https://api.example.test"),

@@ -8,13 +8,17 @@ export function livenessPayload(timestamp = new Date().toISOString()) {
   };
 }
 
-export function readinessPayload(databaseReady: boolean, timestamp = new Date().toISOString()) {
+export type ReadinessChecks = {
+  database: "ok" | "unavailable" | "not_configured" | "not_checked";
+  rateLimit: "ok" | "invalid" | "disabled";
+};
+
+export function readinessPayload(checks: ReadinessChecks, timestamp = new Date().toISOString()) {
+  const ready = checks.database === "ok" && checks.rateLimit !== "invalid";
   return {
-    status: databaseReady ? ("ready" as const) : ("not_ready" as const),
+    status: ready ? ("ready" as const) : ("not_ready" as const),
     service: "tamv-online-network",
-    checks: {
-      database: databaseReady ? ("ok" as const) : ("unavailable" as const),
-    },
+    checks,
     timestamp,
   };
 }
@@ -24,11 +28,35 @@ export const noStoreHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 
+// Share in-flight and resolved values, including falsy values, until the TTL expires.
+export function createSingleFlightTtlCache<T>(
+  load: () => Promise<T>,
+  ttlMs: number,
+  now: () => number = Date.now,
+): () => Promise<T> {
+  let cached: { value: T; expiresAt: number } | undefined;
+  let inFlight: Promise<T> | undefined;
 
-/**
- * Bound the public readiness response even when a pool is saturated or a
- * dependency is slow. The underlying query also has its own driver timeout.
- */
+  return () => {
+    const currentTime = now();
+    if (cached && currentTime < cached.expiresAt) return Promise.resolve(cached.value);
+    if (inFlight) return inFlight;
+
+    const pending = (async () => load())()
+      .then((value) => {
+        cached = { value, expiresAt: now() + ttlMs };
+        return value;
+      })
+      .finally(() => {
+        if (inFlight === pending) inFlight = undefined;
+      });
+
+    inFlight = pending;
+    return pending;
+  };
+}
+
+// Bound readiness even when the underlying pool is saturated.
 export async function probeWithinBudget(
   operation: Promise<unknown>,
   timeoutMs: number,

@@ -221,6 +221,14 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
         </button>
       </form>
 
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {loading
+          ? (english ? "Search in progress." : "Búsqueda en curso.")
+          : results
+            ? (english ? `Search completed: ${results.results.length} records.` : `Búsqueda completada: ${results.results.length} registros.`)
+            : ""}
+      </p>
+
       <p className="federated-search-boundary">
         {english
           ? "Read-only public metadata. Your query is forwarded to the configured institutional service and its providers; do not enter personal, confidential, or sensitive data. Result order is not a quality score."

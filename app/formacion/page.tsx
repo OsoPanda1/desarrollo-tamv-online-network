@@ -12,6 +12,7 @@ import { db } from "@/lib/db"
 import { memberCourseProgress, membershipSubscriptions } from "@/lib/db/schema"
 import { and, eq, inArray } from "drizzle-orm"
 import { COURSE_MODULE_IDS, COURSE_SLUG } from "@/lib/billing/plans"
+import { membershipEntitlementCondition } from "@/lib/billing/entitlement-query"
 import { isLiveMembershipCheckoutReady } from "@/lib/billing/checkout-readiness"
 import { resolveLocale } from "@/lib/i18n"
 
@@ -151,10 +152,7 @@ export default async function MemberFormationPage({ searchParams }: { searchPara
     try {
       const [membership] = await db.select({ id: membershipSubscriptions.id })
         .from(membershipSubscriptions)
-        .where(and(
-          eq(membershipSubscriptions.userId, session.user.id),
-          inArray(membershipSubscriptions.status, ["active", "trialing"]),
-        ))
+        .where(membershipEntitlementCondition(session.user.id))
         .limit(1)
       activeMembership = Boolean(membership)
       if (activeMembership) {

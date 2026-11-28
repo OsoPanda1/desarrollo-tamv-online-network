@@ -1,6 +1,7 @@
 import {
   decideRateLimit,
   hashRateLimitKey,
+  isValidRateLimitSalt,
   requestIdentityFromHeaders,
   windowBounds,
   type RateLimitDecision,
@@ -54,7 +55,7 @@ class PostgresRateLimitStore implements RateLimitStore {
       try {
         await client.query("ROLLBACK");
       } catch {
-        // The original store failure is the useful signal; a failed rollback must not hide it.
+        // Preserve the original store failure if rollback also fails.
       }
       throw error;
     } finally {
@@ -66,8 +67,13 @@ class PostgresRateLimitStore implements RateLimitStore {
 const sharedStore: RateLimitStore = new PostgresRateLimitStore();
 
 export function isSharedRateLimitEnabled(): boolean {
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production") return true;
   if (process.env.TAMV_RATE_LIMIT_ENABLED === "false") return false;
-  return process.env.TAMV_RATE_LIMIT_ENABLED === "true" || process.env.VERCEL_ENV === "production";
+  return process.env.TAMV_RATE_LIMIT_ENABLED === "true";
+}
+
+export function isPublicRateLimitConfigurationReady(salt?: string, enabled?: boolean): boolean {
+  return !enabled || isValidRateLimitSalt(salt);
 }
 
 function sharedHeaders(decision: RateLimitDecision, limit: number) {
@@ -81,21 +87,14 @@ function sharedHeaders(decision: RateLimitDecision, limit: number) {
   };
 }
 
-/**
- * Runtime dependencies for the public rate limiter. Keeping these injectable
- * makes configuration failures testable without depending on PostgreSQL uptime.
- */
+// Injectable runtime dependencies keep configuration failures testable without PostgreSQL.
 export interface PublicRateLimitRuntime {
   store: RateLimitStore;
   getSalt: () => string | undefined;
   isEnabled: () => boolean;
 }
 
-/**
- * Creates a fail-closed rate limiter. A bad salt is reported separately from
- * an unavailable counter store, so operators and regression tests can identify
- * a configuration fault without exposing secret material.
- */
+// Fail closed and distinguish invalid configuration from an unavailable counter store.
 export function createPublicRateLimitEnforcer(runtime: PublicRateLimitRuntime) {
   return async function enforceWithRuntime(
     request: Request | undefined,
@@ -103,12 +102,30 @@ export function createPublicRateLimitEnforcer(runtime: PublicRateLimitRuntime) {
   ): Promise<Response | null> {
     if (!runtime.isEnabled()) return null;
 
+    const salt = runtime.getSalt();
+    if (!isPublicRateLimitConfigurationReady(salt, true)) {
+      return Response.json(
+        {
+          error: "rate_limit_configuration_invalid",
+          retryAfterSeconds: 30,
+        },
+        {
+          status: 503,
+          headers: {
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+            "Retry-After": "30",
+          },
+        },
+      );
+    }
+
     let decision: RateLimitDecision;
     try {
       const key = hashRateLimitKey(
         policy.scope,
         requestIdentityFromHeaders(request?.headers),
-        runtime.getSalt(),
+        salt,
       );
       decision = await decideRateLimit(runtime.store, key, {
         limit: policy.limit,

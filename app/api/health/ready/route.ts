@@ -1,6 +1,7 @@
 import { pool } from "@/lib/db";
 import { probeDatabaseReadiness } from "@/lib/db/readiness";
 import { noStoreHeaders, readinessPayload } from "@/lib/health";
+import { isPublicRateLimitConfigurationReady, isSharedRateLimitEnabled } from "@/lib/rate-limit/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,40 +9,39 @@ export const revalidate = 0;
 
 const DATABASE_PROBE_TIMEOUT_MS = 1_500;
 
-/**
- * Readiness checks the one critical dependency required by database-backed
- * routes. Both the HTTP response and PostgreSQL query are bounded. The response
- * never includes exception text, host, database name, connection string, or
- * driver diagnostics to anonymous callers.
- */
+// Configuration fails before PostgreSQL; public responses never expose driver details.
 export async function GET() {
-  if (!process.env.DATABASE_URL) {
-    return Response.json(readinessPayload(false), {
+  const rateLimitEnabled = isSharedRateLimitEnabled();
+  const rateLimit = rateLimitEnabled
+    ? (isPublicRateLimitConfigurationReady(process.env.TAMV_RATE_LIMIT_SALT, true) ? "ok" : "invalid")
+    : "disabled";
+  const databaseUrl = process.env.DATABASE_URL;
+
+  if (rateLimit === "invalid" || !databaseUrl) {
+    return Response.json(readinessPayload({
+      database: databaseUrl ? "not_checked" : "not_configured",
+      rateLimit,
+    }), {
       status: 503,
       headers: noStoreHeaders,
     });
   }
 
+  let databaseReady = false;
   try {
-    const ready = await probeDatabaseReadiness(pool, {
+    databaseReady = await probeDatabaseReadiness(pool, {
       timeoutMs: DATABASE_PROBE_TIMEOUT_MS,
-      connectionString: process.env.DATABASE_URL,
+      connectionString: databaseUrl,
     });
-    if (!ready) {
-      return Response.json(readinessPayload(false), {
-        status: 503,
-        headers: noStoreHeaders,
-      });
-    }
   } catch {
-    return Response.json(readinessPayload(false), {
-      status: 503,
-      headers: noStoreHeaders,
-    });
+    databaseReady = false;
   }
 
-  return Response.json(readinessPayload(true), {
-    status: 200,
+  return Response.json(readinessPayload({
+    database: databaseReady ? "ok" : "unavailable",
+    rateLimit,
+  }), {
+    status: databaseReady ? 200 : 503,
     headers: noStoreHeaders,
   });
 }

@@ -1,6 +1,6 @@
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -25,6 +25,10 @@ export function fingerprintBuildArtifacts(entries) {
     hash.update(Buffer.from([0]));
   }
   return hash.digest("hex");
+}
+
+export async function clearBuildEvidence() {
+  await rm(outputPath, { force: true });
 }
 
 export async function writeBuildEvidence() {
@@ -55,14 +59,25 @@ export async function writeBuildEvidence() {
   };
 
   await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, JSON.stringify(evidence, null, 2) + "\n", "utf8");
+  const temporaryPath = `${outputPath}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    await writeFile(temporaryPath, JSON.stringify(evidence, null, 2) + "\n", "utf8");
+    await rename(temporaryPath, outputPath);
+  } finally {
+    await rm(temporaryPath, { force: true });
+  }
   return evidence;
 }
 
 const invokedPath = process.argv[1] ? resolve(process.argv[1]) : "";
 if (invokedPath === fileURLToPath(import.meta.url)) {
-  writeBuildEvidence()
+  const clear = process.argv.includes("--clear");
+  (clear ? clearBuildEvidence() : writeBuildEvidence())
     .then((evidence) => {
+      if (clear) {
+        process.stdout.write("TAMV build evidence cleared\n");
+        return;
+      }
       process.stdout.write("TAMV build evidence written: SHA-512 " + evidence.manifestSha512 + "\n");
       process.stdout.write("Scope: " + evidence.manifestFiles.join(", ") + "\n");
     })

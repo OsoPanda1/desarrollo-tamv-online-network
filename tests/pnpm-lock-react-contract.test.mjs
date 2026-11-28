@@ -9,7 +9,7 @@ test("React package versions and pnpm lockfile importers stay aligned", () => {
   const pkg = JSON.parse(read("package.json"));
   const lock = read("pnpm-lock.yaml");
 
-  assert.equal(pkg.packageManager, "pnpm@12.3.4");
+  assert.equal(pkg.packageManager, "pnpm@12.16.1");
   assert.equal(pkg.dependencies.react, "19.3.1");
   assert.equal(pkg.dependencies["react-dom"], "19.3.1");
 

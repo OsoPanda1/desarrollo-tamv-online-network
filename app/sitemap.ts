@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
+import { getSiteOrigin } from "@/lib/seo"
 
-const origin = "https://tamv.online"
+const origin = getSiteOrigin()
 const publicPaths = [
   "/",
   "/quienes-somos",
@@ -42,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {
         languages: {
           es: url,
-          en: url + (path === "/" ? "?lang=en" : "?lang=en"),
+          en: `${url}?lang=en`,
         },
       },
       changeFrequency: path === "/" ? "weekly" : "monthly",
