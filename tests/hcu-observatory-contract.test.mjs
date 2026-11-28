@@ -175,3 +175,20 @@ test("Origins presents the founder portrait and first-person authenticity manife
   assert.match(styles, /\.tamv-origins-founder-portrait img/)
   assert.match(styles, /\.tamv-origins-founder-manifesto \.tamv-origins-manifesto-closing/)
 })
+
+
+test("Origins exposes traceable author profiles, DOI records, and the founder-supplied CITIS invitation without overstating academic credentials", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  assert.match(origins, /https:\/\/orcid\.org\/0009-0008-5050-1539/)
+  assert.match(origins, /https:\/\/isni\.org\/isni\/0000000531699229/)
+  assert.match(origins, /https:\/\/ai\.lounge\.ai\/@tamvonline/)
+  assert.match(origins, /https:\/\/www\.facebook\.com\/share\/p\/1Fku3aeEfZ\//)
+  assert.match(origins, /https:\/\/citis\.ups\.edu\.ec\/es\//)
+  assert.match(origins, /10\.6084\/m9\.figshare\.32135389/)
+  assert.match(origins, /10\.6084\/m9\.figshare\.32098846/)
+  assert.match(origins, /no se presenta como confirmado un grado Ph\.D\./i)
+  assert.match(origins, /doctorado honoris causa/i)
+  assert.match(origins, /nombramiento oficial como editor de Frontiers/i)
+  assert.match(styles, /\.tamv-origins-recognition-sources/)
+})
