@@ -132,8 +132,8 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                 <img
                   src="/visuals/founder-edwin-oswaldo-castillo-trejo.webp"
                   alt={english ? "Edwin Oswaldo Castillo Trejo, founder of TAMV Online Network, in a casual dark hoodie." : "Edwin Oswaldo Castillo Trejo, CEO fundador de TAMV Online Network, con una sudadera oscura, en una fotografía personal."}
-                  width={360}
-                  height={515}
+                  width={320}
+                  height={458}
                   loading="lazy"
                   decoding="async"
                 />
