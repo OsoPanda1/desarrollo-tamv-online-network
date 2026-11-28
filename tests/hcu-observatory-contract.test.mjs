@@ -162,3 +162,16 @@ test("public-record and technical-module disclosures preserve readable light-sur
   assert.match(styles, /\.sovereign-advanced-intro[\s\S]*?color: #29495f !important/)
   assert.match(styles, /\.sovereign-advanced-modules \.sovereign-module-card a[\s\S]*?color: #fffefa !important/)
 })
+
+
+test("Origins presents the founder portrait and first-person authenticity manifesto", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  assert.match(origins, /founder-edwin-oswaldo-castillo-trejo\.webp/)
+  assert.match(origins, /CEO fundador/)
+  assert.match(origins, /no deseo aparentar lo que no soy/)
+  assert.match(origins, /mano de obra barata y consumidora/)
+  assert.match(origins, /tamv-origins-founder-manifesto/)
+  assert.match(styles, /\.tamv-origins-founder-portrait img/)
+  assert.match(styles, /\.tamv-origins-founder-manifesto \.tamv-origins-manifesto-closing/)
+})
