@@ -65,12 +65,12 @@ const publishedAssets: Record<string, PublishedAsset> = {
   },
   "IMG-04": {
     kind: "image",
-    src: "/tamv-hero-banner.jpg",
-    altEs: "Banner institucional de TAMV Online Network con la identidad visual del proyecto.",
-    altEn: "TAMV Online Network institutional banner using the project's visual identity.",
-    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/main/public/tamv-hero-banner.jpg",
-    sourceLabelEs: "Activo institucional del repositorio TAMV",
-    sourceLabelEn: "TAMV repository institutional asset",
+    src: "/visuals/tamv-innovation-hub-hero.svg",
+    altEs: "Ilustración tecnológica original de TAMV con redes de investigación, gobernanza de IA, seguridad y procedencia digital.",
+    altEn: "Original TAMV technology illustration with research networks, AI governance, security and digital provenance.",
+    sourceUrl: "https://github.com/OsoPanda1/desarrollo-tamv-online-network/blob/security/secret-boundary-and-visual-audit/public/visuals/tamv-innovation-hub-hero.svg",
+    sourceLabelEs: "Ilustración original TAMV · Innovation Hub",
+    sourceLabelEn: "Original TAMV illustration · Innovation Hub",
   },
   "IMG-05": {
     kind: "image",
