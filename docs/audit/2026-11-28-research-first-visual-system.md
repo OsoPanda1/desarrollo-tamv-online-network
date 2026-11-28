@@ -34,7 +34,7 @@ Los siguientes SVG son ilustraciones originales creadas para el repositorio. No 
 ## Cambios de interfaz
 
 - La portada utiliza una pieza tecnológica original y ya no una imagen territorial como motivo visual principal.
-- La página de inicio expone una galería temática de seis áreas: investigación y ciencia abierta; gobernanza de IA; Zero Trust; integridad y procedencia; calidad del conocimiento; autoridad humana y agentes.
+- La página de inicio expone una galería de ocho tarjetas: seis áreas técnicas principales y dos fotografías contextuales: investigación y ciencia abierta; gobernanza de IA; Zero Trust; integridad y procedencia; calidad del conocimiento; autoridad humana y agentes.
 - Las tarjetas usan imágenes locales, descripciones ES/EN, texto alternativo específico, enlaces a rutas internas y diseño adaptable.
 - Los activos técnicos del catálogo multimedia dejan de mostrarse como tarjetas genéricas pendientes cuando existe un diagrama original pertinente.
 - El observatorio HCU mantiene el acceso a la visualización interactiva. El diagrama HCU es sólo una introducción editorial; no reemplaza el grafo vivo.
