@@ -263,7 +263,7 @@ export function TamvSovereignConsole({ locale = "es" }: { locale?: Locale }) {
 
   return (
     <>
-      <section className="sovereign-hero" id="inicio" aria-labelledby="sovereign-title" lang={locale}>
+      <section className="sovereign-hero" id="consola-soberana" aria-labelledby="sovereign-title" lang={locale}>
         <div className="sovereign-grid-overlay" aria-hidden="true" />
         <div className="container sovereign-hero-inner">
           <div className={"sovereign-telemetry" + (signalsExpanded ? " is-expanded" : "")} aria-label={english ? "Public operational signals" : "Señales operativas públicas"}>

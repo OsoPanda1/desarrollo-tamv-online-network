@@ -87,6 +87,41 @@ test("allow requires every factor and the impact-based approval count", () => {
   assert.deepEqual([0, 1, 2, 3, 4].map(requiredApprovals), [1, 1, 2, 2, 3]);
 });
 
+test("truthy non-Boolean authorization factors fail closed", () => {
+  const factors = ["identity", "authority", "policy", "evidence", "safety"];
+  for (const factor of factors) {
+    for (const value of ["false", 1, {}, []]) {
+      const decision = evaluateConstitution(
+        LATAMV_V2_DEMO_GENES,
+        { ...complete, [factor]: value },
+        AT,
+      );
+      assert.equal(decision.allowed, false, `${factor} accepted ${JSON.stringify(value)}`);
+      assert.equal(decision.reason, "missing_factor");
+    }
+  }
+});
+
+test("consensus approvals must be a finite integer at or above the threshold", () => {
+  const invalidCounts = [
+    ["NaN", NaN],
+    ["positive infinity", Infinity],
+    ["negative infinity", -Infinity],
+    ["fractional", 2.5],
+    ["negative", -1],
+    ["string", "2"],
+  ];
+  for (const [label, consensusApprovals] of invalidCounts) {
+    const decision = evaluateConstitution(
+      LATAMV_V2_DEMO_GENES,
+      { ...complete, consensusApprovals },
+      AT,
+    );
+    assert.equal(decision.allowed, false, `consensusApprovals accepted ${label}`);
+    assert.equal(decision.reason, "consensus_insufficient");
+  }
+});
+
 test("unverified signature metadata cannot change a decision", () => {
   const gene = LATAMV_V2_DEMO_GENES.find((item) => item.ruleId === "R-IMPACT-LATAM-001");
   const withSignature = evaluateConstitution([{ ...gene, signatureMetadata: "ed25519:unverified" }], complete, AT);

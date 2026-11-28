@@ -17,7 +17,7 @@ servers:
     description: Same-origin API; use the origin where this application is deployed.
 tags:
   - name: Research
-    description: Public research topic and project catalogs.
+    description: Public research topic, project and federated metadata catalogs.
   - name: Researchers
     description: Public profiles explicitly enabled for publication.
   - name: HCU
@@ -158,11 +158,16 @@ paths:
     post:
       operationId: federatedInstitutionalResearchSearch
       tags: [Research]
-      summary: Search public research metadata through the institutional TAMV application
+      summary: Search public research metadata through institutional or direct anonymous providers
       description: >-
-        Forwards a bounded search query to the server-configured public institutional research API.
-        The caller cannot choose the upstream URL. This does not share sessions, write data, or establish
-        authorship, peer review, accreditation, licensing or independent verification.
+        For research queries, uses the server-configured institutional API when present and otherwise
+        searches fixed anonymous Zenodo, Figshare, DataCite, OSF and CERN Open Data endpoints. OSF is a
+        title-filtered metadata bridge, not full-text search. Organization queries require the configured
+        institutional mechanism. The caller cannot choose an upstream URL. Public requests omit credentials,
+        reject redirects, use a 4-second timeout per provider and bound each response to 256 KiB, returning at
+        most 4 records per provider and 24 overall. Individual public-provider failures are reported as
+        unavailable states without discarding successful providers. This does not share sessions, write data,
+        or establish authorship, peer review, quality, endorsement, partnership, licensing or independent verification.
       requestBody:
         required: true
         content:
@@ -171,7 +176,7 @@ paths:
               $ref: "#/components/schemas/FederatedResearchRequest"
       responses:
         "200":
-          description: Validated public metadata returned by the institutional application.
+          description: Validated institutional metadata or direct anonymous public-provider metadata with honest per-provider states.
           headers:
             Cache-Control:
               schema: { type: string, const: no-store }
@@ -212,19 +217,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/FederatedResearchError"
         "502":
-          description: Institutional upstream is unavailable or returned invalid metadata.
+          description: A configured institutional upstream is unavailable or returned invalid metadata.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/FederatedResearchError"
         "503":
-          description: Institutional endpoint is not configured or is rate limited.
+          description: The configured institutional endpoint is invalid or rate limited, or an organization query has no configured institutional bridge.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/FederatedResearchError"
         "504":
-          description: Institutional endpoint timed out.
+          description: The configured institutional endpoint timed out.
           content:
             application/json:
               schema:
@@ -581,13 +586,16 @@ components:
       required: [ok, provider, query, type, retrievedAt, results, providers, methodology, semantics]
       properties:
         ok: { type: boolean, const: true }
-        provider: { type: string, const: "TAMV Online Network — Institutional Research Platform" }
+        provider:
+          type: string
+          enum: ["TAMV Online Network — Institutional Research Platform", "TAMV Online Network — Public Research Providers"]
         query: { type: string, minLength: 3, maxLength: 180 }
         type: { type: string, enum: [research, organizations] }
         retrievedAt: { type: string, format: date-time }
         results:
           type: array
           maxItems: 24
+          description: Direct anonymous fallback returns at most 4 unique records per provider and 24 overall; rank is not a quality score.
           items: { $ref: "#/components/schemas/FederatedResearchMetadataRecord" }
         providers:
           type: array
@@ -604,7 +612,7 @@ components:
         provider: { type: string, minLength: 1, maxLength: 120 }
         title: { type: string, minLength: 1, maxLength: 600 }
         url: { type: string, maxLength: 2048, description: "HTTPS URL or empty string when the source has no safe external URL." }
-        doi: { type: [string, "null"], maxLength: 500 }
+        doi: { type: [string, "null"], maxLength: 500, description: Source-declared DOI only; absence remains null. }
         year: { type: [integer, "null"] }
         authors:
           type: array
@@ -613,8 +621,8 @@ components:
         venue: { type: [string, "null"], maxLength: 240 }
         resourceType: { type: [string, "null"], maxLength: 100 }
         citedByCount: { type: [number, "null"] }
-        license: { type: [string, "null"], maxLength: 240 }
-        openAccess: { type: [boolean, "null"] }
+        license: { type: [string, "null"], maxLength: 240, description: Source-declared license identifier or label only; null does not grant or deny permission, and a value is not a TAMV reuse grant. }
+        openAccess: { type: [boolean, "null"], description: Source-declared only; direct anonymous adapters do not infer access rights. }
         evidenceClass: { type: string, minLength: 1, maxLength: 1200 }
         retrievedAt: { type: string, format: date-time }
     FederatedResearchProviderState:
@@ -625,7 +633,7 @@ components:
         id: { type: string, minLength: 1, maxLength: 120 }
         name: { type: string, minLength: 1, maxLength: 180 }
         status: { type: string, enum: [ok, empty, unavailable, not_configured, link_only] }
-        count: { type: integer, minimum: 0, maximum: 100000 }
+        count: { type: integer, minimum: 0, maximum: 100000, description: Number of unique normalized records emitted for this provider; unavailable is always 0. }
         note: { type: string, maxLength: 1200 }
     FederatedResearchError:
       type: object

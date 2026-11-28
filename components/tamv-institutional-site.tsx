@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react"
-import { TamvSiteHeader } from "./tamv-site-header"
+import { TamvNavigationChrome } from "@/components/tamv-navigation-chrome"
 import { TamvDonationCTA } from "@/components/shared/tamv-donation-cta"
 import { TamvBuildFingerprint, TamvSovereignConsole } from "./tamv-sovereign-console"
 import { TamvSectionMedia } from "./tamv-section-media"
@@ -10,17 +10,16 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
   const english = locale === "en"
   return (
     <>
-      <a className="skip-link" href="#contenido">{english ? "Skip to content" : "Saltar al contenido"}</a>
-      <TamvSiteHeader locale={locale} />
+      <TamvNavigationChrome locale={locale} />
       <main id="contenido" lang={locale}>
-        <section className="tamv-hero-banner" aria-label={english ? "TAMV Online Network institutional banner" : "Banner institucional de TAMV Online Network"}>
+        <section id="inicio" className="tamv-hero-banner" aria-label={english ? "TAMV Online Network institutional banner" : "Banner institucional de TAMV Online Network"}>
           <img
             src="/tamv-hero-banner.jpg"
             alt={english
               ? "TAMV Online Network banner: Advanced Versatile Mexican Technology, an independent Latin American open science platform, with a glowing globe over a Mexican town and the seven federations."
               : "Banner de TAMV Online Network: Tecnología Avanzada Mexicana Versátil, plataforma latinoamericana independiente de ciencia abierta, con un globo luminoso sobre una ciudad mexicana y las siete federaciones."}
-            width={1376}
-            height={768}
+            width={1584}
+            height={672}
             fetchPriority="high"
             decoding="async"
           />
@@ -60,6 +59,7 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
             <a href={localizedPath("/ecosistema", locale)}>{english ? "Ecosystem" : "Ecosistema"}</a>
             <a href={localizedPath("/desarrolladores", locale)}>{english ? "Developers" : "Desarrolladores"}</a>
             <a href={localizedPath("/estandar", locale)}>{english ? "Open integrity standard" : "Estándar de integridad abierta"}</a>
+            <a href={localizedPath("/soberania-digital", locale)}>{english ? "Digital sovereignty and AI" : "Soberanía digital e IA"}</a>
             <a href={localizedPath("/comunidad", locale)}>{english ? "Community" : "Comunidad"}</a>
             <a href="https://orcid.org/0009-0008-5050-1539" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight aria-hidden="true" /></a>
             <a href="https://isni.org/isni/0000000531699229" target="_blank" rel="noopener noreferrer">ISNI <ArrowUpRight aria-hidden="true" /></a>

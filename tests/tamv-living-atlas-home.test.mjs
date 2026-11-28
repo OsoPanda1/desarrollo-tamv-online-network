@@ -7,7 +7,7 @@ const consoleSource = await readFile(new URL("../components/tamv-sovereign-conso
 const fingerprint = await readFile(new URL("../components/tamv-sovereign-console.tsx", import.meta.url), "utf8");
 
 test("homepage renders one Living Atlas tree and preserves bilingual institutional chrome", () => {
-  assert.match(home, /<TamvSiteHeader locale=\{locale\} \/>/);
+  assert.match(home, /<TamvNavigationChrome locale=\{locale\} \/>/);
   assert.match(home, /<TamvSovereignConsole locale=\{locale\} \/>/);
   assert.match(home, /<TamvBuildFingerprint locale=\{locale\} \/>/);
   assert.match(home, /localizedPath\("\/proyectos", locale\)/);
@@ -22,7 +22,9 @@ test("legacy landing-page body is not rendered beside the new console", () => {
   assert.doesNotMatch(home, /<section className="hero-section"/);
   assert.doesNotMatch(home, /<TamvSiteGuide/);
   assert.doesNotMatch(home, /<HomeVisualBand/);
-  assert.match(consoleSource, /id="inicio"/);
+  assert.match(consoleSource, /className="sovereign-hero" id="consola-soberana"/);
+  assert.doesNotMatch(consoleSource, /id="inicio"/);
+  assert.equal((home.match(/id="inicio"/g) ?? []).length, 1);
   assert.match(consoleSource, /id="contacto"/);
   assert.match(fingerprint, /sovereign-footer-integrity container" id="contacto"/);
 });

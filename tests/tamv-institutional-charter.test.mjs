@@ -8,7 +8,7 @@ const licenseScope = await readFile(new URL("../LICENSES.md", import.meta.url), 
 const license = await readFile(new URL("../LICENSE", import.meta.url), "utf8");
 const docsLicense = await readFile(new URL("../LICENSE-DOCS", import.meta.url), "utf8");
 const homepage = await readFile(new URL("../components/tamv-sovereign-console.tsx", import.meta.url), "utf8");
-const header = await readFile(new URL("../components/tamv-site-header.tsx", import.meta.url), "utf8");
+const navigation = await readFile(new URL("../lib/navigation.ts", import.meta.url), "utf8");
 const shell = await readFile(new URL("../components/tamv-app-shell.tsx", import.meta.url), "utf8");
 const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 
@@ -42,8 +42,8 @@ test("license scope separates original software, authored prose and third-party 
 });
 
 test("the founding charter is discoverable from navigation, atlas and sitemap", () => {
-  assert.ok(header.includes('href: "/origenes"'));
-  assert.doesNotMatch(header, /href: "\/origenes".*href: "\/origenes"/s);
+  assert.ok(navigation.includes('href: "/origenes"'));
+  assert.equal((navigation.match(/href: "\/origenes"/g) ?? []).length, 1);
   assert.ok(shell.includes('localizedPath("/quienes-somos", locale)'));
   assert.ok(homepage.includes('href={english ? "/quienes-somos?lang=en" : "/quienes-somos"}'));
   assert.match(homepage, /Mission, legacy and cooperation|Misión, legado y cooperación/);

@@ -128,3 +128,23 @@ test("readiness probe rejects invalid timeout budgets", async () => {
   const { probeWithinBudget } = await import("../lib/health.ts");
   await assert.rejects(() => probeWithinBudget(Promise.resolve(), 0), RangeError);
 });
+
+test("bounded operations preserve resolved values and dependency errors", async () => {
+  const { withinBudget } = await import("../lib/health.ts");
+  const value = { ready: true };
+  assert.equal(await withinBudget(Promise.resolve(value), 50), value);
+  await assert.rejects(() => withinBudget(Promise.reject(new Error("dependency failed")), 50), /dependency failed/);
+});
+
+test("bounded operations expose a distinct timeout and contain cleanup failures", async () => {
+  const { BudgetExceededError, withinBudget } = await import("../lib/health.ts");
+  let cleanups = 0;
+  await assert.rejects(
+    () => withinBudget(new Promise(() => {}), 5, () => {
+      cleanups += 1;
+      throw new Error("cleanup failed");
+    }),
+    BudgetExceededError,
+  );
+  assert.equal(cleanups, 1);
+});

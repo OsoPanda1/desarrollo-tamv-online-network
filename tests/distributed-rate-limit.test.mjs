@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
-import { decideRateLimit, hashRateLimitKey, isValidRateLimitSalt, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
+import { decideRateLimit, hashRateLimitKey, isValidRateLimitSalt, MAX_RATE_LIMIT_WINDOW_MS, rateLimitCleanupCutoff, requestIdentityFromHeaders, windowBounds } from "../lib/rate-limit/distributed.ts";
 import { createPublicRateLimitEnforcer, isPublicRateLimitConfigurationReady, isSharedRateLimitEnabled } from "../lib/rate-limit/server.ts";
 
 class FakeSharedStore {
@@ -44,6 +44,24 @@ test("shared rate limiter opens a fresh counter in the next fixed window", async
   assert.equal(blocked.allowed, false);
   assert.equal(next.allowed, true);
   assert.equal(next.resetAt, 120_000);
+});
+
+test("rate-limit cleanup cannot remove any counter from a permitted active window", async () => {
+  const now = 5 * MAX_RATE_LIMIT_WINDOW_MS;
+  const cutoff = rateLimitCleanupCutoff(now);
+  const activeWindowStart = windowBounds(now, MAX_RATE_LIMIT_WINDOW_MS).windowStart;
+
+  assert.equal(cutoff, now - MAX_RATE_LIMIT_WINDOW_MS);
+  assert.ok(activeWindowStart >= cutoff);
+  await assert.rejects(
+    decideRateLimit(new FakeSharedStore(), "key", { limit: 1, windowMs: MAX_RATE_LIMIT_WINDOW_MS + 1, now }),
+    /between 1000ms and/,
+  );
+
+  const server = readFileSync(resolve(process.cwd(), "lib/rate-limit/server.ts"), "utf8");
+  assert.match(server, /RATE_LIMIT_CLEANUP_INTERVAL_MS = 10 \* 60 \* 1000/);
+  assert.match(server, /rateLimitCleanupCutoff\(now\)/);
+  assert.doesNotMatch(server, /windowStart - windowMs/);
 });
 
 test("shared rate limiter keeps separate buckets for different hashed keys", async () => {

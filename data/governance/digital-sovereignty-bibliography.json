@@ -1,0 +1,6193 @@
+{
+  "schemaVersion": "1.0",
+  "source": {
+    "filename": "search-papers.bib",
+    "sha256": "366fdc0e2ac88fdd5766965d0ee031378919fa7d26170b5b50aaad5003d23eed",
+    "bytes": 100646,
+    "entryCount": 364
+  },
+  "coverage": {
+    "firstYear": 2014,
+    "lastYear": 2026,
+    "withDoi": 352,
+    "withoutDoi": 12,
+    "withYear": 359,
+    "withoutYear": 5,
+    "withJournal": 335,
+    "withoutJournal": 29,
+    "records2024to2026": 212
+  },
+  "interpretation": {
+    "themeBasis": "Editorial inference from titles and a curated key map; abstracts and full texts were not supplied.",
+    "themeStatus": "Inference, not author keywords, peer-review classification, or scientific validation.",
+    "metadataStatus": "Source-declared values normalized for display; uncertain or incomplete metadata is preserved and flagged, not silently corrected."
+  },
+  "limitations": [
+    "The corpus is not claimed to be exhaustive, systematic, representative, or fully peer reviewed.",
+    "DOI presence does not verify resolution, authorship, publication status, quality, or licensing.",
+    "No abstract or full text was supplied; methods and themes are inferred from titles and metadata.",
+    "A declared URL or DOI does not grant TAMV reuse rights."
+  ],
+  "records": [
+    {
+      "key": "Cos24",
+      "type": "article",
+      "title": "Digital Sovereignty in times of AI: between perils of hegemonic agendas and possibilities of alternative approaches",
+      "authors": "Alexandre Costa-Barbosa and Bianca Herlo and G. Joost",
+      "journal": "Liinc em Revista",
+      "year": 2024,
+      "doi": "10.18617/liinc.v20i2.7312",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fil24",
+      "type": "article",
+      "title": "Desafíos de gobernanza de inteligencia artificial en América Latina. Infraestructura, descolonización y nueva dependencia",
+      "authors": "F. Filgueira",
+      "journal": "Revista del CLAD Reforma y Democracia",
+      "year": 2024,
+      "doi": "10.69733/clad.ryd.n87.a3",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "infrastructure",
+        "policy-institutions"
+      ],
+      "line": 9,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rob24",
+      "type": "article",
+      "title": "Digital sovereignty and artificial intelligence: a normative approach",
+      "authors": "H. Roberts",
+      "journal": "Ethics and Information Technology",
+      "year": 2024,
+      "doi": "10.1007/s10676-024-09810-5",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "sovereignty-concepts"
+      ],
+      "line": 17,
+      "metadataFlags": []
+    },
+    {
+      "key": "Leh24",
+      "type": "article",
+      "title": "An alternative planetary future? Digital sovereignty frameworks and the decolonial option",
+      "authors": "Sebastián Lehuedé",
+      "journal": "Big Data & Society",
+      "year": 2024,
+      "doi": "10.1177/20539517231221778",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 25,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cou19",
+      "type": "article",
+      "title": "What does the notion of “sovereignty” mean when referring to the digital?",
+      "authors": "S. Couture and S. Toupin",
+      "journal": "New Media & Society",
+      "year": 2019,
+      "doi": "10.1177/1461444819865984",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 33,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gue22",
+      "type": "article",
+      "title": "Construyendo soberanía digital en América Latina: un análisis de las iniciativas de cuatro colectivos sociales",
+      "authors": "Jenny Teresita Guerra-González and Marcela Suárez Estrada and T. Cerratto Pargman",
+      "journal": "Chasqui. Revista Latinoamericana de Comunicación",
+      "year": 2022,
+      "doi": "10.16921/chasqui.v1i149.4628",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "participation",
+        "sovereignty-concepts"
+      ],
+      "line": 41,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fil23",
+      "type": "article",
+      "title": "Designing artificial intelligence policy: Comparing design spaces in Latin America",
+      "authors": "Fernando Filgueiras",
+      "journal": "Latin American Policy",
+      "year": 2023,
+      "doi": "10.1111/lamp.12282",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 49,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25",
+      "type": "article",
+      "title": "BIG TECH SOVEREIGNTY: PLATFORMS AND DISCOURSE OF SOVEREIGNTY-AS-A-SERVICE",
+      "authors": "Rafael Grohmann and A. C. Barbosa",
+      "journal": "AoIR Selected Papers of Internet Research",
+      "year": 2025,
+      "doi": "10.5210/spir.v2024i0.13948",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "sovereignty-concepts"
+      ],
+      "line": 57,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil25b",
+      "type": "article",
+      "title": "Regional integration as a remedy against technological dependency? The contradictions in the calls for regional integration in Latin American AI strategies",
+      "authors": "Guilherme Cavalcante Silva",
+      "journal": "Tapuya: Latin American Science, Technology and Society",
+      "year": 2025,
+      "doi": "10.1080/25729861.2025.2545040",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 65,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25e",
+      "type": "article",
+      "title": "Sovereignty-as-a-service: How big tech companies co-opt and redefine digital sovereignty",
+      "authors": "Rafael Grohmann and Alexandre Costa-Barbosa",
+      "journal": "Media, Culture, and Society",
+      "year": 2025,
+      "doi": "10.1177/01634437251395003",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "sovereignty-concepts"
+      ],
+      "line": 73,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ram26c",
+      "type": "article",
+      "title": "Credible Sovereignty: Operationalizing AI Governance Across Infrastructure, Data, and Models: A Systematic Review",
+      "authors": "R. Raman and Prema Nedungadi",
+      "journal": "AI",
+      "year": 2026,
+      "doi": "10.3390/ai7090327",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "infrastructure",
+        "methods-evaluation",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 81,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mar26b",
+      "type": "article",
+      "title": "Soberanía digital: Breve estado del arte global y latinoamericano",
+      "authors": "Jeimy José Cano Martínez",
+      "journal": "Revista Sistemas",
+      "year": 2026,
+      "doi": "10.29236/sistemas.n180a4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 89,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tay25",
+      "type": "article",
+      "title": "Governing artificial intelligence means governing data: (Re)setting the agenda for data justice",
+      "authors": "Linnet Taylor and Siddharth Peter de Souza and Aaron Martin and Joan López Solano",
+      "journal": "Dialogues on Digital Society",
+      "year": 2025,
+      "doi": "10.1177/29768640241306800",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 97,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fra24c",
+      "type": "article",
+      "title": "Digital Sovereignty: A Descriptive Analysis and a Critical Evaluation of Existing Models",
+      "authors": "Samuele Fratini and Emmie Hine and Claudio Novelli and H. Roberts and Luciano Floridi",
+      "journal": "Digital Society",
+      "year": 2024,
+      "doi": "10.1007/s44206-024-00146-7",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation",
+        "sovereignty-concepts"
+      ],
+      "line": 105,
+      "metadataFlags": []
+    },
+    {
+      "key": "Png22",
+      "type": "article",
+      "title": "At the Tensions of South and North: Critical Roles of Global South Stakeholders in AI Governance",
+      "authors": "Marie-Therese Png",
+      "journal": "Proceedings of the 2022 ACM Conference on Fairness, Accountability, and Transparency",
+      "year": 2022,
+      "doi": "10.1145/3531146.3533200",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 113,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25b",
+      "type": "article",
+      "title": "AI policy debates in Brazil: struggles over regulation, governance and labour",
+      "authors": "Rafael Grohmann and Edemilson Paraná and J. Valente and Roseli Figaro",
+      "journal": "Global Political Economy",
+      "year": 2025,
+      "doi": "10.1332/26352257y2025d000000037",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 121,
+      "metadataFlags": []
+    },
+    {
+      "key": "Zam21",
+      "type": "article",
+      "title": "AI Public Policies in Latin America: Disruption or more of the same?",
+      "authors": "R. Zambrano and J. M. Sánchez-Torres",
+      "journal": "Proceedings of the 14th International Conference on Theory and Practice of Electronic Governance",
+      "year": 2021,
+      "doi": "10.1145/3494193.3494294",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 129,
+      "metadataFlags": []
+    },
+    {
+      "key": "Viv25",
+      "type": "article",
+      "title": "Artificial Intelligence meets South America: mapping emerging technology power governance and the challenges ahead",
+      "authors": "Ernesto Vivares and Francisco Rodriguez-Ortiz",
+      "journal": "Globalizations",
+      "year": 2025,
+      "doi": "10.1080/14747731.2025.2497209",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 137,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro26",
+      "type": "article",
+      "title": "Popular digital sovereignty and digital real utopias: Lessons from the Homeless Workers’ Movement in Brazil",
+      "authors": "Rafael Grohmann and Alexandre Costa-Barbosa",
+      "journal": "Convergence (London, England)",
+      "year": 2026,
+      "doi": "10.1177/13548565261456920",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 145,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25f",
+      "type": "article",
+      "title": "Soberania Popular e Autonomia",
+      "authors": "Rafael Grohmann and Pedro Burity and Lorena Vilarins",
+      "journal": "Comunicação Mídia e Consumo",
+      "year": 2025,
+      "doi": "10.18568/cmc.v22i65.3085",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 153,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cor25",
+      "type": "article",
+      "title": "Reimagining AI in Latin America: situated narratives of users, developers, and decision-makers on understanding and governing AI",
+      "authors": "Teresa Correa and Francisca Luco and M. Humeres and Dusan Cotoras and A. Davidoff and Yelena Hernández-Estrada and Iñaki Oyarzún-Merino and Claudia López",
+      "journal": "Communication and Change",
+      "year": 2025,
+      "doi": "10.1007/s44382-025-00012-1",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 161,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cou25",
+      "type": "article",
+      "title": "Resisting and Claiming Digital Sovereignty: The Cases of Civil Society and Indigenous Groups",
+      "authors": "S. Couture and S. Toupin and Alejandro MayoralBaños",
+      "journal": "Policy & Internet",
+      "year": 2025,
+      "doi": "10.1002/poi3.434",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "participation",
+        "sovereignty-concepts"
+      ],
+      "line": 169,
+      "metadataFlags": []
+    },
+    {
+      "key": "San25b",
+      "type": "article",
+      "title": "Attributes of Digital Sovereignty: A Conceptual Framework",
+      "authors": "Mauro Santaniello",
+      "journal": "Geopolitics",
+      "year": 2025,
+      "doi": "10.1080/14650045.2025.2521548",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 177,
+      "metadataFlags": []
+    },
+    {
+      "key": "Par21b",
+      "type": "article",
+      "title": "Digital empowerment for whom? An analysis of ‘Network sovereignty’ in low-income, rural communities in Mexico and Tanzania",
+      "authors": "Lisa Parks and R. Srinivasan and Diego Aragón",
+      "journal": "Information, Communication & Society",
+      "year": 2021,
+      "doi": "10.1080/1369118x.2021.1928264",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "participation",
+        "sovereignty-concepts"
+      ],
+      "line": 185,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sri24",
+      "type": "article",
+      "title": "AI, Global Governance, and Digital Sovereignty",
+      "authors": "Swati Srivastava and Justin Bullock",
+      "journal": "ArXiv",
+      "year": 2024,
+      "doi": "10.48550/arxiv.2410.17481",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 193,
+      "metadataFlags": []
+    },
+    {
+      "key": "Poh20",
+      "type": "article",
+      "title": "Digital sovereignty",
+      "authors": "Julia Pohle and T. Thiel",
+      "journal": "Internet Policy Rev.",
+      "year": 2020,
+      "doi": "10.14763/2020.4.1532",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 201,
+      "metadataFlags": [
+        "duplicate_title_different_work"
+      ]
+    },
+    {
+      "key": "Ric22",
+      "type": "article",
+      "title": "Ethics for the majority world: AI and the question of violence at scale",
+      "authors": "Paola Ricaurte",
+      "journal": "Media, Culture & Society",
+      "year": 2022,
+      "doi": "10.1177/01634437221099612",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "rights-ethics"
+      ],
+      "line": 209,
+      "metadataFlags": []
+    },
+    {
+      "key": "Est26",
+      "type": "article",
+      "title": "Popular Digital Sovereignty and Infrastructural Dependencies: The Contrate Quem Luta Project",
+      "authors": "Walmir Estima",
+      "journal": "Digital Society",
+      "year": 2026,
+      "doi": "10.1007/s44206-026-00266-2",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "infrastructure",
+        "sovereignty-concepts"
+      ],
+      "line": 217,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mug24",
+      "type": "article",
+      "title": "EU AI sovereignty: for whom, to what end, and to whose benefit?",
+      "authors": "Daniel K. Mügge",
+      "journal": "Journal of European Public Policy",
+      "year": 2024,
+      "doi": "10.1080/13501763.2024.2318475",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 225,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fel26",
+      "type": "article",
+      "title": "Sovereignty Theater: Why Sovereign AI Falls Short of Cultural Self-Determination",
+      "authors": "Bruria Friedman Feldman and Tyler M. Smith and Victor Y. Wu and Yuan-Hao Zou",
+      "journal": "Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society",
+      "year": 2026,
+      "doi": "10.1609/aies.v9i2.43200",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 233,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rep25",
+      "type": "article",
+      "title": "Concept ‘Stretching’ or Concept Innovation? A Review of the Usages of Sovereignty in the Digital Sovereignty Literature",
+      "authors": "E. Repetto",
+      "journal": "Policy & Internet",
+      "year": 2025,
+      "doi": "10.1002/poi3.70011",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 241,
+      "metadataFlags": []
+    },
+    {
+      "key": "Joh24b",
+      "type": "article",
+      "title": "Brazil’s Artificial Intelligence Plan (PBIA) of 2024: Enabler of AI sovereignty?",
+      "authors": "Germano P. Johansson and V. C. Farias da Costa and W. B. Gaspar",
+      "journal": "The African Journal of Information and Communication (AJIC)",
+      "year": 2024,
+      "doi": "10.23962/ajic.i34.20424",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "sovereignty-concepts"
+      ],
+      "line": 249,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mon23",
+      "type": "article",
+      "title": "Artificial intelligence: The blind spot of info-communication platform policy-making and regulation in Latin America",
+      "authors": "D. Monje and F. Caballero",
+      "journal": "Journal of Digital Media & Policy",
+      "year": 2023,
+      "doi": "10.1386/jdmp_00119_1",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 257,
+      "metadataFlags": []
+    },
+    {
+      "key": "Val24",
+      "type": "article",
+      "title": "Critical data studies with Latin America: Theorizing beyond data colonialism",
+      "authors": "J. Valente and Rafael Grohmann",
+      "journal": "Big Data & Society",
+      "year": 2024,
+      "doi": "10.1177/20539517241227875",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 265,
+      "metadataFlags": []
+    },
+    {
+      "key": "Vea23",
+      "type": "article",
+      "title": "AI and Global Governance: Modalities, Rationales, Tensions",
+      "authors": "M. Veale and K. Matus and Robert Gorwa",
+      "journal": "Annual Review of Law and Social Science",
+      "year": 2023,
+      "doi": "10.1146/annurev-lawsocsci-020223-040749",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "security-geopolitics"
+      ],
+      "line": 273,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mor25b",
+      "type": "article",
+      "title": "Tecnopolíticas feministas: resistencias digitales, justicia de datos y soberanía tecnológica en América Latina",
+      "authors": "S. Morales and Graciela Natansohn and Silvina Molina",
+      "journal": "Signo y Pensamiento",
+      "year": 2025,
+      "doi": "10.11144/javeriana.syp44.tfrd",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 281,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sch20b",
+      "type": "article",
+      "title": "Democratic Governance of Digital Platforms and Artificial Intelligence?",
+      "authors": "Ingrid Schneider",
+      "journal": "JeDEM: eJournal of eDemocracy and Open Government",
+      "year": 2020,
+      "doi": "10.29379/jedem.v12i1.604",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 289,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fra24b",
+      "type": "article",
+      "title": "Dependency in the Digital Age? The Experience of Mercado Libre in Latin America",
+      "authors": "Sebastián Fernández Franco and Juan M. Graña and Cecilia Rikap",
+      "journal": "Development and Change",
+      "year": 2024,
+      "doi": "10.1111/dech.12839",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "platforms-power"
+      ],
+      "line": 297,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mar26c",
+      "type": "article",
+      "title": "All novelty is but oblivion: Problem framing and AI regulation in Latin American policymaking",
+      "authors": "Juan Martín Marinangeli",
+      "journal": "Revista Latinoamericana de Economía y Sociedad Digital",
+      "year": 2026,
+      "doi": "10.53857/rlesd.06.2026.03",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 305,
+      "metadataFlags": []
+    },
+    {
+      "key": "Poh22",
+      "type": "article",
+      "title": "Soberanía digital",
+      "authors": "Julia Pohle and T. Thiel",
+      "journal": "Revista Latinoamericana de Economía y Sociedad Digital",
+      "year": 2022,
+      "doi": "10.53857/olmh2516",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 313,
+      "metadataFlags": [
+        "duplicate_title_different_work"
+      ]
+    },
+    {
+      "key": "Yew26",
+      "type": "article",
+      "title": "The Commodification of AI Sovereignty: Lessons from the Fight for Sovereign Oil",
+      "authors": "Rui-Jie Yew and K. Creasey and Taylor Lynn Curtis and S. Venkatasubramanian",
+      "journal": "ArXiv",
+      "year": 2026,
+      "doi": "10.48550/arxiv.2601.11763",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 321,
+      "metadataFlags": []
+    },
+    {
+      "key": "Flo20",
+      "type": "article",
+      "title": "The Fight for Digital Sovereignty: What It Is, and Why It Matters, Especially for the EU",
+      "authors": "L. Floridi",
+      "journal": "Philosophy & Technology",
+      "year": 2020,
+      "doi": "10.1007/s13347-020-00423-6",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 329,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil25c",
+      "type": "article",
+      "title": "Articulating AI futures for Brazil: on different regimes of technological solutionism",
+      "authors": "Guilherme Cavalcante Silva",
+      "journal": "Critical Policy Studies",
+      "year": 2025,
+      "doi": "10.1080/19460171.2024.2449381",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 337,
+      "metadataFlags": []
+    },
+    {
+      "key": "Poh24",
+      "type": "article",
+      "title": "From multistakeholderism to digital sovereignty: Toward a new discursive order in internet governance?",
+      "authors": "Julia Pohle and M. Santaniello",
+      "journal": "Policy & Internet",
+      "year": 2024,
+      "doi": "10.1002/poi3.426",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 345,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gar21b",
+      "type": "article",
+      "title": "ANÁLISIS DE LAS ESTRATEGIAS NACIONALES DE INTELIGENCIA ARTIFICIAL EN AMÉRICA LATINA: ESTUDIO DE LOS ENFOQUES DE ÉTICA Y DE DERECHOS HUMANOS",
+      "authors": "Victor H. Garcia-Benitez and E. Ruvalcaba-Gomez",
+      "journal": "Revista de Gestión Pública",
+      "year": 2021,
+      "doi": "10.22370/rgp.2021.10.1.3151",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "rights-ethics"
+      ],
+      "line": 353,
+      "metadataFlags": []
+    },
+    {
+      "key": "Moh20",
+      "type": "article",
+      "title": "Decolonial AI: Decolonial Theory as Sociotechnical Foresight in Artificial Intelligence",
+      "authors": "S. Mohamed and Marie-Therese Png and William S. Isaac",
+      "journal": "Philosophy & Technology",
+      "year": 2020,
+      "doi": "10.1007/s13347-020-00405-8",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 361,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ish26",
+      "type": "article",
+      "title": "Digital colonialism, techno-sovereignty, and infrastructural power",
+      "authors": "A. Ishkhanyan",
+      "journal": "Frontiers in Political Science",
+      "year": 2026,
+      "doi": "10.3389/fpos.2026.1811790",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "sovereignty-concepts"
+      ],
+      "line": 369,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mus22",
+      "type": "article",
+      "title": "Infrastructuring digital sovereignty: a research agenda for an infrastructure-based sociology of digital self-determination practices",
+      "authors": "F. Musiani",
+      "journal": "Information, Communication & Society",
+      "year": 2022,
+      "doi": "10.1080/1369118x.2022.2049850",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "sovereignty-concepts"
+      ],
+      "line": 377,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cha25b",
+      "type": "article",
+      "title": "Widening the divide, reloading dependency: the political economy of data and AI capability building in Latin America",
+      "authors": "H. Chavez and Daniel Vizuete-Sandoval",
+      "journal": "Globalizations",
+      "year": 2025,
+      "doi": "10.1080/14747731.2024.2441625",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 385,
+      "metadataFlags": []
+    },
+    {
+      "key": "Arg26",
+      "type": "article",
+      "title": "Algorithmic Challenges and Regulatory Frameworks of Artificial Intelligence in Mexico: A Prospective Analysis from the Perspective of Digital Governance Theory",
+      "authors": "Eduardo Arguijo and Yenny Villuendas-Rey and Arturo Cruz-Jiménez and Jonatan Mireles-Hernández and O. Camacho-Nieto and Mario Aldape-Pérez",
+      "journal": "Comput.",
+      "year": 2026,
+      "doi": "10.3390/computers15030150",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 393,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fis22",
+      "type": "article",
+      "title": "The digital sovereignty trick: why the sovereignty discourse fails to address the structural dependencies of digital capitalism in the global south",
+      "authors": "David Fischer",
+      "journal": "Zeitschrift für Politikwissenschaft",
+      "year": 2022,
+      "doi": "10.1007/s41358-022-00316-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "platforms-power",
+        "sovereignty-concepts"
+      ],
+      "line": 401,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ha26",
+      "type": "article",
+      "title": "AI Governance and the Global South: Power Mechanisms of Exclusion and Strategic Responses",
+      "authors": "Y. Ha",
+      "journal": "The Korean Association of Area Studies",
+      "year": 2026,
+      "doi": "10.29159/kjas.44.3.55",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 409,
+      "metadataFlags": []
+    },
+    {
+      "key": "Luc25b",
+      "type": "article",
+      "title": "Hacia una IA decolonial: marcos alternativos, resistencias y propuestas",
+      "authors": "Horacio Correa Lucero",
+      "journal": "Hipertextos",
+      "year": 2025,
+      "doi": "10.24215/23143924e106",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 417,
+      "metadataFlags": []
+    },
+    {
+      "key": "Jia24",
+      "type": "article",
+      "title": "Models of State Digital Sovereignty From the Global South: Diverging Experiences From China, India and South Africa",
+      "authors": "Min Jiang",
+      "journal": "Policy & Internet",
+      "year": 2024,
+      "doi": "10.1002/poi3.427",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 425,
+      "metadataFlags": []
+    },
+    {
+      "key": "Seo21b",
+      "type": "article",
+      "title": "Chinese and U.S. AI and Cloud Multinational Corporations in Latin America",
+      "authors": "M. Seoane",
+      "journal": "",
+      "year": 2021,
+      "doi": "10.1007/978-3-030-74420-5_5",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "infrastructure"
+      ],
+      "line": 433,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Avi22",
+      "type": "article",
+      "title": "Por una transición digital incluyente y justa, desde Latinoamérica al mundo",
+      "authors": "Renata Ávila",
+      "journal": "",
+      "year": 2022,
+      "doi": "10.33960/issn-e.1885-9119.dtfo06",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 440,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Nan24",
+      "type": "article",
+      "title": "The false promise of individual digital sovereignty in Europe: Comparing artificial intelligence and data regulations in China and the European Union",
+      "authors": "Riccardo Nanni and P. G. Bizzaro and M. Napolitano",
+      "journal": "Policy & Internet",
+      "year": 2024,
+      "doi": "10.1002/poi3.424",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "sovereignty-concepts"
+      ],
+      "line": 447,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ver21",
+      "type": "article",
+      "title": "Regulatory paths for artificial intelligence in latin american countries with data protection law frameworks: limits and possibilities of integrating policies",
+      "authors": "A. Veronese and Amanda Nunes Lopes Espiñeira Lemos",
+      "journal": "Revista Latinoamericana de Economía y Sociedad Digital",
+      "year": 2021,
+      "doi": "10.53857/cjfb4918",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 455,
+      "metadataFlags": []
+    },
+    {
+      "key": "Her25",
+      "type": "article",
+      "title": "Towards a sociotechnical ecology of artificial intelligence: power, accountability, and governance in a global context",
+      "authors": "Andrés Domínguez Hernández and A. Perini and Semeli Hadjiloizou and A. Borda and Sabeehah Mahomed and David Leslie",
+      "journal": "AI and Ethics",
+      "year": 2025,
+      "doi": "10.1007/s43681-025-00902-6",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 463,
+      "metadataFlags": []
+    },
+    {
+      "key": "Err26",
+      "type": "article",
+      "title": "Pursuing digital sovereignty in technological peripheries: The case of Chile",
+      "authors": "José Antonio Errázuriz",
+      "journal": "Journal of Digital Media & Policy",
+      "year": 2026,
+      "doi": "10.1386/jdmp_00219_1",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 471,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fel25",
+      "type": "article",
+      "title": "Doing the Feminist Work in AI: Reflections from an AI Project in Latin America",
+      "authors": "Marianela Ciolfi Felice and Ivana Feldfeber and Carolina Glasserman Apicella and Y. Quiroga and Julián Ansaldo and L. Lapenna and Santiago Bezchinsky and Raul Barriga Rubio and Mailén García",
+      "journal": "Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems",
+      "year": 2025,
+      "doi": "10.1145/3706598.3713681",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 479,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bel26",
+      "type": "article",
+      "title": "Imaginarios de la Inteligencia Artificial en México",
+      "authors": "Eduardo Robles Belmont and G. Sued",
+      "journal": "Eikasía Revista de Filosofía",
+      "year": 2026,
+      "doi": "10.57027/eikasia.134.1283",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 487,
+      "metadataFlags": []
+    },
+    {
+      "key": "Alf26",
+      "type": "article",
+      "title": "Tecnocracias digitales y soberanía algorítmica: la disputa por el poder infraestructural en el siglo XXI.",
+      "authors": "Andreina Pérez Alfaro",
+      "journal": "Tsafiqui - Revista Científica en Ciencias Sociales",
+      "year": 2026,
+      "doi": "10.29019/tsafiqui.v16i2.1817",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 495,
+      "metadataFlags": []
+    },
+    {
+      "key": "Yey25",
+      "type": "article",
+      "title": "An Enabling Regulatory Framework for Artificial Intelligence in Latin America and the Caribbean",
+      "authors": "Eduardo Levy Yeyati",
+      "journal": "",
+      "year": 2025,
+      "doi": "10.18235/0013801",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 503,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Fil22b",
+      "type": "article",
+      "title": "Artificial Intelligence Policy Regimes: Comparing Politics and Policy to National Strategies for Artificial Intelligence",
+      "authors": "Fernando Filgueiras",
+      "journal": "Global Perspectives",
+      "year": 2022,
+      "doi": "10.1525/gp.2022.32362",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 510,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sav26",
+      "type": "article",
+      "title": "The Rise of AI Authorities? A Closer Look at Latin America’s Institutional Responses and External Influences",
+      "authors": "Rocco Saverino and Pablo Trigo Kramcsák and Barbara da Rosa Lazarotto",
+      "journal": "University of Bologna Law Review",
+      "year": 2026,
+      "doi": "10.60923/issn.2531-6133/21439",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 518,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mul23",
+      "type": "article",
+      "title": "Artificial Intelligence in the Colonial Matrix of Power",
+      "authors": "James Muldoon and Boxi A Wu",
+      "journal": "Philosophy & Technology",
+      "year": 2023,
+      "doi": "10.1007/s13347-023-00687-8",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 526,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tre21",
+      "type": "article",
+      "title": "Latin American perspectives on datafication and artificial intelligence: Traditions, interventions and possibilities",
+      "authors": "Emiliano Treré and S. Milan",
+      "journal": "Palabra Clave",
+      "year": 2021,
+      "doi": "10.5294/pacla.2021.24.3.1",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 534,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil25d",
+      "type": "article",
+      "title": "Soberania e tecnodiversidade",
+      "authors": "S. Silveira",
+      "journal": "V!RUS Journal",
+      "year": 2025,
+      "doi": "10.11606/2175-974x.virus.v30.240239",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 542,
+      "metadataFlags": []
+    },
+    {
+      "key": "Wey25",
+      "type": "article",
+      "title": "Digital Disintegration: Techno-Blocs and Strategic Sovereignty in the AI Era",
+      "authors": "Stephen Weymouth",
+      "journal": "International Organization",
+      "year": 2025,
+      "doi": "10.1017/s0020818325101070",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 550,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dan26b",
+      "type": "article",
+      "title": "ARTIFICIAL INTELLIGENCE, THE DIGITAL DIVIDE, AND THE CHALLENGES FACING LATIN AMERICA IN THE NEW GLOBAL ECONOMY",
+      "authors": "C. C. Danesi",
+      "journal": "Latin American Journal of European Studies",
+      "year": 2026,
+      "doi": "10.51799/2763-8685v6n1013",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 558,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cas25d",
+      "type": "article",
+      "title": "Digital Governance in Latin America: A Perspective from the European Experience",
+      "authors": "Ccory Yamina Silva Casas",
+      "journal": "Política Internacional",
+      "year": 2025,
+      "doi": "10.61249/pi.vi138.277",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 566,
+      "metadataFlags": []
+    },
+    {
+      "key": "Luc25",
+      "type": "article",
+      "title": "Colonial structures in AI: a Latin American decolonial literature review of structural implications for marginalised communities in the Global South",
+      "authors": "H. Lucero and Cheryl Martens",
+      "journal": "AI Soc.",
+      "year": 2025,
+      "doi": "10.1007/s00146-025-02547-9",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "participation"
+      ],
+      "line": 574,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bec21",
+      "type": "article",
+      "title": "The curious absence of cybernationalism in Latin America: Lessons for the study of digital sovereignty and governance",
+      "authors": "Martín Becerra and S. Waisbord",
+      "journal": "Communication and the Public",
+      "year": 2021,
+      "doi": "10.1177/20570473211046730",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 582,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ver21b",
+      "type": "article",
+      "title": "Trayectoria normativa de la inteligencia artificial en los países de Latinoamérica con un marco jurídico para la protección de datos: límites y posibilidades de las políticas integradoras",
+      "authors": "A. Veronese and Amanda Nunes Lopes Espiñeira Lemos",
+      "journal": "Revista Latinoamericana de Economía y Sociedad Digital",
+      "year": 2021,
+      "doi": "10.53857/mzbu2371",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 590,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hao26",
+      "type": "article",
+      "title": "Governing critical AI capabilities through sovereign orchestration without full stack ownership",
+      "authors": "Yi-Chen Hao",
+      "journal": "Discover Artificial Intelligence",
+      "year": 2026,
+      "doi": "10.1007/s44163-026-02447-x",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 598,
+      "metadataFlags": []
+    },
+    {
+      "key": "Leh24b",
+      "type": "article",
+      "title": "Compute North vs. Compute South: The Uneven Possibilities of Compute-based AI Governance Around the Globe",
+      "authors": "V. Lehdonvirta and Boxi Wu and Zoe Hawkins",
+      "journal": "",
+      "year": 2024,
+      "doi": "10.1609/aies.v7i1.31683",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "infrastructure",
+        "policy-institutions"
+      ],
+      "line": 606,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Adl24",
+      "type": "article",
+      "title": "The Discursive Struggle for Digital Sovereignty: Security, Economy Rights and the Cloud Project Gaia‐X",
+      "authors": "Rebecca Adler-Nissen and K. Eggeling",
+      "journal": "JCMS: Journal of Common Market Studies",
+      "year": 2024,
+      "doi": "10.1111/jcms.13594",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 613,
+      "metadataFlags": []
+    },
+    {
+      "key": "Eke25",
+      "type": "article",
+      "title": "Decoloniality impact assessment for AI",
+      "authors": "D. Eke and R. Chavarriaga and B. Stahl",
+      "journal": "Ai & Society",
+      "year": 2025,
+      "doi": "10.1007/s00146-025-02649-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation"
+      ],
+      "line": 621,
+      "metadataFlags": []
+    },
+    {
+      "key": "Car20",
+      "type": "article",
+      "title": "The CARE Principles for Indigenous Data Governance",
+      "authors": "S. Carroll and Ibrahim Garba and O. L. Figueroa-Rodríguez and J. Holbrook and R. Lovett and S. Materechera and M. Parsons and Kay Raseroka and D. Rodriguez-Lonebear and Robyn Rowe and Rodrigo Sara and Jennifer D. Walker and Jane Anderson and M. Hudson",
+      "journal": "Data Sci. J.",
+      "year": 2020,
+      "doi": "10.5334/dsj-2020-043",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "policy-institutions"
+      ],
+      "line": 629,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mar25b",
+      "type": "article",
+      "title": "Decolonizing AI rationality in the Ecuadorian Amazon",
+      "authors": "Cheryl Martens and Etsa Franklin Salvio Sharupi Tapuy and Maria de-los-Angeles Ortega-Calle",
+      "journal": "Globalizations",
+      "year": 2025,
+      "doi": "10.1080/14747731.2025.2528514",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 637,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sch25c",
+      "type": "article",
+      "title": "Where does digital sovereignty lie in building the Brazilian smart city?",
+      "authors": "Iara Schiavi and S. A. da Silveira and A. Pasti",
+      "journal": "Digital Geography and Society",
+      "year": 2025,
+      "doi": "10.1016/j.diggeo.2025.100137",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 645,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cac26",
+      "type": "article",
+      "title": "The epistemic readiness gap: rethinking AI readiness indices through ILIA 2025",
+      "authors": "Inti Josue Cachipuendo-Contero",
+      "journal": "AI & SOCIETY",
+      "year": 2026,
+      "doi": "10.1007/s00146-026-03087-6",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation"
+      ],
+      "line": 653,
+      "metadataFlags": []
+    },
+    {
+      "key": "And26",
+      "type": "article",
+      "title": "Capitalismo informacional y dependencia digital: infraestructuras, datos y reorganización del poder global.",
+      "authors": "Tiago Negrão de Andrade and Maria Cristina Gobbi",
+      "journal": "Observatorio Latinoamericano y Caribeño",
+      "year": 2026,
+      "doi": "10.62174/olac.11424",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 661,
+      "metadataFlags": []
+    },
+    {
+      "key": "Jua26",
+      "type": "article",
+      "title": "AI and Governance",
+      "authors": "Miguel Ángel Juárez-Merino",
+      "journal": "The International Journal of Technology, Knowledge, and Society",
+      "year": 2026,
+      "doi": "10.18848/1832-3669/cgp/a1024",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 669,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tre21b",
+      "type": "article",
+      "title": "Latin American perspectives on datafication and artificial intelligence",
+      "authors": "Emiliano Treré and S. Milan",
+      "journal": "Palabra Clave",
+      "year": 2021,
+      "doi": "10.5294/pacla.2021.24.3",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 677,
+      "metadataFlags": []
+    },
+    {
+      "key": "Erm22",
+      "type": "article",
+      "title": "Artificial Intelligence and the Political Legitimacy of Global Governance",
+      "authors": "Eva Erman and Markus Furendal",
+      "journal": "Political Studies",
+      "year": 2022,
+      "doi": "10.1177/00323217221126665",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions",
+        "security-geopolitics"
+      ],
+      "line": 685,
+      "metadataFlags": []
+    },
+    {
+      "key": "Set25",
+      "type": "article",
+      "title": "AI From the South: artificial intelligence in Latin America through the sociotechnical imaginaries of Brazilian tech workers",
+      "authors": "Kenzo Soares Seto",
+      "journal": "Globalizations",
+      "year": 2025,
+      "doi": "10.1080/14747731.2025.2465166",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 693,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gur20",
+      "type": "article",
+      "title": "The AI-development Connection - A View from the South",
+      "authors": "Anita Gurumurthy",
+      "journal": "Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society",
+      "year": 2020,
+      "doi": "10.1145/3375627.3377139",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 701,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bec24",
+      "type": "article",
+      "title": "Soberanía y nacionalismo en entornos digitales: la llamativa ausencia de América Latina en el debate mundial",
+      "authors": "M. Becerra and Silvio Waisbord",
+      "journal": "Signo y Pensamiento",
+      "year": 2024,
+      "doi": "10.11144/javeriana.syp43.sned",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 709,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hoe24",
+      "type": "article",
+      "title": "Digital Sovereignty, the Private Sector, and a Social Republican Alternative",
+      "authors": "Bernd Hoeksema",
+      "journal": "Digital Society",
+      "year": 2024,
+      "doi": "10.1007/s44206-024-00140-z",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 717,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rei20",
+      "type": "article",
+      "title": "Platform developmentalism: leveraging platform innovation for national development in Latin America",
+      "authors": "K. Reilly",
+      "journal": "Internet Policy Rev.",
+      "year": 2020,
+      "doi": "10.14763/2020.4.1538",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "platforms-power"
+      ],
+      "line": 725,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mic20b",
+      "type": "article",
+      "title": "Emerging models of data governance in the age of datafication",
+      "authors": "Marina Micheli and Marisa Ponti and M. Craglia and Anna Berti Suman",
+      "journal": "Big Data & Society",
+      "year": 2020,
+      "doi": "10.1177/2053951720948087",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 733,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cas26",
+      "type": "article",
+      "title": "Soberania Fatiada: Controle das Infraestruturas e Subordinação da Autoridade Pública no Mundo Digital",
+      "authors": "João Francisco Cassino",
+      "journal": "BRICS Strategy and Technology Review",
+      "year": 2026,
+      "doi": "10.65895/bstr.v2n1.20",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 741,
+      "metadataFlags": []
+    },
+    {
+      "key": "Scr20",
+      "type": "article",
+      "title": "Automatizar con cautela: Datos e Inteligencia Artificial en América Latina",
+      "authors": "Fabrizio Scrollini",
+      "journal": "",
+      "year": 2020,
+      "doi": "10.5281/zenodo.4564556",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 749,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Bal21",
+      "type": "article",
+      "title": "Apropiación de tecnologías en las redes comunitarias de internet latinoamericanas",
+      "authors": "M. Baladron",
+      "journal": "Tripodos",
+      "year": 2021,
+      "doi": "10.51698/tripodos.2020.46p59-76",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 756,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lam24",
+      "type": "article",
+      "title": "Beyond sovereignty as authority: the multiplicity of European approaches to digital sovereignty",
+      "authors": "Daniel Lambach and Linda Monsees",
+      "journal": "Global Political Economy",
+      "year": 2024,
+      "doi": "10.1332/26352257y2024d000000007",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 764,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cos25",
+      "type": "article",
+      "title": "Soberania Digital e Políticas públicas em Inteligência Artificial no Brasil",
+      "authors": "Camila Mattos da Costa",
+      "journal": "Contracampo",
+      "year": 2025,
+      "doi": "10.22409/9f09kk35",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 772,
+      "metadataFlags": []
+    },
+    {
+      "key": "Var21",
+      "type": "article",
+      "title": "Artificial intelligence and consent: a feminist anti-colonial critique",
+      "authors": "Joana Varon and P. Peña",
+      "journal": "Internet Policy Rev.",
+      "year": 2021,
+      "doi": "10.14763/2021.4.1602",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 780,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rad21",
+      "type": "article",
+      "title": "Steering the governance of artificial intelligence: national strategies in perspective",
+      "authors": "R. Radu",
+      "journal": "Policy and Society",
+      "year": 2021,
+      "doi": "10.1080/14494035.2021.1929728",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 788,
+      "metadataFlags": []
+    },
+    {
+      "key": "And26b",
+      "type": "article",
+      "title": "A inteligência artificial como dispositivo geopolítico",
+      "authors": "Tiago Negrão Andrade and M. Gobbi",
+      "journal": "Tríade: Comunicação, Cultura e Mídia",
+      "year": 2026,
+      "doi": "10.22484/2318-5694.2026v14id5790",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "security-geopolitics"
+      ],
+      "line": 796,
+      "metadataFlags": []
+    },
+    {
+      "key": "Viv00",
+      "type": "article",
+      "title": "Data centres and the new strategic infrastructure governance: From cloud ESG to compute sovereignty",
+      "authors": "Vlado Vivoda and Ron Janjua and Danilo Borja",
+      "journal": "The Extractive Industries and Society",
+      "year": null,
+      "doi": "10.1016/j.exis.2026.102036",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 804,
+      "metadataFlags": [
+        "missing_year"
+      ]
+    },
+    {
+      "key": "Fol26",
+      "type": "article",
+      "title": "Beyond platform capitalism: Digital solidarity economy and free culture networks in Argentina and Brazil",
+      "authors": "Leonardo F. Foletto and Daniela Santini",
+      "journal": "Internet Policy Rev.",
+      "year": 2026,
+      "doi": "10.14763/2026.1.2061",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power"
+      ],
+      "line": 811,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ruv25",
+      "type": "article",
+      "title": "Governance of Artificial Intelligence in the Public Sector: Analysis of Public Policies in Spain and Mexico",
+      "authors": "E. A. Ruvalcaba-Gomez and Victor H. Garcia-Benitez",
+      "journal": "Review of Policy Research",
+      "year": 2025,
+      "doi": "10.1111/ropr.70057",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 819,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hum21",
+      "type": "article",
+      "title": "Data sovereignty: A review",
+      "authors": "P. Hummel and Matthias Braun and M. Tretter and P. Dabrock",
+      "journal": "Big Data & Society",
+      "year": 2021,
+      "doi": "10.1177/2053951720982012",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 827,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gla22",
+      "type": "article",
+      "title": "Contested Spatialities of Digital Sovereignty",
+      "authors": "G. Glasze and A. Cattaruzza and Frédérick Douzet and Finn Dammann and Marie-Gabrielle Bertran and Clotilde Bômont and Matthias Braun and D. Danet and Alix Desforges and A. Géry and S. Grumbach and P. Hummel and Kévin Limonier and Max Münßinger and Florian Nicolai and Louis Pétiniaud and Jan Winkler and Caroline Zanin",
+      "journal": "Geopolitics",
+      "year": 2022,
+      "doi": "10.1080/14650045.2022.2050070",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 835,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil25e",
+      "type": "article",
+      "title": "Índice de Soberania Digital",
+      "authors": "S. A. da Silveira and J. Xiong",
+      "journal": "Liinc em Revista",
+      "year": 2025,
+      "doi": "10.18617/liinc.v21i1.7451",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 843,
+      "metadataFlags": []
+    },
+    {
+      "key": "Alv26",
+      "type": "article",
+      "title": "Regulación de la Inteligencia Artificial en América Latina: Un Análisis Comparado de sus Avances, Desafíos y Perspectivas Éticas",
+      "authors": "Corina Lourdes Miranda Alvarado and Stalin Patricio Arana Vera",
+      "journal": "Revista Científica Multidimensional Magna Sapientia",
+      "year": 2026,
+      "doi": "10.62308/ms260101",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 851,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fil23b",
+      "type": "article",
+      "title": "The Brazilian (Non)perspective on national strategy for artificial intelligence",
+      "authors": "Fernando Filgueiras and Tainá Aguiar Junquilho",
+      "journal": "Discover Artificial Intelligence",
+      "year": 2023,
+      "doi": "10.1007/s44163-023-00052-w",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 859,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bor24",
+      "type": "article",
+      "title": "El Oligopolio Tecnológico Global, la periferia digital y América Latina",
+      "authors": "Carina Borrastero and Ignacio Juncos",
+      "journal": "Desarrollo Económico. Revista de Ciencias Sociales",
+      "year": 2024,
+      "doi": "10.59339/de.v64i243.699",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 867,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hum25",
+      "type": "article",
+      "title": "Cooling down AI regulation controversies: Three closure processes in the Chilean legislative arena",
+      "authors": "M. Humeres and Dusan Cotoras and Renato Moretti and Iñaki Oyarzún-Merino and Teresa Correa and Claudia López",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517241311067",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 875,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25d",
+      "type": "article",
+      "title": "Latin American critical data studies",
+      "authors": "Rafael Grohmann",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517251330160",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 883,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ric23b",
+      "type": "article",
+      "title": "AI for/by the majority world: From technologies of dispossession to technologies of radical care",
+      "authors": "Paola Ricaurte",
+      "journal": "Proceedings of the 2023 AAAI/ACM Conference on AI, Ethics, and Society",
+      "year": 2023,
+      "doi": "10.1145/3600211.3607544",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 891,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tay20",
+      "type": "article",
+      "title": "Public Actors Without Public Values: Legitimacy, Domination and the Regulation of the Technology Sector",
+      "authors": "Linnet Taylor",
+      "journal": "Philosophy & Technology",
+      "year": 2020,
+      "doi": "10.1007/s13347-020-00441-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 899,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ish25c",
+      "type": "article",
+      "title": "Governing AI across borders: corporate power, state sovereignty and global regulation",
+      "authors": "A. Ishkhanyan",
+      "journal": "Digital Policy, Regulation and Governance",
+      "year": 2025,
+      "doi": "10.1108/dprg-03-2025-0057",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 907,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pen25b",
+      "type": "article",
+      "title": "Algocracy in the Global South: The threat of a new dependency",
+      "authors": "Nicolás De la Peña and H. Guerrero-Sierra and Iván Ramón Rodríguez Benavidez",
+      "journal": "Revista Chilena de Derecho y Tecnología",
+      "year": 2025,
+      "doi": "10.5354/0719-2584.2025.74784",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 915,
+      "metadataFlags": []
+    },
+    {
+      "key": "Est22",
+      "type": "article",
+      "title": "Towards a Terrestrial Internet: re-imagining digital networks from the ground up",
+      "authors": "Marcela Suárez Estrada and Sebastián Lehuedé",
+      "journal": "Tapuya: Latin American Science, Technology and Society",
+      "year": 2022,
+      "doi": "10.1080/25729861.2022.2139913",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 923,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro23b",
+      "type": "article",
+      "title": "Not just platform, nor cooperatives: worker-owned technologies from below",
+      "authors": "Rafael Grohmann",
+      "journal": "Communication, Culture & Critique",
+      "year": 2023,
+      "doi": "10.1093/ccc/tcad036",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power"
+      ],
+      "line": 931,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ric19",
+      "type": "article",
+      "title": "Data Epistemologies, The Coloniality of Power, and Resistance",
+      "authors": "Paola Ricaurte",
+      "journal": "Television & New Media",
+      "year": 2019,
+      "doi": "10.1177/1527476419831640",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 939,
+      "metadataFlags": []
+    },
+    {
+      "key": "Biz23",
+      "type": "article",
+      "title": "Discussing internet platform policy and regulation in Latin America",
+      "authors": "Ana Bizberge and Guillermo Mastrini and Rodrigo Gómez",
+      "journal": "Journal of Digital Media & Policy",
+      "year": 2023,
+      "doi": "10.1386/jdmp_00118_2",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 947,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cou21",
+      "type": "article",
+      "title": "TECHNOLOGICAL SOVEREIGNTY AND SOCIAL JUSTICE: EXPLORING THE INTERSECTION OF FREE SOFTWARE AND INDIGENOUS KNOWLEDGE",
+      "authors": "S. Couture and S. Toupin and Mayoral-Baños Alejandro",
+      "journal": "AoIR Selected Papers of Internet Research",
+      "year": 2021,
+      "doi": "10.5210/spir.v2021i0.12155",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "sovereignty-concepts"
+      ],
+      "line": 955,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pol24",
+      "type": "article",
+      "title": "Estado, soberania digital e tecnologias emergentes",
+      "authors": "F. Polido",
+      "journal": "Revista de Ciências do Estado",
+      "year": 2024,
+      "doi": "10.35699/2525-8036.2024.53066",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 963,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dig23",
+      "type": "article",
+      "title": "Digital sovereignty, challenges and risks of digitalization in Latin America",
+      "authors": "Л. Н. Симонова",
+      "journal": "Latinskaia Amerika",
+      "year": 2023,
+      "doi": "10.31857/s0044748x0028265-0",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 971,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gar24",
+      "type": "article",
+      "title": "ANÁLISE DAS ESTRATÉGIAS NACIONAIS DE INTELIGÊNCIA ARTIFICIAL NA AMÉRICA LATINA",
+      "authors": "Victor H. Garcia-Benitez and E. Ruvalcaba-Gomez",
+      "journal": "Revista Brasileira de Direitos Fundamentais & Justiça",
+      "year": 2024,
+      "doi": "10.30899/dfj.v20i50.1564",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 979,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fra25",
+      "type": "article",
+      "title": "The sociotechnical politics of digital sovereignty: Frictional infrastructures and the alignment of privacy and geopolitics",
+      "authors": "Samuele Fratini",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517251400729",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "rights-ethics",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 987,
+      "metadataFlags": []
+    },
+    {
+      "key": "Val24b",
+      "type": "article",
+      "title": "Data Workers in AI development",
+      "authors": "J. Valente",
+      "journal": "Liinc em Revista",
+      "year": 2024,
+      "doi": "10.18617/liinc.v20i2.7302",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 995,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lem24",
+      "type": "article",
+      "title": "Soberania digital",
+      "authors": "Grayce Lemos and Marina Bazzo de Espíndola and Nayara Cristine Müller Tosatti",
+      "journal": "Logeion: Filosofia da Informação",
+      "year": 2024,
+      "doi": "10.21728/logeion.2024v11e-7364",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1003,
+      "metadataFlags": [
+        "duplicate_title_different_work"
+      ]
+    },
+    {
+      "key": "Mol26b",
+      "type": "article",
+      "title": "HACIA UNA MIRADA DE LA (IN) MADUREZ DE LA INTELIGENCIA ARTIFICIAL EN AMÉRICA LATINA. UNA REFLEXIÓN NECESARIA",
+      "authors": "Oscar Molina-Bailon and Kleber Mazziero",
+      "journal": "Arte 21",
+      "year": 2026,
+      "doi": "10.62507/a21.v26i1.781",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1011,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dig26b",
+      "type": "article",
+      "title": "Digital Sovereignty in the Global Cognitive-Informational Order: Geocognitive Power Poles and Governed Interdependence",
+      "authors": "Unknown Author",
+      "journal": "Journal of Modern Technology and Engineering",
+      "year": 2026,
+      "doi": "10.62476/jmte.11161",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1019,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ron24",
+      "type": "article",
+      "title": "‘The sovereign cloud’ in Europe: diverging nation state preferences and disputed institutional competences in the context of limited technological capabilities",
+      "authors": "Julia Rone",
+      "journal": "Journal of European Public Policy",
+      "year": 2024,
+      "doi": "10.1080/13501763.2024.2348618",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 1027,
+      "metadataFlags": []
+    },
+    {
+      "key": "Viv26",
+      "type": "article",
+      "title": "Globalizations: Introduction",
+      "authors": "Ernesto Vivares and Belén Albornoz and Cheryl Martens",
+      "journal": "Globalizations",
+      "year": 2026,
+      "doi": "10.1080/14747731.2025.2585096",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1035,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sam21b",
+      "type": "article",
+      "title": "Governing Artificial Intelligence in an Age of Inequality",
+      "authors": "Padmashree Gehl Sampath",
+      "journal": "Global Policy",
+      "year": 2021,
+      "doi": "10.1111/1758-5899.12940",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1043,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bra24",
+      "type": "article",
+      "title": "Is digital sovereignty normatively desirable?",
+      "authors": "Matthias Braun and P. Hummel",
+      "journal": "Information, Communication & Society",
+      "year": 2024,
+      "doi": "10.1080/1369118x.2024.2332624",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1051,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mal26",
+      "type": "article",
+      "title": "Hacia una Soberanía Tecnológica de los pueblos Indígenas: Un marco estratégico de gobernanza de datos frente al extractivismo algorítmico",
+      "authors": "Silverio Chisaguano Malliquinga",
+      "journal": "Polo del Conocimiento",
+      "year": 2026,
+      "doi": "10.23857/pc.v11i8.12385",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1059,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kak20",
+      "type": "article",
+      "title": "''The Global South is everywhere, but also always somewhere'': National Policy Narratives and AI Justice",
+      "authors": "Amba Kak",
+      "journal": "Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society",
+      "year": 2020,
+      "doi": "10.1145/3375627.3375859",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 1067,
+      "metadataFlags": [
+        "source_quote_delimiters"
+      ]
+    },
+    {
+      "key": "Pur26",
+      "type": "article",
+      "title": "Core-Periphery Dynamics in Brazil’s Artificial Intelligence Expansion, 2022-2025: A World-System Analysis",
+      "authors": "Vanessa Difasuci Purnomo",
+      "journal": "Politeia : Journal of Public Administration and Political Science and International Relations",
+      "year": 2026,
+      "doi": "10.61978/politeia.v4i3.1655",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1075,
+      "metadataFlags": []
+    },
+    {
+      "key": "Set24",
+      "type": "article",
+      "title": "Platform sub-imperialism",
+      "authors": "K. Seto",
+      "journal": "Big Data & Society",
+      "year": 2024,
+      "doi": "10.1177/20539517241249410",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power"
+      ],
+      "line": 1083,
+      "metadataFlags": []
+    },
+    {
+      "key": "Med24",
+      "type": "article",
+      "title": "Participatory action research in critical data studies: Interrogating AI from a South–North approach",
+      "authors": "A. Medrado and P. Verdegem",
+      "journal": "Big Data & Society",
+      "year": 2024,
+      "doi": "10.1177/20539517241235869",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "participation"
+      ],
+      "line": 1091,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sou25",
+      "type": "article",
+      "title": "Rebooting the global consensus: Norm entrepreneurship, data governance and the inalienability of digital bodies",
+      "authors": "Siddharth Peter de Souza and Linnet Taylor",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517251330191",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 1099,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cal22",
+      "type": "article",
+      "title": "Artificial intelligence and EU security: the false promise of digital sovereignty",
+      "authors": "Andrea Calderaro and Stella Blumfelde",
+      "journal": "European Security",
+      "year": 2022,
+      "doi": "10.1080/09662839.2022.2101885",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1107,
+      "metadataFlags": []
+    },
+    {
+      "key": "Agu21b",
+      "type": "article",
+      "title": "Internet Policy Formation in Latin America: Understanding the Internet Policy Formation in Latin America: Understanding the Links Between the National, the Regional, and the Global Links Between the National, the Regional, and the Global",
+      "authors": "Carolina Aguerre and H. Galperin",
+      "journal": "",
+      "year": 2021,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/07b65a4b7a9bcc3d4bda73d553aa63471e1c63f0",
+      "urlSource": "https://www.semanticscholar.org/paper/07b65a4b7a9bcc3d4bda73d553aa63471e1c63f0",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 1115,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi",
+        "duplicated_title_phrase"
+      ]
+    },
+    {
+      "key": "Yik21",
+      "type": "article",
+      "title": "SOVEREIGNTY IN THE CYBERSPACE: CONTESTATION OF CONCEPTS AND POLICIES",
+      "authors": "Chan-Chin Yik and Ke Li",
+      "journal": "AoIR Selected Papers of Internet Research",
+      "year": 2021,
+      "doi": "10.5210/spir.v2021i0.12153",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1122,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rib26",
+      "type": "article",
+      "title": "Práticas de autonomia para o desenvolvimento tecnológico no Sul Global",
+      "authors": "Ana Carolina Ritschel Ribeiro and L. Velloso",
+      "journal": "Design Proceedings",
+      "year": 2026,
+      "doi": "10.5151/1jppd-0001",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1130,
+      "metadataFlags": []
+    },
+    {
+      "key": "Onu26",
+      "type": "article",
+      "title": "Digital Colonialism and Algorithmic Power: Data Sovereignty and AI Governance in the Global South",
+      "authors": "Victor Chinonye Onuchukwu and Oghomwen Rita Ohiro",
+      "journal": "AI, Law, Politics",
+      "year": 2026,
+      "doi": "10.5709/alp-02.01.2026-03",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1138,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rob21",
+      "type": "article",
+      "title": "Safeguarding European values with digital sovereignty: an analysis of statements and policies",
+      "authors": "H. Roberts and J. Cowls and Federico Casolari and J. Morley and M. Taddeo and L. Floridi",
+      "journal": "Internet Policy Rev.",
+      "year": 2021,
+      "doi": "10.14763/2021.3.1575",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1146,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tou25",
+      "type": "article",
+      "title": "Artificial intelligence for development (AI4D): A contested notion",
+      "authors": "S. Toupin and Roda Siad",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517241304678",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1154,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dut25",
+      "type": "article",
+      "title": "Our data, ourselves: Participation, justice, and alternative futures of data sovereignty in India",
+      "authors": "Sagnik Dutta and Suruchi Mazumdar",
+      "journal": "Big Data & Society",
+      "year": 2025,
+      "doi": "10.1177/20539517251365235",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "participation",
+        "sovereignty-concepts"
+      ],
+      "line": 1162,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rot25",
+      "type": "article",
+      "title": "Dependent development in digital capitalism: The politics of startup policies in the new periphery",
+      "authors": "Sidney A. Rothstein",
+      "journal": "Competition & Change",
+      "year": 2025,
+      "doi": "10.1177/10245294251379143",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 1170,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mil24",
+      "type": "article",
+      "title": "Against decolonial reductionism: The impact of Latin American thinking on the data decolonization project",
+      "authors": "S. Milan and Emiliano Treré",
+      "journal": "Big Data & Society",
+      "year": 2024,
+      "doi": "10.1177/20539517241270694",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1178,
+      "metadataFlags": []
+    },
+    {
+      "key": "Set23",
+      "type": "article",
+      "title": "Subimperialismo de dados: uma crítica ao colonialismo de dados diante das Big Techs sul-americanas",
+      "authors": "Kenzo Soares Seto",
+      "journal": "Revista Eletrônica Internacional de Economia Política da Informação da Comunicação e da Cultura",
+      "year": 2023,
+      "doi": "10.54786/revistaeptic.v25i2.19199",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1186,
+      "metadataFlags": []
+    },
+    {
+      "key": "Vip25",
+      "type": "article",
+      "title": "Towards AI sovereignty: The good, the bad, and the ugly of AI policy in India",
+      "authors": "Jai Vipra",
+      "journal": "The African Journal of Information and Communication (AJIC)",
+      "year": 2025,
+      "doi": "10.23962/ajic.i35.21263",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1194,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gua00",
+      "type": "article",
+      "title": "The trust deﬁcit. EU bargaining for access and control over cloud infrastructures",
+      "authors": "Filippo Gualtiero and Blancato Madeline and Carr",
+      "journal": "",
+      "year": null,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/e1c8eda05bc04b12332f2d006377e28fe3169d29",
+      "urlSource": "https://www.semanticscholar.org/paper/e1c8eda05bc04b12332f2d006377e28fe3169d29",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 1202,
+      "metadataFlags": [
+        "missing_year",
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Ruh26",
+      "type": "article",
+      "title": "Reframing digital colonialism in Global South AIgovernance",
+      "authors": "Yashvardhan Ruhela",
+      "journal": "International Journal of Political Science and Governance",
+      "year": 2026,
+      "doi": "10.33545/26646021.2026.v8.i9b.1282",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1208,
+      "metadataFlags": []
+    },
+    {
+      "key": "Su25",
+      "type": "article",
+      "title": "Assembling platform governance as private ordering in the age of generative AI: platform interdependence in policy evolution",
+      "authors": "Chao Chris Su and N. Chan",
+      "journal": "Information, Communication & Society",
+      "year": 2025,
+      "doi": "10.1080/1369118x.2025.2513672",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 1216,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bar21b",
+      "type": "article",
+      "title": "Talking AI into Being: The Narratives and Imaginaries of National AI Strategies and Their Performative Politics",
+      "authors": "Jascha Bareis and Christian Katzenbach",
+      "journal": "Science, Technology, & Human Values",
+      "year": 2021,
+      "doi": "10.1177/01622439211030007",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1224,
+      "metadataFlags": []
+    },
+    {
+      "key": "Aya24",
+      "type": "article",
+      "title": "Decolonizing global AI governance: assessment of the state of decolonized AI governance in Sub-Saharan Africa",
+      "authors": "Gelan Ayana and Kokeb Dese and Hundessa Daba Nemomssa and Bontu Habtamu and B. Mellado and K. Badu and E. Yamba and S. Faye and M. Ondua and D. Nsagha and Denis Nkweteyim and J. D. Kong",
+      "journal": "Royal Society Open Science",
+      "year": 2024,
+      "doi": "10.1098/rsos.231994",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 1232,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ish25b",
+      "type": "article",
+      "title": "The sovereignty-internationalism paradox in AI governance: digital federalism and global algorithmic control",
+      "authors": "A. Ishkhanyan",
+      "journal": "Discover Artificial Intelligence",
+      "year": 2025,
+      "doi": "10.1007/s44163-025-00374-x",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1240,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pap23b",
+      "type": "article",
+      "title": "The state’s role in governing artificial intelligence: development, control, and promotion through national strategies",
+      "authors": "G. Papyshev and Masaru Yarime",
+      "journal": "Policy Design and Practice",
+      "year": 2023,
+      "doi": "10.1080/25741292.2022.2162252",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1248,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lan23",
+      "type": "article",
+      "title": "Rethinking geographies of sovereignty: Towards a conceptual framework of situated sovereignty",
+      "authors": "B. Lange and M. Pütz and Bianca Herlo",
+      "journal": "Geography Compass",
+      "year": 2023,
+      "doi": "10.1111/gec3.12728",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1256,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tru26",
+      "type": "article",
+      "title": "Transformación digital en el sector público: eficiencia con riesgos sociales",
+      "authors": "Rocío Aguilar Trujillo",
+      "journal": "Perfiles Latinoamericanos",
+      "year": 2026,
+      "doi": "10.18504/pl3467-003-2026",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1264,
+      "metadataFlags": []
+    },
+    {
+      "key": "Far22",
+      "type": "article",
+      "title": "Digital sovereignty and taking back control: from regulatory capitalism to regulatory mercantilism in EU cybersecurity",
+      "authors": "Benjamin Farrand and H. Carrapico",
+      "journal": "European Security",
+      "year": 2022,
+      "doi": "10.1080/09662839.2022.2102896",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1272,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mun25",
+      "type": "article",
+      "title": "From Neoliberal Openness to Sovereign Openness: Analysing Imaginaries of European Digital Policies",
+      "authors": "Max Münßinger and Susanne Schröder-Bergen and G. Glasze",
+      "journal": "Geopolitics",
+      "year": 2025,
+      "doi": "10.1080/14650045.2025.2507606",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 1280,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mie25",
+      "type": "article",
+      "title": "Academic Discourse on AI in Europe and Latin America: A Comparative Analysis with IRaMuTeQ",
+      "authors": "Jenifer Mieles Mieles and Luis Ángel Guaman-Lazo",
+      "journal": "Journal of Cultural Analysis and Social Change",
+      "year": 2025,
+      "doi": "10.64753/jcasc.v11i1.3636",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1288,
+      "metadataFlags": []
+    },
+    {
+      "key": "Nem26",
+      "type": "article",
+      "title": "AI ethics through a decolonial lens: what does AI ethics look like if we take seriously the push to decolonise it?",
+      "authors": "S. Nemorin and Beatrice Bonami",
+      "journal": "Ai & Society",
+      "year": 2026,
+      "doi": "10.1007/s00146-026-02935-9",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "rights-ethics"
+      ],
+      "line": 1296,
+      "metadataFlags": []
+    },
+    {
+      "key": "Wan26f",
+      "type": "article",
+      "title": "Digital Sovereignty",
+      "authors": "Blair Wang and R. Ciriello and Alexander Richter",
+      "journal": "Business & Information Systems Engineering",
+      "year": 2026,
+      "doi": "10.1007/s12599-026-01018-9",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1304,
+      "metadataFlags": [
+        "duplicate_title_different_work"
+      ]
+    },
+    {
+      "key": "Her25b",
+      "type": "article",
+      "title": "Lessons From the Margins: Contextualizing, Reimagining, and Hacking Generative AI in Global South",
+      "authors": "Andrés Domínguez Hernández and Diana Mosquera and F. Gallegos",
+      "journal": "Harvard Data Science Review",
+      "year": 2025,
+      "doi": "10.1162/99608f92.30a2934f",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 1312,
+      "metadataFlags": []
+    },
+    {
+      "key": "Col24",
+      "type": "article",
+      "title": "Las otras geopolíticas de la inteligencia artificial",
+      "authors": "Carme Colomina and Marta Galceran-Vercher",
+      "journal": "Revista CIDOB d'Afers Internacionals",
+      "year": 2024,
+      "doi": "10.24241/rcai.2024.138.3.27",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "security-geopolitics"
+      ],
+      "line": 1320,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cha21",
+      "type": "article",
+      "title": "Sovereignty 2.0",
+      "authors": "A. Chander and Hao-Chen Sun",
+      "journal": "SSRN Electronic Journal",
+      "year": 2021,
+      "doi": "10.2139/ssrn.3904949",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1328,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bir20",
+      "type": "article",
+      "title": "Algorithmic Colonization of Africa",
+      "authors": "Abeba Birhane",
+      "journal": "SCRIPT-ed",
+      "year": 2020,
+      "doi": "10.2966/scrip.170220.389",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1336,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cha21b",
+      "type": "article",
+      "title": "Contested Sovereignties: States, Media Platforms, Peoples, and the Regulation of Media Content and Big Data in the Networked Society",
+      "authors": "P. Chapdelaine and Jaqueline Mcleod Rogers",
+      "journal": "Laws",
+      "year": 2021,
+      "doi": "10.3390/laws10030066",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1344,
+      "metadataFlags": []
+    },
+    {
+      "key": "Jan20",
+      "type": "article",
+      "title": "Data governance: Organizing data for trustworthy Artificial Intelligence",
+      "authors": "M. Janssen and P. Brous and E. Estévez and L. Barbosa and T. Janowski",
+      "journal": "Gov. Inf. Q.",
+      "year": 2020,
+      "doi": "10.1016/j.giq.2020.101493",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 1352,
+      "metadataFlags": []
+    },
+    {
+      "key": "Seo21",
+      "type": "article",
+      "title": "Data securitisation: the challenges of data sovereignty in India",
+      "authors": "Maximiliano Facundo Vila Seoane",
+      "journal": "Third World Quarterly",
+      "year": 2021,
+      "doi": "10.1080/01436597.2021.1915122",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1360,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mon22b",
+      "type": "article",
+      "title": "Digital sovereignty, geopolitical imaginaries, and the reproduction of European identity",
+      "authors": "Linda Monsees and Daniel Lambach",
+      "journal": "European Security",
+      "year": 2022,
+      "doi": "10.1080/09662839.2022.2101883",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1368,
+      "metadataFlags": []
+    },
+    {
+      "key": "Abr26",
+      "type": "article",
+      "title": "AI ethics in postcolonial contexts: a critical synthesis of infrastructures, power, and governance",
+      "authors": "Itoro Abraham",
+      "journal": "AI & SOCIETY",
+      "year": 2026,
+      "doi": "10.1007/s00146-026-03153-z",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 1376,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gar26b",
+      "type": "article",
+      "title": "Dependencia administrada y soberanía relativa: gobernanza de la IA en dos universidades latinoamericanas",
+      "authors": "Alexander Pereira Garcia",
+      "journal": "Tramas y Redes",
+      "year": 2026,
+      "doi": "10.54871/cl4c10ae",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1384,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tra26b",
+      "type": "article",
+      "title": "Who Can Change Course? An Integrative Review of AI Sovereignty and Collective Learning Capacity",
+      "authors": "Kim Phuc Tran",
+      "journal": "",
+      "year": 2026,
+      "doi": "",
+      "url": "https://arxiv.org/abs/2606.00729",
+      "urlSource": "https://arxiv.org/abs/2606.00729",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1392,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Sau26",
+      "type": "article",
+      "title": "Digital sovereignty as a political and economic struggle: the state and social movements in education",
+      "authors": "Geo Saura and J. Casas and Mateus Arguelho",
+      "journal": "Learning, Media and Technology",
+      "year": 2026,
+      "doi": "10.1080/17439884.2026.2692954",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1399,
+      "metadataFlags": []
+    },
+    {
+      "key": "Abi25",
+      "type": "article",
+      "title": "Algorithmic Sovereignty and the New Security Dependencies: How Foreign AI Surveillance Technologies Reshape Domestic Autonomy in the Global Sout",
+      "authors": "Sheriffdeen Folaranmi Abiade",
+      "journal": "World Journal of Advanced Research and Reviews",
+      "year": 2025,
+      "doi": "10.30574/wjarr.2025.27.2.2845",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1407,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mon20",
+      "type": "article",
+      "title": "La inteligencia artificial al servicio del bien social en América Latina y el Caribe: Panorámica regional e instantáneas de doce países",
+      "authors": "Constanza Gómez Mont and Claudia May Del Pozo and Cristina Martínez Pinto and Ana Victoria Martín del Campo Alcocer",
+      "journal": "",
+      "year": 2020,
+      "doi": "10.18235/0002393",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 1415,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Viv00b",
+      "type": "article",
+      "title": "Estratégias de transformação digital na América Latina: políticas de infraestrutura e capacitação no Brasil, Chile, Colômbia e Uruguai",
+      "authors": "Pedro César de Quadros Vivas",
+      "journal": "",
+      "year": null,
+      "doi": "10.11606/d.8.2025.tde-04022026-194550",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1422,
+      "metadataFlags": [
+        "missing_year",
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Gal26",
+      "type": "article",
+      "title": "Communication Regulation and Digital Sovereignty in Latin America: Diagnosis and Challenges from a Comparative Perspective with the European Union",
+      "authors": "Francisco Javier Moreno Gálvez and Rodrigo Gómez",
+      "journal": "Perspectives on Global Development and Technology",
+      "year": 2026,
+      "doi": "10.1163/15691497-20263014",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1428,
+      "metadataFlags": []
+    },
+    {
+      "key": "Far25b",
+      "type": "article",
+      "title": "Passengers in Flight: AI Governance Capacity in the Global South",
+      "authors": "Sami Farhad",
+      "journal": "Digital Society",
+      "year": 2025,
+      "doi": "10.1007/s44206-025-00195-6",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 1436,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dje22",
+      "type": "article",
+      "title": "Role of the state and responsibility in governing artificial intelligence: a comparative analysis of AI strategies",
+      "authors": "C. Djeffal and Markus B. Siewert and Stefan Wurster",
+      "journal": "Journal of European Public Policy",
+      "year": 2022,
+      "doi": "10.1080/13501763.2022.2094987",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "rights-ethics"
+      ],
+      "line": 1444,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pie25",
+      "type": "article",
+      "title": "Sovereignty in the Digital Era: Rethinking Territoriality and Governance in Cyberspace",
+      "authors": "F. Pierucci",
+      "journal": "Digital Society",
+      "year": 2025,
+      "doi": "10.1007/s44206-025-00189-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1452,
+      "metadataFlags": []
+    },
+    {
+      "key": "Man20b",
+      "type": "article",
+      "title": "$1BlockSidewalk to Barcelona: Technological sovereignty and the social license to operate smart cities",
+      "authors": "Monique Mann and P. Mitchell and M. Foth and I. Anastasiu",
+      "journal": "J. Assoc. Inf. Sci. Technol.",
+      "year": 2020,
+      "doi": "10.1002/asi.24387",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1460,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bel22b",
+      "type": "article",
+      "title": "Digital/sovereignty and European security integration: an introduction",
+      "authors": "R. Bellanova and H. Carrapico and D. Duez",
+      "journal": "European Security",
+      "year": 2022,
+      "doi": "10.1080/09662839.2022.2101887",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1468,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gad26",
+      "type": "article",
+      "title": "Souveränität, die man nicht sieht. Staat, Infrastruktur und Subjektivierung im Diskurs digitaler Selbstbestimmung",
+      "authors": "Eik Gädeke",
+      "journal": "Zeitschrift für Hochschulentwicklung",
+      "year": 2026,
+      "doi": "10.21240/zfhe/21-3/01",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1476,
+      "metadataFlags": []
+    },
+    {
+      "key": "Llo23",
+      "type": "article",
+      "title": "Crossing Routes: Artificial Intelligence Governance and Human Rights in Latin America",
+      "authors": "M. Llorens",
+      "journal": "CEBRI-Revista: Brazilian Journal of International Affairs",
+      "year": 2023,
+      "doi": "10.54827/issn2764-7897.cebri2023.07.03.0x.81-98.en",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 1484,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ber26",
+      "type": "article",
+      "title": "Soberania Digital em Disputa",
+      "authors": "J. Berwaldt and João Pedro de Lima Camello",
+      "journal": "BRICS Strategy and Technology Review",
+      "year": 2026,
+      "doi": "10.65895/bstr.v1n1.2",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1492,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ada21",
+      "type": "article",
+      "title": "Can artificial intelligence be decolonized?",
+      "authors": "R. Adams",
+      "journal": "Interdisciplinary Science Reviews",
+      "year": 2021,
+      "doi": "10.1080/03080188.2020.1840225",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1500,
+      "metadataFlags": []
+    },
+    {
+      "key": "Alb26",
+      "type": "article",
+      "title": "Introduction to the special issue on Digital Solidarity Economies",
+      "authors": "María Belén Albornoz and Ricard Espelt and R. Grohmann and Denise Kasparian",
+      "journal": "Internet Policy Rev.",
+      "year": 2026,
+      "doi": "10.14763/2026.1.2075",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1508,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ado19",
+      "type": "article",
+      "title": "Critical Engagement on Digital Sovereignty in International Relations: Actor Transformation and Global Hierarchy",
+      "authors": "Abid Adonis",
+      "journal": "Global: Jurnal Politik Internasional",
+      "year": 2019,
+      "doi": "10.7454/global.v21i2.412",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1516,
+      "metadataFlags": []
+    },
+    {
+      "key": "Car24",
+      "type": "article",
+      "title": "Co-creating the future of data-centric AI governance in Mexico",
+      "authors": "Thomas Carey-Wilson and Gefion Thuermer and S. Coleman",
+      "journal": "",
+      "year": 2024,
+      "doi": "10.61557/xehw7357",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 1524,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Eff25",
+      "type": "article",
+      "title": "Legal Infrastructures for Inclusive Tech Development: ArtificialIntelligence in the Global South",
+      "authors": "J. O. Effoduh and Kingsley Eze and Victor Ufot",
+      "journal": "The Transnational Human Rights Review",
+      "year": 2025,
+      "doi": "10.60082/2563-4631.1110",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 1531,
+      "metadataFlags": []
+    },
+    {
+      "key": "Flo26",
+      "type": "article",
+      "title": "Kara-Kichwa Data Sovereignty Framework: Reference Point for Indigenous Data Authority Renaissances in LAC",
+      "authors": "WariNkwi K. Flores and KunTikzi Flores and Rosa M. Panama and K. Alta",
+      "journal": "",
+      "year": 2026,
+      "doi": "",
+      "url": "https://arxiv.org/abs/2601.06634",
+      "urlSource": "https://arxiv.org/abs/2601.06634",
+      "themes": [
+        "indigenous-data",
+        "sovereignty-concepts"
+      ],
+      "line": 1539,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Mil19",
+      "type": "article",
+      "title": "Big Data from the South(s): Beyond Data Universalism",
+      "authors": "S. Milan and Emiliano Treré",
+      "journal": "Television & New Media",
+      "year": 2019,
+      "doi": "10.1177/1527476419837739",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1546,
+      "metadataFlags": []
+    },
+    {
+      "key": "Dut26",
+      "type": "article",
+      "title": "Introduction: Rethinking data colonialism: Local negotiations with data, postcoloniality, and power",
+      "authors": "Sagnik Dutta and Suruchi Mazumdar and Kerry McInerney",
+      "journal": "Big Data & Society",
+      "year": 2026,
+      "doi": "10.1177/20539517261455429",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1554,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cal25",
+      "type": "article",
+      "title": "Pathways to inclusion : advancing civil society’s role in AI governance : evidence from and for the global majority",
+      "authors": "Paola Gálvez Callirgos",
+      "journal": "",
+      "year": 2025,
+      "doi": "10.58863/20.500.12424/4321249",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "participation",
+        "policy-institutions"
+      ],
+      "line": 1562,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Sua23",
+      "type": "article",
+      "title": "Soberanía digital: un debate abierto y tres problemas políticos",
+      "authors": "Sara Suárez-Gonzalo",
+      "journal": "Quaderns de Filosofia",
+      "year": 2023,
+      "doi": "10.7203/qfia.10.2.26464",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1569,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cas26b",
+      "type": "article",
+      "title": "PARA ALÉM DO TECNOSSOLUCIONISMO DO CAPITAL NA EDUCAÇÃO: LUTAS PELA SOBERANIA DIGITAL",
+      "authors": "Jordi Casas and C. R. Cavalcanti",
+      "journal": "Educação & Sociedade",
+      "year": 2026,
+      "doi": "10.1590/es.305814",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1577,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sch26b",
+      "type": "article",
+      "title": "Preventing AI extractivism: the case for braiding indigenous data justice with ABS for stronger AI data governance",
+      "authors": "Maria Schulz and J. Loewen-Colón",
+      "journal": "AI & SOCIETY",
+      "year": 2026,
+      "doi": "10.1007/s00146-026-02931-z",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "indigenous-data",
+        "policy-institutions"
+      ],
+      "line": 1585,
+      "metadataFlags": []
+    },
+    {
+      "key": "Her22b",
+      "type": "article",
+      "title": "Artif icial Intelligence and Participation in Latin America: The National AI Strategies",
+      "authors": "Laura Hernández and M. Canales and Michel Roberto Oliveira de Souza",
+      "journal": "",
+      "year": 2022,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/94cb8500ddc7f0c40485131156876fefa704b997",
+      "urlSource": "https://www.semanticscholar.org/paper/94cb8500ddc7f0c40485131156876fefa704b997",
+      "themes": [
+        "data-justice",
+        "participation"
+      ],
+      "line": 1593,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Vie26",
+      "type": "article",
+      "title": "Inteligência Artificial e movimentos sociais no sul global: democracia digital, colonialidade algorítmica e resistência coletiva",
+      "authors": "Vânia Ereni Lima Vieira and Dalton Max Fernandes de Oliveira and F. S. Menezes",
+      "journal": "Revista DCS",
+      "year": 2026,
+      "doi": "10.54899/dcs.v23i91.6871",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1600,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mol24",
+      "type": "article",
+      "title": "Decolonial AI as Disenclosure",
+      "authors": "Warmhold Jan Thomas Mollema",
+      "journal": "ArXiv",
+      "year": 2024,
+      "doi": "10.4236/jss.2024.122032",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1608,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cor25b",
+      "type": "article",
+      "title": "ENTRE EL CONTROL Y LA DEPENDENCIA: LA SOBERANÍA DIGITAL DEL ECUADOR EN LA ERA GLOBAL",
+      "authors": "María Emilia Vásquez Coronel",
+      "journal": "REVISTA DE DERECHO",
+      "year": 2025,
+      "doi": "10.47712/rd.2025.v10i2.326",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 1616,
+      "metadataFlags": []
+    },
+    {
+      "key": "Edw25",
+      "type": "article",
+      "title": "Private ordering, generative AI and the ‘platformisation paradigm’: What can we learn from comparative analysis of models terms and conditions?",
+      "authors": "L. Edwards and Igor Szpotakowski and Gabriele Cifrodelli and Joséphine Sangaré and James Stewart",
+      "journal": "Cambridge Forum on AI: Law and Governance",
+      "year": 2025,
+      "doi": "10.1017/cfl.2024.11",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1624,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sei25b",
+      "type": "article",
+      "title": "DIGITAL SOVEREIGNTY AS A LEGAL CATEGORY: BETWEEN NATIONAL JURISDICTION AND THE POWER OF DIGITAL PLATFORMS",
+      "authors": "K. K. Seitenov and M. Sadykov",
+      "journal": "BULLETIN OF THE ACADEMY OF LAW ENFORCEMENT AGENCIES",
+      "year": 2025,
+      "doi": "10.52425/25187252_2025_37_25",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1632,
+      "metadataFlags": []
+    },
+    {
+      "key": "Egb26",
+      "type": "article",
+      "title": "Reimagining sovereignty in the Global South: digital dependency, AI and cybersecurity",
+      "authors": "Jasper Uyi Egbobamwonyi-Bedaux",
+      "journal": "Third World Quarterly",
+      "year": 2026,
+      "doi": "10.1080/01436597.2026.2690081",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 1640,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mur26",
+      "type": "article",
+      "title": "Gobernanza jurídica de la inteligencia artificial: revisión sistemática de la producción científica Iberoamericana",
+      "authors": "C. R. Rudas Murga",
+      "journal": "Revista Tribunal",
+      "year": 2026,
+      "doi": "10.59659/revistatribunal.v6i17.555",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 1648,
+      "metadataFlags": []
+    },
+    {
+      "key": "Agu21",
+      "type": "article",
+      "title": "Unravelling Resistance: Data Activism Configurations in Latin American Civil Society",
+      "authors": "C. Aguerre and R. Tarullo",
+      "journal": "Palabra Clave",
+      "year": 2021,
+      "doi": "10.5294/pacla.2021.24.3.5",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "participation"
+      ],
+      "line": 1656,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sob25",
+      "type": "article",
+      "title": "Bits coloniais: a reprodução de desigualdades estruturais pela colonização algorítmica na América Latina",
+      "authors": "Haroldo Carneiro Leão Sobrinho and Marlene Vendas Carneiro Leão",
+      "journal": "CONTRIBUCIONES A LAS CIENCIAS SOCIALES",
+      "year": 2025,
+      "doi": "10.55905/revconv.18n.6-114",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1664,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hel23b",
+      "type": "article",
+      "title": "Diversity and neocolonialism in Big Data research: Avoiding extractivism while struggling with paternalism",
+      "authors": "Paula Helm and A. de Götzen and Luca Cernuzzi and Alethia Hume and Shyam Diwakar and S. Ruiz-Correa and D. Gática-Pérez",
+      "journal": "Big Data & Society",
+      "year": 2023,
+      "doi": "10.1177/20539517231206802",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1672,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lyn20b",
+      "type": "article",
+      "title": "Contesting Digital Futures: Urban Politics, Alternative Economies, and the Movement for Technological Sovereignty in Barcelona",
+      "authors": "Casey R. Lynch",
+      "journal": "Antipode",
+      "year": 2020,
+      "doi": "10.1111/anti.12522",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1680,
+      "metadataFlags": []
+    },
+    {
+      "key": "Thu21",
+      "type": "article",
+      "title": "The COVID-Crisis as Catalyst for the Norm Development of Digital Sovereignty. Building Barriers or Improving Digital Policies?",
+      "authors": "Johannes Thumfart",
+      "journal": "SSRN Electronic Journal",
+      "year": 2021,
+      "doi": "10.2139/ssrn.3793530",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1688,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kal22b",
+      "type": "article",
+      "title": "From Quality to Quantity: How Can Digital Sovereignty be Parsed into Measurable Components?",
+      "authors": "Martin Kaloudis",
+      "journal": "European Journal of Business Science and Technology",
+      "year": 2022,
+      "doi": "10.11118/ejobsat.2022.011",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation",
+        "sovereignty-concepts"
+      ],
+      "line": 1696,
+      "metadataFlags": []
+    },
+    {
+      "key": "Leh22",
+      "type": "article",
+      "title": "Territories of data: ontological divergences in the growth of data infrastructure",
+      "authors": "Sebastián Lehuedé",
+      "journal": "Tapuya: Latin American Science, Technology and Society",
+      "year": 2022,
+      "doi": "10.1080/25729861.2022.2035936",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 1704,
+      "metadataFlags": []
+    },
+    {
+      "key": "She22",
+      "type": "article",
+      "title": "European Digital Sovereignty: A Layered Approach",
+      "authors": "Haroon Sheikh",
+      "journal": "Digital Society",
+      "year": 2022,
+      "doi": "10.1007/s44206-022-00025-z",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1712,
+      "metadataFlags": []
+    },
+    {
+      "key": "Chu26",
+      "type": "article",
+      "title": "Redefining Digital Sovereignty",
+      "authors": "Chee Hae Chung",
+      "journal": "Technology and Regulation",
+      "year": 2026,
+      "doi": "10.71265/q0527965",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1720,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ros21",
+      "type": "article",
+      "title": "Internet interconnection infrastructure: lessons from the global South",
+      "authors": "Fernanda R. Rosa",
+      "journal": "Internet Policy Rev.",
+      "year": 2021,
+      "doi": "10.14763/2021.4.1583",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "infrastructure"
+      ],
+      "line": 1728,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kwa25",
+      "type": "article",
+      "title": "“We know what we are doing”: the politics and trends in artificial intelligence policies in Africa",
+      "authors": "Thompson Gyedu Kwarkye",
+      "journal": "Canadian Journal of African Studies / Revue canadienne des études africaines",
+      "year": 2025,
+      "doi": "10.1080/00083968.2025.2456619",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 1736,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rac16",
+      "type": "article",
+      "title": "El software y las licencias libres. Hacia la soberanía tecnológica y digital",
+      "authors": "B. Racioppe",
+      "journal": "Oficios Terrestres",
+      "year": 2016,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/b444e45536d3b214bc432450f50e7f98237b9d8a",
+      "urlSource": "https://www.semanticscholar.org/paper/b444e45536d3b214bc432450f50e7f98237b9d8a",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1744,
+      "metadataFlags": [
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Man26",
+      "type": "article",
+      "title": "Algorithmic Sovereignty: A Multidimensional Conceptual Framework for National Cyber-Defense Posture in Emerging Economies",
+      "authors": "Raja Humuntal Manalu and S. Sumantri and S. Thamrin and Pujo Widodo and R. Indrajit",
+      "journal": "International Journal of Computer Information Systems and Industrial Management Applications",
+      "year": 2026,
+      "doi": "10.70917/ijcisim-2026-4116",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1752,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rad25",
+      "type": "article",
+      "title": "Same Stereotypes, Different Term? Understanding the ''Global South'' in AI Ethics",
+      "authors": "Evani Radiya-Dixit and A. Christin",
+      "journal": "",
+      "year": 2025,
+      "doi": "10.1609/aies.v8i3.36697",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "rights-ethics"
+      ],
+      "line": 1760,
+      "metadataFlags": [
+        "missing_journal",
+        "source_quote_delimiters"
+      ]
+    },
+    {
+      "key": "Wal20",
+      "type": "article",
+      "title": "Indigenous Data Sovereignty and Policy",
+      "authors": "M. Walter and T. Kukutai and S. Carroll and D. Rodriguez-Lonebear",
+      "journal": "",
+      "year": 2020,
+      "doi": "10.4324/9780429273957",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 1767,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Dun25",
+      "type": "article",
+      "title": "Ideal Approaches to AI Regulation in LATAM Countries: Promoting Technological Advancement and Human Rights Protections",
+      "authors": "E. Dunayevich and Hajime Akiyama",
+      "journal": "F1000Research",
+      "year": 2025,
+      "doi": "10.12688/f1000research.160332.1",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 1774,
+      "metadataFlags": []
+    },
+    {
+      "key": "Din26",
+      "type": "article",
+      "title": "A Dialética da Cibernética",
+      "authors": "B. C. Diniz",
+      "journal": "BRICS Strategy and Technology Review",
+      "year": 2026,
+      "doi": "10.65895/bstr.v1n1.3",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "rights-ethics"
+      ],
+      "line": 1782,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cav25",
+      "type": "article",
+      "title": "Toward deep assessments: On the possibility of decolonial digital technologies",
+      "authors": "Dorian Cavé and R. Rehak",
+      "journal": "TATuP - Zeitschrift für Technikfolgenabschätzung in Theorie und Praxis",
+      "year": 2025,
+      "doi": "10.14512/tatup.7227",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1790,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil22",
+      "type": "article",
+      "title": "Toward a popular theory of algorithms",
+      "authors": "I. Siles and Edgar Gómez-Cruz and Paola Ricaurte",
+      "journal": "Popular Communication",
+      "year": 2022,
+      "doi": "10.1080/15405702.2022.2103140",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 1798,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gue22b",
+      "type": "article",
+      "title": "Strategically constructed narratives on artificial intelligence: What stories are told in governmental artificial intelligence policies?",
+      "authors": "A. Guenduez and Tobias Mettler",
+      "journal": "Government Information Quarterly",
+      "year": 2022,
+      "doi": "10.1016/j.giq.2022.101719",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 1806,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gur23",
+      "type": "article",
+      "title": "Beyond data bodies: New directions for a feminist theory of data sovereignty",
+      "authors": "Anita Gurumurthy and Nandini Chami",
+      "journal": "SSRN Electronic Journal",
+      "year": 2023,
+      "doi": "10.2139/ssrn.4037321",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1814,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cab20",
+      "type": "article",
+      "title": "fAIr LAC: Adopción ética y responsable de la inteligencia artificial en América Latina y el Caribe",
+      "authors": "M. Cabrol and Natalia González A. and Cristina Pombo and R. Sáncheza",
+      "journal": "",
+      "year": 2020,
+      "doi": "10.18235/0002169",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 1822,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Tan22",
+      "type": "article",
+      "title": "The challenge of the cloud: between transnational capitalism and data sovereignty",
+      "authors": "Min Tang",
+      "journal": "Information, Communication & Society",
+      "year": 2022,
+      "doi": "10.1080/1369118x.2022.2128598",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "sovereignty-concepts"
+      ],
+      "line": 1829,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sam26b",
+      "type": "article",
+      "title": "The new international economic order in the digital age: dependency, Big Tech, and data decolonization",
+      "authors": "Sampean",
+      "journal": "Globalizations",
+      "year": 2026,
+      "doi": "10.1080/14747731.2026.2681300",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "platforms-power"
+      ],
+      "line": 1837,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mon22",
+      "type": "article",
+      "title": "Ethical Governance of AI in the Global South: A Human Rights Approach to Responsible Use of AI",
+      "authors": "Anibal Monasterio-Astobiza and T. Ausín and Belén Liedo and Mario Toboso and M. Aparício and Daniel López",
+      "journal": "The 2021 Summit of the International Society for the Study of Information",
+      "year": 2022,
+      "doi": "10.3390/proceedings2022081136",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 1845,
+      "metadataFlags": []
+    },
+    {
+      "key": "Aru19",
+      "type": "article",
+      "title": "AI and the Global South",
+      "authors": "C. Arun",
+      "journal": "The Oxford Handbook of Ethics of AI",
+      "year": 2019,
+      "doi": "10.1093/oxfordhb/9780190067397.013.38",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1853,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sil25",
+      "type": "article",
+      "title": "Beyond Copy-Paste: The Brussels Effect and the Evolution of Digital Law in Brazil",
+      "authors": "Alexandre Pacheco da Silva and Rebeca Maldaun Cabral",
+      "journal": "Beijing Law Review",
+      "year": 2025,
+      "doi": "10.4236/blr.2025.161029",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 1861,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bar24b",
+      "type": "article",
+      "title": "Infraestruturas tecnológicas para a educação como projeto político rumo à soberania digital",
+      "authors": "Alexandre Costa Barbosa and Priscila Gonsales",
+      "journal": "EmRede - Revista de Educação a Distância",
+      "year": 2024,
+      "doi": "10.53628/emrede.v11i.1085",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1869,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hel23",
+      "type": "article",
+      "title": "A Delimitation of Data Sovereignty from Digital and Technological Sovereignty",
+      "authors": "Malte Hellmeier and Franziska von Scherenberg",
+      "journal": "",
+      "year": 2023,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/49f71308ccd0f8e8d5dce6ba0be8d9059ec2b475",
+      "urlSource": "https://www.semanticscholar.org/paper/49f71308ccd0f8e8d5dce6ba0be8d9059ec2b475",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1877,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Yey26",
+      "type": "article",
+      "title": "Are We Ready for AI? From Measurement to Policy Governance",
+      "authors": "Eduardo Levy Yeyati",
+      "journal": "",
+      "year": 2026,
+      "doi": "10.18235/0013984",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 1884,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Leh22b",
+      "type": "article",
+      "title": "When friction becomes the norm: Antagonism, discourse and planetary data turbulence",
+      "authors": "Sebastián Lehuedé",
+      "journal": "New Media & Society",
+      "year": 2022,
+      "doi": "10.1177/14614448221108449",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1891,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hac14",
+      "type": "article",
+      "title": "La souveraineté technologique",
+      "authors": "A. Haché",
+      "journal": "Mouvements",
+      "year": 2014,
+      "doi": "10.3917/mouv.079.0038",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1899,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rob22b",
+      "type": "article",
+      "title": "AI narratives and unequal conditions. Analyzing the discourse of liminal expert voices in discursive communicative spaces",
+      "authors": "A. Robertson and Max Maccarone",
+      "journal": "Telecommunications Policy",
+      "year": 2022,
+      "doi": "10.1016/j.telpol.2022.102462",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1907,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sou24",
+      "type": "article",
+      "title": "Decolonial Data Law and Governance",
+      "authors": "Siddharth Peter de Souza and Hellen Mukiri Smith and Linnet Taylor",
+      "journal": "Technology and Regulation",
+      "year": 2024,
+      "doi": "10.71265/rvwfyt51",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 1915,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mer25b",
+      "type": "article",
+      "title": "Inteligencia artificial: hacia una gobernanza ética",
+      "authors": "Alfredo Estrada Merino",
+      "journal": "Acta Herediana",
+      "year": 2025,
+      "doi": "10.20453/ah.v68i2.7505",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 1923,
+      "metadataFlags": []
+    },
+    {
+      "key": "Isa23",
+      "type": "article",
+      "title": "What to do on AI policy and why? A Latin American comparison of policy ideas",
+      "authors": "Carolina E. Isaza",
+      "journal": "SSRN Electronic Journal",
+      "year": 2023,
+      "doi": "10.2139/ssrn.4669680",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 1931,
+      "metadataFlags": []
+    },
+    {
+      "key": "Aze24",
+      "type": "article",
+      "title": "The Role of Network Centralization in Shaping Digital Sovereignty: An Analysis Under the DNS Lens",
+      "authors": "Andrei C. Azevedo and Eder John Scheid and M. F. Franco and D. F. Boeira and Luciano Zembruzki and L. Granville",
+      "journal": "International Journal of Network Management",
+      "year": 2024,
+      "doi": "10.1002/nem.2309",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "sovereignty-concepts"
+      ],
+      "line": 1939,
+      "metadataFlags": []
+    },
+    {
+      "key": "Boj25",
+      "type": "article",
+      "title": "Satellite promises: An open-source investigation and footprint analysis of SGDC-1’s quest in delivering broadband to public rural schools in Brazil",
+      "authors": "Iago Bojczuk",
+      "journal": "Convergence",
+      "year": 2025,
+      "doi": "10.1177/13548565251353426",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1947,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kum23",
+      "type": "article",
+      "title": "Media, digital sovereignty and geopolitics: the case of the TikTok ban in India",
+      "authors": "Ajay Kumar and D. Thussu",
+      "journal": "Media, Culture & Society",
+      "year": 2023,
+      "doi": "10.1177/01634437231174351",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1955,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pra22",
+      "type": "article",
+      "title": "People as data, data as oil: the digital sovereignty of the Indian state",
+      "authors": "R. Prasad",
+      "journal": "Information, Communication & Society",
+      "year": 2022,
+      "doi": "10.1080/1369118x.2022.2056498",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1963,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bro25",
+      "type": "article",
+      "title": "Understanding AI and power: situated perspectives from Global North and South practitioners",
+      "authors": "Venetia Brown and Retno Larasati and Joseph Kwarteng and T. Farrell",
+      "journal": "Ai & Society",
+      "year": 2025,
+      "doi": "10.1007/s00146-025-02731-x",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 1971,
+      "metadataFlags": []
+    },
+    {
+      "key": "Can23",
+      "type": "article",
+      "title": "Spanish Fake Sovereignty: From Privatising the Nation-State to Becoming a Digital Colony",
+      "authors": "Ekaitz Cancela and Jule Goikoetxea",
+      "journal": "Ethnopolitics",
+      "year": 2023,
+      "doi": "10.1080/17449057.2023.2275882",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 1979,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tay17",
+      "type": "article",
+      "title": "What is data justice? The case for connecting digital rights and freedoms globally",
+      "authors": "Linnet Taylor",
+      "journal": "Big Data & Society",
+      "year": 2017,
+      "doi": "10.1177/2053951717736335",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 1987,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cur26",
+      "type": "article",
+      "title": "SOBERANÍA DIGITAL: DESAFÍOS Y OPORTUNIDADES PARA LA DEFENSA NACIONAL ECUATORIANA",
+      "authors": "C. Curvale and Jaime Baeza Freer and E. Hurtado",
+      "journal": "Revista de la Academia del Guerra del Ejército Ecuatoriano",
+      "year": 2026,
+      "doi": "10.24133/age.vol19.n01.2026.09",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 1995,
+      "metadataFlags": []
+    },
+    {
+      "key": "And22",
+      "type": "article",
+      "title": "Governing digital platform power for industrial development: towards an entrepreneurial-regulatory state",
+      "authors": "Antonio Andreoni and S. Roberts",
+      "journal": "Cambridge Journal of Economics",
+      "year": 2022,
+      "doi": "10.1093/cje/beac055",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "policy-institutions"
+      ],
+      "line": 2003,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pas20",
+      "type": "article",
+      "title": "The Nooscope manifested: AI as instrument of knowledge extractivism",
+      "authors": "M. Pasquinelli and Vladan Joler",
+      "journal": "Ai & Society",
+      "year": 2020,
+      "doi": "10.1007/s00146-020-01097-6",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2011,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mad00",
+      "type": "article",
+      "title": "Data Sovereignty for Planetary Sustainability: Mapping the North-South Concerns",
+      "authors": "S. Madya",
+      "journal": "",
+      "year": null,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/4eaf2668bb0f60b6b97f31c21713e0d4ac37cb37",
+      "urlSource": "https://www.semanticscholar.org/paper/4eaf2668bb0f60b6b97f31c21713e0d4ac37cb37",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2019,
+      "metadataFlags": [
+        "missing_year",
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Lef25",
+      "type": "article",
+      "title": "Artificial Intelligence for Social Well-Being in Latin America",
+      "authors": "G. Lefranc",
+      "journal": "2025 IEEE CHILEAN Conference on Electrical, Electronics Engineering, Information and Communication Technologies (CHILECON)",
+      "year": 2025,
+      "doi": "10.1109/chilecon66915.2025.11476613",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2025,
+      "metadataFlags": []
+    },
+    {
+      "key": "Can25",
+      "type": "article",
+      "title": "THE DIGITAL ERA AND SOCIO-LEGAL TRANSFORMATIONS IN LATIN AMERICA",
+      "authors": "Priscila Caneparo",
+      "journal": "Shusha Scientific Journal",
+      "year": 2025,
+      "doi": "10.66366/ssj.2026.47",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2033,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mat21",
+      "type": "article",
+      "title": "The machinery of $1techno-colonialism crafting “democracy.” A glimpse into digital sub-netizenship in Mexico",
+      "authors": "Inés Durán Matute and Rodrigo Camarena González",
+      "journal": "Democratization",
+      "year": 2021,
+      "doi": "10.1080/13510347.2021.1947248",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2041,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tir25",
+      "type": "article",
+      "title": "Gubernamentalidad algorítmica, inteligencia artificial y prácticas de disidencia en Latam",
+      "authors": "F. Tirado and José Luis Blasco Ejarque",
+      "journal": "Psicoperspectivas",
+      "year": 2025,
+      "doi": "10.5027/psicoperspectivas-vol24-issue2-fulltext-3441",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2049,
+      "metadataFlags": []
+    },
+    {
+      "key": "Oke26",
+      "type": "article",
+      "title": "Decolonial AI: Algorithmic Colonialism and the Struggle for African (Technological) Futures",
+      "authors": "T. Ọ̀kẹ́ and Damilare Bello",
+      "journal": "Emerging Media",
+      "year": 2026,
+      "doi": "10.1177/27523543261502819",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2057,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sal24",
+      "type": "article",
+      "title": "Artificial intelligence, digital colonialism, and the implications for Africa’s future development",
+      "authors": "A. Salami",
+      "journal": "Data & Policy",
+      "year": 2024,
+      "doi": "10.1017/dap.2024.75",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2065,
+      "metadataFlags": []
+    },
+    {
+      "key": "Oli24",
+      "type": "article",
+      "title": "Knowledge and emancipation",
+      "authors": "Thaiane M. Oliveira and Tatiane M. Mendes Pinto",
+      "journal": "Journal of Digital Social Research",
+      "year": 2024,
+      "doi": "10.33621/jdsr.v6i3.33244",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2073,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hud23",
+      "type": "article",
+      "title": "Indigenous Peoples' Rights in Data: a contribution toward Indigenous Research Sovereignty",
+      "authors": "M. Hudson and S. Carroll and Jane Anderson and Darrah Blackwater and Felina M. Cordova-Marks and Jewel Cummins and D. David-Chavez and Adam Fernandez and Ibrahim Garba and Danielle Hiraldo and Mary Beth Jäger and L. Jennings and A. Martinez and R. Sterling and Jennifer D. Walker and Robyn Rowe",
+      "journal": "Frontiers in Research Metrics and Analytics",
+      "year": 2023,
+      "doi": "10.3389/frma.2023.1173805",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "sovereignty-concepts"
+      ],
+      "line": 2081,
+      "metadataFlags": []
+    },
+    {
+      "key": "Nor22",
+      "type": "article",
+      "title": "The ethics of artificial intelligence, UNESCO and the African Ubuntu perspective",
+      "authors": "D. V. van Norren",
+      "journal": "Journal of Information, Communication and Ethics in Society",
+      "year": 2022,
+      "doi": "10.1108/jices-04-2022-0037",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "rights-ethics"
+      ],
+      "line": 2089,
+      "metadataFlags": []
+    },
+    {
+      "key": "Say25",
+      "type": "article",
+      "title": "Defining the intension and extension of nations’ sovereignty in the age of generative AI",
+      "authors": "Sofiya Sayankina and Elinor Tsen and Er-Win Tan and Ryan K. L. Ko",
+      "journal": "Territory, Politics, Governance",
+      "year": 2025,
+      "doi": "10.1080/21622671.2025.2568474",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "sovereignty-concepts"
+      ],
+      "line": 2097,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bed26",
+      "type": "article",
+      "title": "Digital governance and public ethics: challenges for the welfare state in the age of artificial intelligence",
+      "authors": "Kathia Díaz Bedoya and M. M. Toledo and Amalia Paula Angulo-Caicedo and Byron Fernando Chere-Quiñónez",
+      "journal": "International Journal of Aquatic Research and Environmental Studies",
+      "year": 2026,
+      "doi": "10.70102/ijares/v6s1/6-s1-544",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 2105,
+      "metadataFlags": []
+    },
+    {
+      "key": "Car22",
+      "type": "article",
+      "title": "Follow the Leader? A Comparative Law Study of the EU’s General Data Protection Regulation’s Impact in Latin America",
+      "authors": "A. Carrillo and Matías Jackson",
+      "journal": "ICL Journal",
+      "year": 2022,
+      "doi": "10.1515/icl-2021-0037",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2113,
+      "metadataFlags": []
+    },
+    {
+      "key": "Var25",
+      "type": "article",
+      "title": "The Principle of Shared Utilization of Benefits Applied to the Development of Artificial Intelligence",
+      "authors": "C. Vargas-Machado and A. Bedoya",
+      "journal": "Philosophies",
+      "year": 2025,
+      "doi": "10.3390/philosophies10040087",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2121,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fer26",
+      "type": "article",
+      "title": "Soberanía tecnológica y lenguas indígenas: de la dominación histórica a la era de la inteligencia artificial",
+      "authors": "Silvia Fernández-Sabido and Laura Peniche-Sabido",
+      "journal": "Texto Livre",
+      "year": 2026,
+      "doi": "10.1590/1983-3652.2026.64143",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "sovereignty-concepts"
+      ],
+      "line": 2129,
+      "metadataFlags": []
+    },
+    {
+      "key": "Wal24",
+      "type": "article",
+      "title": "Managing the race to the moon: Global policy and governance in Artificial Intelligence regulation—A contemporary overview and an analysis of socioeconomic consequences",
+      "authors": "Yoshija Walter",
+      "journal": "Discover Artificial Intelligence",
+      "year": 2024,
+      "doi": "10.1007/s44163-024-00109-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2137,
+      "metadataFlags": []
+    },
+    {
+      "key": "Smu21",
+      "type": "article",
+      "title": "From a ‘race to AI’ to a ‘race to AI regulation’: regulatory competition for artificial intelligence",
+      "authors": "N. A. Smuha",
+      "journal": "Law, Innovation and Technology",
+      "year": 2021,
+      "doi": "10.1080/17579961.2021.1898300",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2145,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pau22",
+      "type": "article",
+      "title": "Can critical policy studies outsmart AI? Research agenda on artificial intelligence technologies and public policy",
+      "authors": "Regine Paul",
+      "journal": "Critical Policy Studies",
+      "year": 2022,
+      "doi": "10.1080/19460171.2022.2123018",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2153,
+      "metadataFlags": []
+    },
+    {
+      "key": "Por26",
+      "type": "article",
+      "title": "Inteligência Artificial e Sul Global: problemáticas e perspectivas em governança",
+      "authors": "M. P. Pordeus and Marcelo Davi Santos and Bruno Muneratto and Romário Nascimento de Oliveira and Marcelo José do Monte and Helane Diogo Marques da Silva and Caio Leonam Vieira Pordeus and Josivan Rocha Josino and José Célio Pessoa Fonteles",
+      "journal": "Aposta: Revista de Ciencias Sociales",
+      "year": 2026,
+      "doi": "10.23900/ra.v24i112.854",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2161,
+      "metadataFlags": []
+    },
+    {
+      "key": "Vol21",
+      "type": "article",
+      "title": "Digital sovereignty and approaches to governing globalized data spaces",
+      "authors": "I. Volkmer",
+      "journal": "Cultural Sovereignty beyond the Modern State",
+      "year": 2021,
+      "doi": "10.1515/9783110679151-007",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2169,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bad25b",
+      "type": "article",
+      "title": "Algorithmic sovereignty and democratic resilience: rethinking AI governance in the age of generative AI",
+      "authors": "Wael M. Badawy",
+      "journal": "AI and Ethics",
+      "year": 2025,
+      "doi": "10.1007/s43681-025-00739-z",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 2177,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lui25c",
+      "type": "article",
+      "title": "Micro-dimensions in practice: how do Argentina and Brazil shape digital transformation through instrumental choices?",
+      "authors": "L. Lui and Luciana Leite Lima and Rafael Barbosa de Aguiar",
+      "journal": "Policy Design and Practice",
+      "year": 2025,
+      "doi": "10.1080/25741292.2025.2545668",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2185,
+      "metadataFlags": []
+    },
+    {
+      "key": "Str22",
+      "type": "article",
+      "title": "The Strategic and Responsible Use of Artificial Intelligence in the Public Sector of Latin America and the Caribbean",
+      "authors": "Unknown Author",
+      "journal": "OECD Public Governance Reviews",
+      "year": 2022,
+      "doi": "10.1787/1f334543-en",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "rights-ethics"
+      ],
+      "line": 2193,
+      "metadataFlags": []
+    },
+    {
+      "key": "Man22",
+      "type": "article",
+      "title": "The Ethical Considerations of AI in Latin America",
+      "authors": "J. F. Mancilla-Caceres and Sara Estrada-Villalta",
+      "journal": "Digital Society",
+      "year": 2022,
+      "doi": "10.1007/s44206-022-00018-y",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2201,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ban21b",
+      "type": "article",
+      "title": "Harnessing Artificial Intelligence for Development on the Post-COVID-19 Era: A Review of National AI Strategies and Policies",
+      "authors": "W. Bank",
+      "journal": "World Bank, Washington, DC eBooks",
+      "year": 2021,
+      "doi": "10.1596/35619",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2209,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gen25",
+      "type": "article",
+      "title": "Generative Artificial Intelligence and Indigenous Knowledge Systems in the Global South: A Systematic Review on Data Colonialism and Epistemic Justice",
+      "authors": "Unknown Author",
+      "journal": "Letters in High Energy Physics",
+      "year": 2025,
+      "doi": "10.52783/lhep.2025.1602",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "indigenous-data",
+        "methods-evaluation"
+      ],
+      "line": 2217,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sap26",
+      "type": "article",
+      "title": "Indigenous-led futures in Artificial Intelligence",
+      "authors": "Maria Sapignoli and M. Hudson",
+      "journal": "Anuac",
+      "year": 2026,
+      "doi": "10.4000/16m4y",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "indigenous-data"
+      ],
+      "line": 2225,
+      "metadataFlags": []
+    },
+    {
+      "key": "Wor26",
+      "type": "article",
+      "title": "Indigenous Data Sovereignty and the Governance of Artificial Intelligence: Toward Equitable Benefit for Indigenous Peoples",
+      "authors": "Jacob Prehn (Worimi) and Bronwyn Carlson (Aboriginal) and Maggie Walter (Palawa) and Ray Lovett (Wongaibon/Ngiyampaa) and Bobby Maher (Yamatji, Noongar, Kija)",
+      "journal": "Journal of Sociology",
+      "year": 2026,
+      "doi": "10.1177/14407833261460137",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "indigenous-data",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 2233,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mis25",
+      "type": "article",
+      "title": "Trust in Digital Sovereignty: A Review of Security, Privacy, and Governance Challenges",
+      "authors": "S. Misra and Kousik Barik and Petter Kvalvik",
+      "journal": "Public Organization Review",
+      "year": 2025,
+      "doi": "10.1007/s11115-025-00968-0",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "rights-ethics",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 2241,
+      "metadataFlags": []
+    },
+    {
+      "key": "Anw26",
+      "type": "article",
+      "title": "Towards a new paradigm of “datafied development”: Epistemic, infrastructural, economic, and geopolitical domains",
+      "authors": "Mohammad Amir Anwar and N. Thylstrup and Rafael Grohmann and Julian Posada",
+      "journal": "Big Data & Society",
+      "year": 2026,
+      "doi": "10.1177/20539517261459214",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure",
+        "security-geopolitics"
+      ],
+      "line": 2249,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hee18",
+      "type": "article",
+      "title": "Data justice for development",
+      "authors": "Richard Heeks and J. Renken",
+      "journal": "Information Development",
+      "year": 2018,
+      "doi": "10.1177/0266666916678282",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2257,
+      "metadataFlags": []
+    },
+    {
+      "key": "Zha26f",
+      "type": "article",
+      "title": "Participation of the Global South in International Artificial Intelligence Governance: Challenges and China’s Choices",
+      "authors": "Ruijian Zhang",
+      "journal": "Journal of Political Research",
+      "year": 2026,
+      "doi": "10.12737/2587-6295-2026-10-2-254-273",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "participation",
+        "policy-institutions"
+      ],
+      "line": 2265,
+      "metadataFlags": []
+    },
+    {
+      "key": "Agu25",
+      "type": "article",
+      "title": "La Gobernanza en la era digital: Retos y Problemas para su implementación en México",
+      "authors": "Rodrigo Ernesto de la Mora Aguilera and M. E. Collado",
+      "journal": "Espacios Públicos",
+      "year": 2025,
+      "doi": "10.36677/espaciospublicos.v26i64.24954",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 2273,
+      "metadataFlags": []
+    },
+    {
+      "key": "Yeu20",
+      "type": "article",
+      "title": "Recommendation of the Council on Artificial Intelligence (OECD)",
+      "authors": "K. Yeung",
+      "journal": "International Legal Materials",
+      "year": 2020,
+      "doi": "10.1017/ilm.2020.5",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2281,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mor23",
+      "type": "article",
+      "title": "The unhomed data subject: negotiating datafication in Latin America",
+      "authors": "Esteban Morales and K. Reilly",
+      "journal": "Information, Communication & Society",
+      "year": 2023,
+      "doi": "10.1080/1369118x.2023.2250436",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2289,
+      "metadataFlags": []
+    },
+    {
+      "key": "Her26b",
+      "type": "article",
+      "title": "Artificial Intelligence with a Human Face: Ethics, Digital Literacy, and Technological Citizenship in Rural Communities of the Highlands of Veracruz",
+      "authors": "Fernando Aguirre Hernández",
+      "journal": "Estudios y Perspectivas Revista Científica y Académica",
+      "year": 2026,
+      "doi": "10.61384/r.c.a..v6i2.1790",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "participation",
+        "rights-ethics"
+      ],
+      "line": 2297,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sch22",
+      "type": "article",
+      "title": "A cidade neoliberal e a soberania de dados: mapeamento do cenário dos dispositivos de dataficação em São Paulo",
+      "authors": "Iara Schiavi and S. A. da Silveira",
+      "journal": "urbe. Revista Brasileira de Gestão Urbana",
+      "year": 2022,
+      "doi": "10.1590/2175-3369.014.e20210145",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2305,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mil21",
+      "type": "article",
+      "title": "Big Data from the South(s)",
+      "authors": "S. Milan and Emiliano Treré",
+      "journal": "The Oxford Handbook of Sociology and Digital Media",
+      "year": 2021,
+      "doi": "10.1093/oxfordhb/9780197510636.013.7",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2313,
+      "metadataFlags": []
+    },
+    {
+      "key": "Roc25",
+      "type": "article",
+      "title": "Democratising Artificial Intelligence for Pandemic Preparedness and Global Governance in Latin American and Caribbean Countries",
+      "authors": "Ulisses N. Rocha and R. Bonidia and J. Kong and Mariana Dauhajre and C. Struchiner and Guilherme T. Goedert and Peter F. Stadler and D. Sanches and T. Day and Marcia Castro and J. Edmunds and M. Colomé-Hidalgo and D. A. H. Morban and Edian F. Franco and C. Ugarte-Gil and Patricia Espinoza-Lopez and G. Carrasco-Escobar and A. D. Ferreira de Carvalho",
+      "journal": "Microbial Biotechnology",
+      "year": 2025,
+      "doi": "10.1111/1751-7915.70256",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2321,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mel25",
+      "type": "article",
+      "title": "Connecting regions, closing gaps, building sovereignty. The European Union-Latin America and the Caribbean Digital Alliance: Recommendations for the EU-CELAC Summit",
+      "authors": "Angeles Melguizo and I. Sánchez and J. Torreblanca and M. Acevedo and Víctor Muñoz",
+      "journal": "",
+      "year": 2025,
+      "doi": "10.33960/issn-e.1885-9119.dtfcecfren",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 2329,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Med26b",
+      "type": "article",
+      "title": "Algorithmic Constitutionalism in Mexico: Artificial Intelligence, Public Power, and the Transformation of Fundamental Rights",
+      "authors": "Luis Abraham Paz Medina and Marisol González Hernández and Carlos Romeo Rodríguez Mazariego and José Adolfo Pérez de la Rosa",
+      "journal": "Revista Veritas de Difusão Científica",
+      "year": 2026,
+      "doi": "10.61616/rvdc.v7i3.1901",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2336,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kal21",
+      "type": "article",
+      "title": "Digital sovereignty–European Union's action plan needs a common understanding to succeed",
+      "authors": "Martin Kaloudis",
+      "journal": "History Compass",
+      "year": 2021,
+      "doi": "10.1111/hic3.12698",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2344,
+      "metadataFlags": []
+    },
+    {
+      "key": "Kha24",
+      "type": "article",
+      "title": "Autonomy of Generative AI Digital Platforms in Regulating Relations with Users",
+      "authors": "Y. Kharitonova",
+      "journal": "Actual Problems of Russian Law",
+      "year": 2024,
+      "doi": "10.17803/1994-1471.2024.165.8.066-075",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "platforms-power"
+      ],
+      "line": 2352,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tor25",
+      "type": "article",
+      "title": "Conectando regiones, cerrando brechas, construyendo soberanía · Alianza Digital Unión Europea-América Latina y Caribe: recomendaciones de cara a la Cumbre UE-CELAC",
+      "authors": "J. Torreblanca and I. Sánchez and M. Acevedo and Angeles Melguizo and Víctor Muñoz",
+      "journal": "",
+      "year": 2025,
+      "doi": "10.33960/issn-e.1885-9119.dtfcecfr",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "sovereignty-concepts"
+      ],
+      "line": 2360,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Sue26",
+      "type": "article",
+      "title": "Data-enabled co-production: a situated dynamic of AI research at a Mexican university center",
+      "authors": "G. Sued and E. Robles-Belmont",
+      "journal": "Tapuya: Latin American Science, Technology and Society",
+      "year": 2026,
+      "doi": "10.1080/25729861.2026.2643047",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2367,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lop24",
+      "type": "article",
+      "title": "Users’ Experiences of Algorithm-Mediated Public Services: Folk Theories, Trust, and Strategies in the Global South",
+      "authors": "Claudia López and A. Davidoff and Francisca Luco and M. Humeres and Teresa Correa",
+      "journal": "International Journal of Human–Computer Interaction",
+      "year": 2024,
+      "doi": "10.1080/10447318.2024.2356910",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2375,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hut24",
+      "type": "article",
+      "title": "Data sovereignty: The next frontier for internet policy?",
+      "authors": "Jonathon Hutchinson and Milica Stilinovic and Joanne E. Gray",
+      "journal": "Policy & Internet",
+      "year": 2024,
+      "doi": "10.1002/poi3.386",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 2383,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sua24",
+      "type": "article",
+      "title": "How to employ artificial intelligence in public administration? Analysis and discussion of the Ibero American charter on artificial intelligence in civil service",
+      "authors": "Juan José Rastrollo Suárez and A. Ferraro",
+      "journal": "Eastern Journal of European Studies",
+      "year": 2024,
+      "doi": "10.47743/ejes-2024-0207",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2391,
+      "metadataFlags": []
+    },
+    {
+      "key": "Oli26",
+      "type": "article",
+      "title": "Why Feminist Design Matters for GenAI: Perspectives from Lusophone Innovation Ecosystems",
+      "authors": "A. Oliveira and Rodrigo Hernández-Ramírez and Hande Ayanoğlu",
+      "journal": "International Conference on Gender Research",
+      "year": 2026,
+      "doi": "10.34190/icgr.9.1.4615",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2399,
+      "metadataFlags": []
+    },
+    {
+      "key": "Jia25",
+      "type": "article",
+      "title": "Contesting Digital Sovereignty: Untangling a Complex and Multifaceted Concept",
+      "authors": "Min Jiang and Luca Belli",
+      "journal": "SSRN Electronic Journal",
+      "year": 2025,
+      "doi": "10.2139/ssrn.5264608",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2407,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gho25",
+      "type": "article",
+      "title": "Decolonizing Algorithms: Artificial Intelligence Bias and Digital Colonialism in Global South AI Governance",
+      "authors": "Ibnu Fikri Ghozali",
+      "journal": "JURNAL NAWALA POLITIKA",
+      "year": 2025,
+      "doi": "10.24843/jnp.v3i1.342",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2415,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mir26",
+      "type": "article",
+      "title": "Latin America in the Age of Artificial Intelligence: Toward a Policy and Cooperation Agenda",
+      "authors": "Rafael Gustavo Miranda-Delgado",
+      "journal": "Bulgarian Journal of International Economics and Politics",
+      "year": 2026,
+      "doi": "10.37075/bjiep.2026.1.02",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2423,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bat26",
+      "type": "article",
+      "title": "Normative Limits of Generative AI: A Comparative Study of Content Restrictions in Closed-Source and Open-Source Models",
+      "authors": "Abdulhamid Batayhi",
+      "journal": "Topkapı Sosyal Bilimler Dergisi (TJSS)",
+      "year": 2026,
+      "doi": "10.15659/tjss.2026.019",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2431,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gal26b",
+      "type": "article",
+      "title": "Pedagogia Algorítmica e Justiça Epistêmica na Universidade Latino-Americana",
+      "authors": "B. Galasso",
+      "journal": "Praxis & Saber",
+      "year": 2026,
+      "doi": "10.19053/uptc.22160159.v17.n50.2026.21032",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2439,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tso19",
+      "type": "article",
+      "title": "Tribal Data Governance and Informational Privacy: Constructing ''Indigenous Data Sovereignty''",
+      "authors": "Rebecca A. Tsosie",
+      "journal": "Montana law review",
+      "year": 2019,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/e233bd63f80af952f79ae307833aba60871e79f5",
+      "urlSource": "https://www.semanticscholar.org/paper/e233bd63f80af952f79ae307833aba60871e79f5",
+      "themes": [
+        "indigenous-data",
+        "policy-institutions",
+        "rights-ethics",
+        "sovereignty-concepts"
+      ],
+      "line": 2447,
+      "metadataFlags": [
+        "missing_doi",
+        "source_quote_delimiters"
+      ]
+    },
+    {
+      "key": "Kuk00",
+      "type": "article",
+      "title": "Indigenous Data Sovereignty:",
+      "authors": "T. Kukutai and M. Walter",
+      "journal": "The Data Journalism Handbook",
+      "year": null,
+      "doi": "10.2307/j.ctv1qr6smr.12",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "sovereignty-concepts"
+      ],
+      "line": 2455,
+      "metadataFlags": [
+        "missing_year",
+        "possibly_incomplete_title"
+      ]
+    },
+    {
+      "key": "Has22",
+      "type": "article",
+      "title": "Governing algorithms from the South: a case study of AI development in Africa",
+      "authors": "Yousif Hassan",
+      "journal": "AI & SOCIETY",
+      "year": 2022,
+      "doi": "10.1007/s00146-022-01527-7",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2462,
+      "metadataFlags": []
+    },
+    {
+      "key": "Fre26",
+      "type": "article",
+      "title": "Human Rights–Based AI Governance in Thailand: A Functional-Equivalence Approach Beyond the EU AI Act",
+      "authors": "P. Freiberg and M. Harris and Parot Ratnapinda",
+      "journal": "Journal of East Asia and International Law",
+      "year": 2026,
+      "doi": "10.14330/jeail.2026.19.1.07",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions",
+        "rights-ethics"
+      ],
+      "line": 2470,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sin25",
+      "type": "article",
+      "title": "Digital colonialism and AI: A Critical Analysis",
+      "authors": "Neeharika Singh",
+      "journal": "Journal of Humanities and Education Development",
+      "year": 2025,
+      "doi": "10.22161/jhed.7.4.18",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2478,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gup25b",
+      "type": "article",
+      "title": "Mexico’s Digital Leap: G20-Driven Technological Transformation and Public Infrastructure Evolution",
+      "authors": "Poorak Gupta",
+      "journal": "International Journal For Multidisciplinary Research",
+      "year": 2025,
+      "doi": "10.36948/ijfmr.2025.v07i03.46361",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 2486,
+      "metadataFlags": []
+    },
+    {
+      "key": "Yan26b",
+      "type": "article",
+      "title": "Artificial intelligence, the Global South, and knowledge socialism",
+      "authors": "Yang Yang and M. Peters",
+      "journal": "Educational Philosophy and Theory",
+      "year": 2026,
+      "doi": "10.1080/00131857.2026.2680902",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2494,
+      "metadataFlags": []
+    },
+    {
+      "key": "War26",
+      "type": "article",
+      "title": "Middle powers in the platform economy: Digital sovereignty after the data pivot",
+      "authors": "T. Warin",
+      "journal": "Data & Policy",
+      "year": 2026,
+      "doi": "10.1017/dap.2026.10085",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "platforms-power",
+        "sovereignty-concepts"
+      ],
+      "line": 2502,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tim19",
+      "type": "article",
+      "title": "Ethics of AI and Cybersecurity When Sovereignty is at Stake",
+      "authors": "Paul Timmers",
+      "journal": "Minds and Machines",
+      "year": 2019,
+      "doi": "10.1007/s11023-019-09508-4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "rights-ethics",
+        "security-geopolitics",
+        "sovereignty-concepts"
+      ],
+      "line": 2510,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lyn23",
+      "type": "article",
+      "title": "‘The tears don’t give you funding’: data neocolonialism in development in the Global South",
+      "authors": "Renee Lynch and Jason C. Young and Chris Jowaisas and J. Sam and S. Boakye-Achampong and M. Garrido and Chris Rothschild",
+      "journal": "Third World Quarterly",
+      "year": 2023,
+      "doi": "10.1080/01436597.2023.2166482",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2518,
+      "metadataFlags": []
+    },
+    {
+      "key": "Zay26",
+      "type": "article",
+      "title": "Use of artificial intelligence from an ethical perspective in agronomy: Global, national (Cuba) and local (Trinidad) analysis",
+      "authors": "Delvis Zayas and Rogelio Pérez Rojas",
+      "journal": "Social Agriculture, Food System, and Environmental Sustainability",
+      "year": 2026,
+      "doi": "10.61511/safses.v3i1.2026.3322",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2526,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ver23",
+      "type": "article",
+      "title": "The influence of European Union personal data protection standards in Latin America from the perspective of social actors and Latin American authorities",
+      "authors": "A. Veronese and A. Silveira and Rebecca Lemos Igreja and Amanda Nunes Lopes Espiñeira Lemos and Thiago Guimarães Moraes",
+      "journal": "UNIO – EU Law Journal",
+      "year": 2023,
+      "doi": "10.21814/unio.9.2.5531",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2534,
+      "metadataFlags": []
+    },
+    {
+      "key": "Pei24",
+      "type": "article",
+      "title": "Digitale Souveränität und informationelle Selbstbestimmung am Beispiel der Kontrolle über die eigenen Daten",
+      "authors": "Karl-Nikolaus Peifer",
+      "journal": "UFITA",
+      "year": 2024,
+      "doi": "10.5771/2568-9185-2024-1-112",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2542,
+      "metadataFlags": []
+    },
+    {
+      "key": "Tre22",
+      "type": "article",
+      "title": "Sovereignty in the Digital and Contact Tracing Apps",
+      "authors": "Maxwell H. Tretter",
+      "journal": "Digital Society",
+      "year": 2022,
+      "doi": "10.1007/s44206-022-00030-2",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2550,
+      "metadataFlags": []
+    },
+    {
+      "key": "Amr20",
+      "type": "article",
+      "title": "Introduction: Computing in/from the South",
+      "authors": "Sareeta Amrute and L. F. Murillo",
+      "journal": "",
+      "year": 2020,
+      "doi": "10.28968/cftt.v6i2.34594",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "infrastructure"
+      ],
+      "line": 2558,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Bos24",
+      "type": "article",
+      "title": "Is the Brussels Effect Creating a New Legal Order in Africa and Latin America and the Caribbean?",
+      "authors": "Patricia Boshe and Carolina Goberna Caride",
+      "journal": "Technology and Regulation",
+      "year": 2024,
+      "doi": "10.71265/vh3cw625",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2565,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ham25",
+      "type": "article",
+      "title": "AI, education and digital sovereignty",
+      "authors": "Shereen Hamadeh and Hira Amin",
+      "journal": "Frontiers in Education",
+      "year": 2025,
+      "doi": "10.3389/feduc.2025.1677727",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2573,
+      "metadataFlags": []
+    },
+    {
+      "key": "Amr22",
+      "type": "article",
+      "title": "A Primer on AI in/from the Majority World: An Empirical Site and a Standpoint",
+      "authors": "Sareeta Amrute and Ranjit Singh and Rigoberto Lara Guzmán",
+      "journal": "SSRN Electronic Journal",
+      "year": 2022,
+      "doi": "10.2139/ssrn.4199467",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2581,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cha25",
+      "type": "article",
+      "title": "(Lack of) Patterns in Commitment: Data Protection in the Latin America and Caribbean Personal Data Protection Laws",
+      "authors": "Elías Chavarría-Mora",
+      "journal": "Social Media + Society",
+      "year": 2025,
+      "doi": "10.1177/20563051251337206",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2589,
+      "metadataFlags": []
+    },
+    {
+      "key": "Bel24",
+      "type": "article",
+      "title": "Cooperation and innovation to build meaningful data protection in Latin America",
+      "authors": "Luca Belli and N. Zingales",
+      "journal": "International Review of Law, Computers & Technology",
+      "year": 2024,
+      "doi": "10.1080/13600869.2024.2351670",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2597,
+      "metadataFlags": []
+    },
+    {
+      "key": "And25",
+      "type": "article",
+      "title": "Regulamentação da inteligência artificial no Brasil: IA como Sujeito do Direito",
+      "authors": "Bianca Martins de Andrade and Ana Sofia Napias Tavares and Vitória Meneguim Salmen",
+      "journal": "Cadernos PET-Filosofia",
+      "year": 2025,
+      "doi": "10.5380/petfilo.v25i1.98683",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2605,
+      "metadataFlags": []
+    },
+    {
+      "key": "Web23",
+      "type": "article",
+      "title": "Digital Sovereignty Revisited",
+      "authors": "R. Weber",
+      "journal": "Jusletter-IT",
+      "year": 2023,
+      "doi": "10.38023/3533b9ee-4a5e-4f81-a9ea-6cb891d60a2d",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2613,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ver23b",
+      "type": "article",
+      "title": "The concept of personal data protection culture from European Union documents: a “Brussels effect” in Latin America?",
+      "authors": "A. Veronese and A. Silveira and Rebecca Lemos Igreja and Amanda Nunes Lopes Espiñeira Lemos and Thiago Guimarães Moraes",
+      "journal": "UNIO – EU Law Journal",
+      "year": 2023,
+      "doi": "10.21814/unio.9.1.5299",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2621,
+      "metadataFlags": []
+    },
+    {
+      "key": "Uru23",
+      "type": "article",
+      "title": "Regulating the Algorithmic Welfare State in Latin America",
+      "authors": "René Urueña",
+      "journal": "SSRN Electronic Journal",
+      "year": 2023,
+      "doi": "10.2139/ssrn.4670480",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2629,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lis21",
+      "type": "article",
+      "title": "Towards a Taxonomy of Ecosystem Data Governance",
+      "authors": "D. Lis and B. Otto",
+      "journal": "",
+      "year": 2021,
+      "doi": "10.24251/hicss.2021.733",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 2637,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Law23",
+      "type": "article",
+      "title": "Digital Sovereignty: What it is and why it matters for HCI",
+      "authors": "Dennis Lawo and Thomas Neifer and Margarita Esau-Held and G. Stevens",
+      "journal": "Extended Abstracts of the 2023 CHI Conference on Human Factors in Computing Systems",
+      "year": 2023,
+      "doi": "10.1145/3544549.3585834",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2644,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ism25",
+      "type": "article",
+      "title": "The Intersection of Digital Sovereignty and Cybersecurity",
+      "authors": "Shereen Ismail",
+      "journal": "2025 IEEE International Conference on Electro Information Technology (eIT)",
+      "year": 2025,
+      "doi": "10.1109/eit64391.2025.11103607",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2652,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro16",
+      "type": "article",
+      "title": "Del «extractivismo económico» al «extractivismo epistémico» y «extractivismo ontológico»: una forma destructiva de conocer, ser y estar en el mundo",
+      "authors": "Ramón Grosfoguel",
+      "journal": "",
+      "year": 2016,
+      "doi": "10.25058/20112742.60",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2660,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Abu23",
+      "type": "article",
+      "title": "Can apparent bystanders distinctively shape an outcome? Global south countries and global catastrophic risk-focused governance of artificial intelligence",
+      "authors": "Cecil Abungu and Michelle Malonza and S. Adan",
+      "journal": "ArXiv",
+      "year": 2023,
+      "doi": "10.48550/arxiv.2312.04616",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice",
+        "policy-institutions"
+      ],
+      "line": 2667,
+      "metadataFlags": []
+    },
+    {
+      "key": "Rob22",
+      "type": "article",
+      "title": "Decolonisation, Global Data Law, and Indigenous Data Sovereignty",
+      "authors": "J. S. Roberts and Laura N. Montoya",
+      "journal": "ArXiv",
+      "year": 2022,
+      "doi": "10.48550/arxiv.2208.04700",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "indigenous-data",
+        "policy-institutions",
+        "sovereignty-concepts"
+      ],
+      "line": 2675,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ali14",
+      "type": "article",
+      "title": "Towards a decolonial computing",
+      "authors": "Mustafa Ali",
+      "journal": "",
+      "year": 2014,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/7ab3f7e7cacaf6b9685c39e1a988a64f46bbb5f7",
+      "urlSource": "https://www.semanticscholar.org/paper/7ab3f7e7cacaf6b9685c39e1a988a64f46bbb5f7",
+      "themes": [
+        "data-justice",
+        "infrastructure"
+      ],
+      "line": 2683,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Bel22",
+      "type": "article",
+      "title": "Data protection and artificial intelligence inequalities and regulations in Latin America",
+      "authors": "Luca Belli and N. Zingales",
+      "journal": "Comput. Law Secur. Rev.",
+      "year": 2022,
+      "doi": "10.1016/j.clsr.2022.105761",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "data-justice"
+      ],
+      "line": 2690,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mur26b",
+      "type": "article",
+      "title": "Open Data, Metadata Regimes and Unequal Infrastructures: Decolonial Challenges for Digital Heritage Preservation",
+      "authors": "Victor Tuon Murari",
+      "journal": "Heritage",
+      "year": 2026,
+      "doi": "10.3390/heritage9090355",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2698,
+      "metadataFlags": []
+    },
+    {
+      "key": "Qad26",
+      "type": "article",
+      "title": "Literasi Digital dan Ketimpangan Sosial: Tinjauan Sistematis Terhadap Kesenjangan Akses dan Partisipasi Komunikasi di Masyarakat Berkembang",
+      "authors": "A. Qadir and Hamim Mustofa",
+      "journal": "PEDAGOGIC: Indonesian Journal of Science Education and Technology",
+      "year": 2026,
+      "doi": "10.54373/ijset.v6i3.6166",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2706,
+      "metadataFlags": []
+    },
+    {
+      "key": "Con20",
+      "type": "article",
+      "title": "Behavioral Use Licensing for Responsible AI",
+      "authors": "Danish Contractor and D. Mcduff and J. Haines and Jenny Lee and Christopher Hines and Brent J. Hecht and Nicholas Vincent and Han-Lin Li",
+      "journal": "Proceedings of the 2022 ACM Conference on Fairness, Accountability, and Transparency",
+      "year": 2020,
+      "doi": "10.1145/3531146.3533143",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "rights-ethics"
+      ],
+      "line": 2714,
+      "metadataFlags": []
+    },
+    {
+      "key": "Avi25",
+      "type": "article",
+      "title": "From the Digital Ecosystem to Critical Artificial Intelligence",
+      "authors": "René Manuel Velázquez Avila and Geilert De la Peña Consuegra and María Fernanda Linzan Saltos and Jisson Oswaldo Vega Intriago and Mónica Katherine Murillo-Mora and Yira Annabell Vásquez Giler and Kléber Gabriel Guerrero-Aray",
+      "journal": "Seminars in Medical Writing and Education",
+      "year": 2025,
+      "doi": "10.56294/mw2025737",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2722,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sha22",
+      "type": "article",
+      "title": "Four internets: data, geopolitics, and the governance of cyberspace",
+      "authors": "L. Sharma",
+      "journal": "Journal of Cyber Policy",
+      "year": 2022,
+      "doi": "10.1080/23738871.2022.2125331",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions",
+        "security-geopolitics"
+      ],
+      "line": 2730,
+      "metadataFlags": []
+    },
+    {
+      "key": "Hab22",
+      "type": "article",
+      "title": "A Framework to Identify Data Governance Requirements in Open Data Ecosystems",
+      "authors": "Armin Haberl and C. Malin and S. Thalmann",
+      "journal": "",
+      "year": 2022,
+      "doi": "10.18690/um.fov.4.2022.22",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 2738,
+      "metadataFlags": [
+        "missing_journal"
+      ]
+    },
+    {
+      "key": "Alv20",
+      "type": "article",
+      "title": "La Visión de América Latina sobre el Reglamento General de Protección de Datos",
+      "authors": "L. E. Álvarez",
+      "journal": "Comentario Internacional",
+      "year": 2020,
+      "doi": "10.32719/26312549.2019.19.4",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2745,
+      "metadataFlags": []
+    },
+    {
+      "key": "Men25",
+      "type": "article",
+      "title": "Las Relaciones Internacionales en la era digital",
+      "authors": "Abdiel Hernández Mendoza and Arón Miguel HernándezMartínez",
+      "journal": "Anuario Mexicano de Asuntos Globales",
+      "year": 2025,
+      "doi": "10.59673/amag.v3i3.113",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2753,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cal17",
+      "type": "article",
+      "title": "Artificial Intelligence Policy: A Primer and Roadmap",
+      "authors": "Ryan Calo",
+      "journal": "University of Bologna Law Review",
+      "year": 2017,
+      "doi": "10.2139/ssrn.3015350",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2761,
+      "metadataFlags": []
+    },
+    {
+      "key": "Mil17",
+      "type": "article",
+      "title": "Desafíos en el debate de la protección de datos para Latinoamérica",
+      "authors": "V. Milanes",
+      "journal": "",
+      "year": 2017,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/4e24e3d445925b1e7f67d73d121cf67548ab9029",
+      "urlSource": "https://www.semanticscholar.org/paper/4e24e3d445925b1e7f67d73d121cf67548ab9029",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2769,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    },
+    {
+      "key": "Ros24b",
+      "type": "article",
+      "title": "Citation politics: The gender gap in internet governance",
+      "authors": "Fernanda R. Rosa and Kimberly Anastácio and Maria Vitoria Pereira de Jesus and H. Veras",
+      "journal": "Telecommunications Policy",
+      "year": 2024,
+      "doi": "10.1016/j.telpol.2024.102734",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "policy-institutions"
+      ],
+      "line": 2776,
+      "metadataFlags": []
+    },
+    {
+      "key": "Maf23",
+      "type": "article",
+      "title": "Data protection in Mercosur: current situation, perspectives and project",
+      "authors": "Brenda Luciana Maffei and Nadia Guillermina Jimenez",
+      "journal": "Latin American Journal of European Studies",
+      "year": 2023,
+      "doi": "10.51799/2763-8685v3n2003",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2784,
+      "metadataFlags": []
+    },
+    {
+      "key": "Sch25b",
+      "type": "article",
+      "title": "Exploited Intelligence: AI, Cybercrime, and the Global South’s Digital Struggle",
+      "authors": "Tetiana Schipper",
+      "journal": "Journal of World Affairs",
+      "year": 2025,
+      "doi": "10.1177/29769442251405945",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2792,
+      "metadataFlags": []
+    },
+    {
+      "key": "Cou20b",
+      "type": "article",
+      "title": "Что означает понятие «суверенитет» в цифровом мире?",
+      "authors": "S. Couture and S. Toupin",
+      "journal": "International Organisations Research Journal",
+      "year": 2020,
+      "doi": "10.17323/1996-7845-2020-04-03",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2800,
+      "metadataFlags": []
+    },
+    {
+      "key": "O24",
+      "type": "article",
+      "title": "ВОСПИТАТЕЛЬНЫЙ ПОТЕНЦИАЛ И ЦИВИЛИЗАЦИОННО-КУЛЬТУРНЫЕ РИСКИ ИСКУССТВЕННОГО ИНТЕЛЛЕКТА В ЦИФРОВЫХ ЭКОСИСТЕМАХ",
+      "authors": "T. O. and Шеховцова Е. А.",
+      "journal": "Человеческий капитал",
+      "year": 2024,
+      "doi": "10.25629/hc.2024.11.13",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "rights-ethics"
+      ],
+      "line": 2808,
+      "metadataFlags": []
+    },
+    {
+      "key": "Ilb24",
+      "type": "article",
+      "title": "Ética y regulación de la inteligencia artificial en tecnologías educativas aplicadas a contextos escolares latinoamericanos",
+      "authors": "Evelyn Lizeth Ilbay",
+      "journal": "Atlas Research Journal",
+      "year": 2024,
+      "doi": "10.65305/arj.v2n1.2024.18",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "policy-institutions"
+      ],
+      "line": 2816,
+      "metadataFlags": []
+    },
+    {
+      "key": "Val20",
+      "type": "article",
+      "title": "Assessing the public policy-cycle framework in the age of artificial intelligence: From agenda-setting to policy evaluation",
+      "authors": "David Valle-Cruz and J. I. Criado and Rodrigo Sandoval-Almazán and E. Ruvalcaba-Gómez",
+      "journal": "Gov. Inf. Q.",
+      "year": 2020,
+      "doi": "10.1016/j.giq.2020.101509",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance",
+        "methods-evaluation",
+        "policy-institutions"
+      ],
+      "line": 2824,
+      "metadataFlags": []
+    },
+    {
+      "key": "Gro25c",
+      "type": "article",
+      "title": "Soberania e Inteligência Artificial",
+      "authors": "Rafael Grohmann and M. Schneider and S. A. da Silveira",
+      "journal": "Liinc em Revista",
+      "year": 2025,
+      "doi": "10.18617/liinc.v21i1.7546",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "sovereignty-concepts"
+      ],
+      "line": 2832,
+      "metadataFlags": []
+    },
+    {
+      "key": "Lon24d",
+      "type": "article",
+      "title": "Consent in Crisis: The Rapid Decline of the AI Data Commons",
+      "authors": "Shayne Longpre and Robert Mahari and Ariel N. Lee and Campbell Lund and Hamidah Oderinwale and William Brannon and Nayan Saxena and Naana Obeng-Marnu and Tobin South and Cole J. Hunter and Kevin Klyman and Christopher Klamm and Hailey Schoelkopf and Nikhil Singh and Manuel Cherep and A. Anis and A. Dinh and Caroline Chitongo and Da Yin and Damien Sileo and Deividas Mataciunas and Diganta Misra and Emad A. Alghamdi and Enrico Shippole and Jian-Guo Zhang and Joanna Materzynska and Kun Qian and Kushagra Tiwary and Lester James Validad Miranda and Manan Dey and Minnie Liang and Mohammed Hamdy and Niklas Muennighoff and Seonghyeon Ye and Seungone Kim and Shrestha Mohanty and Vipul Gupta and Vivek Sharma and Chien Minh Vu and Xuhui Zhou and Yizhi Li and Cai-Ming Xiong and Luis Villa and Stella Biderman and Hanlin Li and Daphne Ippolito and Sara Hooker and Jad Kabbara and Sandy Pentland",
+      "journal": "ArXiv",
+      "year": 2024,
+      "doi": "10.48550/arxiv.2407.14933",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2840,
+      "metadataFlags": []
+    },
+    {
+      "key": "Por19",
+      "type": "article",
+      "title": "La Protección de los Datos Personales en el Entorno Digital. Los Estándares de Protección de Datos en los Países Iberoamericanos",
+      "authors": "Adriana Margarita Porcelli",
+      "journal": "REVISTA QUAESTIO IURIS",
+      "year": 2019,
+      "doi": "10.12957/rqi.2019.40175",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "unclassified"
+      ],
+      "line": 2848,
+      "metadataFlags": []
+    },
+    {
+      "key": "Can22",
+      "type": "article",
+      "title": "Atlas of AI: power, politics, and the planetary costs of artificial intelligence.",
+      "authors": "Muhammed Can",
+      "journal": "International Affairs",
+      "year": 2022,
+      "doi": "10.1093/ia/iiac034",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2856,
+      "metadataFlags": []
+    },
+    {
+      "key": "Qui25",
+      "type": "article",
+      "title": "Generative AI, copyright and the AI Act",
+      "authors": "J. Quintais",
+      "journal": "Comput. Law Secur. Rev.",
+      "year": 2025,
+      "doi": "10.1016/j.clsr.2025.106107",
+      "url": null,
+      "urlSource": "",
+      "themes": [
+        "ai-governance"
+      ],
+      "line": 2864,
+      "metadataFlags": []
+    },
+    {
+      "key": "Obr19",
+      "type": "article",
+      "title": "Cuestiones jurídicas sobre la circulación de datos en América Latina",
+      "authors": "Ingrid Judit Obregón",
+      "journal": "",
+      "year": 2019,
+      "doi": "",
+      "url": "https://www.semanticscholar.org/paper/37037da28a2a36d42639e874fa0da4aeb4b429c7",
+      "urlSource": "https://www.semanticscholar.org/paper/37037da28a2a36d42639e874fa0da4aeb4b429c7",
+      "themes": [
+        "data-justice"
+      ],
+      "line": 2872,
+      "metadataFlags": [
+        "missing_journal",
+        "missing_doi"
+      ]
+    }
+  ]
+}

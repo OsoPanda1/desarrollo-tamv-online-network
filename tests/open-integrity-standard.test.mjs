@@ -281,7 +281,7 @@ test("static surfaces publish the standard, its example and its API contract", (
   assert.match(read("app/layout.tsx"), /'\.\/standard\.css'/);
   assert.match(read("components/tamv-app-shell.tsx"), /\/estandar/);
   assert.match(read("components/tamv-institutional-site.tsx"), /\/estandar/);
-  assert.match(read("components/tamv-site-header.tsx"), /\/estandar/);
+  assert.match(read("lib/navigation.ts"), /\/estandar/);
   assert.match(read("package.json"), /standard:check/);
   assert.match(read("public/openapi.yaml"), /\/api\/v1\/standard\/evaluate:/);
   assert.match(read("public/openapi.yaml"), /\/api\/v1\/standard\/schema:/);

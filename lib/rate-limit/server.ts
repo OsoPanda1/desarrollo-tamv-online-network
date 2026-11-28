@@ -2,6 +2,7 @@ import {
   decideRateLimit,
   hashRateLimitKey,
   isValidRateLimitSalt,
+  rateLimitCleanupCutoff,
   requestIdentityFromHeaders,
   windowBounds,
   type RateLimitDecision,
@@ -19,6 +20,8 @@ type PgPool = { connect: () => Promise<{
   release: () => void;
 }> };
 
+const RATE_LIMIT_CLEANUP_INTERVAL_MS = 10 * 60 * 1000;
+
 class PostgresRateLimitStore implements RateLimitStore {
   private lastCleanupAt = 0;
   private poolPromise?: Promise<PgPool>;
@@ -34,12 +37,12 @@ class PostgresRateLimitStore implements RateLimitStore {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
-      if (now - this.lastCleanupAt > windowMs * 10) {
-        this.lastCleanupAt = now;
+      if (now - this.lastCleanupAt >= RATE_LIMIT_CLEANUP_INTERVAL_MS) {
         await client.query(
           "DELETE FROM public.tamv_rate_limit_counters WHERE window_start_ms < $1",
-          [windowStart - windowMs],
+          [rateLimitCleanupCutoff(now)],
         );
+        this.lastCleanupAt = now;
       }
       const result = await client.query(
         `INSERT INTO public.tamv_rate_limit_counters (bucket, window_start_ms, hits)

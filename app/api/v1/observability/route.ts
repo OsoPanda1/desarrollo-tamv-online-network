@@ -1,9 +1,7 @@
-import { db, pool } from "@/lib/db"
-import { hcuAtoms, researchProposals, researchTopics, researcherProfiles } from "@/lib/db/schema"
-import { probeDatabaseReadiness } from "@/lib/db/readiness"
+import { pool } from "@/lib/db"
+import { probeDatabasePublicCounts, probeDatabaseReadiness } from "@/lib/db/readiness"
 import { createSingleFlightTtlCache } from "@/lib/health"
 import { apiJson } from "@/lib/http"
-import { and, count, eq } from "drizzle-orm"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -35,51 +33,18 @@ async function probeDatabase(): Promise<Probe> {
   }
 }
 
-async function safeCount(run: () => PromiseLike<{ value: number | string }[]>): Promise<number | null> {
-  try {
-    const [row] = await run()
-    const value = Number(row?.value ?? 0)
-    return Number.isFinite(value) ? value : null
-  } catch {
-    return null
-  }
-}
-
 async function measureDatabaseSnapshot(): Promise<DatabaseSnapshot> {
-  const [database, publishedProposals, publicResearchers, publicTopics, publicHcuAtoms] = await Promise.all([
+  const [database, counts] = await Promise.all([
     probeDatabase(),
-    safeCount(() =>
-      db
-        .select({ value: count() })
-        .from(researchProposals)
-        .where(and(eq(researchProposals.status, "published"), eq(researchProposals.visibility, "public"))),
-    ),
-    safeCount(() =>
-      db
-        .select({ value: count() })
-        .from(researcherProfiles)
-        .where(eq(researcherProfiles.isPublic, true)),
-    ),
-    safeCount(() =>
-      db
-        .select({ value: count() })
-        .from(researchTopics)
-        .where(and(eq(researchTopics.userId, "system"), eq(researchTopics.status, "open"))),
-    ),
-    safeCount(() =>
-      db
-        .select({ value: count() })
-        .from(hcuAtoms)
-        .where(and(eq(hcuAtoms.userId, "system"), eq(hcuAtoms.visibility, "public"))),
-    ),
+    probeDatabasePublicCounts(pool, { timeoutMs: DATABASE_PROBE_TIMEOUT_MS }),
   ])
 
   return {
     database,
-    publishedProposals,
-    publicResearchers,
-    publicTopics,
-    publicHcuAtoms,
+    publishedProposals: counts?.publishedProposals ?? null,
+    publicResearchers: counts?.publicResearchers ?? null,
+    publicTopics: counts?.publicTopics ?? null,
+    publicHcuAtoms: counts?.publicHcuAtoms ?? null,
     databaseMeasuredAt: new Date().toISOString(),
   };
 }

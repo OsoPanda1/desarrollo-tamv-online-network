@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { fetchInstitutionalResearch } from "../../../../../lib/ecosystem/institutional-research.ts";
+import { fetchInstitutionalResearch, type InstitutionalResearchResult } from "../../../../../lib/ecosystem/institutional-research.ts";
+import { fetchPublicResearchProviders } from "../../../../../lib/ecosystem/public-research-providers.ts";
+import { isSameOriginRequest } from "../../../../../lib/http.ts";
 import { enforcePublicRateLimit } from "../../../../../lib/rate-limit/server.ts";
 
 export const runtime = "nodejs";
@@ -67,16 +69,6 @@ async function readLimitedBody(request: Request): Promise<ReadBodyResult> {
   }
 }
 
-function sameOriginWhenProvided(request: Request): boolean {
-  const origin = request.headers.get("origin")
-  if (!origin) return true
-  try {
-    return new URL(origin).origin === new URL(request.url).origin
-  } catch {
-    return false
-  }
-}
-
 const responseHeaders = {
   "Cache-Control": "no-store",
   "X-Content-Type-Options": "nosniff",
@@ -90,7 +82,8 @@ export async function POST(request: Request): Promise<Response> {
   });
   if (rateLimited) return rateLimited;
 
-  if (!sameOriginWhenProvided(request)) {
+  const requiresOriginCheck = request.headers.has("origin") || request.headers.get("sec-fetch-site") === "cross-site"
+  if (requiresOriginCheck && !isSameOriginRequest(request)) {
     return Response.json({ ok: false, error: "origin_not_allowed" }, { status: 403, headers: responseHeaders });
   }
   const contentType = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
@@ -129,20 +122,28 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const normalizedQuery = input.data.query.replace(/\s+/g, " ");
-  const result = await fetchInstitutionalResearch(normalizedQuery, input.data.type);
-  if (!result.ok) {
-    return Response.json({ ok: false, error: result.error }, { status: result.httpStatus, headers: responseHeaders });
+  const institutionalResult = await fetchInstitutionalResearch(normalizedQuery, input.data.type);
+  let data: InstitutionalResearchResult;
+  let provider = "TAMV Online Network — Institutional Research Platform";
+
+  if (institutionalResult.ok) {
+    data = institutionalResult.data;
+  } else if (institutionalResult.error === "provider_not_configured" && input.data.type === "research") {
+    data = await fetchPublicResearchProviders(normalizedQuery);
+    provider = "TAMV Online Network — Public Research Providers";
+  } else {
+    return Response.json({ ok: false, error: institutionalResult.error }, { status: institutionalResult.httpStatus, headers: responseHeaders });
   }
 
   return Response.json({
     ok: true,
-    provider: "TAMV Online Network — Institutional Research Platform",
-    query: result.data.query,
-    type: result.data.type,
-    retrievedAt: result.data.retrievedAt,
-    results: result.data.results,
-    providers: result.data.providers,
-    methodology: result.data.methodology,
-    semantics: "Imported public research metadata only. Result order is not a quality score; this result does not establish authorship, peer review, accreditation, license permissions, or independent verification.",
+    provider,
+    query: data.query,
+    type: data.type,
+    retrievedAt: data.retrievedAt,
+    results: data.results,
+    providers: data.providers,
+    methodology: data.methodology,
+    semantics: "Imported public research metadata only. Result order is not a quality score; this result does not establish authorship, peer review, quality, accreditation, endorsement, partnership, license permissions, access rights, or independent verification.",
   }, { status: 200, headers: responseHeaders });
 }

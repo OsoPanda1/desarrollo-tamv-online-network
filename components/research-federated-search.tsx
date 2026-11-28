@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import { ArrowUpRight, Search } from "lucide-react"
 import type { Locale } from "@/lib/i18n"
 
@@ -112,19 +112,33 @@ const providerLabels: Record<ProviderState["status"], [string, string]> = {
   link_only: ["Enlace externo", "External link"],
 }
 
-export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) {
+export function ResearchFederatedSearch({ locale = "es", initialQuery }: { locale?: Locale; initialQuery?: string }) {
   const english = locale === "en"
-  const [query, setQuery] = useState("")
+  const normalizedInitialQuery = (initialQuery ?? "").trim().replace(/\s+/g, " ").slice(0, 180)
+  const [query, setQuery] = useState(normalizedInitialQuery)
   const [type, setType] = useState<SearchType>("research")
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState<SuccessResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const automaticQuery = useRef<string | null>(null)
+
+  useEffect(() => {
+    setQuery(normalizedInitialQuery)
+    if (normalizedInitialQuery.length < 3 || automaticQuery.current === normalizedInitialQuery) return
+    automaticQuery.current = normalizedInitialQuery
+    void performSearch(normalizedInitialQuery, "research")
+  }, [normalizedInitialQuery])
 
   function messageFor(code: string | undefined, status: number): string {
-    if (code === "provider_not_configured" || code === "provider_configuration_invalid") {
+    if (code === "provider_not_configured") {
       return english
-        ? "The institutional search bridge is not configured for this environment yet."
-        : "El puente de búsqueda institucional todavía no está configurado para este entorno."
+        ? "Organization search requires the configured institutional research bridge."
+        : "La búsqueda de organizaciones requiere el puente institucional de investigación configurado."
+    }
+    if (code === "provider_configuration_invalid") {
+      return english
+        ? "The configured institutional research bridge has an invalid destination."
+        : "El puente institucional de investigación configurado tiene un destino no válido."
     }
     if (code === "provider_rate_limited") {
       return english
@@ -152,15 +166,7 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
       : "No se pudo completar la búsqueda federada. El proveedor puede no estar disponible o su respuesta puede ser inválida."
   }
 
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const normalizedQuery = query.trim().replace(/\s+/g, " ")
-    if (normalizedQuery.length < 3 || normalizedQuery.length > 180) {
-      setResults(null)
-      setError(english ? "Enter between 3 and 180 characters." : "Introduce entre 3 y 180 caracteres.")
-      return
-    }
-
+  async function performSearch(searchQuery: string, searchType: SearchType) {
     setLoading(true)
     setResults(null)
     setError(null)
@@ -168,7 +174,7 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
       const response = await fetch("/api/v1/research/federated", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ query: normalizedQuery, type }),
+        body: JSON.stringify({ query: searchQuery, type: searchType }),
         cache: "no-store",
       })
       const body: unknown = await response.json().catch(() => null)
@@ -189,6 +195,17 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
     } finally {
       setLoading(false)
     }
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const normalizedQuery = query.trim().replace(/\s+/g, " ")
+    if (normalizedQuery.length < 3 || normalizedQuery.length > 180) {
+      setResults(null)
+      setError(english ? "Enter between 3 and 180 characters." : "Introduce entre 3 y 180 caracteres.")
+      return
+    }
+    await performSearch(normalizedQuery, type)
   }
 
   return (
@@ -231,8 +248,8 @@ export function ResearchFederatedSearch({ locale = "es" }: { locale?: Locale }) 
 
       <p className="federated-search-boundary">
         {english
-          ? "Read-only public metadata. Your query is forwarded to the configured institutional service and its providers; do not enter personal, confidential, or sensitive data. Result order is not a quality score."
-          : "Metadatos públicos de solo lectura. La consulta se envía al servicio institucional configurado y sus proveedores; no introduzcas datos personales, confidenciales o sensibles. El orden no es una puntuación de calidad."}
+          ? "Read-only public metadata. Research queries use fixed anonymous providers (OSF matches titles only) or the configured institutional service; do not enter personal, confidential, or sensitive data. Result order is not a quality score."
+          : "Metadatos públicos de solo lectura. Las consultas de investigación usan proveedores anónimos fijos (OSF solo compara títulos) o el servicio institucional configurado; no introduzcas datos personales, confidenciales o sensibles. El orden no es una puntuación de calidad."}
       </p>
 
       {error ? <div className="federated-search-state is-error" role="alert">{error}</div> : null}

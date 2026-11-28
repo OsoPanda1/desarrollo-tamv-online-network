@@ -2,288 +2,394 @@
 
 **Tecnología Avanzada Mexicana Versátil · Territorio Autónomo de Memoria Viva**
 
-**Proyecto impulsado con colaboración de tecnología latinoamericana. TAMV Online Network — Orgullosamente Realmontenses. Orgullosamente Latinoamericanos.**
-
-TAMV Online Network es una iniciativa mexicana independiente orientada a tecnología, investigación, memoria territorial, gobernanza digital y sistemas de evidencia. Su enfoque combina una plataforma web, documentación técnica, interfaces de investigación y una hoja de ruta para conectar proyectos sin presentar los enlaces de catálogo como integraciones verificadas.
+TAMV Online Network es una iniciativa mexicana independiente para tecnología, investigación, memoria territorial, gobernanza digital y sistemas de evidencia. Este repositorio contiene la aplicación web institucional, sus contratos API, pruebas, migraciones y documentación técnica.
 
 - **Repositorio:** [OsoPanda1/desarrollo-tamv-online-network](https://github.com/OsoPanda1/desarrollo-tamv-online-network)
-- **Sitio institucional de referencia:** [tamv.online](https://tamv.online)
-- **Repositorio institucional complementario:** [OsoPanda1/tamvonline-weboficial.com](https://github.com/OsoPanda1/tamvonline-weboficial.com)
-- **Identidad del proyecto:** Tecnología Avanzada Mexicana Versátil y Territorio Autónomo de Memoria Viva.
-- **Producto/superficie institucional identificada en el proyecto:** PLAY & GO.
-- **Licenciamiento:** arquitectura híbrida propuesta; su alcance depende de cada activo, de la cadena de titularidad y de la revisión descrita en [LICENSES.md](LICENSES.md).
+- **Vista de referencia:** [desarrollo-tamv-online-network.vercel.app](https://desarrollo-tamv-online-network.vercel.app/)
+- **Rama principal:** `main`
+- **Licencia de software:** Apache-2.0 en LICENSE, según [LICENSE](LICENSE) y con el alcance descrito en [LICENSES.md](LICENSES.md).
 
-> **Importante:** este README describe el código y la documentación del repositorio. No constituye una certificación de seguridad, una declaración de cumplimiento legal, una garantía de producción, una acreditación externa ni una afirmación de que todos los activos pertenecen a una única persona o entidad.
+> Este README describe el código y la documentación de una revisión concreta. No constituye una certificación de seguridad, una declaración de cumplimiento legal, una acreditación externa ni una garantía de que el despliegue visible corresponda al commit local más reciente.
 
-## Estado del repositorio y validación
+## Estado actual
 
-La rama de trabajo de licenciamiento asociada al [PR #51](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/51) incorpora la propuesta de licenciamiento híbrido, un registro inicial de activos, borradores de gobernanza y un workflow de generación de SBOM. El PR permanece sujeto a revisión; no se debe interpretar como fusionado ni como aprobación jurídica.
+El repositorio implementa una plataforma Next.js bilingüe con navegación por audiencias, guía de inicio, investigación, atlas territorial, portal de propuestas, gobernanza, formación, membresías y un hub soberano de protección digital y gobernanza de IA.
 
-### Qué está respaldado y qué sigue pendiente
+La distinción de estados es obligatoria:
 
-| Área | Estado documentado | Límite |
-|---|---|---|
-| Aplicación web | Código Next.js en el repositorio | No equivale a despliegue productivo verificado |
-| Pruebas, TypeScript y build | Existen scripts en package.json | Los resultados históricos no validan automáticamente el HEAD de esta rama |
-| Workflow de licencias/SBOM | Workflow definido en .github/workflows/license-compliance.yml | La definición del workflow no demuestra que una ejecución haya terminado correctamente |
-| Inventario de activos | Registro inicial en docs/legal/asset-register.csv | Las filas iniciales están marcadas UNREVIEWED; no constituyen una auditoría de titularidad |
-| Licencias | Apache-2.0 en LICENSE; política híbrida en revisión | El alcance por archivo y los derechos de terceros deben verificarse |
-| Privacidad y marca | Borradores y requisitos documentados | No sustituyen avisos publicados, autorizaciones ni revisión profesional |
-| Despliegue y métricas | Hay integración de Analytics y Speed Insights condicionada a producción | No se declaran Core Web Vitals ni métricas reales sin tráfico observado |
-| Membresías y pagos | Rutas y contratos de aplicación presentes en el código | La configuración de pagos está deshabilitada por defecto; no asumir transacciones activas |
-| Base de datos | PostgreSQL/Drizzle y scripts de migración | La migración 0004 de rate limits debe verificarse y aplicarse en el entorno correcto antes de producción |
-| Integraciones externas | Algunos adaptadores y catálogos públicos | Listar un sistema no demuestra conexión viva, autorización, salud ni certificación externa |
-
-Una ejecución local histórica reportó 174/174 pruebas, typecheck correcto, build correcto y ausencia de vulnerabilidades de nivel alto en una auditoría de producción. Ese registro no está vinculado aquí a un SHA reproducible y **no debe citarse como validación del HEAD actual**. La evidencia de CI, Vercel y las auditorías debe consultarse para el commit concreto que se quiera liberar. Los fallos de workflows sin pasos ejecutados o logs suficientes se clasifican como **bloqueados/no concluyentes**, no como pruebas de que el código falla ni como resultados satisfactorios.
-
-- [Pull request de licenciamiento #51](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/51)
-- [Historial de GitHub Actions](https://github.com/OsoPanda1/desarrollo-tamv-online-network/actions)
-- [Auditoría técnica integral del 26 de noviembre de 2026](docs/audit/2026-11-26-total-project-audit.md)
-- [Plan de preparación de producción](docs/security/release-readiness.md)
-
-## Propósito y principios
-
-El proyecto busca preservar memoria, investigación y trabajo tecnológico con procedencia visible. La implementación debe diferenciar de forma explícita:
-
-1. **Declarado:** información que mantiene el proyecto o que registra un autor.
-2. **Implementado:** código o configuración presentes en una versión concreta.
+1. **Declarado:** información editorial, metadatos o intención del proyecto.
+2. **Implementado:** código o configuración presentes en el repositorio.
 3. **Probado:** comportamiento respaldado por una ejecución reproducible.
 4. **Desplegado:** versión disponible en un entorno identificado.
 5. **Verificado externamente:** resultado emitido o confirmado por un tercero identificable.
 
-Un hash identifica bytes, pero no prueba por sí solo la veracidad de una afirmación, la autoría legal o la titularidad. Un DOI, ORCID, catálogo de repositorios, puntaje automatizado o recibo interno tampoco equivale por sí mismo a revisión por pares, certificación, acreditación o impacto independiente.
+Una ruta, un catálogo, un hash, un DOI, un ORCID o una puntuación interna no prueban por sí solos producción, integración remota, revisión por pares, titularidad o certificación.
 
-## Arquitectura técnica
+## Capacidades principales
 
-Las versiones declaradas en package.json para esta rama incluyen:
+- **Experiencia institucional ES/EN:** navegación superior, navegación izquierda para personas y derecha para organizaciones, academias e instituciones, ambas plegables.
+- **Guía y onboarding:** tutorial por pasos conectado con rutas reales de investigación, publicación, formación, apoyo y participación.
+- **Living Atlas y HCU:** visualización territorial, grafo público, simulador y alternativas de lectura. Las posiciones y métricas son codificaciones descriptivas, no pruebas de causalidad.
+- **Investigación y portal:** proyectos, publicaciones, perfiles opt-in, propuestas, consentimiento, evidencias, apelaciones y moderación con controles de servidor.
+- **Gobernanza y evidencia:** evaluador LATAMV, estándar de integridad, recibos TPVA y dossier de auditoría con límites explícitos.
+- **Soberanía digital e IA:** marco público `TAMV-SD-AI`, bibliografía consultable y protocolo de solicitud de auditoría externa.
+- **Formación y comunidad:** módulos de aprendizaje, progreso para usuarios autenticados y superficies de participación.
+- **Membresías y apoyo:** contratos de checkout, webhook, portal y estado de suscripción; el billing está deshabilitado por defecto y no se simulan pagos.
+- **API pública y federación:** salud, investigación, HCU, exportaciones, ecosistema, procedencia y metadatos públicos con contratos documentados.
 
-- **Framework:** Next.js 16.4.6 con App Router.
-- **UI:** React y React DOM 19.3.1.
-- **Lenguaje:** TypeScript 7.0.2.
-- **Gestor de paquetes:** pnpm 12.16.1, declarado en packageManager.
-- **Persistencia:** PostgreSQL con Drizzle ORM.
-- **Autenticación:** Better Auth.
-- **Validación de contratos:** Zod.
-- **Tokens y utilidades criptográficas:** jose; las primitivas y afirmaciones de seguridad deben revisarse según el uso concreto.
-- **IA y UI de chat:** AI SDK y @ai-sdk/react.
-- **Observabilidad web:** @vercel/analytics y @vercel/speed-insights, montados sólo en producción.
-- **Pruebas:** Node.js test runner mediante node:test.
+La presencia de una superficie no demuestra que todos sus proveedores, secretos, migraciones o permisos estén configurados en un entorno productivo.
 
-La instalación reproducible debe respetar pnpm-lock.yaml y usar una versión de Node compatible con las dependencias. El lockfile y package.json son las fuentes de verdad para la instalación de esta revisión; no debe copiarse una versión de pnpm de notas antiguas si contradice packageManager.
+## Arquitectura y stack
+
+| Capa | Implementación actual |
+|---|---|
+| Framework | Next.js 16.4.6, App Router y Turbopack |
+| UI | React y React DOM 19.3.1 |
+| Lenguaje | TypeScript 7.0.2 |
+| Paquetes | pnpm 12.16.1 y `pnpm-lock.yaml` |
+| Persistencia | PostgreSQL con `pg` y Drizzle ORM |
+| Autenticación | Better Auth, email/password y sesiones |
+| Validación | Zod y validación de límites en el servidor |
+| IA | AI SDK 7 y `@ai-sdk/react` |
+| Criptografía | `jose` y utilidades de evidencia del proyecto |
+| API | Route Handlers de Next.js y contrato OpenAPI |
+| Pruebas | `node:test` con ejecución directa de TypeScript |
+| Observabilidad web | Vercel Analytics y Speed Insights, sólo en producción |
+| Estilos | CSS por superficie, PostCSS y Tailwind 4 |
+
+La revisión contiene **48 archivos de página**, **44 archivos de ruta API**, **53 archivos de prueba** y **siete migraciones SQL**. Estos conteos describen el árbol del repositorio, no el número de endpoints expuestos sin autorización.
+
+### Organización del código
+
+- `app/`: páginas, layouts, metadatos, sitemap y Route Handlers.
+- `components/`: shell institucional, navegación, visualizaciones y componentes de investigación.
+- `lib/`: acceso a datos, autorización, gobernanza, pruebas, i18n, SEO y utilidades HTTP.
+- `migrations/`: cambios de esquema numerados; se aplican mediante el flujo del proyecto.
+- `public/`: recursos públicos, OpenAPI, bibliografía fuente y evidencia de build.
+- `scripts/`: generación determinista, migraciones, preflight y evidencia.
+- `tests/`: contratos, seguridad, gobernanza, navegación y regresiones.
+- `docs/`: arquitectura, operaciones, investigación, seguridad, legal y hoja de ruta.
 
 ## Superficies de la aplicación
 
-Las rutas documentadas en el código incluyen las siguientes áreas. La presencia de una ruta no implica que todos los servicios externos requeridos estén configurados en cada entorno.
-
-| Ruta o área | Propósito documentado |
+| Área | Rutas representativas |
 |---|---|
-| / | Consola Living Atlas, con revelado progresivo y navegación bilingüe |
-| /quienes-somos, /origenes | Identidad, contexto y narrativa de origen |
-| /guia, /institucionalizacion | Guía de uso y hoja de ruta institucional |
-| /investigacion, /proyectos, /investigadores, /fuentes | Contenido de investigación, proyectos, perfiles opt-in y fuentes |
-| /hcu, /atlas, /portal/hcu | Observatorio HCU y visualización territorial |
-| /formacion, /membresias, /apoyar | Formación, membresías y apoyo institucional |
-| /ecosistema, /ecosistema/metadata, /desarrolladores | Catálogo y metadatos de sistemas, contratos e información para desarrolladores |
-| /auditoria-creator | Dossier de Creator OS con límites de procedencia y verificación |
-| /gobernanza | Evaluador local de políticas; no equivale a autorización legal productiva |
+| Inicio y guía | `/`, `/guia`, `/atlas`, `/hcu`, `/portal/hcu` |
+| Identidad y territorio | `/quienes-somos`, `/origenes`, `/logros`, `/utamv`, `/isabella` |
+| Investigación | `/investigacion`, `/investigacion/publicaciones`, `/investigadores`, `/fuentes`, `/proyectos` |
+| Gobernanza | `/gobernanza`, `/soberania-digital`, `/estandar`, `/auditoria-creator` |
+| Ecosistema técnico | `/arquitectura`, `/ecosistema`, `/desarrolladores`, `/desarrolladores/independiente` |
+| Formación y participación | `/formacion`, `/comunidad`, `/membresias`, `/apoyar`, `/unete` |
+| Portal y cuenta | `/portal`, `/portal/perfil`, `/portal/propuestas`, `/cuenta`, `/sign-in`, `/sign-up` |
+| Institucional | `/institucionalizacion`, `/excelencia`, `/privacidad`, `/membresias/condiciones` |
 
-### HCU y visualización territorial
+Las rutas protegidas requieren sesión y autorización. Una URL accesible o un enlace de navegación no concede permisos.
 
-El observatorio HCU utiliza un grafo público respaldado por PostgreSQL y ofrece visualización interactiva y una lectura alternativa. El archivo graph.js del sitio institucional estático es documental y no se sincroniza automáticamente con el grafo de la aplicación. Las métricas y posiciones visuales son codificaciones descriptivas: no constituyen predicciones causales ni validación científica independiente.
+## HCU y visualización territorial
+
+El Observatorio HCU utiliza un grafo público respaldado por PostgreSQL y ofrece visualización interactiva, simulador y lectura alternativa. El archivo `graph.js` del sitio institucional estático es documental y no se sincroniza automáticamente con el grafo de la aplicación.
+
+Las métricas y posiciones visuales son codificaciones descriptivas: no constituyen predicciones causales ni validación científica independiente. El apoyo institucional a esta superficie debe conservar fuente, versión, licencia y límites de uso de cada dato.
 
 Especificación: [HCU Observatory v2](docs/architecture/hcu-observatory-v2.md).
 
-## Procedencia y evidencia: TPVA
+## Soberanía digital y gobernanza de IA
 
-**TPVA (TAMV Proof & Verification Atlas)** es una arquitectura para organizar procedencia, integridad, revisión y evidencia. Su implementación debe describirse con límites explícitos y por versión.
+La ruta [`/soberania-digital`](app/soberania-digital/page.tsx) unifica el marco **TAMV-SD-AI v1.0**, declarado como **borrador público**, no como ley, reglamento, certificación o declaración de cumplimiento.
 
-La Fase 1 documentada incluye:
+Contenido implementado:
 
-- [Contrato de recibo TPVA v1](docs/specs/tpva-receipt-v1.md).
-- [Esquema JSON](docs/specs/tpva-receipt-v1.schema.json).
-- Canonicalización determinista en lib/proofs/canonical.ts.
-- Hash SHA-256 del payload canónico en lib/proofs/hash.ts.
-- Validación estricta en lib/proofs/validate.ts.
-- Verificador offline fail-closed en lib/proofs/verify.ts.
-- Vectores de prueba en docs/specs/tpva-test-vectors/.
-- Pruebas de recibo en tests/tpva-receipt-v1.test.mjs.
+- Ocho principios soberanos.
+- Cinco capas: infraestructura/cómputo, datos/conocimiento, modelos/cadenas de suministro, decisiones/personas y ecosistema/dependencias.
+- Ciclo operativo: gobernar, mapear, medir y gestionar.
+- Ocho métodos, ocho controles de gobernanza de IA y seis compromisos decoloniales.
+- Nueve pasos de protocolo de auditoría y ocho reglas de acceso.
+- Referencias normativas, glosario, limitaciones y mapa de implementación.
+- Bibliografía bilingüe con búsqueda, filtros, ordenación y paginación local.
 
-La firma cubre los bytes canónicos definidos por el contrato. Ningún estado local ni campo aportado por quien envía el recibo puede convertir una revisión en certificación de un tercero. Los estados VERIFIED, WITH NOTES, FAILED, UNVERIFIED y REVOKED son estados de evidencia TPVA, no sellos externos.
+### Bibliografía y procedencia
 
-Las fases 2–7 —constructor de paquetes de evidencia, firma con KMS/HSM, persistencia append-only, API pública de pruebas, interfaz pública y federación Atlas/LITLE— siguen pendientes según la documentación de esta revisión. El material PQC descrito en otros componentes no debe presentarse como una implementación poscuántica validada si sólo es un adaptador, etiqueta o stand-in.
+La fuente pública es [`public/research/soberania-digital/search-papers.bib`](public/research/soberania-digital/search-papers.bib):
 
-Referencia de diseño: [TPVA Master Blueprint](docs/security-review/TPVA_MASTER_BLUEPRINT.md).
+- **364 registros BibTeX.**
+- **100646 bytes.**
+- **SHA-256:** `366fdc0e2ac88fdd5766965d0ee031378919fa7d26170b5b50aaad5003d23eed`.
+- Cobertura declarada: 2014–2026; 352 registros con DOI; 212 de 2024–2026.
 
-## Gobernanza LATAMV
+El generador [`scripts/build-sovereignty-bibliography.mjs`](scripts/build-sovereignty-bibliography.mjs) conserva la fuente exacta, rechaza campos y claves duplicados, preserva registros no anglófonos, proyecta únicamente URL HTTPS sin credenciales y señala metadatos inciertos en lugar de corregirlos silenciosamente. El resultado determinista está en [`data/governance/digital-sovereignty-bibliography.json`](data/governance/digital-sovereignty-bibliography.json).
 
-LATAMV 2.0 se documenta como especificación y evaluador local determinista en lib/governance/latamv-v2.ts. La especificación está en docs/governance/latamv-v2-specification.md y las pruebas de política en tests/latamv-v2-policy.test.mjs.
+Los temas son inferencia editorial a partir de títulos y mapeos curados; no son palabras clave de autores, clasificación de revisión por pares ni validación científica. El corpus no se declara exhaustivo, sistemático, representativo ni completamente revisado por pares. La presencia de DOI no verifica resolución, autoría, calidad o licencia de reutilización.
 
-Límites declarados:
+Para comprobar la integridad de la fuente y del manifiesto:
 
-- requiredApprovals() calcula cantidades; no verifica identidades ni firmas.
-- signatureMetadata es metadato declarativo, no prueba criptográfica.
-- verifyRuntimeProvenance() permanece no integrado.
+```bash
+node scripts/build-sovereignty-bibliography.mjs --check
+```
+
+### Auditoría externa: límite operativo
+
+El hub incluye un generador local de solicitud o aviso de auditoría externa. Crea un borrador en memoria, permite copiarlo o descargarlo y abre un correo con **sólo el asunto**. No envía datos, no abre casos, no asigna auditores, no concede permisos ni persiste el formulario.
+
+Una solicitud o aviso es necesaria pero no suficiente. El protocolo exige revisar identidad, mandato, independencia, conflictos, alcance, versión, criterios, confidencialidad, minimización, acceso temporal de mínimo privilegio, supervisión, registro, hallazgos, respuesta, remediación, re-prueba, apelación y revocación.
+
+**No existen actualmente un rol de auditor externo, gestión de casos, concesión de acceso, anexos confidenciales, portal de auditor ni cierre auditado.**
+
+## Gobernanza, procedencia y evidencia
+
+### LATAMV 2.0
+
+[`lib/governance/latamv-v2.ts`](lib/governance/latamv-v2.ts) implementa un evaluador local determinista documentado en [`docs/governance/latamv-v2-specification.md`](docs/governance/latamv-v2-specification.md).
+
+Sus límites son explícitos:
+
+- `requiredApprovals()` calcula cantidades; no verifica identidades ni firmas.
+- `signatureMetadata` es metadato declarativo, no prueba criptográfica.
+- `verifyRuntimeProvenance()` no está integrado.
 - No se presentan como implementados ZK, quórum criptográfico real, auto-sanación, pasaporte soberano, negociación jurisdiccional ejecutable ni cumplimiento legal.
 
-## APIs públicas y federación
+### TPVA — TAMV Proof & Verification Atlas
 
-El contrato machine-readable está en [public/openapi.yaml](public/openapi.yaml) y la guía en [Public API Quickstart](docs/api/public-api-quickstart.md).
+La Fase 1 incluye contrato de recibo, esquema JSON, canonicalización determinista, hash SHA-256, validación estricta, verificador offline fail-closed, vectores y pruebas.
 
-Rutas documentadas relevantes:
+- [Contrato TPVA v1](docs/specs/tpva-receipt-v1.md)
+- [Esquema JSON](docs/specs/tpva-receipt-v1.schema.json)
+- [Blueprint](docs/security-review/TPVA_MASTER_BLUEPRINT.md)
 
-| Método y ruta | Alcance y límite |
+La firma cubre los bytes canónicos definidos por el contrato. Los estados `VERIFIED`, `WITH NOTES`, `FAILED`, `UNVERIFIED` y `REVOKED` son estados de evidencia interna, no sellos externos. Las fases de empaquetado, KMS/HSM, persistencia append-only, API pública, UI pública y federación siguen sujetas a su propia evidencia de implementación.
+
+### Estándar de integridad
+
+La ruta `/estandar` y sus endpoints exponen el estándar TAMV y su evaluador. Una evaluación automatizada no sustituye revisión jurídica, auditoría independiente ni autorización humana.
+
+## API pública y federación
+
+El contrato machine-readable está en [`public/openapi.yaml`](public/openapi.yaml) y la guía en [`docs/api/public-api-quickstart.md`](docs/api/public-api-quickstart.md).
+
+| Método y ruta | Alcance |
 |---|---|
-| GET /api/health | Liveness, independiente de PostgreSQL |
-| GET /api/health/ready | Readiness con comprobación de PostgreSQL; devuelve 503 si la dependencia no está disponible |
-| GET /api/v1/research/topics | Catálogo público de temas |
-| GET /api/v1/research/projects | Registros públicos de proyectos |
-| GET /api/v1/researchers | Perfiles opt-in |
-| GET /api/v1/hcu/graph | Grafo declarativo HCU; no es modelo causal validado |
-| GET /api/v1/exports/research | Exportaciones JSON-LD/CSV |
-| GET /api/v1/ecosystem | Catálogo de sistemas |
-| GET /api/v1/ecosystem/metadata | Metadatos públicos de GitHub con dominio fijo |
-| GET /api/v1/huggingface | Snapshot local de metadatos públicos; no consulta el Hub en runtime |
-| POST /api/v1/provenance/validate | Validación de envelope; no prueba autoría |
-| POST /api/v1/research/federated | Puente de investigación institucional, deshabilitado si no hay URL HTTPS configurada |
+| `GET /api/health` | Liveness, independiente de PostgreSQL |
+| `GET /api/health/ready` | Readiness con PostgreSQL; responde 503 si la dependencia no está disponible |
+| `GET /api/v1/research/topics` | Catálogo público de temas |
+| `GET /api/v1/research/projects` | Proyectos públicos |
+| `GET /api/v1/researchers` | Perfiles opt-in |
+| `GET /api/v1/hcu/graph` | Grafo declarativo HCU |
+| `GET /api/v1/exports/research` | Exportaciones JSON-LD/CSV |
+| `GET /api/v1/ecosystem` | Catálogo de sistemas |
+| `GET /api/v1/ecosystem/metadata` | Metadatos públicos de GitHub con dominio fijo |
+| `GET /api/v1/huggingface` | Snapshot local de metadatos públicos; sin llamadas al Hub en runtime |
+| `POST /api/v1/provenance/validate` | Validación de envelope; no prueba autoría |
+| `POST /api/v1/research/federated` | Puente institucional, deshabilitado sin URL HTTPS configurada |
 
-El catálogo separa los estados catalogued, contracted, adapter_implemented y verified. Un sistema catalogado no debe describirse como integrado o verificado sin evidencia adicional.
+Los estados del catálogo separan `catalogued`, `contracted`, `adapter_implemented` y `verified`. Un sistema catalogado no debe describirse como integrado o verificado sin evidencia reciente.
 
-Referencias: [ecosystem federation](docs/architecture/ecosystem-federation-v1.md), [GitHub public metadata adapter](docs/architecture/github-public-metadata-adapter-v1.md), [institutional research federation](docs/architecture/institutional-research-federation-v1.md) y [federation contract](docs/architecture/federation-contract.md).
+Las rutas de autenticación, billing, LGS, moderación, asistentes y administración tienen controles y requisitos de configuración independientes. El acceso público no se extiende a ellas por aparecer en el árbol de `app/api`.
 
-## Snapshot de Hugging Face
+### Snapshot de Hugging Face
 
-El puente de Hugging Face está diseñado como un snapshot local de metadatos públicos. El generador se encuentra en scripts/hf-evidence-snapshot.mjs, el comando en el script hf:snapshot y la validación en lib/huggingface/public-snapshot.ts. El snapshot versionado se describe en docs/evidence/huggingface-public-snapshot.json.
-
-No guarda tokens, repositorios privados o gated, pesos, embeddings ni resultados de inferencia. Un listado público no prueba que un modelo haya sido evaluado, adoptado, licenciado para un uso concreto o revisado externamente. El endpoint lee el snapshot local y no hace llamadas remotas al Hub durante las solicitudes.
-
-## Membresías, formación y apoyo
-
-Las superficies documentadas incluyen:
-
-- **Plan individual:** MXN $229 por mes y usuario.
-- **Plan business:** MXN $699 por mes y organización.
-- **Formación:** cinco módulos prácticos con progreso para usuarios autenticados.
-- **Apoyo/donaciones:** /apoyar muestra un flujo transparente cuando no hay proveedor configurado; no debe simular pagos ni solicitar datos bancarios.
-- **Billing:** los endpoints de checkout, webhook, portal y estado de membresía requieren configuración y controles de producción. La redirección del navegador no concede acceso por sí sola.
-- **Seats de organización:** el plan business está ligado al usuario contratante y al nombre de organización; no se documentan seats, invitaciones ni transferencia de acceso a empleados como implementados.
-- **AI Lounge:** los enlaces a plataformas externas son referencias de descubrimiento, no prueba de pase, patrocinio, afiliación ni autorización.
-- **ROR:** el registro de organización es una meta institucional futura; un ROR ID no constituye por sí mismo incorporación legal ni verificación criptográfica.
-
-Antes de activar pagos, revisar [Membership Billing Runbook](docs/production/membership-billing-runbook.md) y la [auditoría de despliegue y membresías](docs/audit/2026-11-23-production-deployment-memberships-audit.md).
+El snapshot se genera con `pnpm hf:snapshot` y se valida en `lib/huggingface/public-snapshot.ts`. No guarda tokens, repositorios privados o gated, pesos, embeddings ni resultados de inferencia. El endpoint lee el snapshot local; un listado público no demuestra evaluación, adopción, licencia para un uso concreto o revisión externa.
 
 ## Base de datos y operaciones
 
-- PostgreSQL es la persistencia principal documentada para la aplicación.
+- PostgreSQL es la persistencia principal documentada.
 - Drizzle ORM administra el acceso desde el código.
-- PG_POOL_MAX admite un valor entre 1 y 20, con valor por defecto 3.
-- pnpm db:preflight y pnpm db:preflight -- --strict son diagnósticos de sólo lectura.
-- pnpm db:migrate ejecuta el flujo de migraciones sujeto a las comprobaciones documentadas; no debe aplicarse en producción sin preflight estricto y backup/restore comprobado.
-- La migración migrations/0004_public_rate_limits.sql debe verificarse en la base de datos correcta. Si la tabla de rate limits no existe, el limitador puede responder 503 de forma fail-closed; no se debe eludir el control abriendo solicitudes sin límite.
-- No se deben compartir cadenas de conexión, tokens, dumps o datos personales en issues o PR.
+- `PG_POOL_MAX` admite enteros de 1 a 20; el valor por defecto es 3.
+- `pnpm db:preflight` es de sólo lectura.
+- `pnpm db:migrate` ejecuta el flujo de migraciones con sus comprobaciones.
+- La migración `0004_public_rate_limits.sql` debe existir en el entorno correcto. Si el almacén de rate limits no está disponible, el limitador puede responder 503 de forma fail-closed.
+- La migración `0005_lgs_audit_events.sql` y el resto del esquema deben verificarse en staging antes de producción.
 
-## Seguridad y preparación para producción
-
-Las referencias principales son [triple hardening](docs/security/triple-hardening.md), [triple hardening controls](docs/security/triple-hardening-controls.md), [release readiness](docs/security/release-readiness.md), [baseline audit](docs/audit/2026-11-baseline.md) y la auditoría integral enlazada arriba.
-
-Los controles se organizan en tres planos:
-
-1. **Criptografía y datos:** TLS, gestión de cifrado, digests, rotación de claves y recuperación de backups, según el entorno.
-2. **Aplicación e identidad:** autorización deny-by-default, validación server-side, sesiones, rate limits, redirecciones seguras y cadena de suministro.
-3. **Gobernanza y operación:** consentimiento, retención, moderación, apelaciones, aprobaciones y gestión de incidentes.
-
-Antes de una liberación productiva se debe verificar, como mínimo:
-
-- Configuración productiva de Better Auth, URL base, secreto fuerte y cookies seguras.
-- Variables de entorno configuradas en el proveedor de despliegue; un archivo .env.example no demuestra que existan secretos configurados.
-- Instalación reproducible desde lockfile, pruebas, typecheck, build y revisión de dependencias.
-- Migraciones, preflight, backup y restauración ensayada en el entorno adecuado.
-- Pruebas de autorización y aislamiento de datos con sesiones de prueba.
-- Workflow de licencias/SBOM completado y artefactos vinculados al SHA liberado.
-- Revisión de privacidad, términos, marca, afiliaciones y cadena de titularidad.
-- Estado real de despliegue y métricas observadas; no declarar mediciones si no existen datos.
-
-No se declara que el sistema esté al 100 % en producción, que tenga seguridad absoluta, no-repudio, cumplimiento normativo, PQC efectivo o certificación externa.
+No ejecutes migraciones contra producción como parte de una validación local. No compartas cadenas de conexión, tokens, dumps ni datos personales en issues o PR. Antes de una migración se requiere identificar el destino, ejecutar preflight, respaldo, restauración ensayada y plan de reversión.
 
 ## Desarrollo local
 
-Requisitos: Node.js compatible con las dependencias del lockfile y pnpm 12.16.1, conforme a package.json. Usa una base de datos de desarrollo o pruebas; no ejecutes migraciones contra producción como parte de una validación local.
+### Requisitos
 
-Instalación y comprobaciones:
+- Node.js compatible con Next.js 16.4.6 y el lockfile.
+- pnpm 12.16.1, conforme a `packageManager`.
+- PostgreSQL de desarrollo o pruebas para comprobar rutas que requieren persistencia.
 
-    pnpm install --frozen-lockfile
-    pnpm test
-    pnpm typecheck
-    pnpm build
-    pnpm audit --prod --audit-level high
-    pnpm hf:snapshot
-    pnpm dev
+### Instalación y comandos
 
-Si una comprobación falla, registra el comando, versión de Node/pnpm, SHA del commit, salida relevante y si el fallo procede del código, de la configuración o de una dependencia externa. No marques como exitoso un comando que no se ejecutó.
+```bash
+pnpm install --frozen-lockfile
+pnpm test
+pnpm typecheck
+pnpm build
+pnpm dev
+```
 
-Variables de entorno y credenciales deben gestionarse localmente o mediante el gestor de secretos del entorno. No incluyas archivos .env reales en Git.
+Comandos adicionales:
 
-## Pruebas visuales y conexión con Meticulous
+```bash
+pnpm db:preflight
+pnpm db:migrate
+pnpm db:migrate:plan
+pnpm standard:check
+pnpm hf:snapshot
+node scripts/build-sovereignty-bibliography.mjs --check
+```
 
-Se prepara la integración de Meticulous para registrar sesiones de uso, reproducir flujos entre commits, detectar regresiones visuales/DOM y consultar cobertura. Esta integración complementa las pruebas existentes; no reemplaza tests, typecheck, auditoría de seguridad ni validación de despliegue.
+El build ejecuta esta secuencia:
 
-- **CLI:** instalar con \`npm install --global @alwaysmeticulous/cli@latest\`.
-- **MCP:** endpoint \`https://app.meticulous.ai/api/mcp\`, configurado para clientes compatibles en \`.mcp.json\` y \`.cursor/mcp.json\`.
-- **Guía de integración:** [docs/qa/METICULOUS-INTEGRATION.md](docs/qa/METICULOUS-INTEGRATION.md).
-- **Workflow manual de exploración:** [Meticulous Agent Swarm](.github/workflows/meticulous-agent-swarm.yml), sujeto a habilitación beta, token de proyecto y URL HTTPS de preview.
-- **Estado:** preparado en la rama de trabajo; no se afirma que la organización/proyecto Meticulous esté conectado, que el recorder esté instalado o que exista un test run satisfactorio hasta completar la activación externa.
+```bash
+node scripts/write-build-evidence.mjs --clear && next build && node scripts/write-build-evidence.mjs
+```
 
-Antes de grabar sesiones, utilizar staging y cuentas sintéticas. Las grabaciones pueden contener solicitudes, respuestas y cabeceras; nunca registrar datos personales reales, credenciales administrativas o tokens. El workflow no debe ejecutarse hasta que el proyecto esté habilitado por Meticulous y se haya guardado el secreto \`METICULOUS_API_TOKEN\` en GitHub Actions.
+[`public/build-evidence.json`](public/build-evidence.json) contiene un SHA-512 calculado sobre los bytes exactos de `BUILD_ID` y los manifiestos seleccionados de Next.js. No es un digest del despliegue completo, una firma digital, un timestamp confiable ni evidencia de que CI haya pasado.
+
+### Variables de entorno
+
+Copia [`.env.example`](.env.example) a `.env.local` y sustituye los placeholders sólo en tu entorno local. Nunca subas archivos `.env` reales.
+
+Configuración mínima para una revisión local con base de datos y autenticación:
+
+- `DATABASE_URL`
+- `PG_POOL_MAX`
+- `BETTER_AUTH_URL`
+- `BETTER_AUTH_SECRET`
+- `APP_URL`
+- `TAMV_RATE_LIMIT_ENABLED` y `TAMV_RATE_LIMIT_SALT` cuando el limitador esté habilitado
+
+Configuraciones opcionales y deshabilitadas por defecto:
+
+- TAMV Pass y claves de identidad.
+- Stripe, webhook, impuestos y aprobaciones legales de membresía.
+- URL de donación.
+- Puente de investigación institucional.
+- Acceso de fundador y especificación privada LGS.
+
+En producción, `BETTER_AUTH_URL` y `BETTER_AUTH_SECRET` deben configurarse en el gestor de secretos. Un build local puede advertir sobre su ausencia; esa advertencia no debe interpretarse como autenticación productiva validada.
+
+## Seguridad y preparación para producción
+
+Los controles se organizan en tres planos:
+
+1. **Datos y criptografía:** TLS, hashes, minimización, rotación y recuperación según el entorno.
+2. **Aplicación e identidad:** autorización deny-by-default, validación server-side, sesiones, límites de cuerpo, same-origin, rate limits y redirecciones seguras.
+3. **Gobernanza y operación:** consentimiento, retención, moderación, apelaciones, aprobaciones y gestión de incidentes.
+
+Documentos principales:
+
+- [Triple hardening](docs/security/triple-hardening.md)
+- [Controles de triple hardening](docs/security/triple-hardening-controls.md)
+- [Release readiness](docs/security/release-readiness.md)
+- [Runbook de rate limits](docs/OPERATIONS-0004-PUBLIC-RATE-LIMITS.md)
+- [Runbook de membresías](docs/production/membership-billing-runbook.md)
+- [Matriz de cierre modular](docs/roadmap/module-completion-matrix-2026-11.md)
+
+Antes de una liberación productiva se debe verificar, como mínimo:
+
+- Secretos y orígenes canónicos configurados fuera del repositorio.
+- Instalación congelada, pruebas, typecheck, build, auditoría de dependencias, CodeQL y secret scan asociados al SHA candidato.
+- Migraciones y rate limits demostrados en staging.
+- Backup y restauración ensayados.
+- Autorización, aislamiento de datos, privacidad, consentimiento, retirada y apelación probados con sesiones de prueba.
+- Billing en sandbox, conciliación e idempotencia verificadas antes de cobrar.
+- Smoke tests de liveness/readiness y flujos críticos en el despliegue candidato.
+- Observabilidad sin secretos ni datos personales innecesarios.
+- Revisión jurídica de privacidad, términos, marca, afiliaciones y cadena de titularidad.
+- Estado real del despliegue y métricas observadas; no declarar métricas sin tráfico medido.
+
+No se declara que el sistema esté al 100 % en producción, que tenga seguridad absoluta, no-repudio, cumplimiento normativo, PQC efectivo o certificación externa.
+
+## Validación local de esta revisión
+
+Ejecución local realizada el **28 de noviembre de 2026** sobre el candidato de esta revisión:
+
+| Comprobación | Resultado |
+|---|---|
+| `pnpm test` | 369 pruebas, 369 aprobadas, 0 fallos |
+| `pnpm typecheck` | Correcto |
+| `pnpm build` | Correcto |
+| Biblioteca `--check` | Correcta; 364 registros y bytes/hash exactos |
+| Huella de evidencia de build | Recomcalculada y coincidente |
+| `git diff --check` | Correcto |
+| Escaneo de secretos de los archivos del cambio | Sin hallazgos |
+| HTTP local ES/EN de `/` y `/soberania-digital` | 200 |
+| Fuente BibTeX servida | 200; 100646 bytes y SHA-256 esperado |
+| Estructura DOM de inicio y hub | Sin IDs duplicados |
+| Formulario de auditoría renderizado | `method="dialog"`, sin `action` ni envío remoto |
+
+La verificación visual e interactiva en navegador —incluidos teclado, reduced-motion, 320 px, filtros, copia, descarga y mailto— sigue pendiente cuando el viewport nativo no está disponible. Los resultados locales no sustituyen CI, staging, producción ni revisión externa.
+
+## Membresías y pagos
+
+### Formación y apoyo
+
+- Plan individual documentado: **MXN 229/mes por usuario**.
+- Plan business documentado: **MXN 699/mes por organización**.
+- Formación: cinco módulos prácticos con progreso para usuarios autenticados.
+- El plan business está ligado al usuario contratante y al nombre de organización; no se declaran seats, invitaciones ni transferencia de acceso a empleados como implementados.
+- `/apoyar` muestra un estado transparente cuando no hay proveedor configurado; no simula pagos ni solicita datos bancarios.
+- Los enlaces de AI Lounge son referencias de descubrimiento, no prueba de pase, patrocinio, afiliación o autorización.
+- ROR es una meta institucional futura; un identificador ROR no equivale a constitución legal ni verificación criptográfica.
+
+Antes de activar cobros, revisa el [runbook de membresías](docs/production/membership-billing-runbook.md) y la [auditoría de despliegue y membresías](docs/audit/2026-11-23-production-deployment-memberships-audit.md).
+
+## Pruebas visuales y Meticulous
+
+La integración con Meticulous está preparada como complemento para reproducción de sesiones y regresiones visuales/DOM. No sustituye tests, typecheck, seguridad ni validación de despliegue.
+
+- [Guía de integración](docs/qa/METICULOUS-INTEGRATION.md)
+- [Workflow manual](.github/workflows/meticulous-agent-swarm.yml)
+
+No se afirma que el proyecto Meticulous esté conectado, que el recorder esté instalado o que exista una ejecución satisfactoria. Las grabaciones deben usar staging y cuentas sintéticas; nunca datos personales reales, credenciales administrativas ni tokens.
 
 ## Licenciamiento híbrido y derechos
 
-La propuesta distingue capas que no deben aplicarse automáticamente al mismo activo:
+La propuesta distingue capas que no se aplican automáticamente al mismo activo:
 
-| Capa | Instrumento propuesto | Alcance previsto | Estado |
-|---|---|---|---|
-| Software original público | Apache License 2.0 (Apache-2.0) | Sólo el material comprendido por LICENSE y con derechos de redistribución acreditados | LICENSE existe; alcance por activo aún requiere revisión |
-| Documentación editorial | Creative Commons Attribution 4.0 (CC BY 4.0) | Documentos identificados expresamente y libres de restricciones de terceros | No aplicar por extensión ni asumir que cubre todo docs/ |
-| Bases de datos públicas seleccionadas | Open Data Commons ODbL 1.0 | Datasets identificados, autorizados y acompañados de manifiesto | Reservada para datasets revisados; no activa por defecto |
-| Activos privados | Borrador de licencia privada TAMV | Sólo activos enumerados en un anexo y con cadena de titularidad probada | Borrador no aprobado ni firmado |
-| Marca y afiliación | Política y autorizaciones separadas | Nombres, logos, afiliaciones, credenciales y representaciones oficiales | Borrador pendiente de verificación jurídica |
-| Datos personales | Avisos y contratos de tratamiento independientes | Tratamiento con finalidades, transparencia, seguridad y base jurídica aplicable | No lo resuelve una licencia de software |
+| Capa | Instrumento | Estado |
+|---|---|---|
+| Software original público | Apache-2.0 | `LICENSE` existe; el alcance por activo requiere revisión |
+| Documentación editorial identificada | CC BY 4.0 | No se aplica por extensión a todo `docs/` |
+| Datasets públicos seleccionados | ODbL 1.0 | Reservada para datasets revisados y autorizados |
+| Activos privados enumerados | Borrador de licencia privada TAMV | No aprobado ni firmado |
+| Marca y afiliación | Política y autorizaciones separadas | Borrador pendiente de verificación |
+| Datos personales | Avisos y contratos de tratamiento | No los resuelve una licencia de software |
 
-Documentos de referencia:
+Referencias:
 
-- [Mapa de licencias y derechos](LICENSES/README.md)
-- [Resumen de alcance](LICENSES.md)
+- [Mapa de licencias](LICENSES/README.md)
 - [Estado de licenciamiento](docs/governance/licensing-status.md)
 - [Plan de implementación](docs/legal/LICENSING-IMPLEMENTATION-PLAN.md)
 - [Registro de activos](docs/legal/asset-register.csv)
-- [Borrador de licencia privada](LICENSES/TAMV-PRIVATE-LICENSE-DRAFT.md)
-- [Borrador de política de marca y afiliación](LICENSES/TRADEMARK-AND-AFFILIATION-POLICY-DRAFT.md)
-- [Síntesis de investigación](docs/legal/RESEARCH-SYNTHESIS-HYBRID-LICENSING.md)
 
-La licencia privada no puede revocar retroactivamente derechos concedidos válidamente bajo Apache-2.0. CC BY no debe usarse para software. ODbL no autoriza por sí sola la divulgación de datos personales ni resuelve todos los derechos sobre contenido individual. Las contribuciones no se consideran cedidas a TAMV sólo por aparecer en GitHub, una comunidad o una conversación.
+El registro inicial está marcado `UNREVIEWED` y no prueba titularidad. La licencia privada no puede revocar retroactivamente derechos concedidos válidamente bajo Apache-2.0. CC BY no debe usarse para software. ODbL no autoriza por sí sola divulgar datos personales ni resolver todos los derechos de contenido individual.
 
-El registro inicial de activos contiene filas de ejemplo y está marcado UNREVIEWED. Hasta completar la revisión de cada activo, no debe usarse como prueba de titularidad ni como autorización para publicar datos, contenido de terceros, credenciales, información confidencial o materiales culturalmente restringidos.
+**Revisión profesional pendiente:** la política final, la cadena de titularidad, los contratos de contribución, la protección de datos, las condiciones de membresía y los derechos de marca requieren asesoría jurídica cualificada en México antes de adoptarse como vinculantes.
 
-**Revisión profesional pendiente:** la política final, la cadena de titularidad, los contratos de contribución, la protección de datos, las condiciones de membresía y los derechos de marca requieren revisión por asesoría jurídica cualificada en México antes de adoptarse como vinculantes.
+## Limitaciones conocidas
+
+- La validación CI, el despliegue productivo y las operaciones externas no se dan por verificados por este README.
+- La configuración productiva de Better Auth, secretos, cookies y orígenes requiere evidencia del entorno.
+- Migraciones, backup/restauración, rate limits y billing requieren staging y configuración autorizados.
+- Los conectores académicos e institucionales conservan estados separados de catálogo, contrato, adaptador y verificación.
+- HCU y Atlas no constituyen modelos causales validados ni un gemelo territorial productivo.
+- TPVA Fase 1 no equivale a certificación externa; sus fases posteriores tienen estados independientes.
+- No existe un flujo operativo de auditor externo, casos, permisos temporales, anexos confidenciales ni portal auditor.
+- No se declaran seats empresariales, comunidad multiusuario persistente, memoria durable de IA ni agentes en producción sin evidencia específica.
+- Las métricas de rendimiento y uso no se declaran sin observación real.
+- La revisión visual e interactiva completa sigue pendiente.
+
+La hoja de ruta y las dependencias de cierre están en [`docs/roadmap/module-completion-matrix-2026-11.md`](docs/roadmap/module-completion-matrix-2026-11.md).
 
 ## Contribuir
 
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir un pull request.
+Consulta [`CONTRIBUTING.md`](CONTRIBUTING.md) antes de abrir un pull request.
 
-- Explica el problema, los pasos para reproducirlo y un criterio de aceptación.
-- Añade pruebas relevantes y reporta sólo resultados que se hayan ejecutado.
-- Documenta los cambios de API, migraciones, variables de entorno y riesgos de compatibilidad.
-- Identifica origen, licencia y versión de los componentes o materiales externos.
-- No subas secretos, credenciales, datos personales ni activos cuya publicación no esté autorizada.
+- Explica el problema, reproducción y criterio de aceptación.
+- Añade pruebas relevantes y reporta sólo resultados ejecutados.
+- Documenta cambios de API, migraciones, variables de entorno y riesgos.
+- Identifica origen, licencia y versión de materiales externos.
+- No subas secretos, credenciales, datos personales ni activos sin autorización de publicación.
 - No afirmes certificación, afiliación, titularidad o cumplimiento sin evidencia verificable.
 - Mantén alineadas las versiones en español e inglés cuando ambas existan.
 
-## Investigación y fuentes
+## Investigación, contacto y seguridad
 
-Conserva URL canónica, identificador, fecha de consulta, versión inspeccionada, licencia aplicable y estado de revisión para cada fuente. Distingue títulos localizados por una búsqueda bibliográfica de textos completos efectivamente revisados. La síntesis de licenciamiento registra literatura localizada y temas de compatibilidad; sus referencias deben completar metadatos y validación de texto completo antes de usarse como bibliografía académica definitiva.
+Conserva URL canónica, identificador, fecha de consulta, versión inspeccionada, licencia y estado de revisión para cada fuente. Distingue títulos localizados de textos completos efectivamente revisados.
 
-## Contacto y reportes de seguridad
+No publiques vulnerabilidades explotables, tokens, datos personales ni registros privados en issues públicos. Usa el mecanismo privado de reporte de vulnerabilidades de GitHub si está habilitado, o un canal institucional verificado. No asumas que un reporte fue recibido sin confirmación explícita.
 
-No publiques vulnerabilidades explotables, tokens, datos personales ni registros privados en issues públicos. Utiliza el mecanismo privado de reporte de vulnerabilidades de GitHub si está habilitado para el repositorio, o un canal institucional verificado. No asumas que un reporte fue recibido hasta contar con confirmación explícita.
-
-## Aviso final
-
-TAMV Online Network se desarrolla como un proyecto tecnológico y de memoria en evolución. Las descripciones, estados de madurez, integraciones, licencias y métricas deben interpretarse con referencia al commit, al entorno y a la evidencia concreta. Este README no sustituye los contratos, licencias completas, avisos de privacidad, documentación de terceros ni una auditoría independiente.
+Las descripciones, estados de madurez, integraciones, licencias y métricas deben interpretarse respecto del commit, el entorno y la evidencia concreta. Este README no sustituye contratos, licencias completas, avisos de privacidad, documentación de terceros ni una auditoría independiente.

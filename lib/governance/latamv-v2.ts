@@ -117,11 +117,15 @@ export function evaluateConstitution(
     ["evidence", context.evidence],
     ["safety", context.safety],
   ] as const;
-  const missing = factors.find(([, present]) => !present);
+  const missing = factors.find(([, present]) => present !== true);
   if (missing) {
     return { ...base, allowed: false, reason: "missing_factor", matchedRuleId: gene.ruleId };
   }
-  if (context.consensusApprovals < required) {
+  if (
+    !Number.isFinite(context.consensusApprovals) ||
+    !Number.isInteger(context.consensusApprovals) ||
+    context.consensusApprovals < required
+  ) {
     return { ...base, allowed: false, reason: "consensus_insufficient", matchedRuleId: gene.ruleId };
   }
   return { ...base, allowed: true, reason: "all_factors_present", matchedRuleId: gene.ruleId };

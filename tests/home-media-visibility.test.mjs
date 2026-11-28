@@ -13,8 +13,8 @@ test("homepage progressive-reveal allowlist preserves the contextual media secti
 
   assert.match(
     css,
-    /main#contenido\s*>\s*:not\(\.sovereign-hero\):not\(\.sovereign-workspace\):not\(\[data-tamv-mind-map="governance"\]\):not\(\[data-media-area="home"\]\)\s*\{\s*display:\s*none\s*!important;\s*\}/,
-    "the homepage visibility selector must preserve the governance map and the contextual media section",
+    /main#contenido\s*>\s*:not\(\.sovereign-hero\):not\(\.sovereign-workspace\):not\(\.tamv-hero-banner\):not\(\.home-extras-disclosure\):not\(\[data-tamv-mind-map="governance"\]\):not\(\[data-media-area="home"\]\)\s*\{\s*display:\s*none\s*!important;\s*\}/,
+    "the homepage visibility selector must preserve the hero, opt-in disclosure, governance map and contextual media section",
   )
   assert.match(
     site,

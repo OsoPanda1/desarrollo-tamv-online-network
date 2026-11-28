@@ -10,6 +10,7 @@ import './visuals.css'
 import './evidence.css'
 import './standard.css'
 import './pearl.css'
+import './navigation.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteOrigin()),

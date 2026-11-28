@@ -24,6 +24,12 @@ export interface RateLimitPolicy {
   now?: number;
 }
 
+export const MAX_RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+export function rateLimitCleanupCutoff(now: number) {
+  return now - MAX_RATE_LIMIT_WINDOW_MS;
+}
+
 /**
  * Read only the canonical client address supplied by a trusted ingress.
  * Do not trust the first X-Forwarded-For value: callers can prepend entries
@@ -57,7 +63,9 @@ export async function decideRateLimit(
   policy: RateLimitPolicy,
 ): Promise<RateLimitDecision> {
   if (!Number.isInteger(policy.limit) || policy.limit < 1) throw new Error("rate limit must be a positive integer");
-  if (!Number.isInteger(policy.windowMs) || policy.windowMs < 1000) throw new Error("rate limit window must be at least 1000ms");
+  if (!Number.isInteger(policy.windowMs) || policy.windowMs < 1000 || policy.windowMs > MAX_RATE_LIMIT_WINDOW_MS) {
+    throw new Error(`rate limit window must be between 1000ms and ${MAX_RATE_LIMIT_WINDOW_MS}ms`);
+  }
 
   const now = policy.now ?? Date.now();
   const result = await store.consume({ key, windowMs: policy.windowMs, now });
