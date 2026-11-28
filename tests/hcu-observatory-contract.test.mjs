@@ -144,4 +144,12 @@ test("homepage leads with technology and exposes a research-first visual system"
   assert.match(media, /src: "\/visuals\/collaborator-staging-flow\.svg"/)
   assert.match(media, /src: "\/visuals\/developer-connector-architecture\.svg"/)
   assert.match(media, /src: "\/visuals\/evidence-gated-roadmap\.svg"/)
+  const visualStyles = read("components/tamv-visual-systems.module.css")
+  assert.match(gallery, /research-photo/)
+  assert.match(gallery, /infrastructure-photo/)
+  assert.match(gallery, /creativecommons\.org\/licenses\/by\/4\.0|CC BY 4\.0/)
+  assert.match(gallery, /Wikimedia Commons/)
+  assert.match(gallery, /card\.sourceUrl/)
+  assert.match(visualStyles, /\.credit/)
+
 })
