@@ -10,17 +10,39 @@ type SearchParams = Promise<{ lang?: string }>
 
 export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
   const english = resolveLocale((await searchParams).lang) === "en"
-  return english
-    ? {
-        title: "Origins | TAMV Online Network",
-        description: "The personal story behind TAMV Online Network: a journey of adversity, self-reconstruction, memory, and the decision to build a place where people can belong.",
-        openGraph: { locale: "en_US", title: "Origins | TAMV Online Network", description: "The story, conviction, and human origin behind TAMV Online Network." },
-      }
-    : {
-        title: "Orígenes | TAMV Online Network",
-        description: "Biografía de Edwin Oswaldo Castillo Trejo, Anubis Villaseñor: desarrollador autodidacta, investigador independiente y fundador de TAMV Online Network desde Real del Monte, Hidalgo.",
-        openGraph: { locale: "es_MX", title: "Orígenes | TAMV Online Network", description: "La historia personal, trayectoria tecnológica y obra documentada de Edwin Oswaldo Castillo Trejo, Anubis Villaseñor." },
-      }
+  const title = english
+    ? "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor) | Origins — TAMV Online Network"
+    : "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor) | Orígenes — TAMV Online Network"
+  const description = english
+    ? "Founder biography, self-taught technology work, public identifiers, repositories, and citable technical records for Edwin Oswaldo Castillo Trejo, creator of TAMV Online Network in Real del Monte, Hidalgo."
+    : "Biografía del fundador, obra tecnológica autodidacta, identificadores públicos, repositorios y registros técnicos citables de Edwin Oswaldo Castillo Trejo, creador de TAMV Online Network desde Real del Monte, Hidalgo."
+  const socialImage = {
+    url: "/visuals/tamv-innovation-hub-hero.svg",
+    width: 1584,
+    height: 672,
+    alt: english
+      ? "TAMV Online Network: research, AI governance, security, open knowledge, and digital sovereignty."
+      : "TAMV Online Network: investigación, gobernanza de IA, seguridad, conocimiento abierto y soberanía digital.",
+  }
+
+  return {
+    title,
+    description,
+    openGraph: {
+      type: "website",
+      siteName: "TAMV Online Network",
+      locale: english ? "en_US" : "es_MX",
+      title,
+      description,
+      images: [socialImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [socialImage.url],
+    },
+  }
 }
 
 
@@ -40,6 +62,9 @@ const professionalProfiles: ProfileResource[] = [
   { label: "TAMV Online · sitio público", href: "https://tamvonline-oficial.odoo.com/", es: "Publicaciones y documentación institucional del propio ecosistema TAMV; deben distinguirse de fuentes externas independientes.", en: "Publications and institutional documentation from TAMV itself; these should be distinguished from independent external sources." },
   { label: "TAMV ONLINE · comunidad técnica", href: "https://groups.io/g/TAMVONLINE-ECOSISTEM-LATAM", es: "Comunidad de divulgación y documentación técnica; los anuncios del grupo son fuentes de la organización, no evaluaciones independientes.", en: "Community for technical communication and documentation; group announcements are organizational sources, not independent evaluations." },
   { label: "Isabella TERMINUS-V6 · repositorio", href: "https://github.com/OsoPanda1/ISABELLA-VERSION-TERMINUS-V6", es: "Repositorio de código y documentación técnica de la arquitectura Isabella.", en: "Code repository and technical documentation for the Isabella architecture." },
+  { label: "LinkedIn · perfil profesional complementario", href: "https://mx.linkedin.com/in/teamanubismodelos", es: "Perfil público adicional bajo el nombre Edwin Oswaldo Castillo Trejo, con actividad de servicios y publicaciones anteriores. Se enlaza como presencia profesional complementaria, no como acreditación académica.", en: "Additional public profile under the name Edwin Oswaldo Castillo Trejo, with service information and earlier posts. Included as complementary professional presence, not as an academic credential." },
+  { label: "Zenodo · búsqueda de registros del autor", href: "https://zenodo.org/search?q=Edwin%20Oswaldo%20Castillo%20Trejo", es: "Búsqueda de registros que permite inspeccionar títulos, versiones, fechas, autores, licencias y DOI directamente en el repositorio.", en: "Search across records to inspect titles, versions, dates, authors, licenses, and DOIs directly in the repository." },
+  { label: "Frontiers · búsqueda en directorio público", href: "https://www.frontiersin.org/Community/WhosWho.aspx?f=0&name=Edwin%20Oswaldo%20Castillo%20Trejo", es: "Punto de consulta en el directorio público de Frontiers. No se ha confirmado una ficha activa ni un nombramiento editorial atribuible con seguridad al autor.", en: "Lookup path in Frontiers' public directory. An active profile or editorial appointment reliably attributable to the author has not been confirmed." },
   { label: "TAMV · CITIS 2026 y Nodo Cero", href: "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11", es: "Artículo editorial del propio ecosistema que relata el vínculo con CITIS y el reconocimiento Ph.D. reportado por el autor.", en: "An article from the TAMV ecosystem reporting the CITIS connection and the Ph.D.-level recognition described by the author." },
 ]
 
@@ -349,6 +374,11 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                     <a href="https://citis.ups.edu.ec/es/" target="_blank" rel="noopener noreferrer">{english ? "Official CITIS 2026 website" : "Sitio oficial de CITIS 2026"} <ArrowUpRight aria-hidden="true" /></a>
                     <a href="https://www.ups.edu.ec/noticias?articleId=4406888&byid=" target="_blank" rel="noopener noreferrer">{english ? "UPS event summary" : "Reseña del evento publicada por UPS"} <ArrowUpRight aria-hidden="true" /></a>
                     <a href="https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11" target="_blank" rel="noopener noreferrer">{english ? "TAMV account of CITIS 2026" : "Relato de TAMV sobre CITIS 2026"} <ArrowUpRight aria-hidden="true" /></a>
+                  </div>
+                  <p className="tamv-origins-recognition-footnote">{english ? "Frontiers check: this link opens the public people directory. It is included for transparent follow-up, not as proof of authorship, reviewer status, editor appointment, or a formally conferred degree." : "Comprobación de Frontiers: este enlace abre el directorio público de personas. Se incluye para facilitar una consulta transparente; no constituye prueba de autoría, actividad como revisor, nombramiento editorial ni concesión formal de un grado."}</p>
+                  <div className="tamv-origins-recognition-sources">
+                    <a href="https://www.frontiersin.org/Community/WhosWho.aspx" target="_blank" rel="noopener noreferrer">{english ? "Frontiers public people directory" : "Directorio público de personas de Frontiers"} <ArrowUpRight aria-hidden="true" /></a>
+                    <a href="https://www.researchgate.net/profile/Edwin-Oswaldo-Castillo-Trejo" target="_blank" rel="noopener noreferrer">{english ? "Verified ResearchGate profile" : "Perfil localizado en ResearchGate"} <ArrowUpRight aria-hidden="true" /></a>
                   </div>
                   <details className="tamv-origins-profile-audit">
                     <summary>{english ? "Profile verification notes" : "Notas de verificación de perfiles"}</summary>

@@ -229,3 +229,21 @@ test("Origins timeline ties each milestone to a source and labels author-reporte
   assert.match(styles, /\.tamv-origins-milestone-card/)
   assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?tamv-origins-milestone-list/)
 })
+
+
+test("Origins metadata exposes a bilingual title, description, and social preview without claiming a degree", () => {
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /Edwin Oswaldo Castillo Trejo \(Anubis Villaseñor\) \| Origins/)
+  assert.match(origins, /Edwin Oswaldo Castillo Trejo \(Anubis Villaseñor\) \| Orígenes/)
+  assert.match(origins, /openGraph:[\s\S]*?images: \[socialImage\]/)
+  assert.match(origins, /twitter:[\s\S]*?card: "summary_large_image"/)
+  assert.match(origins, /tamv-innovation-hub-hero\.svg/)
+})
+
+test("Origins links verified and exploratory identity directories without presenting them as endorsements", () => {
+  const origins = read("app/origenes/page.tsx")
+  assert.match(origins, /linkedin\.com\/in\/teamanubismodelos/)
+  assert.match(origins, /zenodo\.org\/search\?q=Edwin%20Oswaldo%20Castillo%20Trejo/)
+  assert.match(origins, /frontiersin\.org\/Community\/WhosWho\.aspx/)
+  assert.match(origins, /not as proof of authorship|no constituye prueba de autoría/)
+})
