@@ -63,3 +63,22 @@ Activos externos incorporados con procedencia visible:
 Las imágenes externas se enlazan desde Wikimedia Commons para conservar la página de atribución. La disponibilidad del host externo no está bajo control del proyecto; si se decide descargar o transformar estos activos, debe conservarse la ficha de licencia, autoría, fecha y registro de cambios. El video se sirve desde el modo de privacidad mejorada de YouTube y conserva un enlace al original.
 
 Los espacios sin un archivo real verificado (retrato de autoría, captura actual de Isabella, captura de HCU, comprobante TPVA, grabación de TAMV Living Atlas y tutorial propio) permanecen como pendientes. No se generan capturas ficticias ni se atribuye a TAMV contenido de terceros.
+
+
+## Revisión de activos tecnológicos originales — 2026-11-28
+
+La rama de trabajo incorpora nueve SVG originales locales en `public/visuals/`. Estos recursos no sustituyen los archivos territoriales históricos ni se presentan como fotografías, capturas de producto o evidencia de ejecución. Su función es ilustrar temas tecnológicos específicos.
+
+| Activo | Tema | Naturaleza |
+|---|---|---|
+| `tamv-innovation-hub-hero.svg` | Investigación, gobernanza, seguridad y soberanía digital | Portada tecnológica original |
+| `research-evidence-network.svg` | Publicaciones, datos, métodos, autores y revisión | Diagrama conceptual |
+| `ai-governance-framework.svg` | Identidad, autoridad, política, evidencia y seguridad | Diagrama conceptual |
+| `zero-trust-security.svg` | Cliente, runtime, secretos y APIs | Diagrama conceptual |
+| `cryptographic-provenance.svg` | SHA-512, Ed25519, timestamp y recibo | Diagrama conceptual; no es recibo firmado |
+| `knowledge-provenance.svg` | Verificación, incertidumbre, impacto y publicación | Diagrama conceptual |
+| `hcu-hypergraph-field.svg` | Dominios y relaciones HCU | Ilustración conceptual; no reemplaza el grafo interactivo |
+| `open-science-lab.svg` | Método, datos, evidencia y reproducibilidad | Diagrama conceptual |
+| `human-oversight-ai.svg` | Revisión, parada, reversión y reparación | Diagrama conceptual |
+
+La portada y la galería principal apuntan a estos activos locales. Las imágenes territoriales se mantienen en los slots de Atlas y proyectos territoriales; no se deben reutilizar como ilustración genérica de investigación o seguridad. La validación de renderizado, contraste, teclado, rutas ES/EN, solicitudes 404 y rendimiento sigue pendiente hasta disponer de una ejecución de navegador verificable.
