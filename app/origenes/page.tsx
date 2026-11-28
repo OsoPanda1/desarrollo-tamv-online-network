@@ -157,6 +157,25 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                 )}
               </section>
 
+
+              {paragraphs.map((paragraph, index) => (
+                <p key={index} className={index === 2 ? "tamv-origins-emphasis" : undefined}>{paragraph}</p>
+              ))}
+              <blockquote className="tamv-origins-pullquote">
+                <Sparkles aria-hidden="true" />
+                <p>{english ? "A person's past does not have to become the limit of their future." : "El pasado de una persona no tiene por qué convertirse en el límite de su futuro."}</p>
+              </blockquote>
+              <p>{english ? "If someone who came to see himself as disposable could rebuild his direction and turn adversity into structure, we believe that you, too, can transform your own path within TAMV ONLINE NETWORK." : "Si alguien que llegó a verse a sí mismo como descartable pudo reconstruir su rumbo y convertir la adversidad en estructura, estamos convencidos de que en TAMV ONLINE NETWORK tú también puedes transformar el tuyo."}</p>
+              <p>{english ? "Welcome to a new chapter of your life. Welcome to a place built on a conviction that runs through everything we do here:" : "Bienvenido a una nueva etapa de tu vida. Bienvenido a un lugar construido desde una convicción que atraviesa todo lo que hacemos aquí:"}</p>
+              <p className="tamv-origins-not-alone">{english ? "You are not alone." : "No estás solo."}</p>
+              <div className="tamv-origins-mother-note">
+                <span>{english ? "A PERSONAL DEDICATION" : "UNA DEDICATORIA PERSONAL"}</span>
+                <p>{english ? "And if you are reading this, Mom, I want you to know something:" : "Y si estás leyendo esto, mamá, quiero que sepas algo:"}</p>
+                <p className="tamv-origins-dedication">{english ? "TAMV ONLINE NETWORK — “Versatile Mexican Advanced Technology” — this is for you." : "TAMV ONLINE NETWORK — “Tecnología Avanzada Mexicana Versátil” — esto es para ti."}</p>
+                <p>{english ? "Lift your head, smile, and for once, feel proud." : "Levanta el rostro, sonríe y, por primera vez, siente orgullo."}</p>
+                <p className="tamv-origins-final-line">{english ? "Your black sheep achieved something important." : "Tu oveja negra logró algo importante."}</p>
+                <p className="tamv-origins-love">{english ? "I love you, Mom." : "Te amo, mamá."}</p>
+              </div>
               <section className="tamv-origins-biography" aria-labelledby="tamv-origins-biography-title">
                 <div className="tamv-origins-biography-heading">
                   <p className="tamv-origins-manifesto-kicker">{english ? "BIOGRAPHY · DOCUMENTED WORK · PUBLIC IDENTIFIERS" : "BIOGRAFÍA · OBRA DOCUMENTADA · IDENTIFICADORES PÚBLICOS"}</p>
@@ -246,24 +265,6 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                 </aside>
               </section>
 
-              {paragraphs.map((paragraph, index) => (
-                <p key={index} className={index === 2 ? "tamv-origins-emphasis" : undefined}>{paragraph}</p>
-              ))}
-              <blockquote className="tamv-origins-pullquote">
-                <Sparkles aria-hidden="true" />
-                <p>{english ? "A person's past does not have to become the limit of their future." : "El pasado de una persona no tiene por qué convertirse en el límite de su futuro."}</p>
-              </blockquote>
-              <p>{english ? "If someone who came to see himself as disposable could rebuild his direction and turn adversity into structure, we believe that you, too, can transform your own path within TAMV ONLINE NETWORK." : "Si alguien que llegó a verse a sí mismo como descartable pudo reconstruir su rumbo y convertir la adversidad en estructura, estamos convencidos de que en TAMV ONLINE NETWORK tú también puedes transformar el tuyo."}</p>
-              <p>{english ? "Welcome to a new chapter of your life. Welcome to a place built on a conviction that runs through everything we do here:" : "Bienvenido a una nueva etapa de tu vida. Bienvenido a un lugar construido desde una convicción que atraviesa todo lo que hacemos aquí:"}</p>
-              <p className="tamv-origins-not-alone">{english ? "You are not alone." : "No estás solo."}</p>
-              <div className="tamv-origins-mother-note">
-                <span>{english ? "A PERSONAL DEDICATION" : "UNA DEDICATORIA PERSONAL"}</span>
-                <p>{english ? "And if you are reading this, Mom, I want you to know something:" : "Y si estás leyendo esto, mamá, quiero que sepas algo:"}</p>
-                <p className="tamv-origins-dedication">{english ? "TAMV ONLINE NETWORK — “Versatile Mexican Advanced Technology” — this is for you." : "TAMV ONLINE NETWORK — “Tecnología Avanzada Mexicana Versátil” — esto es para ti."}</p>
-                <p>{english ? "Lift your head, smile, and for once, feel proud." : "Levanta el rostro, sonríe y, por primera vez, siente orgullo."}</p>
-                <p className="tamv-origins-final-line">{english ? "Your black sheep achieved something important." : "Tu oveja negra logró algo importante."}</p>
-                <p className="tamv-origins-love">{english ? "I love you, Mom." : "Te amo, mamá."}</p>
-              </div>
               <div className="tamv-origins-endmark" aria-label={english ? "End of founding testimony" : "Fin del testimonio fundacional"}><span /><b>TAMV</b><span /></div>
             </div>
           </div>
