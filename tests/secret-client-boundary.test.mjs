@@ -6,8 +6,9 @@ import test from "node:test";
 const root = process.cwd();
 const sourceRoots = ["app", "components", "lib"];
 const extensions = new Set([".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx"]);
-const sensitiveClientEnv =
-  /process\s*\.\s*env\s*\.\s*NEXT_PUBLIC_[A-Z0-9_]*(?:SECRET|TOKEN|PASSWORD|DATABASE_URL|PRIVATE_KEY|SIGNING_KEY|WEBHOOK_SECRET|API_KEY)/g;
+const envAccess = /process\s*\.\s*env\s*(?:\.\s*([A-Z0-9_]+)|\[\s*["']([A-Z0-9_]+)["']\s*\])/g;
+const sensitivePublicName =
+  /^NEXT_PUBLIC_[A-Z0-9_]*(?:SECRET|TOKEN|PASSWORD|PASS|DATABASE|DB_URL|PRIVATE|SIGNING|WEBHOOK|API_KEY|SERVICE_ROLE|ACCESS_KEY|CLIENT_SECRET)/;
 
 async function sourceFiles(directory) {
   let entries;
@@ -31,7 +32,7 @@ async function sourceFiles(directory) {
   return files;
 }
 
-test("server-only secret names are never read from NEXT_PUBLIC_* variables", async () => {
+test("server-only secret variables are never read through NEXT_PUBLIC_*", async () => {
   const files = [];
   for (const sourceRoot of sourceRoots) {
     files.push(...await sourceFiles(path.join(root, sourceRoot)));
@@ -47,16 +48,18 @@ test("server-only secret names are never read from NEXT_PUBLIC_* variables", asy
       if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") continue;
       throw error;
     }
-    for (const match of source.matchAll(sensitiveClientEnv)) {
+    for (const match of source.matchAll(envAccess)) {
+      const variableName = match[1] ?? match[2];
+      if (!variableName || !sensitivePublicName.test(variableName)) continue;
       const line = source.slice(0, match.index).split("\n").length;
-      violations.push(`${path.relative(root, file)}:${line}: ${match[0]}`);
+      violations.push(`${path.relative(root, file)}:${line}: ${variableName}`);
     }
   }
 
   assert.deepEqual(
     violations,
     [],
-    "Sensitive server configuration must never be referenced through NEXT_PUBLIC_* variables:\n" +
+    "Sensitive server configuration must never be read through NEXT_PUBLIC_* variables:\n" +
       violations.join("\n"),
   );
 });
