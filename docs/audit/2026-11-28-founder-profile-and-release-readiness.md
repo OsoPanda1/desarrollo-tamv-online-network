@@ -2,7 +2,8 @@
 
 **Fecha de corte:** 28 de noviembre de 2026  
 **Rama revisada:** `security/secret-boundary-and-visual-audit`  
-**PR:** [#59](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/59)  
+**PR de seguimiento:** [#60](https://github.com/OsoPanda1/desarrollo-tamv-online-network/pull/60)  
+**Antecedente:** el PR #59 se fusionó con un SHA previo; este PR reúne los cambios posteriores sobre biografía, fuentes y activo binario.  
 **Uso:** trazabilidad editorial de la sección Orígenes y evaluación independiente, aproximada, de preparación para producción.
 
 ## 1. Criterio de investigación
@@ -54,7 +55,7 @@ La cifra de más de 23,000 horas de investigación y desarrollo proviene de decl
 | Documentación, procedencia y procedimientos | 5% | 80% | 4.0 |
 | **Total calculado** | **100%** |  | **35.0%** |
 
-La estimación es de preparación para producción, no de valor intelectual del proyecto. La sección Orígenes tiene una implementación de código muy avanzada respecto a su alcance, pero la rama sigue en un PR abierto tipo borrador. En el HEAD examinado, el único estado de comprobación disponible fue un fallo de Vercel cuya URL señala el límite de despliegues del plan; no se obtuvo un resultado ejecutable de GitHub Actions para ese SHA. No se han verificado `pnpm test`, `pnpm typecheck`, `pnpm build`, QA visual en navegador ni smoke tests post-despliegue.
+El snapshot de código revisado para esta estimación fue `864e56b1ff02559511aaab2111f3d10e2f7b690a`; la edición posterior de este informe cambia el HEAD documental, no el código evaluado. El endpoint de estados de ese snapshot devolvió fallo Vercel con destino `upgradeToPro=build-rate-limit`; la consulta de ejecuciones GitHub Actions no devolvió ejecuciones asociadas a ese SHA. Por lo tanto, no hay resultado ejecutable disponible de tests/typecheck/build para atribuirle un PASS o un FAIL de código. La estimación es de preparación para producción, no de valor intelectual del proyecto. La sección Orígenes tiene una implementación de código muy avanzada respecto a su alcance, pero la rama sigue en un PR abierto tipo borrador. En el HEAD examinado, el único estado de comprobación disponible fue un fallo de Vercel cuya URL señala el límite de despliegues del plan; no se obtuvo un resultado ejecutable de GitHub Actions para ese SHA. No se han verificado `pnpm test`, `pnpm typecheck`, `pnpm build`, QA visual en navegador ni smoke tests post-despliegue.
 
 ### Condiciones para elevar el porcentaje
 
