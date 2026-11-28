@@ -45,3 +45,50 @@ en el repositorio.
   en el hub (2 ocurrencias, con `alt` distinto en cada una).
 - No se extrajeron imágenes de CSS ni de JavaScript: las 17 ocurrencias son
   etiquetas `<img>` con `src` data URI.
+
+
+## Revalidación del estado de los archivos en Git — 2026-11-28
+
+La tabla anterior documenta el resultado de una extracción histórica, pero **no debe usarse como prueba de que los archivos están presentes en el árbol Git actual**. Durante la revalidación del repositorio, siete rutas representativas de `public/hub/` y `public/hub/README.md` devolvieron 404 en la API de contenidos de GitHub. Por ello, la implementación visual no referencia esos nombres como activos locales hasta que se restauren y se verifiquen en un commit.
+
+Activos que sí se verificaron en la rama de trabajo:
+- `public/tamv-hero-banner.jpg`: archivo local presente.
+- `public/security/tamv-secret-boundaries.svg`: diagrama conceptual añadido en la rama de auditoría.
+
+Activos externos incorporados con procedencia visible:
+- Plaza principal de Real del Monte: [Wikimedia Commons — PlazaRealdelMonte.JPG](https://commons.wikimedia.org/wiki/File:PlazaRealdelMonte.JPG), autora Thelmadatter, fecha declarada 14-09-2008, dominio público declarado por la autora.
+- Calle que conduce a la plaza: [Wikimedia Commons — Street2PlazaRealdelMonte.JPG](https://commons.wikimedia.org/wiki/File:Street2PlazaRealdelMonte.JPG), autora Thelmadatter, fecha declarada 14-09-2008, dominio público declarado por la autora.
+- Video contextual: [Canal Once — Viajar para contar: Real del Monte, Hidalgo](https://www.youtube.com/watch?v=n31wbn6skew), publicado por el canal verificado Canal Once. Es contenido externo y no una producción TAMV ni una demostración de RDM Digital.
+
+Las imágenes externas se enlazan desde Wikimedia Commons para conservar la página de atribución. La disponibilidad del host externo no está bajo control del proyecto; si se decide descargar o transformar estos activos, debe conservarse la ficha de licencia, autoría, fecha y registro de cambios. El video se sirve desde el modo de privacidad mejorada de YouTube y conserva un enlace al original.
+
+Los espacios sin un archivo real verificado (retrato de autoría, captura actual de Isabella, captura de HCU, comprobante TPVA, grabación de TAMV Living Atlas y tutorial propio) permanecen como pendientes. No se generan capturas ficticias ni se atribuye a TAMV contenido de terceros.
+
+
+## Revisión de activos tecnológicos originales — 2026-11-28
+
+La rama de trabajo incorpora catorce SVG originales locales en `public/visuals/`. Estos recursos no sustituyen los archivos territoriales históricos ni se presentan como fotografías, capturas de producto o evidencia de ejecución. Su función es ilustrar temas tecnológicos específicos.
+
+| Activo | Tema | Naturaleza |
+|---|---|---|
+| `tamv-innovation-hub-hero.svg` | Investigación, gobernanza, seguridad y soberanía digital | Portada tecnológica original |
+| `research-evidence-network.svg` | Publicaciones, datos, métodos, autores y revisión | Diagrama conceptual |
+| `ai-governance-framework.svg` | Identidad, autoridad, política, evidencia y seguridad | Diagrama conceptual |
+| `zero-trust-security.svg` | Cliente, runtime, secretos y APIs | Diagrama conceptual |
+| `cryptographic-provenance.svg` | SHA-512, Ed25519, timestamp y recibo | Diagrama conceptual; no es recibo firmado |
+| `knowledge-provenance.svg` | Verificación, incertidumbre, impacto y publicación | Diagrama conceptual |
+| `hcu-hypergraph-field.svg` | Dominios y relaciones HCU | Ilustración conceptual; no reemplaza el grafo interactivo |
+| `open-science-lab.svg` | Método, datos, evidencia y reproducibilidad | Diagrama conceptual |
+| `human-oversight-ai.svg` | Revisión, parada, reversión y reparación | Diagrama conceptual |
+
+La portada y la galería principal apuntan a estos activos locales. Las imágenes territoriales se mantienen en los slots de Atlas y proyectos territoriales; no se deben reutilizar como ilustración genérica de investigación o seguridad. La validación de renderizado, contraste, teclado, rutas ES/EN, solicitudes 404 y rendimiento sigue pendiente hasta disponer de una ejecución de navegador verificable.
+
+### Recursos adicionales por tema
+
+| Archivo | Tema | Naturaleza |
+|---|---|---|
+| `learning-pathway.svg` | Formación digital | Diagrama original, no certificación |
+| `accessibility-by-design.svg` | Accesibilidad y guía | Diagrama original |
+| `collaborator-staging-flow.svg` | Colaboración externa segura | Diagrama original |
+| `developer-connector-architecture.svg` | SDK y arquitectura de conectores | Diagrama original, no captura de código |
+| `evidence-gated-roadmap.svg` | Estados de madurez y hoja de ruta | Diagrama original, no estado real del proyecto |

@@ -81,3 +81,114 @@ test("institutional 3D engine preserves source-derived analytics and bilingual c
     assert.match(html, /mapa\/map\.js\?v=hcu-observatory-v2/)
   }
 })
+
+
+test("homepage exposes the live HCU observatory and does not substitute a flat placeholder on the HCU route", () => {
+  const home = read("components/tamv-institutional-site.tsx")
+  assert.match(home, /className="hcu-launch-section"/)
+  assert.match(home, /href=\{english \? "\/hcu\?lang=en" : "\/hcu"\}/)
+  assert.match(home, /Open HCU Observatory|Abrir observatorio HCU/)
+  const page = read("app/hcu/page.tsx")
+  assert.match(page, /<HcuExperience graph=\{graph\}/)
+  assert.doesNotMatch(page, /TamvSectionMedia area="hcu"/)
+  assert.doesNotMatch(page, /import \{ TamvSectionMedia \}/)
+  const styles = read("app/globals.css")
+  assert.match(styles, /\.hcu-launch-section/)
+  assert.match(styles, /@media \(max-width: 760px\)/)
+})
+
+test("homepage leads with technology and exposes a research-first visual system", () => {
+  const home = read("components/tamv-institutional-site.tsx")
+  assert.match(home, /src="\/visuals\/tamv-innovation-hub-hero\.svg"/)
+  assert.match(home, /<TamvVisualSystems locale=\{locale\} \/>/)
+  assert.match(home, /AI governance|gobernanza de IA/i)
+  const gallery = read("components/tamv-visual-systems.tsx")
+  for (const topic of [
+    "research-evidence-network.svg",
+    "ai-governance-framework.svg",
+    "zero-trust-security.svg",
+    "cryptographic-provenance.svg",
+    "knowledge-provenance.svg",
+    "human-oversight-ai.svg",
+  ]) assert.ok(gallery.includes(topic), "missing contextual visual: " + topic)
+  for (const topic of [
+    "tamv-innovation-hub-hero.svg",
+    "research-evidence-network.svg",
+    "ai-governance-framework.svg",
+    "zero-trust-security.svg",
+    "cryptographic-provenance.svg",
+    "knowledge-provenance.svg",
+    "hcu-hypergraph-field.svg",
+    "open-science-lab.svg",
+    "human-oversight-ai.svg",
+    "collaborator-staging-flow.svg",
+    "learning-pathway.svg",
+    "accessibility-by-design.svg",
+    "developer-connector-architecture.svg",
+    "evidence-gated-roadmap.svg",
+  ]) {
+    const asset = read("public/visuals/" + topic)
+    assert.match(asset, /<svg/)
+    assert.match(asset, /<title/)
+    assert.match(asset, /<desc/)
+  }
+  const media = read("components/tamv-section-media.tsx")
+  assert.doesNotMatch(home, /src="\/tamv-hero-banner\.jpg"/)
+  assert.match(media, /src: "\/visuals\/tamv-innovation-hub-hero\.svg"/)
+  assert.match(media, /src: "\/visuals\/zero-trust-security\.svg"/)
+  assert.match(media, /src: "\/visuals\/hcu-hypergraph-field\.svg"/)
+  assert.match(media, /src: "\/visuals\/cryptographic-provenance\.svg"/)
+  assert.match(media, /src: "\/visuals\/open-science-lab\.svg"/)
+  assert.match(media, /src: "\/visuals\/learning-pathway\.svg"/)
+  assert.match(media, /src: "\/visuals\/accessibility-by-design\.svg"/)
+  assert.match(media, /src: "\/visuals\/collaborator-staging-flow\.svg"/)
+  assert.match(media, /src: "\/visuals\/developer-connector-architecture\.svg"/)
+  assert.match(media, /src: "\/visuals\/evidence-gated-roadmap\.svg"/)
+  const visualStyles = read("components/tamv-visual-systems.module.css")
+  assert.match(gallery, /research-photo/)
+  assert.match(gallery, /infrastructure-photo/)
+  assert.match(gallery, /creativecommons\.org\/licenses\/by\/4\.0|CC BY 4\.0/)
+  assert.match(gallery, /Wikimedia Commons/)
+  assert.match(gallery, /card\.sourceUrl/)
+  assert.match(visualStyles, /\.credit/)
+
+})
+
+
+test("public-record and technical-module disclosures preserve readable light-surface contrast", () => {
+  const styles = read("app/globals.css")
+  assert.match(styles, /\.sovereign-reference-disclosure > summary[\s\S]*?color: #12324a !important/)
+  assert.match(styles, /\.sovereign-advanced-modules > summary[\s\S]*?font-weight: 800 !important/)
+  assert.match(styles, /\.sovereign-advanced-intro[\s\S]*?color: #29495f !important/)
+  assert.match(styles, /\.sovereign-advanced-modules \.sovereign-module-card a[\s\S]*?color: #fffefa !important/)
+})
+
+
+test("Origins presents the founder portrait and first-person authenticity manifesto", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  assert.match(origins, /founder-edwin-oswaldo-castillo-trejo\.webp/)
+  assert.match(origins, /CEO fundador/)
+  assert.match(origins, /no deseo aparentar lo que no soy/)
+  assert.match(origins, /mano de obra barata y consumidora/)
+  assert.match(origins, /tamv-origins-founder-manifesto/)
+  assert.match(styles, /\.tamv-origins-founder-portrait img/)
+  assert.match(styles, /\.tamv-origins-founder-manifesto \.tamv-origins-manifesto-closing/)
+})
+
+
+test("Origins exposes traceable author profiles, DOI records, and the founder-supplied CITIS invitation without overstating academic credentials", () => {
+  const origins = read("app/origenes/page.tsx")
+  const styles = read("app/globals.css")
+  assert.match(origins, /https:\/\/orcid\.org\/0009-0008-5050-1539/)
+  assert.match(origins, /https:\/\/isni\.org\/isni\/0000000531699229/)
+  assert.match(origins, /https:\/\/ai\.lounge\.ai\/@tamvonline/)
+  assert.match(origins, /https:\/\/www\.facebook\.com\/share\/p\/1Fku3aeEfZ\//)
+  assert.match(origins, /https:\/\/citis\.ups\.edu\.ec\/es\//)
+  assert.match(origins, /10\.6084\/m9\.figshare\.32135389/)
+  assert.match(origins, /10\.6084\/m9\.figshare\.32098846/)
+  assert.match(origins, /no se presenta como confirmado un grado Ph\.D\./i)
+  assert.match(origins, /doctorado honoris causa/i)
+  assert.match(origins, /nombramiento oficial como editor de Frontiers/i)
+  assert.match(styles, /\.tamv-origins-recognition-sources/)
+})
