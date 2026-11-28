@@ -153,3 +153,12 @@ test("homepage leads with technology and exposes a research-first visual system"
   assert.match(visualStyles, /\.credit/)
 
 })
+
+
+test("public-record and technical-module disclosures preserve readable light-surface contrast", () => {
+  const styles = read("app/globals.css")
+  assert.match(styles, /\.sovereign-reference-disclosure > summary[\s\S]*?color: #12324a !important/)
+  assert.match(styles, /\.sovereign-advanced-modules > summary[\s\S]*?font-weight: 800 !important/)
+  assert.match(styles, /\.sovereign-advanced-intro[\s\S]*?color: #29495f !important/)
+  assert.match(styles, /\.sovereign-advanced-modules \.sovereign-module-card a[\s\S]*?color: #fffefa !important/)
+})
