@@ -25,6 +25,27 @@ export function TamvInstitutionalSite({ locale = "es" }: { locale?: Locale }) {
           />
         </section>
         <TamvSovereignConsole locale={locale} />
+        <section className="hcu-launch-section" aria-labelledby="hcu-launch-title" lang={locale}>
+          <div className="container hcu-launch-grid">
+            <div className="hcu-launch-copy">
+              <p className="hcu-launch-kicker">{english ? "INTERACTIVE SPATIAL OBSERVATORY" : "OBSERVATORIO ESPACIAL INTERACTIVO"}</p>
+              <h2 id="hcu-launch-title">{english ? "Explore the HCU in motion." : "Explora el HCU en movimiento."}</h2>
+              <p>{english ? "Open the live, selectable knowledge field with orbit controls, domain filters, relationship evidence states and the analytical record. This is the interactive instrument—not a static illustration." : "Abre el campo de conocimiento interactivo con órbitas, nodos seleccionables, filtros por dominio, estados de evidencia y registros analíticos. Es el instrumento interactivo, no una ilustración estática."}</p>
+              <div className="hcu-launch-meta" aria-label={english ? "HCU features" : "Funciones del HCU"}>
+                <span>{english ? "3D perspective field" : "Campo espacial en perspectiva"}</span>
+                <span>{english ? "Live graph records" : "Registros del grafo"}</span>
+                <span>{english ? "2D and record alternatives" : "Alternativas 2D y registros"}</span>
+              </div>
+            </div>
+            <div className="hcu-launch-action">
+              <div className="hcu-launch-orbit" aria-hidden="true"><span /><span /><span /><i>Ω</i></div>
+              <a className="hcu-launch-button" href={english ? "/hcu?lang=en" : "/hcu"}>
+                {english ? "Open HCU Observatory" : "Abrir observatorio HCU"} <ArrowUpRight aria-hidden="true" />
+              </a>
+              <p>{english ? "Graph values are declared and exploratory; the visualization does not imply independent verification or causal prediction." : "Los valores del grafo son declarados y exploratorios; la visualización no implica verificación independiente ni predicción causal."}</p>
+            </div>
+          </div>
+        </section>
         <details className="home-extras-disclosure" lang={locale}>
           <summary>{english ? "Explore the extended atlas and media library" : "Explorar el atlas ampliado y la biblioteca multimedia"} <span aria-hidden="true">+</span></summary>
           <div className="home-extras-content">
