@@ -5617,3 +5617,35 @@ body:has(.sovereign-hero) .sovereign-advanced-modules .sovereign-module-card a:h
   .tamv-origins-resource-card { transition: none; }
   .tamv-origins-resource-card:hover { transform: none; }
 }
+
+
+.tamv-origins-recognition-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1.1rem;
+}
+.tamv-origins-recognition-sources a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 40px;
+  max-width: 100%;
+  padding: .6rem .8rem;
+  border: 1px solid rgba(127, 221, 210, .38);
+  border-radius: 7px;
+  background: #eaf8f5;
+  color: #103b40;
+  font-size: .72rem;
+  font-weight: 850;
+  line-height: 1.45;
+  text-decoration: none;
+}
+.tamv-origins-recognition-sources a:hover {
+  border-color: #83e3d7;
+  background: #fff;
+}
+.tamv-origins-recognition-sources a:focus-visible {
+  outline: 3px solid #e4c17b;
+  outline-offset: 3px;
+}
