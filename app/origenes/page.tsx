@@ -97,6 +97,39 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
             <div className="tamv-origins-prose">
               <p className="tamv-origins-greeting">{english ? "It is an honor to welcome you to this space." : "Es un honor recibirte en este espacio."}</p>
               <p>{english ? "My name is Edwin Oswaldo Castillo Trejo, although across the digital ecosystem I am known as Anubis Villaseñor and The Alfa RedHat." : "Mi nombre es Edwin Oswaldo Castillo Trejo, aunque en el ecosistema digital me conocen como Anubis Villaseñor y The Alfa RedHat."}</p>
+              <figure className="tamv-origins-founder-portrait">
+                <img
+                  src="/visuals/founder-edwin-oswaldo-castillo-trejo.webp"
+                  alt={english ? "Edwin Oswaldo Castillo Trejo, founder of TAMV Online Network, in a casual dark hoodie." : "Edwin Oswaldo Castillo Trejo, CEO fundador de TAMV Online Network, con una sudadera oscura, en una fotografía personal."}
+                  width={360}
+                  height={515}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <strong>{english ? "Edwin Oswaldo Castillo Trejo" : "Edwin Oswaldo Castillo Trejo"}</strong>
+                  <span>{english ? "Founder · Anubis Villaseñor · The Alfa RedHat" : "CEO fundador · Anubis Villaseñor · The Alfa RedHat"}</span>
+                </figcaption>
+              </figure>
+              <section className="tamv-origins-founder-manifesto" aria-labelledby="tamv-origins-founder-manifesto-title">
+                <p className="tamv-origins-manifesto-kicker">{english ? "A PERSONAL NOTE ABOUT ORIGIN AND AUTHENTICITY" : "UNA NOTA PERSONAL SOBRE EL ORIGEN Y LA AUTENTICIDAD"}</p>
+                <h2 id="tamv-origins-founder-manifesto-title">{english ? "I will not pretend to be someone I am not." : "No voy a aparentar lo que no soy."}</h2>
+                {english ? (
+                  <>
+                    <p>You may wonder why a site that aims to look businesslike, with high academic standards and careful attention to every line of text, displays a photo of someone without a suit and tie, with no diplomas decorating the walls. The answer is simple: I did not come from elite academies or famous surnames. Like millions of Latin Americans, I come from the streets—where people struggle, where hunger is real, and where marketing does not solve everything.</p>
+                    <p>I present myself this way because this is who I am, this is my essence, and I do not want to pretend to be something I am not. I am not a false smile in a suit with a polished speech and a double standard. I am simply a Latin American trying to leave a path behind so our region is no longer seen as cheap labor and a market of consumers.</p>
+                    <p>We were born in places where scarcity forces us to innovate every day. We live where resilience has become part of our immune system. We live in places where you can earn 1,500 pesos a week and face expenses exceeding 2,000 pesos, and no one understands how there is still enough left for a couple of beers.</p>
+                    <p className="tamv-origins-manifesto-closing">This is me: someone who, because he came from a humble neighborhood, was judged and told he could not make it.</p>
+                  </>
+                ) : (
+                  <>
+                    <p>Te preguntarás por qué un sitio que pretende lucir empresarial, con alta exigencia académica y con detalle y cuidado en cada línea de texto, pone la foto de alguien sin traje ni corbata y sin los diplomas de titulación adornando las paredes. La respuesta es simple: yo no vengo ni surjo de las grandes academias ni de los apellidos de renombre. Yo, al igual que millones de latinoamericanos, vengo de las calles, donde se sufre, donde se pasa hambre, donde el marketing no funciona.</p>
+                    <p>Me presento así porque este soy yo, esta es mi esencia y porque no deseo aparentar lo que no soy. No soy una falsa sonrisa con traje y discurso bonito, de doble moral; simplemente soy un latinoamericano que busca dejar un camino trazado para que nuestra región deje de ser vista como mano de obra barata y consumidora.</p>
+                    <p>Nacimos donde la carencia nos obliga a innovar todos los días; vivimos donde la resiliencia se volvió parte de nuestro sistema inmunológico. Vivimos en lugares donde ganas 1,500 pesos de sueldo semanal y tienes gastos de más de 2,000 pesos, y nadie entiende cómo aún nos alcanza para un par de cervezas.</p>
+                    <p className="tamv-origins-manifesto-closing">Este soy yo: alguien que, por ser y venir de un barrio humilde, fue condenado y escuchó que no podía.</p>
+                  </>
+                )}
+              </section>
               {paragraphs.map((paragraph, index) => (
                 <p key={index} className={index === 2 ? "tamv-origins-emphasis" : undefined}>{paragraph}</p>
               ))}
