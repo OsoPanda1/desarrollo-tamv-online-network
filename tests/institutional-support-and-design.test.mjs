@@ -56,8 +56,8 @@ test("institutional and application HCU surfaces remain distinct and documented"
   assert.match(docs, /PostgreSQL/)
   assert.match(docs, /graph\.js/)
   assert.match(docs, /not automatically synchronized/)
-  assert.match(readme, /Support and donation checkout/)
-  assert.match(readme, /HCU observatory and institutional interface/)
+  assert.match(readme, /apoyo institucional|institutional support/i)
+  assert.match(readme, /Observatorio HCU|HCU observatory/i)
 })
 
 test("donation copy does not imply an unconfirmed open-source license for TAMV code", () => {

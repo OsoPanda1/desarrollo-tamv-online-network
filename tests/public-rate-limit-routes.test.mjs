@@ -27,8 +27,8 @@ test("all abusable public endpoints use the shared distributed limiter", () => {
 
 test("shared limiter is fail-closed and emits bounded 429 responses", () => {
   const server = read("lib/rate-limit/server.ts");
-  assert.match(server, /if \(!isSharedRateLimitEnabled\(\)\) return null/);
-  assert.match(server, /status: 503, headers:/);
+  assert.match(server, /if \(!runtime\.isEnabled\(\)\) return null/);
+  assert.match(server, /status: 503,\s*headers:/);
   assert.match(server, /status: 429, headers: sharedHeaders/);
   assert.match(server, /"Retry-After": String\(decision\.retryAfterSeconds\)/);
   assert.match(server, /DELETE FROM public\.tamv_rate_limit_counters/);

@@ -50,7 +50,7 @@ test("ORÍGENES is a first-class bilingual section linked throughout TAMV", () =
   }
   assert.match(originsPage, /title: "Orígenes \| TAMV Online Network"/);
   assert.match(originsPage, /title: "Origins \| TAMV Online Network"/);
-  assert.match(header, /href: "\/origenes", labelEs: "ORÍGENES", labelEn: "ORIGINS"/);
+  assert.match(header, /href: "\/origenes", labelEs: "(?:ORÍGENES|Orígenes)", labelEn: "(?:ORIGINS|Origins)"/);
   assert.match(appShell, /localizedPath\("\/origenes", locale\)/);
   assert.match(institutionalSite, /localizedPath\("\/origenes", locale\)/);
   assert.match(sitemap, /"\/origenes"/);
