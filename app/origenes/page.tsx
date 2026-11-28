@@ -42,6 +42,66 @@ const professionalProfiles: ProfileResource[] = [
   { label: "Isabella TERMINUS-V6 · repositorio", href: "https://github.com/OsoPanda1/ISABELLA-VERSION-TERMINUS-V6", es: "Repositorio de código y documentación técnica de la arquitectura Isabella.", en: "Code repository and technical documentation for the Isabella architecture." },
   { label: "TAMV · CITIS 2026 y Nodo Cero", href: "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11", es: "Artículo editorial del propio ecosistema que relata el vínculo con CITIS y el reconocimiento Ph.D. reportado por el autor.", en: "An article from the TAMV ecosystem reporting the CITIS connection and the Ph.D.-level recognition described by the author." },
 ]
+
+type BiographyMilestone = { dateEs: string; dateEn: string; titleEs: string; titleEn: string; detailEs: string; detailEn: string; sourceLabelEs: string; sourceLabelEn: string; sourceUrl: string }
+const biographyMilestones: BiographyMilestone[] = [
+  {
+    dateEs: "ENERO DE 2021 · PERFIL PROFESIONAL",
+    dateEn: "JANUARY 2021 · PROFESSIONAL PROFILE",
+    titleEs: "Proyecto de arquitectura TAMV MD-X4",
+    titleEn: "TAMV MD-X4 architecture project",
+    detailEs: "El perfil público de LinkedIn lista el proyecto MD-X4 con fecha de enero de 2021. Es una referencia temporal publicada en el perfil profesional del autor; no sustituye una auditoría independiente de la implementación.",
+    detailEn: "The public LinkedIn profile lists the MD-X4 project with a January 2021 date. This is a timeline reference from the author's professional profile, not an independent implementation audit.",
+    sourceLabelEs: "Ver perfil profesional",
+    sourceLabelEn: "View professional profile",
+    sourceUrl: "https://mx.linkedin.com/in/edwin-oswaldo-castillo-aka-anubis-villase%C3%B1or-69a847376",
+  },
+  {
+    dateEs: "DICIEMBRE DE 2025 · COMUNIDAD TECNOLÓGICA",
+    dateEn: "DECEMBER 2025 · TECHNOLOGY COMMUNITY",
+    titleEs: "Publicación profesional en AVIXA Xchange",
+    titleEn: "Professional publication on AVIXA Xchange",
+    detailEs: "Una publicación sobre TAMV e Isabella Villaseñor AI aparece en AVIXA Xchange. Documenta divulgación y presencia en una comunidad profesional de tecnología audiovisual; no se presenta como artículo revisado por pares.",
+    detailEn: "A post about TAMV and Isabella Villaseñor AI appears on AVIXA Xchange. It documents professional outreach in an audiovisual technology community and is not represented as a peer-reviewed article.",
+    sourceLabelEs: "Leer publicación",
+    sourceLabelEn: "Read post",
+    sourceUrl: "https://xchange.avixa.org/posts/tamv-e-isabella-villasenor-ai-el-parteaguas-que-redefine-el-metaverso-desde-mexico",
+  },
+  {
+    dateEs: "OCTUBRE DE 2026 · REGISTRO DOI",
+    dateEn: "OCTOBER 2026 · DOI RECORD",
+    titleEs: "Isabella Villaseñor AI V6 Genesis",
+    titleEn: "Isabella Villaseñor AI V6 Genesis",
+    detailEs: "ResearchGate lista un documento técnico del autor con DOI 10.5281/zenodo.23418238. El registro hace posible la recuperación y citación; la existencia del DOI no demuestra revisión por pares ni validación externa de las métricas descritas.",
+    detailEn: "ResearchGate lists an author-uploaded technical document with DOI 10.5281/zenodo.23418238. The record supports retrieval and citation; the DOI alone does not prove peer review or external validation of its stated metrics.",
+    sourceLabelEs: "Consultar registro y autoría",
+    sourceLabelEn: "Inspect record and authorship",
+    sourceUrl: "https://www.researchgate.net/publication/416024217_ISABELLA_VILLASENOR_AI_V6_GENESIS_Puede_una_AI_ser_gobernada_con_etica_y_transparencia",
+  },
+  {
+    dateEs: "OCTUBRE DE 2026 · CITIS 2026",
+    dateEn: "OCTOBER 2026 · CITIS 2026",
+    titleEs: "Vinculación reportada con el congreso de UPS en Ecuador",
+    titleEn: "Reported connection with the UPS conference in Ecuador",
+    detailEs: "La Universidad Politécnica Salesiana confirma el congreso CITIS del 28 al 30 de octubre de 2026 en Guayaquil. El fundador aportó una invitación y TAMV publicó un relato sobre un reconocimiento Ph.D.; la participación individual y los términos del reconocimiento requieren comprobante institucional propio.",
+    detailEn: "Universidad Politécnica Salesiana confirms CITIS took place in Guayaquil on October 28–30, 2026. The founder supplied an invitation and TAMV published an account of a Ph.D.-level recognition; personal participation and the terms of recognition require an individual institutional document.",
+    sourceLabelEs: "Fuente institucional del congreso",
+    sourceLabelEn: "Official conference source",
+    sourceUrl: "https://citis.ups.edu.ec/es/",
+  },
+  {
+    dateEs: "2026 · HORAS DE DESARROLLO DECLARADAS",
+    dateEn: "2026 · SELF-REPORTED DEVELOPMENT HOURS",
+    titleEs: "Más de 23,000 horas reportadas en la documentación de TAMV",
+    titleEn: "More than 23,000 hours reported in TAMV documentation",
+    detailEs: "Una publicación del ecosistema cifra la inversión del fundador en 23,100 horas. Se muestra como dato autodeclarado de la documentación del proyecto, no como registro horario auditado independientemente.",
+    detailEn: "A TAMV ecosystem article puts the founder's investment at 23,100 hours. It is shown as a self-reported figure from project documentation, not an independently audited timesheet.",
+    sourceLabelEs: "Leer declaración de TAMV",
+    sourceLabelEn: "Read TAMV account",
+    sourceUrl: "https://tamvonline-oficial.odoo.com/blog/noticias-2/nodo-cero-camino-a-ecuador-11",
+  },
+]
+
 type ResearchRecord = { titleEs: string; titleEn: string; doi: string; detailEs: string; detailEn: string }
 const researchRecords: ResearchRecord[] = [
   { titleEs: "Registro técnico TAMV / MD-X4 · Zenodo 19436662", titleEn: "TAMV / MD-X4 technical record · Zenodo 19436662", doi: "10.5281/zenodo.19436662", detailEs: "Registro atribuido por el autor a la arquitectura TAMV/MD-X4. El título, la versión y la autoría exactos deben confirmarse en la ficha del repositorio.", detailEn: "Record attributed by the author to the TAMV/MD-X4 architecture. Exact title, version, and authorship should be confirmed on the repository record." },
@@ -215,6 +275,24 @@ export default async function OriginsPage({ searchParams }: { searchParams: Sear
                     <p>{english ? "A place-based digital initiative designed to connect local heritage, visitor information, mapping, storytelling, and potential smart-territory services without displacing the identity of the community it serves." : "Una iniciativa digital vinculada al territorio, diseñada para conectar patrimonio local, información al visitante, cartografía, narrativa y posibles servicios territoriales inteligentes sin desplazar la identidad de la comunidad a la que sirve."}</p>
                   </article>
                 </div>
+
+                <section className="tamv-origins-milestones" aria-labelledby="tamv-origins-milestones-title">
+                  <div className="tamv-origins-resource-heading">
+                    <p className="tamv-origins-manifesto-kicker">{english ? "PUBLIC TIMELINE · SOURCE-LINKED MILESTONES" : "CRONOLOGÍA PÚBLICA · HITOS CON FUENTE"}</p>
+                    <h3 id="tamv-origins-milestones-title">{english ? "A traceable path from project architecture to published records" : "Una trayectoria rastreable: de la arquitectura a los registros públicos"}</h3>
+                    <p>{english ? "Dates and milestones below come from the linked profile or publication. Author-reported items are labeled as such and do not imply an external award or technical certification." : "Las fechas y los hitos proceden del perfil o la publicación enlazada. Los datos declarados por el autor se identifican como tales y no implican un premio externo ni certificación técnica."}</p>
+                  </div>
+                  <ol className="tamv-origins-milestone-list">
+                    {biographyMilestones.map((milestone) => (
+                      <li key={milestone.titleEn} className="tamv-origins-milestone-card">
+                        <p className="tamv-origins-milestone-date">{english ? milestone.dateEn : milestone.dateEs}</p>
+                        <h4>{english ? milestone.titleEn : milestone.titleEs}</h4>
+                        <p className="tamv-origins-milestone-detail">{english ? milestone.detailEn : milestone.detailEs}</p>
+                        <a href={milestone.sourceUrl} target="_blank" rel="noopener noreferrer">{english ? milestone.sourceLabelEn : milestone.sourceLabelEs} <ArrowUpRight aria-hidden="true" /></a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
                 <section className="tamv-origins-resource-block" aria-labelledby="tamv-origin-identifiers-title">
                   <div className="tamv-origins-resource-heading">
                     <p className="tamv-origins-manifesto-kicker">{english ? "AUTHOR AND PROFESSIONAL PRESENCE" : "IDENTIDAD AUTORAL Y PRESENCIA PROFESIONAL"}</p>
