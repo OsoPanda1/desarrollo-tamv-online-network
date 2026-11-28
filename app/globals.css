@@ -5062,3 +5062,137 @@ body:has(.sovereign-hero) .isabella-launcher-caption { color: #536673 !important
 .lgs-gate-decision.is-open { border-color:#b7d9ce; background:#f0f8f4; color:#174d40; }
 .lgs-gate-missing { margin:0; padding-left:20px; color:#8d2923; font:11px/1.8 var(--mono); overflow-wrap:anywhere; }
 @media (max-width:560px) { .lgs-gate-selector,.lgs-gate-requirements { grid-template-columns:1fr; } }
+
+
+/* HCU is a primary interactive product surface, not a secondary static-media card. */
+.hcu-launch-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(34px, 5vw, 66px) 0;
+  border-block: 1px solid #203c4e;
+  color: #edf7fa;
+  background:
+    radial-gradient(ellipse at 76% 42%, rgba(44, 126, 143, .24), transparent 34%),
+    radial-gradient(ellipse at 6% 100%, rgba(172, 113, 76, .12), transparent 36%),
+    linear-gradient(118deg, #071522 0%, #0c2637 54%, #081a28 100%);
+}
+.hcu-launch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(250px, .7fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 70px);
+}
+.hcu-launch-copy { max-width: 760px; }
+.hcu-launch-kicker {
+  margin: 0 0 13px;
+  color: #82d5d0;
+  font: 700 10px/1.5 var(--mono);
+  letter-spacing: .16em;
+}
+.hcu-launch-copy h2 {
+  max-width: 17ch;
+  margin: 0;
+  color: #f3f8fa;
+  font: 500 clamp(34px, 4.5vw, 58px)/1.03 var(--serif);
+  letter-spacing: -.035em;
+}
+.hcu-launch-copy > p:not(.hcu-launch-kicker) {
+  max-width: 70ch;
+  margin: 17px 0 0;
+  color: #c0d1d9;
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.8;
+}
+.hcu-launch-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 21px;
+}
+.hcu-launch-meta span {
+  padding: 7px 10px;
+  border: 1px solid rgba(153, 196, 208, .23);
+  background: rgba(255,255,255,.045);
+  color: #c9e0e6;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.hcu-launch-action {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+}
+.hcu-launch-orbit {
+  position: relative;
+  display: grid;
+  width: min(100%, 240px);
+  aspect-ratio: 1.65;
+  place-items: center;
+  margin-bottom: 4px;
+  border: 1px solid rgba(113, 213, 211, .13);
+  border-radius: 50%;
+  transform: perspective(440px) rotateX(61deg) rotateZ(-15deg);
+  background: radial-gradient(ellipse, rgba(79, 189, 190, .12), transparent 68%);
+}
+.hcu-launch-orbit::before, .hcu-launch-orbit::after, .hcu-launch-orbit span {
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(113, 213, 211, .44);
+  border-radius: 50%;
+  content: "";
+}
+.hcu-launch-orbit::after { inset: 27%; border-color: rgba(225, 183, 136, .55); transform: rotate(58deg) scaleX(.62); }
+.hcu-launch-orbit span:nth-child(1) { inset: 3%; transform: rotate(65deg) scaleX(.38); border-color: rgba(126, 179, 232, .6); }
+.hcu-launch-orbit span:nth-child(2) { inset: 19%; transform: rotate(-42deg) scaleX(.5); border-color: rgba(237, 145, 177, .48); }
+.hcu-launch-orbit span:nth-child(3) { inset: 37%; border-color: rgba(113, 213, 211, .65); }
+.hcu-launch-orbit i {
+  display: grid;
+  width: 42px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(153, 232, 230, .7);
+  border-radius: 50%;
+  background: #0a2637;
+  color: #e6fbfb;
+  font: 500 25px/1 var(--serif);
+  transform: rotateZ(15deg) rotateX(-61deg);
+  box-shadow: 0 0 25px rgba(84, 207, 203, .2);
+}
+.hcu-launch-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 17px;
+  border: 1px solid #e2c29f;
+  background: linear-gradient(135deg, #f3e2ce, #fff8ed);
+  color: #183549;
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none;
+  box-shadow: 0 9px 26px rgba(0,0,0,.16);
+  transition: transform .18s ease, background .18s ease;
+}
+.hcu-launch-button:hover { transform: translateY(-2px); background: #fff; }
+.hcu-launch-button:focus-visible { outline: 3px solid #75d9d4; outline-offset: 4px; }
+.hcu-launch-button svg { width: 17px; height: 17px; }
+.hcu-launch-action > p {
+  max-width: 42ch;
+  margin: 0;
+  color: #9eb8c4;
+  font-size: 10px;
+  line-height: 1.75;
+}
+@media (max-width: 760px) {
+  .hcu-launch-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .hcu-launch-action { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .hcu-launch-orbit { width: min(100%, 200px); }
+  .hcu-launch-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hcu-launch-button { transition: none; }
+  .hcu-launch-button:hover { transform: none; }
+}
