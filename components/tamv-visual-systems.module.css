@@ -149,3 +149,24 @@
   .card:hover, .cardBody a:hover { transform: none; }
   .card:hover .imageFrame img { transform: none; }
 }
+
+.credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem .8rem;
+  margin: 0;
+  padding: .7rem .9rem;
+  border-bottom: 1px solid #294657;
+  background: #0a1b29;
+  color: #9fb7c4;
+  font-size: .68rem;
+  line-height: 1.5;
+}
+.credit a {
+  color: #a9e8e2;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+.credit span { color: #aebfca; }
